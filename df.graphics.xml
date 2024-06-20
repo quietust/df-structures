@@ -1,5 +1,17 @@
 <data-definition>
-    <struct-type type-name='graphic'>
+    <enum-type type-name='curses_color' base-type='uint8_t'>
+        Using the color names without "dark" or "light", favoring primaries.
+        <enum-item name='Black'/>
+        <enum-item name='Blue'/>
+        <enum-item name='Green'/>
+        <enum-item name='Cyan'/>
+        <enum-item name='Red'/>
+        <enum-item name='Magenta'/>
+        <enum-item name='Yellow'/>
+        <enum-item name='White'/>
+    </enum-type>
+
+    <struct-type type-name='graphicst'>
         <int32_t name='screenx'/>
         <int32_t name='screeny'/>
         <int8_t name='screenf'/>
@@ -34,6 +46,222 @@
         <int32_t name='mouse_y'/>
 
         <pointer type-name='uint8_t' name='screen_limit'/>
+    </struct-type>
+
+    <class-type type-name='renderer'>
+        <pointer type-name='uint8_t' name='screen' is-array='true'/>
+        <pointer type-name='int32_t' name='screentexpos' is-array='true'/>
+        <pointer type-name='int8_t' name='screentexpos_addcolor' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_grayscale' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_cf' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_cbr' is-array='true'/>
+
+        <pointer type-name='uint8_t' name='screen_old' is-array='true'/>
+        <pointer type-name='int32_t' name='screentexpos_old' is-array='true'/>
+        <pointer type-name='int8_t' name='screentexpos_addcolor_old' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_grayscale_old' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_cf_old' is-array='true'/>
+        <pointer type-name='uint8_t' name='screentexpos_cbr_old' is-array='true'/>
+
+        <virtual-methods>
+            <vmethod name='update_tile'> <int32_t name='x'/> <int32_t name='y'/> </vmethod>
+            <vmethod name='update_all'/>
+            <vmethod name='render'/>
+            <vmethod name='set_fullscreen'/>
+            <vmethod name='zoom'>
+                <enum base-type='int32_t' type-name='zoom_commands'/>
+            </vmethod>
+
+            <vmethod name='resize'> <int32_t name='w'/> <int32_t name='h'/> </vmethod>
+            <vmethod name='grid_resize'> <int32_t name='w'/> <int32_t name='h'/> </vmethod>
+            <vmethod ret-type='bool' name='get_mouse_coords'>
+                <pointer type-name='int32_t' name='x'/>
+                <pointer type-name='int32_t' name='y'/>
+            </vmethod>
+            <vmethod ret-type='bool' name='uses_opengl'/>
+        </virtual-methods>
+    </class-type>
+
+    <enum-type type-name='zoom_commands'>
+        <enum-item name='zoom_in'/>
+        <enum-item name='zoom_out'/>
+        <enum-item name='zoom_reset'/>
+        <enum-item name='zoom_fullscreen'/>
+        <enum-item name='zoom_resetgrid'/>
+    </enum-type>
+
+   <struct-type type-name='enabler' original-name='enablerst' custom-methods="true">
+        <bool name='fullscreen'/>
+
+        <stl-deque name='overridden_grid_sizes'>
+            <int32_t name='x'/>
+            <int32_t name='y'/>
+        </stl-deque>
+
+        <pointer name='renderer' type-name='renderer'/>
+
+        <int32_t name='calculated_fps'/>
+        <int32_t name='calculated_gfps'/>
+        <stl-deque name='frame_timings' type-name='int32_t'/>
+        <stl-deque name='gframe_timings' type-name='int32_t'/>
+        <int32_t name='frame_sum'/>
+        <int32_t name='gframe_sum'/>
+        <int32_t name='frame_last'/>
+        <int32_t name='gframe_last'/>
+        <s-float name='fps'/>
+        <s-float name='gfps'/>
+        <s-float name='fps_per_gfps'/>
+        <uint32_t name='last_tick'/>
+        <s-float name='outstanding_frames'/>
+        <s-float name='outstanding_gframes'/>
+
+        <uint32_t name='async_frames'/>
+        <bool name='async_paused'/>
+
+        <compound name='async_tobox'>
+            <pointer name='sem'/>
+            <stl-deque name='queue'>
+                <enum name='cmd'>
+                    <enum-item name='pause'/>
+                    <enum-item name='start'/>
+                    <enum-item name='render'/>
+                    <enum-item name='inc'/>
+                    <enum-item name='set_fps'/>
+                </enum>
+                <int32_t name='val'/>
+            </stl-deque>
+            <pointer name='sem_fill'/>
+        </compound>
+
+        <compound name='async_frombox'>
+            <pointer name='sem'/>
+            <stl-deque name='queue'>
+                <enum name='msg'>
+                    <enum-item name='quit'/>
+                    <enum-item name='complete'/>
+                    <enum-item name='set_fps'/>
+                    <enum-item name='set_gfps'/>
+                    <enum-item name='push_resize'/>
+                    <enum-item name='pop_resize'/>
+                    <enum-item name='reset_textures'/>
+                </enum>
+                <compound is-union='true'>
+                    <int32_t name='fps'/>
+                    <compound>
+                        <int32_t name='x'/>
+                        <int32_t name='y'/>
+                    </compound>
+                </compound>
+            </stl-deque>
+            <pointer name='sem_fill'/>
+        </compound>
+
+        <compound name='async_zoom'>
+            <pointer name='sem'/>
+            <stl-deque name='queue'>
+                <enum base-type='int32_t' type-name='zoom_commands'/>
+            </stl-deque>
+            <pointer name='sem_fill'/>
+        </compound>
+
+        <pointer name='async_fromcomplete'/>
+
+        <uint32_t name='renderer_threadid'/>
+
+        <stl-string name='command_line'/>
+        <static-array name='ccolor' count='16'>
+            <static-array count='3' type-name='s-float'/>
+        </static-array>
+
+        <bitfield name='flag' base-type='int32_t'>
+            <flag-bit name='render'/>
+            <flag-bit name='maxfps'/>
+        </bitfield>
+
+        <int8_t name='mouse_lbut'/>
+        <int8_t name='mouse_rbut'/>
+        <int8_t name='mouse_lbut_down'/>
+        <int8_t name='mouse_rbut_down'/>
+        <int8_t name='mouse_lbut_lift'/>
+        <int8_t name='mouse_rbut_lift'/>
+        <int8_t name='tracking_on'/>
+
+        <compound name='textures'>
+            <stl-vector type-name='pointer' name='raws'/>
+            <bool name='uploaded'/>
+            <uint32_t name='gl_catalog'/>
+            <pointer name='gl_texpos'/>
+        </compound>
+
+        <int32_t name='sync'/>
+
+        <compound name='text_system' type-name='text_systemst'/>
+
+        <compound name='simticks'>
+            <pointer name='sem'/>
+            <int32_t name='value'/>
+        </compound>
+        <compound name='gputicks'>
+            <pointer name='sem'/>
+            <int32_t name='value'/>
+        </compound>
+
+        <uint32_t name='clock'/>
+    </struct-type>
+
+    <struct-type type-name='text_systemst'>
+        <stl-vector name='file_info' pointer-type='text_system_file_info'/>
+    </struct-type>
+
+    <struct-type type-name='text_system_file_info'>
+        <int32_t name='index'/>
+        <stl-string name='filename'/>
+        <int8_t name='file_token'/>
+        <int32_t name='number'/>
+    </struct-type>
+
+    <struct-type type-name='text_info'>
+        <stl-vector name='elements' pointer-type='text_info_elementst'/>
+    </struct-type>
+
+    <class-type type-name='text_info_elementst'>
+        <virtual-methods>
+            <vmethod name='getString'><pointer name='val' type-name='stl-string'/></vmethod>
+            <vmethod name='getLong' ret-type='int32_t'/>
+            <vmethod is-destructor='true'/>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='text_info_element_longst' inherits-from='text_info_elementst'>
+        <int32_t name='val'/>
+    </class-type>
+
+    <class-type type-name='text_info_element_stringst' inherits-from='text_info_elementst'>
+        <stl-string name='val'/>
+    </class-type>
+
+    -- texture_handler.h
+    <struct-type type-name='tile_pagest' key-field='token'>
+        <stl-string name='token'/>
+        <stl-string name='filename'/>
+
+        <int16_t name='tile_dim_x'/>
+        <int16_t name='tile_dim_y'/>
+        <int16_t name='page_dim_x'/>
+        <int16_t name='page_dim_y'/>
+
+        <stl-vector name='texpos' type-name='int32_t'/>
+        <stl-vector name='datapos' type-name='int32_t'/>
+        <stl-vector name='texpos_gs' type-name='int32_t'/>
+        <stl-vector name='datapos_gs' type-name='int32_t'/>
+
+        <bool name='loaded'/>
+    </struct-type>
+
+    <struct-type type-name='texture_handlerst'>
+        <stl-vector name='page' pointer-type='tile_pagest'/>
+        <stl-vector name='texpos' type-name='int32_t'/>
+        <stl-vector name='datapos' type-name='int32_t'/>
     </struct-type>
 </data-definition>
 

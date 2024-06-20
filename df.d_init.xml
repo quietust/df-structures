@@ -64,60 +64,66 @@
     </enum-type>
 
     <struct-type type-name='d_init'>
-        <df-flagarray name='flags1' index-enum='d_init_flags1'/>
+        <compound name='display'> bay12: d_init_displayst
+            <df-flagarray name='flags' index-enum='d_init_flags1'/>
 
-        <enum name="nickname_dwarf" type-name='d_init_nickname'/>
-        <enum name="nickname_adventure" type-name='d_init_nickname'/>
-        <enum name="nickname_legends" type-name='d_init_nickname'/>
-        <enum name="nickname_dwarf2" type-name='d_init_nickname'/>
+            <static-array name='nickname' count='4' index-enum='game_type'><enum type-name='d_init_nickname'/></static-array>
 
-        <int32_t name="unk_18"/>
-        <int32_t name="unk_1c"/>
+            <int32_t name="unk_18"/>
+            <int32_t name="unk_1c"/>
 
-        <uint8_t name='sky_tile'/>
-        <static-array name='sky_color' type-name='int16_t' count='3'/>
-        <uint8_t name='chasm_tile'/>
-        <uint8_t name='pillar_tile'/>
-        <static-array name='chasm_color' type-name='int16_t' count='3'/>
+            <uint8_t name='sky_tile'/>
+            <static-array name='sky_color' type-name='int16_t' count='3'/>
+            <uint8_t name='chasm_tile'/>
+            <uint8_t name='pillar_tile'/>
+            <static-array name='chasm_color' type-name='int16_t' count='3'/>
 
-        <compound name='wound_color'>
-            <static-array name='none' type-name='int16_t' count='3'/>
-            <static-array name='minor' type-name='int16_t' count='3'/>
-            <static-array name='inhibited' type-name='int16_t' count='3'/>
-            <static-array name='function_loss' type-name='int16_t' count='3'/>
-            <static-array name='broken' type-name='int16_t' count='3'/>
-            <static-array name='missing' type-name='int16_t' count='3'/>
+            <compound name='wound_color'>
+                <static-array name='none' type-name='int16_t' count='3'/>
+                <static-array name='minor' type-name='int16_t' count='3'/>
+                <static-array name='inhibited' type-name='int16_t' count='3'/>
+                <static-array name='function_loss' type-name='int16_t' count='3'/>
+                <static-array name='broken' type-name='int16_t' count='3'/>
+                <static-array name='missing' type-name='int16_t' count='3'/>
+            </compound>
+
+            <enum name="idlers" base-type='int16_t' type-name='d_init_idlers'/>
+            <enum name="show_embark_tunnel" base-type='int16_t' type-name='d_init_tunnel'/>
         </compound>
 
-        <enum name="idlers" base-type='int16_t' type-name='d_init_idlers'/>
-        <enum name="show_embark_tunnel" base-type='int16_t' type-name='d_init_tunnel'/>
+        <compound name='adventure'> bay12: d_init_adventurest
+            <df-flagarray name='flags' index-enum='d_init_flags2'/>
 
-        <df-flagarray name='flags2' index-enum='d_init_flags2'/>
+            <int32_t name="display_length"/>
 
-        <int32_t name="display_length"/>
-
-        <enum name="adventurer_z_view" type-name='d_init_z_view'/>
-        <int32_t name="adventurer_z_view_size"/>
-
-        <df-flagarray name='flags3' index-enum='d_init_flags3'/>
-
-        <int32_t name="population_cap"/>
-        <int32_t name="baby_cap_absolute"/>
-        <int32_t name="baby_cap_percent"/>
-
-        <static-array name='path_cost' type-name='int32_t' count='4'/>
-        <static-array name='embark_rect' type-name='int16_t' count='2'/>
-
-        <compound name='store_dist'>
-            <int16_t name='item_decrease'/>
-            <int16_t name='seed_combine'/>
-            <int16_t name='bucket_combine'/>
-            <int16_t name='barrel_combine'/>
-            <int16_t name='bin_combine'/>
+            <enum name="adventurer_z_view" type-name='d_init_z_view'/>
+            <int32_t name="adventurer_z_view_size"/>
         </compound>
 
-        <df-flagarray name='flags4' index-enum='d_init_flags4'/>
+        <compound name='dwarf'> bay12: d_init_dwarfst
+            <df-flagarray name='flags' index-enum='d_init_flags3'/>
+
+            <int32_t name="population_cap"/>
+            <int32_t name="baby_cap_absolute"/>
+            <int32_t name="baby_cap_percent"/>
+
+            <static-array name='path_cost' type-name='int32_t' count='4'/>
+            <static-array name='embark_rect' type-name='int16_t' count='2'/>
+
+            <compound name='store_dist'>
+                <int16_t name='item_decrease'/>
+                <int16_t name='seed_combine'/>
+                <int16_t name='bucket_combine'/>
+                <int16_t name='barrel_combine'/>
+                <int16_t name='bin_combine'/>
+            </compound>
+        </compound>
+
+        <compound name='feature'> bay12: d_init_featurest
+            <df-flagarray name='flags' index-enum='d_init_flags4'/>
+        </compound>
         85266c0
+        <compound name='announcements' type-name='announcements'/>
     </struct-type>
 </data-definition>
 

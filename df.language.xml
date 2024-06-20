@@ -18,7 +18,7 @@
         <enum-item name='STANDARD_VERB'/>
     </enum-type>
 
-    <enum-type type-name='part_of_speech'>
+    <enum-type type-name='part_of_speech' base-type='int16_t'> bay12: WordAspect
         <enum-item name='Noun'/>
         <enum-item name='NounPlural'/>
         <enum-item name='Adjective'/>
@@ -30,7 +30,17 @@
         <enum-item name='VerbGerund'/>
     </enum-type>
 
-    <enum-type type-name='sphere_type'>
+    <enum-type type-name='language_word_table_index' base-type='int16_t'> bay12: WordPlace
+        <enum-item name='FrontCompound'/>
+        <enum-item name='RearCompound'/>
+        <enum-item name='FirstName'/>
+        <enum-item name='Adjectives'/>
+        <enum-item name='TheX'/>
+        <enum-item name='OfX'/>
+    </enum-type>
+
+    <enum-type type-name='sphere_type' base-type='int16_t'> bay12: SphereType
+        <enum-item name='NONE' value='-1'/>
         <enum-item name='AGRICULTURE'/>
         <enum-item name='ANIMALS'/>
         <enum-item name='ART'/>
@@ -163,59 +173,57 @@
         <enum-item name='YOUTH'/>
     </enum-type>
 
-    <struct-type type-name='language_word'
+    <struct-type type-name='language_word' original-name='wordst'
                  instance-vector='$global.world.raws.language.words'>
         <stl-string name='word'/>
 
         <code-helper name='describe'>$.word</code-helper>
 
-        <static-array type-name='stl-string' name='forms' count='9' index-enum='part_of_speech'/>
+        <static-array type-name='stl-string' name='forms' count='9' index-enum='part_of_speech'/> bay12: actually WordDefStrings which happens to match
 
-        <uint8_t name='adj_dist'/>
-
-        <padding size='7' comment='looks like garbage'/>
+        <int8_t name='adj_dist'/> bay12: char[WordDefChars]
+        <int16_t name='s_empty'/> bay12: short[WordDefShorts]
+        <int32_t name='l_empty'/> bay12: int32_t[WordDefLongs]
 
         <df-flagarray name='flags' index-enum='language_word_flags'/>
     </struct-type>
 
-    <struct-type type-name='language_translation'
+    <struct-type type-name='language_translation' original-name='translationst'
                  instance-vector='$global.world.raws.language.translations'>
         <stl-string name='name'/>
 
         <code-helper name='describe'>$.name</code-helper>
 
-        <stl-vector name='unknown1' comment='empty'/>
-        <stl-vector name='unknown2' comment='empty'/>
+        <stl-vector name='word_token' pointer-type='stl-string' comment='looks like english words'/>
+        <stl-vector name='word_gloss_tmp' pointer-type='stl-string' comment='looks like translated words'/>
 
-        <stl-vector name='words' index-refers-to='$global.world.raws.language.words[$]'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='words' index-refers-to='$global.world.raws.language.words[$]' pointer-type='stl-string'/>
     </struct-type>
 
-    <struct-type type-name='language_symbol'
+    <struct-type type-name='language_symbol' original-name='symbolst'
                  instance-vector='$global.world.raws.language.symbols'>
         <stl-string name='name'/>
 
-        <stl-vector name='unknown' comment='empty'/>
+        <stl-vector name='s_word_token' pointer-type='stl-string'/>
 
         <stl-vector name='words'>
             <int32_t ref-target='language_word'/>
         </stl-vector>
     </struct-type>
 
-    <struct-type type-name='language_name'>
+    <struct-type type-name='language_name' original-name='namest'>
         <stl-string name='first_name'/>
         <stl-string name='nickname'/>
 
-        <static-array name='words' count='7'>
+        <static-array name='words' count='7' index-enum='language_name_component'>
             <int32_t ref-target='language_word'/>
         </static-array>
-        <static-array name='parts_of_speech' count='7'>
+        <static-array name='parts_of_speech' count='7' index-enum='language_name_component'>
             <enum base-type='int16_t' type-name='part_of_speech'/>
         </static-array>
 
-        <int32_t name='language' ref-target='language_translation'/>
-        <int16_t name='unknown'/>
+        <int32_t name='language' init-value='0' ref-target='language_translation'/>
+        <enum name='type' type-name='language_name_type'/>
 
         <bool name='has_name'/>
 
@@ -250,6 +258,143 @@
                       (flatten (get-english 6 6)))))))
         </code-helper>
     </struct-type>
+
+    <struct-type type-name='language_word_table' comment='word_selectorst'>
+        <static-array name='words' index-enum='language_word_table_index' count='6'>
+            <stl-vector index-refers-to='$$._parent._parent.parts[$$._key][$]'>
+                <int32_t ref-target='language_word'/>
+            </stl-vector>
+        </static-array>
+        <static-array name='parts' index-enum='language_word_table_index' count='6'>
+            <stl-vector>
+                <enum base-type='int32_t' type-name='part_of_speech'/>
+            </stl-vector>
+        </static-array>
+    </struct-type>
+
+    <enum-type type-name='language_name_category'> bay12: DefaultName
+        <enum-item name='Unit'/>
+        <enum-item name='Artifact' comment='ItemGood'/>
+        <enum-item name='ArtifactEvil' comment='ItemBad'/>
+        <enum-item name='Swamp'/>
+        <enum-item name='Desert'/>
+        <enum-item name='Forest'/>
+        <enum-item name='Mountains'/>
+        <enum-item name='Lake'/>
+        <enum-item name='Ocean'/>
+        <enum-item name='Glacier'/>
+
+        <enum-item name='Tundra'/>
+        <enum-item name='Grassland'/>
+        <enum-item name='Hills'/>
+        <enum-item name='Region'/>
+        <enum-item name='Cave'/>
+        <enum-item name='SwampEvil'/>
+        <enum-item name='DesertEvil'/>
+        <enum-item name='ForestEvil'/>
+        <enum-item name='MountainsEvil'/>
+        <enum-item name='LakeEvil'/>
+
+        <enum-item name='OceanEvil'/>
+        <enum-item name='GlacierEvil'/>
+        <enum-item name='TundraEvil'/>
+        <enum-item name='GrasslandEvil'/>
+        <enum-item name='HillsEvil'/>
+        <enum-item name='SwampGood'/>
+        <enum-item name='DesertGood'/>
+        <enum-item name='ForestGood'/>
+        <enum-item name='MountainsGood'/>
+        <enum-item name='LakeGood'/>
+
+        <enum-item name='OceanGood'/>
+        <enum-item name='GlacierGood'/>
+        <enum-item name='TundraGood'/>
+        <enum-item name='GrasslandGood'/>
+        <enum-item name='HillsGood'/>
+        <enum-item name='ArtImage'/>
+        <enum-item name='MountainPeak'/>
+        <enum-item name='River'/>
+        <enum-item name='Volcano'/>
+        <enum-item name='SmallIsland'/>
+
+        <enum-item name='Island'/>
+        <enum-item name='Continent'/>
+        <enum-item name='CommonReligion'/>
+        <enum-item name='Temple'/>
+        <enum-item name='Keep'/>
+        <enum-item name='MeadHall'/>
+        <enum-item name='CraftStore'/>
+        <enum-item name='WeaponStore'/>
+        <enum-item name='ArmorStore'/>
+        <enum-item name='GeneralStore'/>
+
+        <enum-item name='FoodStore'/>
+        <enum-item name='War'/>
+        <enum-item name='Battle'/>
+        <enum-item name='Siege'/>
+        <enum-item name='Road'/>
+        <enum-item name='Wall'/>
+        <enum-item name='Bridge'/>
+        <enum-item name='Tunnel'/>
+    </enum-type>
+
+    <enum-type type-name='language_name_type' base-type='int16_t'> bay12: NameType
+        <enum-item name='NONE' value='-1'/>
+
+        0
+        <enum-item name='Figure' comment='Unit'/>
+        <enum-item name='Artifact' comment='Item'/>
+        <enum-item name='Civilization'/>
+        <enum-item name='Squad'/>
+        <enum-item name='Site' comment='Fortress'/>
+        <enum-item name='World'/>
+        <enum-item name='Region'/>
+        <enum-item name='Dungeon' comment='Cave'/>
+        <enum-item name='LegendaryFigure' comment='Unit_OfThe'/>
+        <enum-item name='FigureNoFirst' comment='Unit_Rear'/>
+
+        10
+        <enum-item name='FigureFirstOnly' comment='Unit_Front'/>
+        <enum-item name='ArtImage'/>
+        <enum-item name='EntitySite'/>
+        <enum-item name='ElfTree' comment='Vegetation'/>
+        <enum-item name='NomadicGroup'/>
+        <enum-item name='MigratingGroup'/>
+        <enum-item name='Vessel'/>
+        <enum-item name='MilitaryUnit'/>
+        <enum-item name='Religion'/>
+        <enum-item name='MountainPeak'/>
+
+        20
+        <enum-item name='River'/>
+        <enum-item name='Temple'/>
+        <enum-item name='Keep'/>
+        <enum-item name='MeadHall'/>
+        <enum-item name='CraftStore'/>
+        <enum-item name='WeaponStore'/>
+        <enum-item name='ArmorStore'/>
+        <enum-item name='GeneralStore'/>
+        <enum-item name='FoodStore'/>
+        <enum-item name='War'/>
+
+        30
+        <enum-item name='Battle'/>
+        <enum-item name='Siege'/>
+        <enum-item name='Road'/>
+        <enum-item name='Wall'/>
+        <enum-item name='Bridge'/>
+        <enum-item name='Tunnel'/>
+    </enum-type>
+
+    <enum-type type-name='language_name_component'> bay12: NamePlaceType
+        <enum-item name='FrontCompound'/>
+        <enum-item name='RearCompound'/>
+        <enum-item name='FirstAdjective'/>
+        <enum-item name='SecondAdjective'/>
+        <enum-item name='HyphenCompound'/>
+        <enum-item name='TheX'/>
+        <enum-item name='OfX'/>
+    </enum-type>
 </data-definition>
 
 <!--

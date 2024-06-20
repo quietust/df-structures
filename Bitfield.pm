@@ -26,13 +26,13 @@ sub render_bitfield_core {
     my $base = get_primitive_base($tag);
     my @fields = $tag->findnodes('child::ld:field');
 
-    my $mod = ($tag->nodeName eq 'ld:global-type' ? "$export_prefix extern" : 'static');
-    emit "$mod const bitfield_item_info ${name}_items_[sizeof($base)*8];";
-
     emit_comment $tag, -attr => 1;
 
     emit_block {
         emit $base, ' whole;';
+
+        my $idx = 0;
+        my @idlist;
 
         emit_block {
             for my $item (@fields) {
@@ -55,18 +55,48 @@ sub render_bitfield_core {
                     $fbase = $etn;
                 }
 
+                push @idlist, [ $name, $idx, sprintf('0x%xU',((1<<$size)-1)<<$idx), ',' ];
+                $idx += $size;
+
                 emit_comment $item;
                 emit $fbase, " ", $name, " : ", $size, ";", get_comment($item);
             }
         } "struct ", " bits;";
 
-        emit $name, "($base whole_ = 0) : whole(whole_) {};";
+        $idlist[-1][3] = '';
 
-        emit "const bitfield_item_info *get_items() const { return ${name}_items_; }";
+        emit_block {
+            for my $r (@idlist) {
+                emit "shift_", $r->[0], " = ", $r->[1], $r->[3];
+            }
+        } "enum Shift ", ";";
+
+        emit_block {
+            for my $r (@idlist) {
+                emit "mask_", $r->[0], " = ", $r->[2], $r->[3];
+            }
+        } "enum Mask : $base ", ";";
+
+        emit $name, "($base whole_ = 0) : whole(whole_) {};";
     } "union $name ", ";";
 
+    my $full_name = fully_qualified_name($tag, $name, 1);
+    my $traits_name = 'traits<'.$full_name.'>';
+
+    with_emit_traits {
+        emit_block {
+            emit "typedef $base base_type;";
+            emit "typedef $full_name bitfield_type;";
+            emit "static const int bit_count = sizeof(base_type)*8;";
+            emit "static const bitfield_item_info bits[bit_count];";
+        } "template<> struct ${export_prefix}bitfield_$traits_name ", ";";
+        emit_block {
+            emit "static bitfield_identity identity;";
+            emit "static bitfield_identity *get() { return &identity; }";
+        } "template<> struct ${export_prefix}identity_$traits_name ", ";";
+    };
+
     with_emit_static {
-        my $fname = fully_qualified_name($tag, $name.'_items_', 1);
         emit_block {
             for my $item (@fields) {
                 my $name = $item->getAttribute('name');
@@ -78,7 +108,12 @@ sub render_bitfield_core {
             }
 
             $lines[-1] =~ s/,$//;
-        } "const bitfield_item_info ".$fname."[sizeof($base)*8] = ", ";";
+        } "const bitfield_item_info bitfield_${traits_name}::bits[bit_count] = ", ";";
+
+        emit "bitfield_identity identity_${traits_name}::identity(",
+             "sizeof($full_name), ",
+             type_identity_reference($tag,-parent => 1), ', ',
+             "\"$name\", bitfield_${traits_name}::bit_count, bitfield_${traits_name}::bits);";
     } 'enums';
 }
 

@@ -1,97 +1,51 @@
 <data-definition>
-    <enum-type type-name='uniform_material_class' base-type='int16_t'>
-        <enum-item name='None' value='-1'/>
-
-        <enum-item comment='BROKEN'/>
-        <enum-item name='Leather'/>
-        <enum-item name='Cloth'/>
-        <enum-item name='Wood'/>
-        <enum-item comment='BROKEN'/>
-
-        <enum-item name='Stone'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item name='Metal'/>
-
-        <enum-item comment='BROKEN'/>
-        <enum-item name='Metal2'/>
-        <enum-item name='Gem'/>
-        <enum-item name='Bone'/>
-        <enum-item name='Shell'/>
-
-        <enum-item name='Pearl'/>
-        <enum-item name='Tooth'/>
-        <enum-item name='Horn'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-
-        <enum-item comment='BROKEN'/>
-        <enum-item comment='BROKEN'/>
-        <enum-item name='PlantFiber'/>
-        <enum-item name='Silk'/>
-        <enum-item name='Yarn'/>
-    </enum-type>
-
-    <bitfield-type type-name='uniform_indiv_choice'>
+    <bitfield-type type-name='uniform_indiv_choice' base-type='uint32_t'> bay12: ITEM_CREATION_PARAM_FLAG_*
         <flag-bit name='any'/>
         <flag-bit name='melee'/>
         <flag-bit name='ranged'/>
     </bitfield-type>
 
-    <struct-type type-name='item_filter_spec'>
-        <enum base-type='int16_t' name="item_type" type-name='item_type'/>
-        <int16_t name="item_subtype" refers-to='(item-subtype-target $$._parent.item_type $)'/>
-
-        <enum base-type='int16_t' name="material_class" type-name='uniform_material_class'/>
-
-        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
-        <int32_t name='matindex'/>
-    </struct-type>
-
-    <struct-type type-name='squad_uniform_spec'>
+    <struct-type type-name='squad_uniform_spec' original-name='squad_position_equipment_slotst'>
         <int32_t name="item" ref-target='item'/>
 
-        <compound name='item_filter' type-name='item_filter_spec'/>
+        <enum base-type='int16_t' name="item_type" type-name='item_type'/>
+        <int16_t name="item_subtype" refers-to='(item-subtype-target $$._parent.item_type $)'/>
+        <enum name="material_class" type-name='entity_material_category'/>
+        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <int32_t name='matindex'/>
 
         <int32_t name="color"/>
 
-        <stl-vector name="assigned">
-            <int32_t ref-target='item'/>
-        </stl-vector>
+        <stl-vector name="assigned" type-name='int32_t' ref-target='item'/>
 
-        <compound name="indiv_choice" type-name='uniform_indiv_choice'/>
+        <bitfield name="indiv_choice" type-name='uniform_indiv_choice' comment='actually signed int32'/>
     </struct-type>
 
-    <struct-type type-name='squad_ammo_spec'>
-        <compound name='item_filter' type-name='item_filter_spec'/>
+    <struct-type type-name='squad_ammo_spec' original-name='squad_equipment_ammost'>
+        <enum name="item_type" type-name='item_type'/>
+        <int16_t name="item_subtype" refers-to='(item-subtype-target $$._parent.item_type $)'/>
+        <enum name="material_class" type-name='entity_material_category'/>
+        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <int32_t name='matindex'/>
 
         <int32_t name="amount"/>
 
-        <bitfield name='flags' base-type='uint32_t'>
+        <bitfield name='flags' base-type='uint32_t'> bay12: SQUAD_EQUIPMENT_AMMO_FLAG_*
             <flag-bit name='use_combat'/>
             <flag-bit name='use_training'/>
         </bitfield>
 
-        <stl-vector name="assigned">
-            <int32_t ref-target='item'/>
-        </stl-vector>
+        <stl-vector name="assigned" type-name='int32_t' ref-target='item'/>
     </struct-type>
 
-    <bitfield-type type-name='squad_use_flags' base-type='uint32_t'>
+    <bitfield-type type-name='squad_use_flags' base-type='int32_t'> bay12: SQUAD_BARRACKS_FLAG_*
         <flag-bit name='sleep'/>
         <flag-bit name='train'/>
         <flag-bit name='indiv_eq'/>
         <flag-bit name='squad_eq'/>
     </bitfield-type>
 
-    <enum-type type-name='uniform_category'>
+    <enum-type type-name='uniform_category' base-type='int16_t'> bay12: EntityUniformItemCategoryType
         <enum-item name='body'/>
         <enum-item name='head'/>
         <enum-item name='pants'/>
@@ -101,63 +55,97 @@
         <enum-item name='weapon'/>
     </enum-type>
 
-    <bitfield-type type-name='uniform_flags' base-type='uint32_t'>
+    <bitfield-type type-name='uniform_flags' base-type='uint32_t'> bay12: ENTITY_UNIFORM_FLAG_*
         <flag-bit name='replace_clothing'/>
         <flag-bit name='exact_matches'/>
     </bitfield-type>
 
-    <struct-type type-name='squad_position'>
+    <enum-type type-name='barrack_preference_category'> bay12: SquadPositionBuildingType
+        <enum-item name='Bed'/>
+        <enum-item name='Armorstand'/>
+        <enum-item name='Box'/>
+        <enum-item name='Cabinet'/>
+    </enum-type>
+
+    <enum-type type-name='squad_event_type' base-type='int16_t'> bay12: SquadActivityIndexType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Order'/>
+        <enum-item name='Barracks'/>
+        <enum-item name='Specific'/>
+    </enum-type>
+
+    <struct-type type-name='squad_position' original-name='squad_positionst'>
         <int32_t name='occupant' ref-target='historical_figure'/>
 
         <code-helper name='describe'>(describe-obj @.occupant)</code-helper>
 
-        <stl-vector name="unk_4"/>
+        <stl-vector name="orders" pointer-type='squad_order'/>
 
-        <compound name='preferences'>
-            <stl-vector name="bed">
-                <int32_t ref-target='building'/>
-            </stl-vector>
-            <stl-vector name="armor_stand">
-                <int32_t ref-target='building'/>
-            </stl-vector>
-            <stl-vector name="box">
-                <int32_t ref-target='building'/>
-            </stl-vector>
-        </compound>
-
-        <stl-vector name="unk_44"/>
-
-        <static-array name='uniform' count='7' index-enum='uniform_category'>
-            <stl-vector>
-                <pointer type-name='squad_uniform_spec'/>
-            </stl-vector>
+        <static-array name='preferences' count='4' index-enum='barrack_preference_category'>
+            <stl-vector type-name='int32_t' ref-target='building'/>
         </static-array>
 
-        <stl-string name="unk_c4"/>
+        <compound name='equipment'> bay12: squad_position_equipmentst
+            <static-array name='uniform' count='7' index-enum='uniform_category'>
+                <stl-vector pointer-type='squad_uniform_spec'/>
+            </static-array>
 
-        <compound name='flags' type-name='uniform_flags'/>
+            <stl-string name="nickname"/>
 
-        <stl-vector name='assigned_items'>
-            <int32_t ref-target='item'/>
-        </stl-vector>
+            <bitfield name='flags' type-name='uniform_flags'/>
 
-        <int32_t name="quiver" ref-target='item'/>
-        <int32_t name="backpack" ref-target='item'/>
-        <int32_t name="flask" ref-target='item'/>
+            <stl-vector name='assigned_items' type-name='int32_t' ref-target='item'/>
 
-        -- May be invalid:
-        <int32_t name="activity1" ref-target='activity_entry'/>
-        <int32_t name="activity2" ref-target='activity_entry'/>
-        <int32_t name="activity3" ref-target='activity_entry'/>
+            <int32_t name="quiver" ref-target='item'/>
+            <int32_t name="backpack" ref-target='item'/>
+            <int32_t name="flask" ref-target='item'/>
+        </compound>
 
-        <int32_t name="unk_10c"/>
-        <int32_t name="unk_110"/>
-        <int32_t name="unk_114"/>
-        <int32_t name="unk_118"/>
-        <int32_t name="unk_11c"/>
+        <static-array name='activities' count='3' index-enum='squad_event_type'
+                      type-name='int32_t' ref-target='activity_entry'/>
+        <static-array name='events' count='3' index-enum='squad_event_type'
+                      type-name='int32_t' ref-target='activity_event'
+                      aux-value='$._global.activities[$._key]'/>
+
+        <int32_t name='current_patrol_id' init-value='-1'/>
+        <int32_t name='current_patrol_point_id' init-value='-1'/>
     </struct-type>
 
-    <struct-type type-name='squad' key-field='id' instance-vector='$global.world.squads.all'>
+    <struct-type type-name='squad_schedule_order' original-name='squad_month_orderst'>
+        <pointer name="order" type-name='squad_order'/>
+        <int32_t name="min_count"/>
+        <stl-bit-vector name="positions"/>
+    </struct-type>
+
+    <enum-type type-name='squad_sleep_option_type' base-type='int16_t'> bay12: SquadSleepOptionType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='AnywhereAtWill'/>
+        <enum-item name='InBarracksAtWill'/>
+        <enum-item name='InBarracksAtNeed'/>
+    </enum-type>
+
+    <enum-type type-name='squad_civilian_uniform_type' base-type='int16_t'> bay12: SquadCivilianUniformType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Regular'/>
+        <enum-item name='Civilian'/>
+    </enum-type>
+
+    <struct-type type-name='squad_schedule_entry' original-name='squad_month_schedulest'>
+        <stl-string name='name'/>
+
+        <enum name='sleep_mode' type-name='squad_sleep_option_type'/>
+        <enum name='uniform_mode' type-name='squad_civilian_uniform_type'/>
+
+        <stl-vector name='orders' pointer-type='squad_schedule_order'/>
+
+        <stl-vector name='order_assignments' index-refers-to='$$._global._upglobal.positions[$]'>
+            <pointer> bay12: squad_month_positionst
+                <int32_t name='assigned_order_idx' refers-to='$$._parent._parent._parent.orders[$]'/>
+            </pointer>
+        </stl-vector>
+    </struct-type>
+
+    <struct-type type-name='squad' key-field='id' instance-vector='$global.world.squads.all' original-name='squadst'>
         <int32_t name='id'/>
 
         <compound name='name' type-name='language_name'/>
@@ -168,115 +156,139 @@
             (describe-obj $.name)
         </code-helper>
 
-        <stl-vector name='positions'>
-            <pointer type-name='squad_position'/>
-        </stl-vector>
+        <stl-vector name='positions' pointer-type='squad_position'/>
 
-        <stl-vector name="unk_9c"/>
+        <stl-vector name="orders" pointer-type='squad_order'/>
 
+        bay12: squad_schedulest
         <stl-vector name="schedule">
-            <pointer>
-                <static-array count='12'>
-                    <stl-string name='name'/>
-
-                    <int16_t name='sleep_mode' comment='0 room, 1 barrack will, 2 barrack need'/>
-                    <int16_t name='uniform_mode' comment='0 uniformed, 1 civ clothes'/>
-
-                    <stl-vector name='orders'>
-                        <pointer>
-                            <pointer name="order"/>
-                            <int32_t name="min_count"/>
-                            <stl-vector name="unk_8">
-                                <int32_t/>
-                            </stl-vector>
-                            <int32_t name="unk_18"/>
-                        </pointer>
-                    </stl-vector>
-
-                    <stl-vector name='order_assignments'>
-                        <int32_t refers-to='$$._parent._parent.orders[$]'/>
-                    </stl-vector>
-                </static-array>
+            <pointer> bay12: squad_routine_schedulest
+                <static-array count='12' type-name='squad_schedule_entry'/>
             </pointer>
         </stl-vector>
 
-        <int32_t name="cur_alert_idx"/>
+        <int32_t name="cur_routine_idx" refers-to='$$._parent.schedule[$]' init-value='0'/>
 
         <stl-vector name="rooms">
-            <pointer>
+            <pointer> bay12: squad_barracks_infost
                 <int32_t name='building_id' ref-target='building'/>
-                <compound name='mode' type-name='squad_use_flags'/>
+                <bitfield name='mode' type-name='squad_use_flags'/>
             </pointer>
         </stl-vector>
 
-        <stl-vector name="unk_d0"/>
-        <stl-vector name="unk_e0"/>
+        <stl-vector name="rack_combat" type-name='int32_t' ref-target='building'/>
+        <stl-vector name="rack_training" type-name='int32_t' ref-target='building'/>
 
         <int32_t name="uniform_priority"/>
         <int32_t name="activity" ref-target='activity_entry'/>
 
-        <stl-vector name="ammunition">
-            <pointer type-name='squad_ammo_spec'/>
-        </stl-vector>
+        <compound name='ammo'> bay12: squad_equipmentst
+            <stl-vector name="ammunition" pointer-type='squad_ammo_spec'/>
 
-        <stl-vector name="weapons_free">
-            <int32_t ref-target='item'/>
-        </stl-vector>
-        <stl-vector name="weapons_inuse">
-            <int32_t ref-target='item'/>
-        </stl-vector>
+            <stl-vector name="train_weapon_free" type-name='int32_t' ref-target='item'/>
+            <stl-vector name="train_weapon_inuse" type-name='int32_t' ref-target='item'/>
 
-        <stl-vector name="ammo_items">
-            <int32_t ref-target='item'/>
-        </stl-vector>
-        <stl-vector name="ammo_units">
-            <int32_t ref-target='unit'/>
-        </stl-vector>
+            <stl-vector name="ammo_items" type-name='int32_t' ref-target='item'/>
+            <stl-vector name="ammo_units" type-name='int32_t' ref-target='unit'/>
+        </compound>
 
-        <int16_t name="carry_food"/>
-        <int16_t name="carry_water"/>
+        <compound name='supplies'> bay12: squad_suppliesst
+            <int16_t name="carry_food"/>
+            <enum name="carry_water" base-type='int16_t'>
+                <enum-item name='None' value='-1'/>
+                <enum-item name='NoWater'/>
+                <enum-item name='Water'/>
+                <enum-item name='AnyDrink'/>
+            </enum>
+        </compound>
     </struct-type>
 
-    <struct-type type-name='entity_uniform' key-field='id'>
-        <int32_t name="id"/>
-        <int16_t name="unk_4"/>
+    <enum-type type-name='squad_order_type' base-type='int32_t'> bay12: SquadOrderType
+        <enum-item name='MOVE'/>
+        <enum-item name='KILL_LIST'/>
+        <enum-item name='DEFEND_BURROWS'/>
+        <enum-item name='PATROL_ROUTE'/>
+        <enum-item name='TRAIN'/>
+    </enum-type>
 
-        <code-helper name='describe'>
-            (describe-obj $.name)
-        </code-helper>
+    <enum-type type-name='squad_order_cannot_reason' base-type='int32_t'> bay12: CanFollowOrderType
+        <enum-item name='not_following_order'/>
+        <enum-item name='activity_cancelled'/>
+        <enum-item name='no_barracks'/>
+        <enum-item name='improper_barracks'/>
+        <enum-item name='no_activity'/>
+        <enum-item name='cannot_individually_drill'/>
+        <enum-item name='does_not_exist'/>
+        <enum-item name='no_archery_target'/>
+        <enum-item name='improper_building'/>
+        <enum-item name='unreachable_location'/>
+        <enum-item name='invalid_location'/>
+        <enum-item name='no_reachable_valid_target'/>
+        <enum-item name='no_burrow'/>
+        <enum-item name='not_in_squad'/>
+        <enum-item name='no_patrol_route'/>
+        <enum-item name='no_reachable_point_on_route'/>
+        <enum-item name='invalid_order'/>
+    </enum-type>
 
-        <static-array name='uniform_item_types' count='7' index-enum='uniform_category'>
-            <stl-vector>
-                <enum base-type='int16_t' type-name='item_type'/>
-            </stl-vector>
-        </static-array>
+    <class-type type-name='squad_order' original-name='squad_orderst'>
+        <virtual-methods>
+            <vmethod name='clone'> <ret-type><pointer type-name='squad_order'/></ret-type> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
+            <vmethod name='read_file'>
+                <pointer name='file' type-name='file_compressorst'/>
+                <int32_t name='loadversion'/>
+            </vmethod>
+            <vmethod ret-type='squad_order_type' name='getType'/>
+            <vmethod name='isPatrol' ret-type='bool'/> whether or not dwarves get unhappy while doing this
 
-        <static-array name='uniform_item_subtypes' count='7' index-enum='uniform_category'>
-            <stl-vector>
-                <int16_t refers-to='(item-subtype-target $$._parent._parent._parent.uniform_item_types[$$._parent._key][$$._key] $)'/>
-            </stl-vector>
-        </static-array>
+            <vmethod is-destructor='true'/>
+            <vmethod name='offsetPosition'>
+                <int16_t name='x'/> <int16_t name='y'/> <int16_t name='z'/>
+            </vmethod>
+            <vmethod name='process'>
+                <pointer name='action' comment='actionst'/> <pointer name='soldier' type-name='unit'/>
+            </vmethod>
+            <vmethod ret-type='squad_order_cannot_reason' name='reasonCannot'>
+                <pointer name='soldier' type-name='unit'/>
+            </vmethod>
+            <vmethod ret-type='bool' name='decUniformLock'>
+                <pointer name='soldier' type-name='unit'/>
+            </vmethod>
 
-        <static-array name='uniform_item_info' count='7' index-enum='uniform_category'>
-            <stl-vector name="unk_e8">
-                <pointer>
-                    <int16_t name="unk_0"/>
-                    <int16_t name="color"/>
-                    <int32_t name="unk_4"/>
-                    <int32_t name="unk_8"/>
-                    <int32_t name="unk_c"/>
-                    <compound name="indiv_choice" type-name='uniform_indiv_choice'/>
-                    <int16_t name="mattype" ref-target='material' aux-value='$$.matindex'/>
-                    <int32_t name="matindex"/>
-                    <enum base-type='int16_t' name="material_class" type-name='uniform_material_class'/>
-                </pointer>
-            </stl-vector>
-        </static-array>
+            <vmethod name='getTargetUnits'>
+                <ret-type><pointer><stl-vector type-name='int32_t' ref-target='unit'/></pointer></ret-type>
+            </vmethod>
+            <vmethod ret-type='unit_uniform_mode_type' name='getUniformType'>
+                <pointer name='soldier' type-name='unit'/>
+            </vmethod>
+            <vmethod name='getDescription'> <pointer type-name='stl-string'/> </vmethod>
+            <vmethod name='isInactive' ret-type='bool' comment='always false'> <pointer type-name='unit'/> </vmethod>
+            <vmethod name='isCombat' ret-type='bool' comment='not train'/>
+        </virtual-methods>
+    </class-type>
 
-        <stl-string name="name"/>
+    <class-type type-name='squad_order_movest' inherits-from='squad_order'>
+        <compound name='pos' type-name='coord'/>
+        <int32_t name='point_id'/>
+    </class-type>
 
-        <compound name='flags' type-name='uniform_flags'/>
-    </struct-type>
+    <class-type type-name='squad_order_kill_listst' inherits-from='squad_order'>
+        <stl-vector name='units' type-name='int32_t' ref-target='unit'/>
+        <stl-vector name='histfigs' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-string name='title'/>
+    </class-type>
+
+    <class-type type-name='squad_order_defend_burrowsst' inherits-from='squad_order'>
+        <stl-vector name='burrows' type-name='int32_t' ref-target='burrow'/>
+    </class-type>
+
+    <class-type type-name='squad_order_patrol_routest' inherits-from='squad_order'>
+        <int32_t name='route_id'/>
+    </class-type>
+
+    <class-type type-name='squad_order_trainst' inherits-from='squad_order'/>
+
 </data-definition>
 
 <!--

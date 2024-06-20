@@ -1,17 +1,33 @@
 <data-definition>
-    <enum-type type-name='projectile_type'>
+    <enum-type type-name='projectile_type'> bay12: Projectile
         <enum-item name='Item'/>
         <enum-item name='Unit'/>
         <enum-item name='Magic'/>
     </enum-type>
 
     <struct-type type-name='proj_list_link'>
+        <code-helper name='describe'>(describe-obj $.item)</code-helper>
         <pointer name='item' type-name='projectile'/>
         <pointer name='prev' type-name='proj_list_link'/>
         <pointer name='next' type-name='proj_list_link'/>
     </struct-type>
 
-    <class-type type-name='projectile' original-name='projst' key-field='id'>
+    <bitfield-type type-name='projectile_flags' base-type='uint32_t'> bay12: PROJFLAG_*
+        <flag-bit name='no_impact_destroy' comment='LANDS'/>
+        <flag-bit name='has_hit_ground' comment='DELETE'/>
+        <flag-bit name='bouncing'/>
+        <flag-bit name='high_flying'/>
+
+        <flag-bit name='piercing'/>
+        <flag-bit name='to_be_deleted'/>
+        <flag-bit name='hits_friends'/>
+        <flag-bit name='trap_origin'/>
+
+        <flag-bit name='parabolic'/>
+        <flag-bit name='no_adv_pause'/>
+    </bitfield-type>
+
+    <class-type type-name='projectile' original-name='projst' df-list-link-type='proj_list_link' df-list-link-field='link' key-field='id'>
         <pointer name='link' type-name='proj_list_link'/>
 
         <int32_t name='id'/>
@@ -23,36 +39,33 @@
         <compound name='prev_pos' type-name='coord'/>
 
         <int32_t name='distance_flown'/>
+        <int32_t name='fall_threshold'/>
+        <int32_t name='min_hit_distance'/>
+        <int32_t name='min_ground_distance'/>
 
-        <int32_t name='unk14'/>
-        <int32_t name='unk15'/>
-        <int32_t name='unk16'/>
-
-        <bool name='collided' comment='or falling?'/>
+        <bitfield name='flags' type-name='projectile_flags'/>
 
         <int16_t name='fall_counter' comment='counts down from delay to 0, then it moves'/>
         <int16_t name='fall_delay'/>
 
-        <int32_t name='unk20'/>
-        <int32_t name='unk21'/>
-        <int32_t name='unk22'/>
-        <int32_t name='unk23'/>
+        <int32_t name='hit_rating'/>
+        <int32_t name='total_z_dist'/>
+        <int32_t name='velocity'/>
+        <int32_t name='bow_id' ref-target='item'/>
 
         <virtual-methods>
             <vmethod ret-type='projectile_type' name='getType'/>
-            <vmethod ret-type='bool'>
-                <bool/>
+            <vmethod ret-type='bool' name='checkImpact'>
+                <bool name='noDamageFloor'/>
             </vmethod>
-            <vmethod ret-type='bool'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod ret-type='bool' name='checkMovement'/>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
-            <vmethod>
-                <pointer/>
-            </vmethod>
-            <vmethod ret-type='bool'/>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
+            <vmethod name='print'><pointer type-name='map_viewport'/></vmethod>
+            <vmethod ret-type='bool' name='isObjectLost'/>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>
@@ -62,11 +75,16 @@
     </class-type>
 
     <class-type type-name='proj_unitst' inherits-from='projectile'>
-        <pointer name='unit' type-name='unit' comment='?'/>
+        <pointer name='unit' type-name='unit'/>
     </class-type>
 
+    <enum-type type-name='proj_magic_type'> bay12: ProjMagicType
+        <enum-item name='FIREBALL'/>
+    </enum-type>
+
     <class-type type-name='proj_magicst' inherits-from='projectile'>
-        <pointer name='unk' comment='?'/>
+        <enum name='type' type-name='proj_magic_type' base-type='int16_t'/>
+        <int16_t name='damage'/>
     </class-type>
 </data-definition>
 

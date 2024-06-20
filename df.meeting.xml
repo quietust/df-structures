@@ -1,53 +1,341 @@
 <data-definition>
-    <struct-type type-name='meeting_diplomat'>
-        <int32_t name='unk1' comment='uninitialized'/>
-        <pointer name='person1' type-name='unit' comment='diplomat'/>
-        <pointer name='person2' type-name='unit' comment='count'/>
-        <pointer name='place' type-name='building'/>
-        <int16_t name='unk2' comment='1'/>
-        <int8_t name='unk3' comment='3'/>
-        <int16_t name='unk4' comment='0'/>
-        <int32_t name='unk5' comment='-1'/>
+    <struct-type type-name='dipscript_info'>
+        <int32_t name='id' comment='assigned during Save'/>
+        <stl-string name='script_file' comment='data/dipscript/dwarf_liaison'/>
+
+        <!-- <compound name='script'> --> bay12: scriptst
+        <stl-vector name='script_steps' pointer-type='script_stepst'/>
+        <stl-vector name='script_vars' pointer-type='script_varst'/>
+        <!-- </compound> -->
+
+        <stl-string name='code' comment='DWARF_LIAISON etc'/>
+        <code-helper name='describe'>$.code</code-helper>
     </struct-type>
 
-    <struct-type type-name='meeting_pet'>
-        <int32_t name='unk0' comment='uninitialized'/>
-        <int32_t name='unk1' comment='-1'/>
-        <int32_t name='pet_id' ref-target='unit'/>
+    <struct-type type-name='dipscript_popup' original-name='meetingmomentst' >
+        <pointer name='meeting_holder' type-name='unit'/>
+        <pointer name='activity' type-name='activity_info' comment='bay12: act'/>
+        <bitfield name='flags'>
+            <flag-bit name='close_screen'/> bay12: DEAD
+            <flag-bit name='new_screen'/> bay12: RESTING
+        </bitfield>
+    </struct-type>
+
+    <class-type type-name='script_stepst'>
+        <int32_t name='next_step_idx'/>
+        <virtual-methods>
+            <vmethod name='setNextStep' ret-type='bool'>
+                <int32_t name='idx'/>
+            </vmethod>
+            <vmethod name='execute' ret-type='int32_t'>
+                <pointer name='context' type-name='script_environmentst'/>
+            </vmethod>
+            <vmethod name='skip' ret-type='int32_t'>
+                <pointer name='context' type-name='script_environmentst'/>
+            </vmethod>
+            <vmethod is-destructor='true'/>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='script_step_setvarst' inherits-from='script_stepst'>
+        <stl-string name='dest_type'/>
+        <stl-string name='dest_name'/>
+        <stl-string name='src_type'/>
+        <stl-string name='src_name'/>
+    </class-type>
+
+    <class-type type-name='script_step_simpleactionst' inherits-from='script_stepst'>
+        <stl-string name='type'/>
+        <stl-string name='subtype'/>
+    </class-type>
+
+    <class-type type-name='script_step_conditionalst' inherits-from='script_stepst'>
+        <compound name='condition'> bay12: conditionalst
+            <stl-string name='var1_type'/>
+            <stl-string name='var1_name'/>
+            <stl-string name='comparison'/>
+            <stl-string name='var2_type'/>
+            <stl-string name='var2_name'/>
+        </compound>
+        <int32_t name='conditional_next_step_idx'/>
+    </class-type>
+
+    <class-type type-name='script_step_textviewerst' inherits-from='script_stepst'>
+        <stl-string name='filename'/>
+        <stl-string name='outvar_name'/>
+    </class-type>
+
+    <class-type type-name='script_step_diphistoryst' inherits-from='script_stepst'>
+        <stl-string name='event'/>
+    </class-type>
+
+    <class-type type-name='script_step_discussst' inherits-from='script_stepst'>
+        <stl-string name='event'/>
+    </class-type>
+
+    <class-type type-name='script_step_topicdiscussionst' inherits-from='script_stepst'/>
+
+    <class-type type-name='script_step_constructtopiclistst' inherits-from='script_stepst'/>
+
+    <class-type type-name='script_step_dipeventst' inherits-from='script_step_eventst'>
+        <stl-string name='parm1'/>
+        <stl-string name='parm2'/>
+        <stl-string name='parm3'/>
+        <stl-string name='parm4'/>
+        <stl-string name='parm5'/>
+    </class-type>
+
+    <class-type type-name='script_step_invasionst' inherits-from='script_step_eventst'>
+        <stl-string name='parm'/>
+    </class-type>
+
+    <class-type type-name='script_step_eventst' inherits-from='script_stepst'/>
+
+
+    <class-type type-name='script_varst'>
+        <stl-string name='name'/>
+        <virtual-methods>
+            <vmethod name='instantiate'>
+                <ret-type><pointer type-name='active_script_varst'/></ret-type>
+            </vmethod>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='script_var_unitst' inherits-from='script_varst'/>
+    <class-type type-name='script_var_longst' inherits-from='script_varst'/>
+
+    <class-type type-name='active_script_varst'>
+        <stl-string name='name'/>
+        <virtual-methods>
+            <vmethod name='setColor'/>
+            <vmethod name='formatString'>
+                <pointer type-name='static-string' name='output'/>
+                <pointer type-name='stl-string' name='format'/>
+            </vmethod>
+            <vmethod name='getValue'>
+                <pointer name='int_value' type-name='int32_t'/>
+                <pointer name='ref_value' type-name='specific_ref'/>
+            </vmethod>
+            <vmethod name='setValue'>
+                <pointer name='var' type-name='meeting_variable'/>
+            </vmethod>
+            <vmethod name='removeUnit'>
+                <pointer name='ref_value' type-name='specific_ref'/>
+            </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
+            <vmethod name='read_file'>
+                <pointer name='file' type-name='file_compressorst'/>
+                <int32_t name='loadversion'/>
+            </vmethod>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='active_script_var_unitst' inherits-from='active_script_varst'>
+        <pointer name='unit' type-name='unit'/>
+    </class-type>
+
+    <class-type type-name='active_script_var_longst' inherits-from='active_script_varst'>
+        <int32_t name='value'/>
+    </class-type>
+
+    <struct-type type-name='meeting_variable' original-name='valvarrefst'>
+        <int32_t name='value'/>
+        <compound name='ref' type-name='specific_ref'/>
+        <pointer name='active_var' type-name='active_script_varst'/>
+    </struct-type>
+
+    <struct-type type-name='script_environmentst'>
+        <pointer name='meeting' type-name='meeting_diplomat_info'/>
+        <pointer name='popup' type-name='dipscript_popup'/>
+        <pointer name='activeplot' comment='unused'/>
+        <pointer name='conv' comment='unused'/>
+    </struct-type>
+
+    <struct-type type-name='meeting_diplomat_info' original-name='diplomacy_eventst'>
+        <int32_t name='civ_id' ref-target='historical_entity'/>
+        <int16_t name='activeplotindex'/>
+        <enum name='standard_type' type-name='meeting_standard_type' base-type='int16_t'/>
+        <int32_t name='diplomat_id' ref-target='historical_figure'/>
+        <int32_t name='associate_id' ref-target='historical_figure'/>
+        <stl-vector name="topic_list">
+            <enum base-type='int32_t' type-name='meeting_topic'/>
+        </stl-vector>
+        <stl-vector type-name='int32_t' name='topic_parms'/>
+        <pointer type-name='entity_sell_requests' name='sell_requests'/>
+        <pointer type-name='entity_buy_requests' name='buy_requests'/>
+        <pointer name="dipscript" type-name="dipscript_info"/>
+        <int32_t name="cur_step"/>
+        <stl-vector name='active_script_vars' pointer-type='active_script_varst'/>
+        <stl-string name="outcome_varspace"/>
+        <stl-string name="outcome_varname"/>
+        <bitfield name='flags' base-type='uint32_t'> bay12: DIPLOMACYFLAG_*
+            <flag-bit name='dynamic_load' comment='destroy dipscript_info in destructor'/>
+            <flag-bit name='failure'/>
+            <flag-bit name='success'/>
+        </bitfield>
+        <stl-vector pointer-type='meeting_event' name='events'/>
+        <stl-vector name='agreement_entity' type-name='int32_t' ref-target='historical_entity'/>
+        <stl-vector name='agreement_topic'><enum type-name='meeting_topic' base-type='int16_t'/></stl-vector>
+        <stl-vector name='agreement_year' type-name='int32_t'/>
+        <stl-vector name='agreement_tick' type-name='int32_t'/>
+        <stl-vector name='agreement_outcome' type-name='int16_t'/>
+        <stl-vector name='contact_entity' type-name='int32_t' ref-target='historical_entity'/>
+        <stl-vector name='contact_year' type-name='int32_t'/>
+        <stl-vector name='contact_tick' type-name='int32_t'/>
+    </struct-type>
+
+    <enum-type type-name='meeting_topic' base-type='int16_t'> bay12: DiplomacyTopicType
+        <enum-item name="DiscussCurrent"/>
+        <enum-item name="RequestPeace"/>
+        <enum-item name="TreeQuota"/>
+        <enum-item name="BecomeLandHolder"/>
+        <enum-item name="PromoteLandHolder"/>
+        <enum-item name="ExportAgreement"/>
+        <enum-item name="ImportAgreement"/>
+        <enum-item name="PleasantPlace"/>
+    </enum-type>
+
+    <enum-type type-name='meeting_standard_type'> bay12: StandardDiplomacyTypes, no base type
+        <enum-item name="Standard"/>
+        <enum-item name="FirstContact"/>
+    </enum-type>
+
+    <enum-type type-name='meeting_event_type'> bay12: AgreementTypes, no base type
+        <enum-item name="AcceptAgreement"/>
+        <enum-item name="RejectAgreement"/>
+        <enum-item name="AcceptPeace"/>
+        <enum-item name="RejectPeace"/>
+        <enum-item name="ExportAgreement"/>
+        <enum-item name="ImportAgreement"/>
+    </enum-type>
+
+    <struct-type type-name='meeting_event' original-name='civ_agreementst'>
+        <enum base-type='int16_t' type-name='meeting_event_type' name='type'/>
+        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <int16_t name='topic_parm'/>
+        <stl-vector type-name='int32_t' name='topic_epid' ref-target='entity_position'/>
+        <stl-vector type-name='int32_t' name='topic_hfid' ref-target='historical_figure'/>
+        <int32_t name='quota_total'/>
+        <int32_t name='quota_remaining'/>
+        <int32_t name='year'/>
+        <int32_t name='ticks'/>
+        <pointer type-name='entity_sell_prices' name='sell_prices'/>
+        <pointer type-name='entity_buy_prices' name='buy_prices'/>
+    </struct-type>
+
+    <struct-type type-name='activity_info' original-name='activity_meetingst'>
+        <int32_t name='id' init-value='-1' comment='bay12: save_index; assigned during Save'/>
+        <pointer name='unit_actor' type-name='unit' comment='diplomat or worker'/>
+        <pointer name='unit_noble' type-name='unit' comment='meeting recipient'/>
+        <pointer name='place' type-name='building'/>
+        <bitfield base-type='int16_t' name='flags'> bay12: ACTIVITYFLAG_*
+            <flag-bit name='next_step' comment='SITESEARCHED'/>
+            <flag-bit name='checked_building' comment='ARRIVEDATSITE'/>
+            <flag-bit name='add_delay' comment='INITIALDISCUSS'/>
+            <flag-bit name='topic_discussed' comment='DISCUSSINGTOPIC'/>
+            <flag-bit name='meeting_done'/>
+        </bitfield>
+        <int8_t name='worstroomrank' init-value='3'/>
+        <int16_t name='delay' init-value='0' comment='discusscount'/>
+        <int32_t name='tree_quota' init-value='-1' comment='tempvalue'/>
+    </struct-type>
+
+    <struct-type type-name='pet_info'>
+        <int32_t name='id' comment='assigned during Save'/>
+        <int32_t name='pet_item_id' ref-target='item'/>
+        <int32_t name='pet_unit_id' ref-target='unit'/>
         <compound name='name' type-name='language_name'/>
         <code-helper name='describe'>(describe-obj $.name)</code-helper>
         <int32_t name='unk3'/>
         <int32_t name='owner_id' ref-target='unit'/>
     </struct-type>
 
-    <struct-type type-name='meeting_ref'>
-        <int32_t name='unk1'
-                 comment='4 person, 7 pet (pet), 8 pet (owner)'/>
-        <compound is-union='true'>
-            <pointer name='diplomat' type-name='meeting_diplomat'/>
-            <pointer name='pet' type-name='meeting_pet'/>
-        </compound>
-        <int32_t name='unk2' comment='0'/>
-    </struct-type>
-
     <struct-type type-name='party_info'>
-        <stl-vector name="units">
-            <pointer type-name="unit"/>
-        </stl-vector>
+        <stl-vector name="units" pointer-type="unit"/>
         <pointer name="location" type-name="building"/>
         <int32_t name="timer" comment='-1 per 10'/>
+        <int32_t name='id' comment='assigned during Save'/>
     </struct-type>
 
-    <struct-type type-name='activity_entry' instance-vector='$global.world.activities.all' key-field='id'>
+    <struct-type type-name='room_rent_info' original-name='rentalst'>
+        <stl-vector name='room' pointer-type='building'/>
+        <int32_t name='rent'/>
+        <bitfield name='flags'> bay12: RENTALFLAG_*
+            <flag-bit name='eviction_underway'/>
+            <flag-bit name='move_underway'/>
+        </bitfield>
+    </struct-type>
+
+    <struct-type type-name='schedule_info' original-name='schedulest' key-field='id' instance-vector='$global.world.schedules.all'>
         <int32_t name='id'/>
-        <int16_t name='is_individual'/>
-        <stl-vector name='events'>
-            <pointer type-name='activity_event'/>
-        </stl-vector>
-        <int32_t name='unk2'/>
+        <int16_t name='ax'/>
+        <stl-vector name='slots' pointer-type='schedule_slot'/>
     </struct-type>
 
-    <enum-type type-name='activity_event_type'>
+    <enum-type type-name='schedule_type'> bay12: Schedule, no base type
+        <enum-item name='EAT'/>
+        <enum-item name='SLEEP'/>
+        <enum-item name='HANG_OUT'/>
+        <enum-item name='TEND_SHOP'/>
+        <enum-item name='PATROL'/>
+        <enum-item name='WANDER'/>
+        <enum-item name='MINISTER'/>
+    </enum-type>
+
+    <struct-type type-name='schedule_slot' original-name='schedule_elementst'>
+        <enum name='type' type-name='schedule_type' base-type='int16_t'/>
+        <int16_t name='start_time'/>
+        <int16_t name='end_time'/>
+        <int16_t name='priority'/>
+        <int8_t name='processed'/>
+    </struct-type>
+
+    <struct-type type-name='crime_info'>
+        <enum name='mode' base-type='int16_t'>
+            <enum-item name='ViolateProductionOrder'/>
+            <enum-item name='ViolateExportBan'/>
+            <enum-item name='ViolateJobOrder'/>
+            <enum-item name='ConspiracyToSlowLabor'/>
+            <enum-item name='Murder'/>
+            <enum-item name='DisorderlyConduct'/>
+            <enum-item name='BuildingDestruction'/>
+            <enum-item name='Vandalism'/>
+        </enum>
+
+        <compound name='punishments' type-name='punishmentst'/>
+
+        <pointer name='criminal' type-name='unit'/>
+        <pointer name='victim' type-name='unit'/>
+        <int32_t name='punishment_assigned'/>
+    </struct-type>
+
+    <struct-type type-name='punishment_info' original-name='lawactionst'>
+        <pointer name="criminal" type-name='unit'/>
+        <pointer name="officer" type-name='unit'/>
+        <int16_t name="beating"/>
+        <int16_t name="hammer_strikes"/>
+        <int32_t name="prison_counter"/>
+        <int16_t name="delay" comment='10080'/>
+        <pointer name="jail" type-name='building'/>
+        <stl-vector name="victims" pointer-type='unit'/>
+    </struct-type>
+
+    <enum-type type-name='activity_entry_type' base-type='int16_t'> bay12: ActivityType
+        <enum-item name='TrainingSession'/>
+        <enum-item name='IndividualSkillDrill'/>
+        <enum-item name='Conflict'/>
+        <enum-item name='Harassment'/>
+        <enum-item name='Guard'/>
+    </enum-type>
+
+    <struct-type type-name='activity_entry' original-name='activityst' instance-vector='$global.world.activities.all' key-field='id'>
+        <int32_t name='id'/>
+        <enum name='type' type-name='activity_entry_type'/>
+        <stl-vector name='events' pointer-type='activity_event'/>
+        <int32_t name='next_event_id'/>
+    </struct-type>
+
+    <enum-type type-name='activity_event_type' base-type='int16_t'> bay12: ActivityEventType
         <enum-item name='TrainingSession'/>
         <enum-item name='CombatTraining'/>
         <enum-item name='SkillDemonstration'/>
@@ -56,116 +344,140 @@
         <enum-item name='RangedPractice'/>
     </enum-type>
 
+    <struct-type type-name='activity_event_participants' original-name='activity_event_participant_listst'>
+        <stl-vector name='participant_hf' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='participant_unit' type-name='int32_t' ref-target='unit'/>
+
+        <stl-vector name='unassigned_hf' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='unassigned_unit' type-name='int32_t' ref-target='unit'/>
+
+        -- Holder event
+        <int32_t name='activity_id' ref-target='activity_entry'/>
+        <int32_t name='event_id'/>
+    </struct-type>
+
     <class-type type-name='activity_event' original-name='activity_eventst'>
-        <int32_t name='event_id'
-                 comment='mostly, but not always, the index in activity.events'/>
+        <int32_t name='event_id' comment='mostly, but not always, the index in activity.events'/>
         <int32_t name='activity_id' ref-target='activity_entry'/>
 
-        -- Guess:
-        <int32_t name='subevent_id' comment='-1 unless subevent'/>
-        <int32_t name='num_subevents' comment='0 for ind.drill, 2 for all in training session'/>
+        <code-helper name='find-instance'>
+            (let ((activity (find-instance $activity_entry $$)))
+              (find-by-id $activity.events $event_id $))
+        </code-helper>
 
-        <stl-vector name='hist_figure_ids'>
-            <int32_t ref-target='historical_figure'/>
-        </stl-vector>
-        <stl-vector name='participant_ids'>
-            <int32_t ref-target='unit'/>
-        </stl-vector>
-
-        -- Either empty, or same as above:
-        <stl-vector name='hist_figure_ids2'>
-            <int32_t ref-target='historical_figure'/>
-        </stl-vector>
-        <stl-vector name='participant_ids2'>
-            <int32_t ref-target='unit'/>
-        </stl-vector>
-
-        -- These are equal to the ones above:
-        <int32_t name='activity_id2' ref-target='activity_entry'/>
-        <int32_t name='event_id2'/>
+        <int32_t name='parent_event_id' ref-target='activity_event' aux-value='$$.activity_id'/>
+        <bitfield name='flags' base-type='uint32_t'> bay12: ACTIVITY_EVENT_FLAG_*
+            <flag-bit name='dismissed' comment='to be removed from squad_position, anyway'/>
+            <flag-bit name='squad' comment='for all in training session, but not ind.drill'/>
+        </bitfield>
 
         <virtual-methods>
             <vmethod ret-type='activity_event_type' name='getType'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod is-destructor='true'/>
-            <vmethod ret-type='bool' comment='returns true if hist_figure_ids empty or if various subclass fields are uninitialized'/>
-            <vmethod comment='returns -1'/>
-            <vmethod comment='does nothing'> <pointer/> </vmethod>
-            <vmethod name='getHistFigVector'>
-                <ret-type> <stl-vector> <int32_t ref-target='historical_figure'/> </stl-vector> </ret-type>
+            <vmethod ret-type='bool' name='isEmpty'
+                     comment='returns true if hist_figure_ids empty or if various subclass fields are uninitialized'/>
+
+            <vmethod ret-type='int32_t' name='get_building_id'/>
+            <vmethod name='set_building_id'> <int32_t name='id'/> </vmethod>
+            <vmethod name='getParticipantInfo'>
+                <ret-type> <pointer type-name='activity_event_participants'/> </ret-type>
             </vmethod>
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
-            <vmethod name='setSkillDemoUnk5'>
-                <int16_t name='unk5'/>
+            <vmethod name='dismiss'> <bool name='children_too'/> </vmethod>
+            <vmethod name='removeParticipant'> <int32_t name='histfig'/> <int32_t name='unit'/> <bool name='moving_to_related'/> </vmethod>
+
+            <vmethod name='process'><pointer type-name='unit'/></vmethod>
+            <vmethod ret-type='bool' name='checkDrillInvalid'>
+                <pointer type-name='unit' name='unit'/>
             </vmethod>
-            <vmethod name='setSkillDemoUnk789'>
-                <int32_t name='unk7'/>
-                <int32_t name='unk8'/>
-                <int32_t name='unk9'/>
+            <vmethod ret-type='bool' name='decUniformLock'><pointer type-name='unit'/></vmethod>
+            <vmethod name='getSquadEventType'>
+                <ret-type> <enum base-type='int16_t' type-name='squad_event_type'/> </ret-type>
             </vmethod>
-            <vmethod name='adjustUnkA' comment='combat_training adjusts unk5, skill_demonstration adjusts unk6, others do nothing'>
+            <vmethod name='setDemoSkill'>
+                <enum name='skill' type-name='job_skill'/>
+            </vmethod>
+
+            <vmethod name='setSkillDemoTimers'>
+                <int32_t name='wait_countdown'/>
+                <int32_t name='train_rounds'/>
+                <int32_t name='train_countdown'/>
+            </vmethod>
+            <vmethod name='adjustOrganizeCounter'>
                 <int32_t name='amount'/>
             </vmethod>
-            <vmethod name='getOrganizer' comment='or perhaps somebody else - only works for combat_training and skill_demonstration'>
-                <pointer type-name='int32_t' name='hist_figure_id'/>
-                <pointer type-name='int32_t' name='unit_id'/>
+            <vmethod name='getOrganizer' comment='rather, the instructor'>
+                <pointer name='hist_figure_id'>
+                    <pointer type-name='int32_t' ref-target='historical_figure'/>
+                </pointer>
+                <pointer name='unit_id'>
+                    <pointer type-name='int32_t' ref-target='unit'/>
+                </pointer>
             </vmethod>
-            <vmethod name='getBuilding' comment='returns pointer to building_id'>
+            <vmethod name='getBuilding' comment='barracks'>
                 <ret-type><pointer type-name='int32_t'/></ret-type>
             </vmethod>
-            <vmethod/>
-            <vmethod/>
+            <vmethod ret-type='bool' name='isSparring' comment='actually wrestling'/>
+
+            <vmethod ret-type='unit_uniform_mode_type' name='getUniformType'/>
             <vmethod name='getName'>
-                <int32_t/>
+                <int32_t name='unit_id'/>
                 <pointer type-name='stl-string' name='str'/>
             </vmethod>
         </virtual-methods>
     </class-type>
 
-    <class-type type-name='activity_event_individual_skill_drillst' inherits-from='activity_event'>
-        <int32_t name='building_id' ref-target='building'/>
-        <int32_t name='unk5'/>
-    </class-type>
-
     <class-type type-name='activity_event_training_sessionst' inherits-from='activity_event'>
+        <compound name='participants' type-name='activity_event_participants'/>
     </class-type>
 
     <class-type type-name='activity_event_combat_trainingst' inherits-from='activity_event'>
+        <compound name='participants' type-name='activity_event_participants'/>
         <int32_t name='building_id' ref-target='building'/>
         <int32_t name='hist_figure_id' ref-target='historical_figure'/>
         <int32_t name='unit_id' ref-target='unit'/>
-        <int32_t name='unk5'/>
+        <int32_t name='organize_counter' comment='gt 0 => organizing, lt 0 => done'/>
     </class-type>
 
     <class-type type-name='activity_event_skill_demonstrationst' inherits-from='activity_event'>
+        <compound name='participants' type-name='activity_event_participants'/>
         <int32_t name='building_id' ref-target='building'/>
         <int32_t name='hist_figure_id' ref-target='historical_figure'/>
         <int32_t name='unit_id' ref-target='unit'/>
-        <int16_t name='unk5'/>
-        <int32_t name='unk6'/>
-        <int32_t name='unk7'/>
-        <int32_t name='unk8'/>
-        <int32_t name='unk9'/>
+        <enum name='skill' type-name='job_skill'/>
+        <int32_t name='organize_counter'/>
+        <int32_t name='wait_countdown' init-value='100'/>
+        <int32_t name='train_rounds' init-value='15'/>
+        <int32_t name='train_countdown' init-value='20'/>
     </class-type>
 
-    <class-type type-name='activity_event_ranged_practicest' inherits-from='activity_event'>
-        <int32_t/>
-        <int32_t/>
+    <class-type type-name='activity_event_individual_skill_drillst' inherits-from='activity_event'>
+        <compound name='participants' type-name='activity_event_participants'/>
+        <int32_t name='building_id' ref-target='building'/>
+        <int32_t name='countdown' init-value='3000'/>
     </class-type>
 
     <class-type type-name='activity_event_sparringst' inherits-from='activity_event'>
-        <int32_t/>
-        <stl-vector/>
-        <int32_t/>
+        <compound name='participants' type-name='activity_event_participants'/>
+        <int32_t name='building_id' ref-target='building'/>
+        <stl-vector name='groups'>
+            <pointer> bay12: activity_event_sparring_matchst
+                <stl-vector name='units' type-name='int32_t' ref-target='unit'/>
+                <int32_t name='countdown' init-value='3000'/>
+                <int32_t name='building_id' ref-target='building'/>
+            </pointer>
+        </stl-vector>
+        <int32_t name='countdown' init-value='3000'/>
+    </class-type>
+
+    <class-type type-name='activity_event_ranged_practicest' inherits-from='activity_event'>
+        <compound name='participants' type-name='activity_event_participants'/>
+        <int32_t name='building_id' ref-target='building'/>
+        <int32_t name='countdown'/>
     </class-type>
 </data-definition>
 

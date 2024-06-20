@@ -12,6 +12,7 @@ BEGIN {
         *in_struct_body *in_union_body &with_struct_block
         &get_container_item_type
         &get_struct_fields &get_struct_field_type
+        &render_field_metadata
         &emit_struct_fields
         &find_subfield
     );
@@ -37,7 +38,7 @@ sub with_struct_block(&$;$%) {
 
     my $is_union = is_attr_true($tag,'is-union');
     my $kwd = ($is_union ? "union" : "struct");
-    my $exp = $flags{-export} ? $export_prefix : '';
+    my $exp = $export_prefix; #$flags{-export} ? $export_prefix : '';
     my $prefix = $kwd.' '.$exp.($name ? $name.' ' : '');
 
     emit_comment $tag, -attr => 1;
@@ -56,11 +57,13 @@ sub with_struct_block(&$;$%) {
 
 # FIELD TYPE
 
+our %container_flags;
+
 sub get_container_item_type($;%) {
     my ($tag, %flags) = @_;
     my @items = $tag->findnodes('ld:item');
     if (@items) {
-        return get_struct_field_type($items[0], -local => 1, %flags);
+        return get_struct_field_type($items[0], -local => $in_struct_body, %container_flags, %flags);
     } elsif ($flags{-void}) {
         return $flags{-void};
     } else {
@@ -76,6 +79,7 @@ sub add_simple_init($);
 
 my %custom_primitive_handlers = (
     'stl-string' => sub { return "std::string"; },
+    'stl-fstream' => sub { return "std::fstream"; },
 );
 
 my %custom_primitive_inits = (
@@ -94,6 +98,14 @@ my %custom_container_handlers = (
         $item = 'char' if $item eq 'bool';
         return "std::vector<$item >";
     },
+    'stl-deque' => sub {
+        my $item = get_container_item_type($_, -void => 'void*');
+        return "std::deque<$item >";
+    },
+    'stl-set' => sub {
+        my $item = get_container_item_type($_, -void => 'void*');
+        return "std::set<$item >";
+    },
     'stl-bit-vector' => sub {
         return "std::vector<bool>";
     },
@@ -101,9 +113,18 @@ my %custom_container_handlers = (
         my $type = decode_type_name_ref($_, -attr_name => 'index-enum', -force_type => 'enum-type') || 'int';
         return "BitArray<$type>";
     },
+    'df-static-flagarray' => sub {
+        my $type = decode_type_name_ref($_, -attr_name => 'index-enum', -force_type => 'enum-type') || 'int';
+        my $size = $_->getAttribute('count') or die "No count in df-static-flagarray.\n";
+        return "StaticBitArray<$size,$type>";
+    },
     'df-array' => sub {
         my $item = get_container_item_type($_, -void => 'void*');
         return "DfArray<$item >";
+    },
+    'df-linked-list' => sub {
+        my $item = get_container_item_type($_);
+        return $item; # Just use the link type
     },
 );
 
@@ -148,8 +169,16 @@ sub get_struct_field_type($;%) {
     my $suffix = '';
     my $type_def = undef;
 
+    local %container_flags = %flags;
+    delete $container_flags{-weak};
+    delete $container_flags{-void};
+
+    my $is_bytes = $meta eq 'bytes';
+    check_bad_attrs($tag, $is_bytes, $is_bytes && $subtype eq 'padding');
+
     if ($prefix = $tag->getAttribute('ld:typedef-name')) {
         $prefix = fully_qualified_name($tag,$prefix) unless $flags{-local};
+        $type_def = $tag;
     } elsif ($meta eq 'number') {
         $prefix = primitive_type_name($subtype);
     } elsif ($meta eq 'bytes') {
@@ -173,7 +202,7 @@ sub get_struct_field_type($;%) {
     } elsif ($meta eq 'global') {
         my $tname = $tag->getAttribute('type-name')
             or die "Global field without type-name";
-        $type_def = register_ref($tname, !$flags{-weak});
+        $type_def = register_ref($tname, !$flags{-weak} || ($subtype && $subtype eq 'enum'));
         $prefix = $main_namespace.'::'.$tname;
     } elsif ($meta eq 'compound') {
         die "Unnamed compound in global mode: ".$tag->toString."\n" unless $flags{-local};
@@ -217,16 +246,17 @@ sub get_struct_field_type($;%) {
         die "Invalid field meta type: $meta\n";
     }
 
-    if ($subtype && $flags{-local} && $subtype eq 'enum') {
+    if ($subtype && ($flags{-local} || $flags{-fulltype}) && $subtype eq 'enum') {
         $type_def or die "Enum without a type definition";
         my $def_base = get_primitive_base($type_def,'int32_t');
         my $base = get_primitive_base($tag, $def_base);
 
         unless ($base eq $def_base) {
+            $tag->setAttribute('ld:enum-size-forced', 'true') if $in_struct_body;
+
             if ($flags{-rettype} || $flags{-funcarg} || $in_union_body) {
                 $prefix = $base;
             } else {
-                $tag->setAttribute('ld:enum-size-forced', 'true') if $in_struct_body;
                 $prefix = "enum_field<$prefix,$base>";
             }
         }
@@ -319,7 +349,7 @@ sub render_field_init($) {
         return unless $subtype;
 
         if ($subtype eq 'bitfield' && defined $cur_init_value) {
-            emit $cur_init_field, '.whole = ', $cur_init_value;
+            emit $cur_init_field, '.whole = ', $cur_init_value, ';';
         } elsif ($subtype eq 'enum') {
             if ($meta eq 'global') {
                 my $tname = $field->getAttribute('type-name');
@@ -352,14 +382,162 @@ sub render_field_init($) {
     }
 }
 
+our $full_typename;
+our @field_defs;
+
+sub type_idfun_reference($) {
+    my $type = get_struct_field_type($_[0], -fulltype => 1);
+    return "identity_traits<$type >::get()";
+}
+
+sub auto_identity_reference($) {
+    my $iref = type_identity_reference($_[0], -allow_complex => 1);
+    return $iref || type_idfun_reference($_[0]);
+}
+
+sub render_field_metadata_rec($$) {
+    my ($field, $FLD) = @_;
+
+    local $_;
+    local %weak_refs;
+    local %strong_refs;
+
+    my $meta = $field->getAttribute('ld:meta');
+    my $subtype = $field->getAttribute('ld:subtype');
+    my $name = $field->getAttribute('name') || $field->getAttribute('ld:anon-name');
+
+    if ($FLD eq 'GFLD') {
+        $name = $field->parentNode()->getAttribute('name');
+    }
+
+    if (is_attr_true($field, 'ld:anon-compound'))
+    {
+        local $in_union = $in_union || is_attr_true($field, 'is-union');
+        my @fields = get_struct_fields($field);
+        &render_field_metadata_rec($_, $FLD) for @fields;
+        return;
+    }
+
+    my $enum = 'NULL';
+    if (my $xe = $field->getAttribute('index-enum')) {
+        static_include_type $xe;
+        $enum = type_identity_reference($types{$xe});
+    }
+
+    if ($meta eq 'number') {
+        my $tname = primitive_type_name($subtype);
+        push @field_defs, [ "${FLD}(PRIMITIVE, $name)", "TID($tname)" ];
+    } elsif ($meta eq 'bytes') {
+        if ($subtype eq 'static-string') {
+            my $count = $field->getAttribute('size') || 0;
+            push @field_defs, [ "${FLD}(STATIC_STRING, $name)", 'NULL', $count ];
+        }
+    } elsif ($meta eq 'global' || $meta eq 'compound') {
+        if (is_attr_true($field, 'ld:enum-size-forced')) {
+            push @field_defs, [ "${FLD}(PRIMITIVE, $name)", type_idfun_reference($field) ];
+        } else {
+            if ($meta eq 'global') {
+                my $tname = $field->getAttribute('type-name');
+                $field = $types{$tname} or die "Invalid type: $tname";
+            }
+
+            if ($subtype && $subtype eq 'enum') {
+                push @field_defs, [ "${FLD}(PRIMITIVE, $name)", type_identity_reference($field) ];
+            } else {
+                push @field_defs, [ "${FLD}(SUBSTRUCT, $name)", type_identity_reference($field) ];
+            }
+        }
+    } elsif ($meta eq 'pointer') {
+        my @items = $field->findnodes('ld:item');
+        my $count = 0;
+        $count |= 1 if is_attr_true($field, 'is-array');
+        $count |= 2 if $in_union || is_attr_true($field, 'has-bad-pointers');
+
+        push @field_defs, [ "${FLD}(POINTER, $name)", auto_identity_reference($items[0]), $count, $enum ];
+    } elsif ($meta eq 'static-array') {
+        my @items = $field->findnodes('ld:item');
+        my $count = $field->getAttribute('count')||0;
+
+        push @field_defs, [ "${FLD}(STATIC_ARRAY, $name)", auto_identity_reference($items[0]), $count, $enum ];
+    } elsif ($meta eq 'primitive') {
+        push @field_defs, [ "${FLD}(PRIMITIVE, $name)", type_idfun_reference($field) ];
+    } elsif ($meta eq 'container') {
+        my @items = $field->findnodes('ld:item');
+
+        if ($subtype eq 'stl-vector' && @items &&
+            $items[0]->getAttribute('ld:meta') eq 'pointer')
+        {
+            my @items2 = $items[0]->findnodes('ld:item');
+
+            push @field_defs, [ "${FLD}(STL_VECTOR_PTR, $name)",
+                                auto_identity_reference($items2[0]), 0, $enum ];
+        } else {
+            push @field_defs, [ "${FLD}(CONTAINER, $name)", type_idfun_reference($field), 0, $enum ];
+        }
+    }
+}
+
+sub render_field_metadata($$\@\%) {
+    my ($tag, $full_name, $fields, $info) = @_;
+
+    local $in_union = $in_union_body;
+
+    local $in_struct_body = 0;
+    local $in_union_body = 0;
+
+    local $_;
+    local $full_typename = $full_name;
+
+    my $FLD = ($full_name eq 'global' ? 'GFLD' : 'FLD');
+
+    static_include_type $_ for keys %weak_refs;
+
+    return generate_field_table {
+        render_field_metadata_rec($_, $FLD) for @$fields;
+
+        for my $mtag (@{$info->{vmethods}||[]}, @{$info->{cmethods}||[]}) {
+            my $name = $mtag->getAttribute('name');
+            push @field_defs, [ "METHOD(OBJ_METHOD, $name)" ] if $name;
+        }
+        for my $name (@{$info->{statics}||[]}) {
+            push @field_defs, [ "METHOD(CLASS_METHOD, $name)" ];
+        }
+    } $full_name;
+}
+
 sub emit_struct_fields($$;%) {
     my ($tag, $name, %flags) = @_;
+
+    $tag->setAttribute('ld:in-union','true') if $in_union_body;
 
     local $_;
     my @fields = get_struct_fields($tag);
     &render_struct_field($_) for @fields;
 
-    return if $in_union_body;
+    my $full_name = fully_qualified_name($tag, $name, 1);
+    my $fields_group = lc(substr($full_name, 0, 1));
+    my %info;
+
+    if ($in_union_body) {
+        my $traits_name = 'identity_traits<'.$full_name.'>';
+
+        with_emit_traits {
+            emit_block {
+                emit "static struct_identity identity;";
+                emit "static struct_identity *get() { return &identity; }";
+            } "template<> struct ${export_prefix}$traits_name ", ";";
+        };
+
+        with_emit_static {
+            my $ftable = render_field_metadata $tag, $full_name, @fields, %info;
+            emit "struct_identity ${traits_name}::identity(",
+                    "sizeof($full_name), &allocator_fn<${full_name}>, ",
+                    type_identity_reference($tag,-parent => 1), ', ',
+                    "\"$name\", NULL, $ftable);";
+        } 'fields-' . $fields_group;
+
+        return;
+    }
 
     local $in_struct_body = 0;
     local $in_union_body = 0;
@@ -367,6 +545,16 @@ sub emit_struct_fields($$;%) {
     my $want_ctor = 0;
     my $ctor_args = '';
     my $ctor_arg_init = '';
+
+    my $is_global = $tag->nodeName eq 'ld:global-type';
+    my $inherits = $flags{-inherits};
+    my $original_name = $tag->getAttribute('original-name');
+
+    if ($flags{-class}) {
+        emit "static virtual_identity _identity;";
+    } else {
+        emit "static struct_identity _identity;";
+    }
 
     with_emit_static {
         local @simple_inits;
@@ -379,7 +567,7 @@ sub emit_struct_fields($$;%) {
             }
             render_field_init($_) for @fields;
         };
-        if (@simple_inits || @ctor_lines) {
+        if (1) { #@simple_inits || @ctor_lines) {
             $want_ctor = 1;
             my $full_name = get_struct_field_type($tag);
             emit $full_name,'::',$name,"($ctor_args)";
@@ -390,9 +578,37 @@ sub emit_struct_fields($$;%) {
         }
     } 'ctors';
 
+    %info = $flags{-addmethods}->($tag) if $flags{-addmethods};
+
+    my $alloc_fn = $info{nodtor} ? 'allocator_nodel_fn' : 'allocator_fn';
+
     if ($want_ctor) {
+        outdent { emit $flags{-class} ? "protected:" : "public:"; };
         emit "$name($ctor_args$ctor_arg_init);";
+        if ($flags{-class}) {
+            emit "friend void *${main_namespace}::${alloc_fn}<${full_name}>(void*,const void*);";
+        }
     }
+
+    with_emit_static {
+        my $ftable = render_field_metadata $tag, $full_name, @fields, %info;
+
+        if ($flags{-class}) {
+            emit "virtual_identity ${full_name}::_identity(",
+                    "sizeof($full_name), &${alloc_fn}<${full_name}>, ",
+                    "\"$name\",",
+                    ($original_name ? "\"$original_name\"" : 'NULL'), ',',
+                    ($inherits ? "&${inherits}::_identity" : 'NULL'), ',',
+                    "$ftable);";
+        } else {
+            emit "struct_identity ${full_name}::_identity(",
+                    "sizeof($full_name), &allocator_fn<${full_name}>, ",
+                    type_identity_reference($tag,-parent => 1), ', ',
+                    "\"$name\",",
+                    ($inherits ? "&${inherits}::_identity" : 'NULL'), ',',
+                    "$ftable);";
+        }
+    } 'fields-' . $fields_group;
 }
 
 1;

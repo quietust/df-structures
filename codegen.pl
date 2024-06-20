@@ -79,13 +79,16 @@ for my $name (sort { $a cmp $b } keys %types) {
 
 with_header_file {
     my @items;
+    my @fields;
 
     emit_block {
         emit "void InitGlobals();";
+        emit "extern global_identity _identity;";
 
         for my $name (sort { $a cmp $b } keys %globals) {
             local $typename = $name;
             local $filename = $global_files{$typename};
+            local $in_struct_body = 1;
 
             eval {
                 my $tag = $globals{$typename};
@@ -95,6 +98,7 @@ with_header_file {
                     emit 'extern ', $export_prefix, $prefix, ' *', $name, ';', get_comment($tag);
 
                     push @items, [ $prefix, $name ];
+                    push @fields, $tag->findnodes('ld:item');
                 } "T_$name";
             };
             if ($@) {
@@ -102,6 +106,12 @@ with_header_file {
             }
         }
     } "namespace global ";
+
+    with_emit_static {
+        my %info;
+        my $ftable = render_field_metadata(undef, 'global', @fields, %info);
+        emit "global_identity global::_identity($ftable);";
+    } 'fields';
 
     with_emit_static {
         emit_block {
@@ -120,47 +130,79 @@ with_header_file {
     };
 } 'global_objects';
 
+
+sub replace_file {
+    my ($filename, $new) = @_;
+    if (-e $filename) {
+        open(FH, '<', $filename);
+        my $old = do { local $/; <FH> };
+        close FH;
+        if ($old eq $new) {
+            return;
+        }
+    }
+    open(FH, '>', $filename);
+    do { local $\; print FH $new };
+    close FH;
+}
+
 # Write output files
 
 mkdir $output_dir;
 
 {
-    # Delete the old files
+    my %files;
+    # Get a list of all the existing files
     for my $name (glob "$output_dir/*.h") {
-        unlink $name;
+        $files{$name} = 1;
     }
     for my $name (glob "$output_dir/static*.inc") {
-        unlink $name;
+        $files{$name} = 1;
     }
-    unlink "$output_dir/codegen.out.xml";
+    $files{"$output_dir/codegen.out.xml"} = 1;
 
     # Write out the headers
     local $, = "\n";
     local $\ = "\n";
 
+    my $data;
+
     for my $name (keys %header_data) {
-        open FH, ">$output_dir/$name.h";
-        print FH "/* THIS FILE WAS GENERATED. DO NOT EDIT. */";
-        print FH @{$header_data{$name}};
-        close FH;
+        $data = "/* THIS FILE WAS GENERATED. DO NOT EDIT. */\n";
+        $data .= join("\n", @{$header_data{$name}})."\n";
+        replace_file("$output_dir/$name.h", $data);
+        $files{"$output_dir/$name.h"} = 0;
     }
 
     # Write out the static file
     for my $tag (keys %static_lines) {
-        my $name = $output_dir.'/static'.($tag?'.'.$tag:'').'.inc';
-        open FH, ">$name";
-        print FH "/* THIS FILE WAS GENERATED. DO NOT EDIT. */";
+        $data = "/* THIS FILE WAS GENERATED. DO NOT EDIT. */\n";
         for my $name (sort { $a cmp $b } keys %{$static_includes{$tag}}) {
-            print FH "#include \"$name.h\"";
+            $data .= "#include \"$name.h\"\n";
         }
-        print FH "namespace $main_namespace {";
-        print FH @{$static_lines{$tag}};
-        print FH '}';
-        close FH;
+        $data .= "namespace $main_namespace {\n";
+        $data .= join("\n", @{$static_lines{$tag}})."\n";
+        $data .= '}'."\n";
+
+        my $name = $output_dir.'/static'.($tag?'.'.$tag:'').'.inc';
+        replace_file($name, $data);
+        $files{$name} = 0;
     }
 
-    # Write an xml file with all types
-    open FH, ">$output_dir/codegen.out.xml";
+    # Touch all static.fields-*.inc files
+    for my $group ("a" .. "z") {
+        my $name = $output_dir."/static.fields-$group.inc";
+        unless (-f $name) {
+            open my $fh, ">>", $name;
+            close $fh;
+        }
+        $files{$name} = 0;
+    }
+
+    # Write an xml file with all types.
+    # Always do it, so that its date could be used in make to
+    # determine if the script had been run after inputs changed.
+    open(FH, '>', "$output_dir/codegen.out.xml");
     print FH '<ld:data-definition xmlns:ld="http://github.com/peterix/dfhack/lowered-data-definition">';
     for my $doc (@documents) {
         for my $node ($doc->documentElement()->findnodes('*')) {
@@ -169,4 +211,12 @@ mkdir $output_dir;
     }
     print FH '</ld:data-definition>';
     close FH;
+    $files{"$output_dir/codegen.out.xml"} = 0;
+
+    for my $name (keys %files) {
+        if ($files{$name} == 1) {
+            print("File $name was present but not generated - deleting\n");
+            unlink($name);
+        }
+    }
 }
