@@ -21,14 +21,17 @@ BEGIN {
 
         *weak_refs *strong_refs &register_ref &decode_type_name_ref
 
+        &with_capture_traits &with_emit_traits
         *cur_header_name %header_data &with_header_file
 
-        %static_lines %static_includes &with_emit_static
+        %static_lines %static_includes &static_include_type &with_emit_static
 
         &ensure_name &with_anon
 
-        &fully_qualified_name
+        &fully_qualified_name &type_identity_reference
         &get_comment &emit_comment
+
+        *field_defs &generate_field_table
     );
     our %EXPORT_TAGS = ( ); # eg: TAG => [ qw!name1 name2! ],
     our @EXPORT_OK   = qw( );
@@ -55,7 +58,7 @@ our $filename;
 sub parse_address($;$) {
     my ($str,$in_bits) = @_;
     return undef unless defined $str;
-    
+
     # Parse the format used by offset attributes in xml
     $str =~ /^0x([0-9a-f]+)(?:\.([0-7]))?$/
         or die "Invalid address syntax: $str\n";
@@ -66,7 +69,7 @@ sub parse_address($;$) {
 
 sub check_bad_attrs($;$$) {
     my ($tag, $allow_size, $allow_align) = @_;
-    
+
     die "Cannot use size, alignment or offset for ".$tag->nodeName."\n"
         if ((!$allow_size && defined $tag->getAttribute('size')) ||
             defined $tag->getAttribute('offset') ||
@@ -123,7 +126,7 @@ sub add_global_to_hash($) {
 our @lines;
 our $indentation = 0;
 
-sub with_emit(&;$) { 
+sub with_emit(&;$) {
     # Executes the code block, and returns emitted lines
     my ($blk, $start_indent) = @_;
     local @lines;
@@ -170,12 +173,13 @@ sub emit_block(&;$$%) {
 my @primitive_type_list =
     qw(int8_t uint8_t int16_t uint16_t
        int32_t uint32_t int64_t uint64_t
-       s-float
+       s-float d-float
        bool flag-bit
        padding static-string);
 
 my %primitive_aliases = (
     's-float' => 'float',
+    'd-float' => 'double',
     'static-string' => 'char',
     'flag-bit' => 'void',
     'padding' => 'void',
@@ -250,6 +254,27 @@ sub decode_type_name_ref($;%) {
     }
 }
 
+# Trait generation
+
+our @trait_lines;
+our $trait_indent = 2;
+
+sub with_capture_traits(&) {
+    my ($blk) = @_;
+
+    local $trait_indent = $indentation;
+    local @trait_lines = ();
+
+    $blk->();
+
+    push @lines, @trait_lines;
+}
+
+sub with_emit_traits(&) {
+    my ($blk) = @_;
+    push @trait_lines, &with_emit($blk,$trait_indent);
+}
+
 # Include file generation
 
 our $cur_header_name;
@@ -265,7 +290,9 @@ sub with_header_file(&$) {
 
     # Emit the actual type definition
     my @code = with_emit {
-        &with_anon($handler);
+        with_capture_traits {
+            &with_anon($handler);
+        };
     } 2;
 
     delete $weak_refs{$header_name};
@@ -276,6 +303,9 @@ sub with_header_file(&$) {
         my $def = type_header_def($header_name);
         emit "#ifndef $def";
         emit "#define $def";
+        emit "#ifdef __GNUC__";
+        emit "#pragma GCC system_header";
+        emit "#endif";
 
         for my $strong (sort { $a cmp $b } keys %strong_refs) {
             my $sdef = type_header_def($strong);
@@ -288,10 +318,11 @@ sub with_header_file(&$) {
             for my $weak (sort { $a cmp $b } keys %weak_refs) {
                 next if $strong_refs{$weak};
                 my $ttype = $types{$weak};
+                my $meta = $ttype->getAttribute('ld:meta');
                 my $tstr = 'struct';
-                $tstr = 'enum' if $ttype->nodeName eq 'enum-type';
-                $tstr = 'union' if $ttype->nodeName eq 'bitfield-type';
-                $tstr = 'union' if ($ttype->nodeName eq 'struct-type' && is_attr_true($ttype,'is-union'));
+                $tstr = 'enum' if $meta eq 'enum-type';
+                $tstr = 'union' if $meta eq 'bitfield-type';
+                $tstr = 'union' if ($meta eq 'struct-type' && is_attr_true($ttype,'is-union'));
                 emit $tstr, ' ', $weak, ';';
             }
 
@@ -306,13 +337,19 @@ sub with_header_file(&$) {
 
 # Static file output
 
+our $cur_static;
 our %static_lines;
 our %static_includes;
 
+sub static_include_type($) {
+    $static_includes{$cur_static}{$_[0]}++;
+}
+
 sub with_emit_static(&;$) {
     my ($blk, $tag) = @_;
-    my @inner = &with_emit($blk,2) or return;
     $tag ||= '';
+    local $cur_static = $tag;
+    my @inner = &with_emit($blk,2) or return;
     $static_includes{$tag}{$cur_header_name}++ if $cur_header_name;
     push @{$static_lines{$tag}}, @inner;
 }
@@ -349,11 +386,65 @@ sub fully_qualified_name($$;$) {
     for my $parent ($tag->findnodes('ancestor::*')) {
         if ($parent->nodeName eq 'ld:global-type') {
             push @names, $parent->getAttribute('type-name');
+        } elsif ($parent->nodeName eq 'ld:global-object') {
+            push @names, 'global';
         } elsif (my $n = $parent->getAttribute('ld:typedef-name')) {
             push @names, $n;
         }
     }
-    return join('::',@names,$name);
+    push @names, $name if defined $name;
+    return join('::',@names);
+}
+
+sub type_identity_reference($%) {
+    my ($tag, %flags) = @_;
+
+    return 'NULL' unless $tag;
+
+    my $name = $tag->nodeName;
+
+    if ($flags{-parent}) {
+        while (defined $tag) {
+            $tag = $tag->parentNode;
+            last unless $tag;
+            $name = $tag->nodeName;
+            if ($name eq 'ld:data-definition') {
+                $tag = undef;
+                last;
+            }
+            last if $name eq 'ld:global-type';
+            last if $name eq 'ld:global-object';
+            last if $tag->getAttribute('ld:typedef-name');
+        }
+
+        return 'NULL' unless $tag;
+    }
+
+    return '&global::_identity' if $name eq 'ld:global-object';
+
+    my $meta = $tag->getAttribute('ld:meta');
+    my $subtype = $tag->getAttribute('ld:subtype')||'';
+
+    my $tname;
+    if ($name eq 'ld:global-type') {
+        $tname = $tag->getAttribute('type-name');
+    } elsif ($meta eq 'compound') {
+        $tname = $tag->getAttribute('ld:typedef-name')
+    } else {
+        return undef if $flags{-allow_complex};
+    }
+    $tname or die "No type name: ".$tag->toString();
+
+    my $fqn = fully_qualified_name($tag, $tname, 1);
+
+    if ($meta eq 'enum-type' || $subtype eq 'enum' ||
+        $meta eq 'bitfield-type' || $subtype eq 'bitfield' ||
+        is_attr_true($tag, 'ld:in-union'))
+    {
+        return 'TID('.$fqn.')';
+    } else {
+        return '&'.$fqn.'::_identity';
+    }
 }
 
 # Comments
@@ -396,6 +487,34 @@ sub emit_comment($;%) {
         }
         emit ' */';
     }
+}
+
+# Field tables
+
+our @field_defs;
+
+sub generate_field_table(&$) {
+    my ($blk, $full_name) = @_;
+
+    local @field_defs;
+
+    my $ftable_name = $full_name.'_fields';
+    $ftable_name =~ s/::/_doT_Dot_/g;
+    $ftable_name =~ s/</_lT_/g;
+    $ftable_name =~ s/>/_Gt_/g;
+
+    &with_anon($blk, 'T_'.$ftable_name);
+
+    return 'NULL' unless @field_defs;
+
+    emit "#define CUR_STRUCT $full_name";
+    emit_block {
+        emit '{ ', join(', ', @$_), ' },' for @field_defs;
+        emit "{ FLD_END }";
+    } "static const struct_field_info ${ftable_name}[] = ", ";";
+    emit "#undef CUR_STRUCT";
+
+    return $ftable_name;
 }
 
 1;

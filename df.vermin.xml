@@ -1,43 +1,25 @@
 <data-definition>
-    <bitfield-type type-name='vermin_flags'>
-        <flag-bit/>
+    <bitfield-type type-name='vermin_flags' base-type='uint32_t'> bay12: VERMINEVENTFLAG_*
+        <flag-bit name='already_deleting'/>
         <flag-bit name='is_colony' comment='A vermin colony. For example an anthill or bee hive.'/>
-        <flag-bit/>
-        <flag-bit/>
-        <flag-bit/>
+        <flag-bit name='triggerable'/>
+        <flag-bit name='is_roaming_colony' comment="bay12: NOT_LIMITING; colony building vermin away from colony"/>
     </bitfield-type>
 
-    <struct-type type-name='world_population_ref'>
-        <int16_t name="region_x"/>
-        <int16_t name="region_y"/>
-        <int16_t name="feature_idx" init-value="-1"/>
+    <enum-type type-name='vermin_category'> bay12: VerminCreationType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Eater'/>
+        <enum-item name='Grounder'/>
+        <enum-item name='Rotter'/>
+        <enum-item name='Swamper'/>
+        <enum-item name='Colony'/>
+        <enum-item name='Triggered'/>
+        <enum-item name='Item'/>
+        <enum-item name='Sphere'/>
+        <enum-item name='FromColony'/>
+    </enum-type>
 
-        <int32_t name='cave_id' ref-target='world_underground_region'/>
-
-        <int32_t name="unk_28" />
-
-        <int32_t name="population_idx">
-            <code-helper name='refers-to'>
-                (let* ((info $$._global)
-                       (wdata $global.world.world_data)
-                       (x $info.region_x)
-                       (y $info.region_y)
-                       (reg (or (when (/= $info.feature_idx -1)
-                                  (let* ((rip $wdata.unk_204[(floor x 16)][(floor y 16)])
-                                         (flst $rip.features.feature_init[(logand x 15)][(logand y 15)]))
-                                    $flst[$info.feature_idx].feature))
-                                (awhen $info.cave_id.ref-target
-                                  $it.feature_init.feature)
-                                (find-instance $world_region ;
-                                               $wdata.region_map[x][y].region_id))))
-                  $reg.population[$])
-            </code-helper>
-        </int32_t>
-
-        <int16_t name="unk_30" />
-    </struct-type>
-
-    <struct-type type-name='vermin' instance-vector='$global.world.vermin.all'>
+    <struct-type type-name='vermin' instance-vector='$global.world.event.vermin'>
         <int16_t name='race' ref-target='creature_raw'/>
         <int16_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
         <compound name='pos' type-name='coord'/>
@@ -45,15 +27,15 @@
 
         <int16_t name="countdown" />
 
-        <pointer name="item" type-name='item_critter'/>
+        <pointer name="item" type-name='item'/>
 
-        <compound name='flags' type-name='vermin_flags'/>
+        <bitfield name='flags' type-name='vermin_flags'/>
         <int32_t name="amount" comment="The total number of vermin in this object. Decimal constant 10000001 means infinity (probably)." />
 
         <compound name='population' type-name='world_population_ref'/>
 
-        <int16_t name="unk_34" />
-        <int32_t name="unk_38" comment="weird, normally uninitialized index? also not saved." />
+        <enum type-name='vermin_category' base-type='int16_t' name='category'/>
+        <int32_t name='id' comment='assigned during Save'/>
     </struct-type>
 </data-definition>
 

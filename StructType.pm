@@ -35,8 +35,8 @@ sub translate_lookup($) {
     return $expr;
 }
 
-sub emit_find_instance {
-    my ($tag) = @_;
+sub emit_find_instance(\%$) {
+    my ($rinfo, $tag) = @_;
 
     my $keyfield = $tag->getAttribute('key-field');
     my $keyfield_tag = find_subfield $tag, $keyfield;
@@ -80,10 +80,12 @@ sub emit_find_instance {
                 if ($keyfield) {
                     emit "return binsearch_in_vector(vec_, id_);";
                 } else {
-                    emit "return (id_ >= 0 && id_ < vec_.size()) ? vec_[id_] : NULL;";
+                    emit "return (size_t(id_) < vec_.size()) ? vec_[id_] : NULL;";
                 }
             } "$typename *${typename}::find($keytype id_) ";
         };
+
+        push @{$rinfo->{statics}}, 'find';
     }
 }
 
@@ -110,7 +112,7 @@ sub render_virtual_methods {
             my $is_destructor = is_attr_true($method, 'is-destructor');
             my $name = $is_destructor ? $dtor_id : $method->getAttribute('name');
             if ($name) {
-                die "Duplicate method: $name in ".$type->getAttribute('type-name')."\n"
+                die "Duplicate virtual method: $name in ".$type->getAttribute('type-name')."\n"
                     if exists $name_index{$name};
                 $name_index{$name} = scalar(@vtable);
             }
@@ -118,19 +120,17 @@ sub render_virtual_methods {
         }
     }
 
-    # Ensure there is a destructor to avoid warnings
     my $dtor_idx = $name_index{$dtor_id};
-    unless (defined $dtor_idx) {
-        for (my $i = 0; $i <= $#vtable; $i++) {
-            next if $vtable[$i]->getAttribute('name');
-            $name_index{$dtor_id} = $dtor_idx = $i;
-            last;
-        }
-    }
-    unless (defined $dtor_idx) {
+    my $no_dtor = 0;
+
+    # If the vtable is empty, conjure up a destructor
+    unless (@vtable) {
+        $no_dtor = 1;
         push @vtable, undef;
         $dtor_idx = $#vtable;
     }
+
+    my @our_vmethods;
 
     # Generate the methods
     my $min_id = $starts[-1];
@@ -147,7 +147,9 @@ sub render_virtual_methods {
             $is_anon = 0 if $name;
         }
 
-        my $rq_mode = $is_anon ? 'protected' : 'public';            
+        push @our_vmethods, $method unless ($is_anon || $is_destructor);
+
+        my $rq_mode = $is_anon ? 'protected' : 'public';
         unless ($rq_mode eq $cur_mode) {
             $cur_mode = $rq_mode;
             outdent { emit "$cur_mode:"; }
@@ -173,6 +175,8 @@ sub render_virtual_methods {
                  get_comment($method);
         } "anon_vmethod_$idx";
     }
+
+    return ($no_dtor, \@our_vmethods);
 }
 
 sub render_struct_type {
@@ -180,11 +184,15 @@ sub render_struct_type {
 
     my $tag_name = $tag->getAttribute('ld:meta');
     my $is_class = ($tag_name eq 'class-type');
-    my $custom_methods = is_attr_true($tag, 'custom-methods');
+    my $custom_methods = is_attr_true($tag, 'custom-methods') || $tag->findnodes('custom-methods/cmethod');
     my $has_methods = $is_class || is_attr_true($tag, 'has-methods');
     my $inherits = $tag->getAttribute('inherits-from');
     my $original_name = $tag->getAttribute('original-name');
     my $ispec = '';
+
+    for my $extra ($tag->findnodes('extra-include')) {
+        register_ref $extra->getAttribute('type-name'), 1;
+    }
 
     if ($inherits) {
         register_ref $inherits, 1;
@@ -194,32 +202,43 @@ sub render_struct_type {
     }
 
     with_struct_block {
-        emit_struct_fields($tag, $typename, -class => $is_class, -inherits => $inherits);
-        emit_find_instance($tag);
+        my $vmethod_emit = sub {
+            my %info;
 
-        if ($has_methods || $custom_methods) {
-            if ($is_class) {
-                emit "static class_virtual_identity<$typename> _identity;";
-                with_emit_static {
-                    emit "class_virtual_identity<$typename> ${typename}::_identity(",
-                         "\"$typename\",",
-                         ($original_name ? "\"$original_name\"" : 'NULL'), ',',
-                         ($inherits ? "&${inherits}::_identity" : 'NULL'),
-                         ");";
-                };
+            emit_find_instance(%info, $tag);
+
+            if ($has_methods || $custom_methods) {
+                if ($custom_methods) {
+                    local $indentation = 0;
+                    emit '#include "custom/', $typename, '.methods.inc"';
+
+                    my %name_index;
+                    $info{cmethods} = [];
+                    for my $method ($tag->findnodes('custom-methods/cmethod')) {
+                        my $name = $method->getAttribute('name');
+                        die "Custom method has no name in ".$typename."\n"
+                            if not $name;
+                        die "Duplicate custom method: $name in ".$typename."\n"
+                            if exists $name_index{$name};
+                        $name_index{$name} = 1;
+                        push @{$info{cmethods}}, $method;
+                    }
+                }
+
+                if ($is_class) {
+                    my ($no_dtor, $vmethods) = render_virtual_methods $tag;
+                    $info{nodtor} = $no_dtor;
+                    $info{vmethods} = $vmethods;
+                } elsif (!$custom_methods) {
+                    emit "~",$typename,"() {}";
+                }
             }
 
-            if ($custom_methods) {
-                local $indentation = 0;
-                emit '#include "custom/', $typename, '.methods.inc"';
-            }
+            return %info;
+        };
 
-            if ($is_class) {
-                render_virtual_methods $tag;
-            } elsif (!$custom_methods) {
-                emit "~",$typename,"() {}";
-            }
-        }
+        emit_struct_fields($tag, $typename, -class => $is_class, -inherits => $inherits,
+                            -addmethods => $vmethod_emit);
     } $tag, "$typename$ispec", -export => 1;
 }
 

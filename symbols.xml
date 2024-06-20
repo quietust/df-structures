@@ -22,43 +22,821 @@
         <binary-timestamp value="0x4D90764F"/>
 
         <!-- .data -->
-        <global-address name="control_mode" value="0xB34814" />
-        <global-address name="game_mode" value="0xB34818" />
+
         <global-address name='cursor' value='0xb347f0'/>
         <global-address name='selection_rect' value='0xb347fc'/>
-        <global-address name="window_x" value="0xEB0984" />
-        <global-address name="window_y" value="0xEDEBA0" />
-        <global-address name="window_z" value="0xEDEB7C" />
+
+        <global-address name="gamemode" value="0xB34814" />
+        <global-address name="gametype" value="0xB34818" />
+
+        <global-address name='standingorder_gatherstone' value='0xb348a4'/>
+        <global-address name='standingorder_gatherwood' value='0xb348a5'/>
+        <global-address name='standingorder_gatherfood' value='0xb348a6'/>
+        <global-address name='standingorder_gatherbodies' value='0xb348a7'/>
+        <global-address name='standingorder_gatherrefuse' value='0xb348a8'/>
+        <global-address name='standingorder_gatheranimals' value='0xb348a9'/>
+        <global-address name='standingorder_gatherfurniture' value='0xb348aa'/>
+        <global-address name='standingorder_allharvest' value='0xb348ab'/>
+        <global-address name='standingorder_loom' value='0xb348ac'/>
+        <global-address name='standingorder_collect_web' value='0xb348ad'/>
+        <global-address name='standingorder_slaughter' value='0xb348ae'/>
+        <global-address name='standingorder_butcher' value='0xb348af'/>
+        <global-address name='standingorder_tan' value='0xb348b0'/>
+        <global-address name='standingorder_fishery' value='0xb348b1'/>
+        <global-address name='standingorder_kitchen' value='0xb348b2'/>
+        <global-address name='standingorder_kiln' value='0xb348b3'/>
+        <global-address name='standingorder_smelt' value='0xb348b4'/>
+        <global-address name='standingorder_other' value='0xb348b5'/>
+        <global-address name='standingorder_autoforbid_projectile' value='0xb348b6'/>
+        <global-address name='standingorder_autoforbid_other_items' value='0xb348b7'/>
+
+        <global-address name='ui_menu_width' value='0xb348c8'/>
+        <global-address name='option_exceptions' value='0xb348cb'/>
+
+        <global-address name='standingorder_mixfoods' value='0xb348cc'/>
+
+        <global-address name='gps' value='0xb34d10'/>
+
         <!-- .bss -->
-        <global-address name='world' value='0x16b0a58'/>
-        <global-address name="pause_state" value="0x14EC7C9" />
-        <global-address name='ui' value='0x14ee7e0'/>
+
+        -- large structures
+        <global-address name='enabler' value='0x14ee4d8'/>
         <global-address name='gview' value='0x14f6070'/>
+        <global-address name='buildreq' value='0x1849e88'/>
+        <global-address name='plotinfo' value='0x14ee7e0'/>
+        <global-address name='adventure' value='0x185bf38'/>
+        <global-address name='world' value='0x16b0a58'/>
+        <global-address name='game' value='0x1848648'/>
+        <global-address name='map_renderer' value='0x184bef0'/>
+        <global-address name='texture' value='0x184ae28'/>
         <global-address name='init' value='0x184ae58'/>
         <global-address name='d_init' value='0x1848350'/>
 
-        <global-address name='announcements' value='0x18483f8'/>
-        <global-address name='cursor_unit_list' value='0x185bef0'/>
-
-        <global-address name='ui_sidebar_menus' value='0x1848648'/>
-        <global-address name='ui_build_selector' value='0x1849e88'/>
+        -- vectors (mostly)
+        <global-address name="flows" value="0x184bedc" />
+        <global-address name="timed_events" value="0x14ee78c" />
+        <global-address name="ui_building_assign_type" value="0x185c124" />
+        <global-address name="ui_building_assign_is_marked" value="0x14ee7cc" />
+        <global-address name="ui_building_assign_units" value="0x16b0a48" />
+        <global-address name="ui_building_assign_items" value="0x14ee7bc" />
+        <global-address name="buildjob_building" value="0x14ee76c" />
+        <global-address name="buildjob_flowx" value="0x185c144" />
+        <global-address name="buildjob_flowy" value="0x14ee79c" />
+        <global-address name="buildjob_flowz" value="0xef7258" />
+        <global-address name="created_item_type" value="0x16b0a18" />
+        <global-address name="created_item_subtype" value="0x185c114" />
+        <global-address name="created_item_mattype" value="0x1848638" />
+        <global-address name="created_item_matindex" value="0x14ee7ac" />
+        <global-address name="created_item_count" value="0x14ee77c" />
         <global-address name='ui_look_list' value='0x185c104'/>
-        <global-address name='ui_look_cursor' value='0xedeb98'/>
-        <global-address name='ui_workshop_job_cursor' value='0x14ec79c'/>
-        <global-address name='ui_workshop_in_add' value='0xeb0992'/>
+        <global-address name="dunginv" value="0x16b0a28" />
+        <global-address name="dunginv_inv" value="0x185c0f4" />
+        <global-address name="dunginv_depth" value="0x184833c" />
+        <global-address name="dunginv_flag" value="0x16b0a38" />
+        <global-address name="dunginv_index" value="0x185c134" />
+        <global-address name="dung_targlist" value="0x184ae18" />
 
-   <!--<global-address name="screen_tiles_pointer" />-->
+        -- primitives
+        <global-address name="pause_state" value="0x14EC7C9" />
+        <global-address name="process_dig" value="0x14ec7bb" />
+        <global-address name="process_jobs" value="0x14ec7c4" />
 
-        <global-address name='job_next_id' value='0xe18290'/>
+        <global-address name="window_x" value="0xEB0984" />
+        <global-address name="window_y" value="0xEDEBA0" />
+        <global-address name="window_z" value="0xEDEB7C" />
+        <global-address name="save_on_exit" value="0x14ec7c5" />
 
+        <global-address name="current_weather" value="0x14EC7A0" />
+        <global-address name="weathertimer" value="0xedeb8c" />
+        <global-address name="cur_rain" value="0xef7270" />
+        <global-address name="cur_rain_counter" value="0xef725c" />
+        <global-address name="cur_snow" value="0xec4a60" />
+        <global-address name="cur_snow_counter" value="0xeb0988" />
+
+        <global-address name='ui_building_in_assign' value='0x14ec7c7'/>
+        <global-address name='ui_building_in_resize' value='0x14ec7c6'/>
+        <global-address name='ui_building_resize_radius' value='0xe182a0'/>
         <global-address name='ui_building_item_cursor' value='0xef7264'/>
+        <global-address name='ui_look_cursor' value='0xedeb98'/>
         <global-address name='ui_selected_unit' value='0xef2430'/>
         <global-address name='ui_unit_view_mode' value='0xec4a5c'/>
-        <global-address name="current_weather" value="0x14EC7A0" />
+        <global-address name='ui_workshop_in_add' value='0xeb0992'/>
+        <global-address name='ui_workshop_job_cursor' value='0x14ec79c'/>
+        <global-address name='ui_lever_target_type' value='0xe182a3'/>
+        <global-address name='modeseason' value='0xef726c'/>
+        <global-address name='buildjob_mastering' value='0x14ec7c8'/>
+        <global-address name='buildjob_item1' value='0xe18294'/>
+
         <global-address name='cur_year' value='0xef7268'/>
         <global-address name='cur_year_tick' value='0xec5170'/>
+        <global-address name='cur_year_tick_advmode' value='0xe1829c'/>
+        <global-address name='cur_season' value='0xe182a2'/>
+        <global-address name='cur_season_tick' value='0xe18180'/>
 
-        <global-address name='gps' value='0xb34d10'/>
+        <global-address name='jobvalue' value='0xec4640'/>
+        <global-address name='jobvalue_setter' value='0xec4220'/>
+
+        <global-address name='olookx' value='0xec4218'/>
+        <global-address name='olooky' value='0xe5d0d0'/>
+        <global-address name='olookz' value='0xe1818c'/>
+        <global-address name='oscrollx' value='0xedeb9c'/>
+        <global-address name='oscrolly' value='0xef9078'/>
+        <global-address name='oscrollz' value='0xe18188'/>
+        <global-address name='page' value='0xec5064'/>
+        <global-address name='dunginv_relitem' value='0xe18298'/>
+        <global-address name='throwitem' value='0xedeb80'/>
+        <global-address name='dung_target' value='0xedeba4'/>
+        <global-address name='interactitem' value='0xeb0994'/>
+        <global-address name='interactinvslot' value='0xedeb88'/>
+        <global-address name='dung_buildinginteract' value='0xe182a4'/>
+
+        <global-address name='dung_attackmode' value='0xeb0990'/>
+        <global-address name='dung_dodgemode' value='0xedeb78'/>
+        <global-address name='dung_chargedefendmode' value='0xec421c'/>
+        <global-address name='dung_swimmode' value='0xef9084'/>
+        <global-address name='handleannounce' value='0xeb098a'/>
+        <global-address name='preserveannounce' value='0xeb0993'/>
+        <global-address name='updatelightstate' value='0xeb098b'/>
+
+        <global-address name='standingorder_zone_drinking' value='0x14ec7ca'/>
+        <global-address name='standingorder_zone_fishing' value='0x14ec7cb'/>
+        <global-address name='standingorder_dyed_clothes' value='0x14ec7cc'/>
+        <global-address name='standingorder_gatherrefuse_outside' value='0x14ec7cd'/>
+        <global-address name='standingorder_gatherrefuse_outside_vermin' value='0x14ec7ce'/>
+        <global-address name='standingorder_gatherrefuse_chasm_corpses' value='0x14ec7cf'/>
+        <global-address name='standingorder_gatherrefuse_chasm_skulls' value='0x14ec7d0'/>
+        <global-address name='standingorder_gatherrefuse_chasm_skins' value='0x14ec7d1'/>
+        <global-address name='standingorder_gatherrefuse_chasm_bones' value='0x14ec7d2'/>
+        <global-address name='standingorder_gatherrefuse_chasm_strand_tissue' value='0x14ec7d3'/>
+        <global-address name='standingorder_gatherrefuse_chasm_shell' value='0x14ec7d4'/>
+        <global-address name='standingorder_gatherrefuse_chasm_othernonmetal' value='0x14ec7d5'/>
+        <global-address name='standingorder_autoforbid_your_corpse' value='0x14ec7d6'/>
+        <global-address name='standingorder_autoforbid_other_corpse' value='0x14ec7d7'/>
+        <global-address name='standingorder_autoforbid_your_items' value='0x14ec7d8'/>
+
+        <global-address name='item_next_id' value='0xe5d0d4'/>
+        <global-address name='unit_next_id' value='0xec5068'/>
+        <global-address name='soul_next_id' value='0x14ec794'/>
+        <global-address name='entity_next_id' value='0x14ec790'/>
+        <global-address name='nemesis_next_id' value='0x14ec78c'/>
+        <global-address name='artifact_next_id' value='0xec5174'/>
+        <global-address name='job_next_id' value='0xe18290'/>
+        <global-address name='schedule_next_id' value='0xe18184'/>
+        <global-address name='proj_next_id' value='0xedeb84'/>
+        <global-address name='building_next_id' value='0xef2428'/>
+        <global-address name='machine_next_id' value='0xedeb94'/>
+        <global-address name='flow_guide_next_id' value='0xb3babc'/>
+        <global-address name='hist_figure_next_id' value='0xeb098c'/>
+        <global-address name='hist_event_next_id' value='0xef9080'/>
+        <global-address name='hist_event_collection_next_id' value='0xec5060'/>
+        <global-address name='unit_chunk_next_id' value='0xeb0980'/>
+        <global-address name='art_image_chunk_next_id' value='0xedeb90'/>
+        <global-address name='task_next_id' value='0xe5d0c8'/>
+        <global-address name='squad_next_id' value='0xef242c'/>
+        <global-address name='formation_next_id' value='0xef7260'/>
+        <global-address name='activity_next_id' value='0xef907c'/>
+
+        <global-address name='debug_nopause' value='0x14ec7d9'/>
+        <global-address name='debug_nomoods' value='0x14ec7da'/>
+        <global-address name='debug_combat' value='0x14ec7db'/>
+        <global-address name='debug_wildlife' value='0x14ec7dc'/>
+        <global-address name='debug_nodrink' value='0x14ec7dd'/>
+        <global-address name='debug_noeat' value='0x14ec7de'/>
+        <global-address name='debug_nosleep' value='0x14ec7df'/>
+        <global-address name='debug_showambush' value='0x14ec7e0'/>
+        <global-address name='debug_fastmining' value='0x14ec7e1'/>
+        <global-address name='debug_nothought' value='0x14ec7e2'/>
+        <global-address name='debug_noberserk' value='0x14ec7e3'/>
+        <global-address name='debug_turbospeed' value='0x14ec7e4'/>
+
+        <global-address name='keydisplay' value='0x14ee750'/>
+
+        <!-- vtable pointers -->
+        <vtable-address name='abstract_building_dark_towerst' value='0xa7e7e4'/>
+        <vtable-address name='abstract_building_home_apartment_roomst' value='0xa7e7b4'/>
+        <vtable-address name='abstract_building_home_apartmentst' value='0xa7e784'/>
+        <vtable-address name='abstract_building_home_singlest' value='0xa7e754'/>
+        <vtable-address name='abstract_building_keepst' value='0xa7e724'/>
+        <vtable-address name='abstract_building_marketst' value='0xa7e844'/>
+        <vtable-address name='abstract_building_mead_hallst' value='0xa7e6f4'/>
+        <vtable-address name='abstract_building_storest' value='0xa7e6c4'/>
+        <vtable-address name='abstract_building_templest' value='0xa7e814'/>
+        <vtable-address name='abstract_buildingst' value='0xa7e694'/>
+        <vtable-address name='active_script_var_longst' value='0xa95d18'/>
+        <vtable-address name='active_script_var_unitst' value='0xa95cf8'/>
+        <vtable-address name='activity_event_combat_trainingst' value='0xa7eab4'/>
+        <vtable-address name='activity_event_individual_skill_drillst' value='0xa7eb74'/>
+        <vtable-address name='activity_event_ranged_practicest' value='0xa7ec34'/>
+        <vtable-address name='activity_event_skill_demonstrationst' value='0xa7eb14'/>
+        <vtable-address name='activity_event_sparringst' value='0xa7ebd4'/>
+        <vtable-address name='activity_event_training_sessionst' value='0xa7ea54'/>
+        <vtable-address name='activity_eventst' value='0xa7e9f4'/>
+        <vtable-address name='adventure_environment_ingest_materialst' value='0xa989c0'/>
+        <vtable-address name='adventure_environment_pickup_ignite_vegst' value='0xa98a20'/>
+        <vtable-address name='adventure_environment_pickup_vermin_eventst' value='0xa989f0'/>
+        <vtable-address name='adventure_item_interact_choicest' value='0xa988c0'/>
+        <vtable-address name='adventure_item_interact_fill_with_materialst' value='0xa988f0'/>
+        <vtable-address name='adventure_item_interact_pull_outst' value='0xa988e0'/>
+        <vtable-address name='adventure_item_interact_strugglest' value='0xa988d0'/>
+        <vtable-address name='adventure_movement_attack_creaturest' value='0xa98a50'/>
+        <vtable-address name='adventure_movement_building_interactst' value='0xa98a5c'/>
+        <vtable-address name='adventure_movement_movest' value='0xa98a68'/>
+        <vtable-address name='adventure_option_eat_item_contaminantst' value='0xa98960'/>
+        <vtable-address name='adventure_option_eat_unit_contaminantst' value='0xa98930'/>
+        <vtable-address name='adventure_option_view_contaminantst' value='0xa98990'/>
+        <vtable-address name='adventure_optionst' value='0xa98900'/>
+        <vtable-address name='art_image_element_creaturest' value='0xa7f884'/>
+        <vtable-address name='art_image_element_itemst' value='0xa7f8b4'/>
+        <vtable-address name='art_image_element_plantst' value='0xa7f8e4'/>
+        <vtable-address name='art_image_element_shapest' value='0xa7f944'/>
+        <vtable-address name='art_image_element_treest' value='0xa7f914'/>
+        <vtable-address name='art_image_elementst' value='0xa7f854'/>
+        <vtable-address name='art_image_property_intransitive_verbst' value='0xa7f9ac'/>
+        <vtable-address name='art_image_property_transitive_verbst' value='0xa7f990'/>
+        <vtable-address name='art_image_propertyst' value='0xa7f974'/>
+        <vtable-address name='block_square_event_frozen_liquidst' value='0xa7fd54'/>
+        <vtable-address name='block_square_event_grassst' value='0xa7fd8c'/>
+        <vtable-address name='block_square_event_material_spatterst' value='0xa7fd70'/>
+        <vtable-address name='block_square_event_mineralst' value='0xa7fd38'/>
+        <vtable-address name='block_square_event_world_constructionst' value='0xa7fda8'/>
+        <vtable-address name='block_square_eventst' value='0xa7fd1c'/>
+        <vtable-address name='build_req_choice_genst' value='0xa9c150'/>
+        <vtable-address name='build_req_choice_specst' value='0xa9c174'/>
+        <vtable-address name='building_actualst' value='0xa80d14'/>
+        <vtable-address name='building_animaltrapst' value='0xa856d4'/>
+        <vtable-address name='building_archerytargetst' value='0xa83bd4'/>
+        <vtable-address name='building_armorstandst' value='0xa82554'/>
+        <vtable-address name='building_axle_horizontalst' value='0xa835d4'/>
+        <vtable-address name='building_axle_verticalst' value='0xa83754'/>
+        <vtable-address name='building_bars_floorst' value='0xa83154'/>
+        <vtable-address name='building_bars_verticalst' value='0xa82fd4'/>
+        <vtable-address name='building_bedst' value='0xa847d4'/>
+        <vtable-address name='building_boxst' value='0xa820d4'/>
+        <vtable-address name='building_bridgest' value='0xa829d4'/>
+        <vtable-address name='building_cabinetst' value='0xa82254'/>
+        <vtable-address name='building_cagest' value='0xa84354'/>
+        <vtable-address name='building_chainst' value='0xa841d4'/>
+        <vtable-address name='building_chairst' value='0xa84ad4'/>
+        <vtable-address name='building_civzonest' value='0xa80e94'/>
+        <vtable-address name='building_coffinst' value='0xa84dd4'/>
+        <vtable-address name='building_constructionst' value='0xa865d4'/>
+        <vtable-address name='building_def_furnacest' value='0xa86c60'/>
+        <vtable-address name='building_def_workshopst' value='0xa86c4c'/>
+        <vtable-address name='building_defst' value='0xa86c38'/>
+        <vtable-address name='building_doorst' value='0xa826d4'/>
+        <vtable-address name='building_farmplotst' value='0xa85554'/>
+        <vtable-address name='building_floodgatest' value='0xa82b54'/>
+        <vtable-address name='building_furnacest' value='0xa85854'/>
+        <vtable-address name='building_gear_assemblyst' value='0xa83454'/>
+        <vtable-address name='building_grate_floorst' value='0xa82e54'/>
+        <vtable-address name='building_grate_wallst' value='0xa82cd4'/>
+        <vtable-address name='building_hatchst' value='0xa82854'/>
+        <vtable-address name='building_hivest' value='0xa85fd4'/>
+        <vtable-address name='building_nest_boxst' value='0xa85e54'/>
+        <vtable-address name='building_nestst' value='0xa85cd4'/>
+        <vtable-address name='building_road_dirtst' value='0xa862d4'/>
+        <vtable-address name='building_road_pavedst' value='0xa86454'/>
+        <vtable-address name='building_screw_pumpst' value='0xa83d54'/>
+        <vtable-address name='building_shopst' value='0xa84c54'/>
+        <vtable-address name='building_siegeenginest' value='0xa844d4'/>
+        <vtable-address name='building_slabst' value='0xa850d4'/>
+        <vtable-address name='building_statuest' value='0xa84f54'/>
+        <vtable-address name='building_stockpilest' value='0xa81184'/>
+        <vtable-address name='building_supportst' value='0xa838d4'/>
+        <vtable-address name='building_tablest' value='0xa84954'/>
+        <vtable-address name='building_traction_benchst' value='0xa84654'/>
+        <vtable-address name='building_tradedepotst' value='0xa85b54'/>
+        <vtable-address name='building_trapst' value='0xa832d4'/>
+        <vtable-address name='building_wagonst' value='0xa86154'/>
+        <vtable-address name='building_water_wheelst' value='0xa83ed4'/>
+        <vtable-address name='building_weaponrackst' value='0xa823d4'/>
+        <vtable-address name='building_weaponst' value='0xa83a54'/>
+        <vtable-address name='building_wellst' value='0xa81004'/>
+        <vtable-address name='building_windmillst' value='0xa84054'/>
+        <vtable-address name='building_window_gemst' value='0xa85254'/>
+        <vtable-address name='building_window_glassst' value='0xa853d4'/>
+        <vtable-address name='building_workshopst' value='0xa859d4'/>
+        <vtable-address name='buildingst' value='0xa80ba4'/>
+        <vtable-address name='cave_column_rectanglest' value='0xa7fdd0'/>
+        <vtable-address name='cave_columnst' value='0xa7fdc4'/>
+        <vtable-address name='creature_interaction_effect_bleedingst' value='0xadf52c'/>
+        <vtable-address name='creature_interaction_effect_blistersst' value='0xadf49c'/>
+        <vtable-address name='creature_interaction_effect_bruisingst' value='0xadf478'/>
+        <vtable-address name='creature_interaction_effect_cough_bloodst' value='0xadf550'/>
+        <vtable-address name='creature_interaction_effect_dizzinessst' value='0xadf64c'/>
+        <vtable-address name='creature_interaction_effect_drowsinessst' value='0xadf628'/>
+        <vtable-address name='creature_interaction_effect_feverst' value='0xadf508'/>
+        <vtable-address name='creature_interaction_effect_impair_functionst' value='0xadf604'/>
+        <vtable-address name='creature_interaction_effect_nauseast' value='0xadf598'/>
+        <vtable-address name='creature_interaction_effect_necrosisst' value='0xadf5e0'/>
+        <vtable-address name='creature_interaction_effect_numbnessst' value='0xadf4c0'/>
+        <vtable-address name='creature_interaction_effect_oozingst' value='0xadf454'/>
+        <vtable-address name='creature_interaction_effect_painst' value='0xadf40c'/>
+        <vtable-address name='creature_interaction_effect_paralysisst' value='0xadf4e4'/>
+        <vtable-address name='creature_interaction_effect_swellingst' value='0xadf430'/>
+        <vtable-address name='creature_interaction_effect_unconsciousnessst' value='0xadf5bc'/>
+        <vtable-address name='creature_interaction_effect_vomit_bloodst' value='0xadf574'/>
+        <vtable-address name='creature_interaction_effectst' value='0xadf3e8'/>
+        <vtable-address name='feature_alteration_new_lava_fill_zst' value='0xaa2ac8'/>
+        <vtable-address name='feature_alteration_new_pop_maxst' value='0xaa2ab4'/>
+        <vtable-address name='feature_alterationst' value='0xaa2aa0'/>
+        <vtable-address name='feature_cavest' value='0xaa2b14'/>
+        <vtable-address name='feature_deep_special_tubest' value='0xaa2b84'/>
+        <vtable-address name='feature_deep_surface_portalst' value='0xaa2ba0'/>
+        <vtable-address name='feature_init_cavest' value='0xaa2c74'/>
+        <vtable-address name='feature_init_deep_special_tubest' value='0xaa2df4'/>
+        <vtable-address name='feature_init_deep_surface_portalst' value='0xaa2e54'/>
+        <vtable-address name='feature_init_magma_core_from_layerst' value='0xaa2f14'/>
+        <vtable-address name='feature_init_magma_poolst' value='0xaa2d34'/>
+        <vtable-address name='feature_init_outdoor_riverst' value='0xaa2c14'/>
+        <vtable-address name='feature_init_pitst' value='0xaa2cd4'/>
+        <vtable-address name='feature_init_subterranean_from_layerst' value='0xaa2eb4'/>
+        <vtable-address name='feature_init_underworld_from_layerst' value='0xaa2f74'/>
+        <vtable-address name='feature_init_volcanost' value='0xaa2d94'/>
+        <vtable-address name='feature_initst' value='0xaa2a44'/>
+        <vtable-address name='feature_magma_core_from_layerst' value='0xaa2bd8'/>
+        <vtable-address name='feature_magma_poolst' value='0xaa2b4c'/>
+        <vtable-address name='feature_outdoor_riverst' value='0xaa2af8'/>
+        <vtable-address name='feature_pitst' value='0xaa2b30'/>
+        <vtable-address name='feature_subterranean_from_layerst' value='0xaa2bbc'/>
+        <vtable-address name='feature_underworld_from_layerst' value='0xaa2bf4'/>
+        <vtable-address name='feature_volcanost' value='0xaa2b68'/>
+        <vtable-address name='featurest' value='0xaa2adc'/>
+        <vtable-address name='flow_guide_trailing_flowst' value='0xaa311c'/>
+        <vtable-address name='flow_guidest' value='0xaa3100'/>
+        <vtable-address name='general_ref_artifactst' value='0xac2a00'/>
+        <vtable-address name='general_ref_building_cagedst' value='0xae7be8'/>
+        <vtable-address name='general_ref_building_chainst' value='0xae7bac'/>
+        <vtable-address name='general_ref_building_civzone_assignedst' value='0xae7a80'/>
+        <vtable-address name='general_ref_building_destinationst' value='0xae7c60'/>
+        <vtable-address name='general_ref_building_holderst' value='0xae7c24'/>
+        <vtable-address name='general_ref_building_nest_boxst' value='0xae7c9c'/>
+        <vtable-address name='general_ref_building_triggerst' value='0xae7abc'/>
+        <vtable-address name='general_ref_building_triggertargetst' value='0xae7af8'/>
+        <vtable-address name='general_ref_building_use_target_1st' value='0xae7b34'/>
+        <vtable-address name='general_ref_building_use_target_2st' value='0xae7b70'/>
+        <vtable-address name='general_ref_building_well_tagst' value='0xaa25c8'/>
+        <vtable-address name='general_ref_buildingst' value='0xaa258c'/>
+        <vtable-address name='general_ref_coinbatchst' value='0xac2a78'/>
+        <vtable-address name='general_ref_contained_in_itemst' value='0xae7a08'/>
+        <vtable-address name='general_ref_contains_itemst' value='0xae79cc'/>
+        <vtable-address name='general_ref_contains_unitst' value='0xae760c'/>
+        <vtable-address name='general_ref_entity_art_imagest' value='0xa9e160'/>
+        <vtable-address name='general_ref_entity_itemownerst' value='0xae7d8c'/>
+        <vtable-address name='general_ref_entity_offeredst' value='0xae7d50'/>
+        <vtable-address name='general_ref_entity_stolenst' value='0xae7d14'/>
+        <vtable-address name='general_ref_entityst' value='0xae7cd8'/>
+        <vtable-address name='general_ref_is_artifactst' value='0xae751c'/>
+        <vtable-address name='general_ref_is_nemesisst' value='0xae7594'/>
+        <vtable-address name='general_ref_item_typest' value='0xac2a3c'/>
+        <vtable-address name='general_ref_itemst' value='0xae7990'/>
+        <vtable-address name='general_ref_mapsquarest' value='0xa9e124'/>
+        <vtable-address name='general_ref_nemesisst' value='0xae7558'/>
+        <vtable-address name='general_ref_projectilest' value='0xae7a44'/>
+        <vtable-address name='general_ref_unit_beateest' value='0xae7738'/>
+        <vtable-address name='general_ref_unit_cageest' value='0xae76fc'/>
+        <vtable-address name='general_ref_unit_foodreceiverst' value='0xae7774'/>
+        <vtable-address name='general_ref_unit_holderst' value='0xae7918'/>
+        <vtable-address name='general_ref_unit_infantst' value='0xae7828'/>
+        <vtable-address name='general_ref_unit_itemownerst' value='0xae78a0'/>
+        <vtable-address name='general_ref_unit_kidnapeest' value='0xae77b0'/>
+        <vtable-address name='general_ref_unit_milkeest' value='0xae7648'/>
+        <vtable-address name='general_ref_unit_patientst' value='0xae77ec'/>
+        <vtable-address name='general_ref_unit_sheareest' value='0xae7684'/>
+        <vtable-address name='general_ref_unit_slaughtereest' value='0xae7864'/>
+        <vtable-address name='general_ref_unit_tradebringerst' value='0xae78dc'/>
+        <vtable-address name='general_ref_unit_traineest' value='0xae76c0'/>
+        <vtable-address name='general_ref_unit_workerst' value='0xae7954'/>
+        <vtable-address name='general_ref_unitst' value='0xae75d0'/>
+        <vtable-address name='general_refst' value='0xa9e0e8'/>
+        <vtable-address name='histfig_entity_link_criminalst' value='0xabfdc8'/>
+        <vtable-address name='histfig_entity_link_enemyst' value='0xabfdb0'/>
+        <vtable-address name='histfig_entity_link_former_memberst' value='0xabfd08'/>
+        <vtable-address name='histfig_entity_link_former_mercenaryst' value='0xabfd38'/>
+        <vtable-address name='histfig_entity_link_former_prisonerst' value='0xabfd98'/>
+        <vtable-address name='histfig_entity_link_former_slavest' value='0xabfd68'/>
+        <vtable-address name='histfig_entity_link_herost' value='0xabfde0'/>
+        <vtable-address name='histfig_entity_link_memberst' value='0xabfcf0'/>
+        <vtable-address name='histfig_entity_link_mercenaryst' value='0xabfd20'/>
+        <vtable-address name='histfig_entity_link_positionst' value='0xabfdf8'/>
+        <vtable-address name='histfig_entity_link_prisonerst' value='0xabfd80'/>
+        <vtable-address name='histfig_entity_link_slavest' value='0xabfd50'/>
+        <vtable-address name='histfig_entity_linkst' value='0xabfcd8'/>
+        <vtable-address name='histfig_hf_link_childst' value='0xabfeec'/>
+        <vtable-address name='histfig_hf_link_deityst' value='0xabff00'/>
+        <vtable-address name='histfig_hf_link_fatherst' value='0xabfec4'/>
+        <vtable-address name='histfig_hf_link_imprisonerst' value='0xabff3c'/>
+        <vtable-address name='histfig_hf_link_loverst' value='0xabff14'/>
+        <vtable-address name='histfig_hf_link_motherst' value='0xabfeb0'/>
+        <vtable-address name='histfig_hf_link_prisonerst' value='0xabff28'/>
+        <vtable-address name='histfig_hf_link_spousest' value='0xabfed8'/>
+        <vtable-address name='histfig_hf_linkst' value='0xabfe9c'/>
+        <vtable-address name='histfig_site_link_hangoutst' value='0xabfe60'/>
+        <vtable-address name='histfig_site_link_home_site_abstract_buildingst' value='0xabfe74'/>
+        <vtable-address name='histfig_site_link_home_site_realization_buildingst' value='0xabfe88'/>
+        <vtable-address name='histfig_site_link_lairst' value='0xabfe24'/>
+        <vtable-address name='histfig_site_link_seat_of_powerst' value='0xabfe4c'/>
+        <vtable-address name='histfig_site_link_shopkeeperst' value='0xabfe38'/>
+        <vtable-address name='histfig_site_linkst' value='0xabfe10'/>
+        <vtable-address name='history_event_add_hf_entity_linkst' value='0xac0a94'/>
+        <vtable-address name='history_event_add_hf_hf_linkst' value='0xac0d14'/>
+        <vtable-address name='history_event_add_hf_site_linkst' value='0xac0e54'/>
+        <vtable-address name='history_event_agreements_voidedst' value='0xaae2dc'/>
+        <vtable-address name='history_event_artifact_createdst' value='0xaae37c'/>
+        <vtable-address name='history_event_artifact_droppedst' value='0xac1354'/>
+        <vtable-address name='history_event_artifact_foundst' value='0xac1214'/>
+        <vtable-address name='history_event_artifact_hiddenst' value='0xac10d4'/>
+        <vtable-address name='history_event_artifact_lostst' value='0xaae41c'/>
+        <vtable-address name='history_event_artifact_possessedst' value='0xac1174'/>
+        <vtable-address name='history_event_artifact_recoveredst' value='0xac12b4'/>
+        <vtable-address name='history_event_body_abusedst' value='0xac0f94'/>
+        <vtable-address name='history_event_change_creature_typest' value='0xac1714'/>
+        <vtable-address name='history_event_change_hf_jobst' value='0xac0c74'/>
+        <vtable-address name='history_event_change_hf_statest' value='0xac0bd4'/>
+        <vtable-address name='history_event_collection_abductionst' value='0xa9e040'/>
+        <vtable-address name='history_event_collection_battlest' value='0xabfbf8'/>
+        <vtable-address name='history_event_collection_beast_attackst' value='0xabfca0'/>
+        <vtable-address name='history_event_collection_duelst' value='0xabfc30'/>
+        <vtable-address name='history_event_collection_journeyst' value='0xa9e0b0'/>
+        <vtable-address name='history_event_collection_site_conqueredst' value='0xabfc68'/>
+        <vtable-address name='history_event_collection_theftst' value='0xa9e078'/>
+        <vtable-address name='history_event_collection_warst' value='0xa9e008'/>
+        <vtable-address name='history_event_collectionst' value='0xabfbc0'/>
+        <vtable-address name='history_event_create_entity_positionst' value='0xaa1edc'/>
+        <vtable-address name='history_event_created_buildingst' value='0xaa193c'/>
+        <vtable-address name='history_event_created_sitest' value='0xaa189c'/>
+        <vtable-address name='history_event_created_world_constructionst' value='0xaa19dc'/>
+        <vtable-address name='history_event_creature_devouredst' value='0xac0774'/>
+        <vtable-address name='history_event_diplomat_lostst' value='0xaae23c'/>
+        <vtable-address name='history_event_entity_createdst' value='0xaa1d9c'/>
+        <vtable-address name='history_event_entity_incorporatedst' value='0xaa1e3c'/>
+        <vtable-address name='history_event_entity_razed_buildingst' value='0xac0634'/>
+        <vtable-address name='history_event_first_contact_failedst' value='0xaadfbc'/>
+        <vtable-address name='history_event_first_contactst' value='0xaadf1c'/>
+        <vtable-address name='history_event_hf_destroyed_sitest' value='0xac03b4'/>
+        <vtable-address name='history_event_hf_razed_buildingst' value='0xac06d4'/>
+        <vtable-address name='history_event_hist_figure_abductedst' value='0xaade7c'/>
+        <vtable-address name='history_event_hist_figure_diedst' value='0xa9c21c'/>
+        <vtable-address name='history_event_hist_figure_new_petst' value='0xaa1bbc'/>
+        <vtable-address name='history_event_hist_figure_reach_summitst' value='0xa9be04'/>
+        <vtable-address name='history_event_hist_figure_reunionst' value='0xac0954'/>
+        <vtable-address name='history_event_hist_figure_revivedst' value='0xac09f4'/>
+        <vtable-address name='history_event_hist_figure_simple_battle_eventst' value='0xac08b4'/>
+        <vtable-address name='history_event_hist_figure_travelst' value='0xaa1b1c'/>
+        <vtable-address name='history_event_hist_figure_woundedst' value='0xac0814'/>
+        <vtable-address name='history_event_impersonate_hfst' value='0xac17b4'/>
+        <vtable-address name='history_event_item_stolenst' value='0xaae4bc'/>
+        <vtable-address name='history_event_masterpiece_created_arch_constructst' value='0xa867f4'/>
+        <vtable-address name='history_event_masterpiece_created_arch_designst' value='0xa86754'/>
+        <vtable-address name='history_event_masterpiece_created_dye_itemst' value='0xac1494'/>
+        <vtable-address name='history_event_masterpiece_created_engravingst' value='0xac1674'/>
+        <vtable-address name='history_event_masterpiece_created_foodst' value='0xac15d4'/>
+        <vtable-address name='history_event_masterpiece_created_item_improvementst' value='0xac1534'/>
+        <vtable-address name='history_event_masterpiece_created_itemst' value='0xac13f4'/>
+        <vtable-address name='history_event_masterpiece_lostst' value='0xa7fddc'/>
+        <vtable-address name='history_event_merchantst' value='0xac1034'/>
+        <vtable-address name='history_event_reclaim_sitest' value='0xaa1a7c'/>
+        <vtable-address name='history_event_remove_hf_entity_linkst' value='0xac0b34'/>
+        <vtable-address name='history_event_remove_hf_hf_linkst' value='0xac0db4'/>
+        <vtable-address name='history_event_remove_hf_site_linkst' value='0xac0ef4'/>
+        <vtable-address name='history_event_replaced_buildingst' value='0xac0594'/>
+        <vtable-address name='history_event_site_abandonedst' value='0xac04f4'/>
+        <vtable-address name='history_event_site_diedst' value='0xac0454'/>
+        <vtable-address name='history_event_topicagreement_concludedst' value='0xaae05c'/>
+        <vtable-address name='history_event_topicagreement_madest' value='0xaae19c'/>
+        <vtable-address name='history_event_topicagreement_rejectedst' value='0xaae0fc'/>
+        <vtable-address name='history_event_war_attacked_sitest' value='0xabfff4'/>
+        <vtable-address name='history_event_war_destroyed_sitest' value='0xac0094'/>
+        <vtable-address name='history_event_war_field_battlest' value='0xabff54'/>
+        <vtable-address name='history_event_war_peace_acceptedst' value='0xaa1c5c'/>
+        <vtable-address name='history_event_war_peace_rejectedst' value='0xaa1cfc'/>
+        <vtable-address name='history_event_war_plundered_sitest' value='0xac0134'/>
+        <vtable-address name='history_event_war_site_new_leaderst' value='0xac0274'/>
+        <vtable-address name='history_event_war_site_taken_overst' value='0xac0314'/>
+        <vtable-address name='history_event_war_site_tribute_forcedst' value='0xac01d4'/>
+        <vtable-address name='history_eventst' value='0xabfb24'/>
+        <vtable-address name='interface_button_building_category_selectorst' value='0xa9c088'/>
+        <vtable-address name='interface_button_building_material_selectorst' value='0xa9c070'/>
+        <vtable-address name='interface_button_building_new_jobst' value='0xa9c0a0'/>
+        <vtable-address name='interface_button_buildingst' value='0xa95814'/>
+        <vtable-address name='interface_button_button_designate_selectst' value='0xa958a4'/>
+        <vtable-address name='interface_button_button_donest' value='0xa958bc'/>
+        <vtable-address name='interface_button_button_light_up_selectorst' value='0xa95ce0'/>
+        <vtable-address name='interface_button_button_open_bitem_designationst' value='0xa958d4'/>
+        <vtable-address name='interface_button_button_open_traffic_designationst' value='0xa958ec'/>
+        <vtable-address name='interface_button_buttonst' value='0xa9588c'/>
+        <vtable-address name='interface_button_construction_building_selectorst' value='0xa9585c'/>
+        <vtable-address name='interface_button_construction_category_selectorst' value='0xa95844'/>
+        <vtable-address name='interface_button_construction_donest' value='0xa95874'/>
+        <vtable-address name='interface_button_constructionst' value='0xa9582c'/>
+        <vtable-address name='interface_buttonst' value='0xa957fc'/>
+        <vtable-address name='item_actualst' value='0xa80814'/>
+        <vtable-address name='item_ammost' value='0xaa0adc'/>
+        <vtable-address name='item_amuletst' value='0xac9a44'/>
+        <vtable-address name='item_animaltrapst' value='0xac77e4'/>
+        <vtable-address name='item_anvilst' value='0xacb254'/>
+        <vtable-address name='item_armorst' value='0xa9f63c'/>
+        <vtable-address name='item_armorstandst' value='0xac8c84'/>
+        <vtable-address name='item_backpackst' value='0xaa11bc'/>
+        <vtable-address name='item_ballistaarrowheadst' value='0xac4b34'/>
+        <vtable-address name='item_ballistapartsst' value='0xacc6f4'/>
+        <vtable-address name='item_barrelst' value='0xa9f2cc'/>
+        <vtable-address name='item_barst' value='0xac2c44'/>
+        <vtable-address name='item_bedst' value='0xa9e50c'/>
+        <vtable-address name='item_binst' value='0xac8914'/>
+        <vtable-address name='item_blocksst' value='0xac3324'/>
+        <vtable-address name='item_body_componentst' value='0xa8b8cc'/>
+        <vtable-address name='item_boulderst' value='0xaa2604'/>
+        <vtable-address name='item_boxst' value='0xaa076c'/>
+        <vtable-address name='item_braceletst' value='0xacab74'/>
+        <vtable-address name='item_bucketst' value='0xac7474'/>
+        <vtable-address name='item_cabinetst' value='0xac9364'/>
+        <vtable-address name='item_cagest' value='0xac7104'/>
+        <vtable-address name='item_catapultpartsst' value='0xacc384'/>
+        <vtable-address name='item_chainst' value='0xac5fd4'/>
+        <vtable-address name='item_chairst' value='0xa9ebec'/>
+        <vtable-address name='item_cheesest' value='0xac4ea4'/>
+        <vtable-address name='item_clothst' value='0xac5584'/>
+        <vtable-address name='item_coffinst' value='0xac7b54'/>
+        <vtable-address name='item_coinst' value='0xa9ba94'/>
+        <vtable-address name='item_constructedst' value='0xa9a284'/>
+        <vtable-address name='item_corpsepiecest' value='0xa8bc3c'/>
+        <vtable-address name='item_corpsest' value='0xa98de4'/>
+        <vtable-address name='item_craftedst' value='0xa99f14'/>
+        <vtable-address name='item_crownst' value='0xaca124'/>
+        <vtable-address name='item_crutchst' value='0xacc014'/>
+        <vtable-address name='item_doorst' value='0xa9a5f4'/>
+        <vtable-address name='item_drinkst' value='0xa99154'/>
+        <vtable-address name='item_earringst' value='0xaca804'/>
+        <vtable-address name='item_eggst' value='0xa99ba4'/>
+        <vtable-address name='item_figurinest' value='0xac96d4'/>
+        <vtable-address name='item_fish_rawst' value='0xac3d74'/>
+        <vtable-address name='item_fishst' value='0xa9e19c'/>
+        <vtable-address name='item_flaskst' value='0xa9ef5c'/>
+        <vtable-address name='item_floodgatest' value='0xac58f4'/>
+        <vtable-address name='item_foodst' value='0xac5214'/>
+        <vtable-address name='item_gemst' value='0xacaee4'/>
+        <vtable-address name='item_globst' value='0xa99834'/>
+        <vtable-address name='item_glovesst' value='0xaa03fc'/>
+        <vtable-address name='item_gobletst' value='0xac6344'/>
+        <vtable-address name='item_gratest' value='0xac5c64'/>
+        <vtable-address name='item_hatch_coverst' value='0xa9a964'/>
+        <vtable-address name='item_helmst' value='0xaa008c'/>
+        <vtable-address name='item_instrumentst' value='0xac66b4'/>
+        <vtable-address name='item_leavesst' value='0xac47c4'/>
+        <vtable-address name='item_liquid_miscst' value='0xa812f4'/>
+        <vtable-address name='item_meatst' value='0xa8bfac'/>
+        <vtable-address name='item_millstonest' value='0xac85a4'/>
+        <vtable-address name='item_orthopedic_castst' value='0xacbca4'/>
+        <vtable-address name='item_pantsst' value='0xaa0e4c'/>
+        <vtable-address name='item_petst' value='0xac40e4'/>
+        <vtable-address name='item_pipe_sectionst' value='0xaccdd4'/>
+        <vtable-address name='item_plantst' value='0xa81d44'/>
+        <vtable-address name='item_powder_miscst' value='0xa994c4'/>
+        <vtable-address name='item_quernst' value='0xa9b3b4'/>
+        <vtable-address name='item_quiverst' value='0xaa152c'/>
+        <vtable-address name='item_remainsst' value='0xa81664'/>
+        <vtable-address name='item_ringst' value='0xaca494'/>
+        <vtable-address name='item_rockst' value='0xac3a04'/>
+        <vtable-address name='item_roughst' value='0xac3694'/>
+        <vtable-address name='item_scepterst' value='0xac9db4'/>
+        <vtable-address name='item_seedsst' value='0xaad6dc'/>
+        <vtable-address name='item_shieldst' value='0xa9fd1c'/>
+        <vtable-address name='item_shoesst' value='0xa9f9ac'/>
+        <vtable-address name='item_siegeammost' value='0xacca64'/>
+        <vtable-address name='item_skin_tannedst' value='0xac4454'/>
+        <vtable-address name='item_slabst' value='0xac8234'/>
+        <vtable-address name='item_smallgemst' value='0xac2fb4'/>
+        <vtable-address name='item_splintst' value='0xacb934'/>
+        <vtable-address name='item_statuest' value='0xac7ec4'/>
+        <vtable-address name='item_tablest' value='0xa9b044'/>
+        <vtable-address name='item_threadst' value='0xaada4c'/>
+        <vtable-address name='item_toolst' value='0xa9acd4'/>
+        <vtable-address name='item_totemst' value='0xacb5c4'/>
+        <vtable-address name='item_toyst' value='0xac6a24'/>
+        <vtable-address name='item_traction_benchst' value='0xa9e87c'/>
+        <vtable-address name='item_trapcompst' value='0xacd4b4'/>
+        <vtable-address name='item_trappartsst' value='0xacd144'/>
+        <vtable-address name='item_verminst' value='0xa819d4'/>
+        <vtable-address name='item_weaponrackst' value='0xac8ff4'/>
+        <vtable-address name='item_weaponst' value='0xa9b724'/>
+        <vtable-address name='item_windowst' value='0xac6d94'/>
+        <vtable-address name='item_woodst' value='0xa98a74'/>
+        <vtable-address name='itemdef_ammost' value='0xacdf64'/>
+        <vtable-address name='itemdef_armorst' value='0xacdf50'/>
+        <vtable-address name='itemdef_foodst' value='0xacdff0'/>
+        <vtable-address name='itemdef_glovesst' value='0xacdf8c'/>
+        <vtable-address name='itemdef_helmst' value='0xacdfc8'/>
+        <vtable-address name='itemdef_instrumentst' value='0xacdf3c'/>
+        <vtable-address name='itemdef_pantsst' value='0xacdfdc'/>
+        <vtable-address name='itemdef_shieldst' value='0xacdfb4'/>
+        <vtable-address name='itemdef_shoesst' value='0xacdfa0'/>
+        <vtable-address name='itemdef_siegeammost' value='0xacdf78'/>
+        <vtable-address name='itemdef_toolst' value='0xacdf14'/>
+        <vtable-address name='itemdef_toyst' value='0xacdf28'/>
+        <vtable-address name='itemdef_trapcompst' value='0xacdf00'/>
+        <vtable-address name='itemdef_weaponst' value='0xacdeec'/>
+        <vtable-address name='itemdefst' value='0xacded8'/>
+        <vtable-address name='itemimprovement_art_imagest' value='0xac2adc'/>
+        <vtable-address name='itemimprovement_bandsst' value='0xac2b54'/>
+        <vtable-address name='itemimprovement_clothst' value='0xac2bf4'/>
+        <vtable-address name='itemimprovement_coveredst' value='0xac2b04'/>
+        <vtable-address name='itemimprovement_itemspecificst' value='0xac2ba4'/>
+        <vtable-address name='itemimprovement_rings_hangingst' value='0xac2b2c'/>
+        <vtable-address name='itemimprovement_sewn_imagest' value='0xac2c1c'/>
+        <vtable-address name='itemimprovement_spikesst' value='0xac2b7c'/>
+        <vtable-address name='itemimprovement_threadst' value='0xac2bcc'/>
+        <vtable-address name='itemimprovementst' value='0xac2ab4'/>
+        <vtable-address name='itemst' value='0xac2694'/>
+        <vtable-address name='KeybindingScreen' value='0xaddd64'/>
+        <vtable-address name='layer_object_buttonst' value='0xa959e4'/>
+        <vtable-address name='layer_object_listst' value='0xa95a44'/>
+        <vtable-address name='machine_standardst' value='0xade220'/>
+        <vtable-address name='machinest' value='0xade208'/>
+        <vtable-address name='MacroScreenLoad' value='0xaddd90'/>
+        <vtable-address name='MacroScreenSave' value='0xadddbc'/>
+        <vtable-address name='proj_itemst' value='0xa820b0'/>
+        <vtable-address name='proj_magicst' value='0xae71dc'/>
+        <vtable-address name='proj_unitst' value='0xa8730c'/>
+        <vtable-address name='projst' value='0xa80b80'/>
+        <vtable-address name='reaction_product_item_improvementst' value='0xae7504'/>
+        <vtable-address name='reaction_product_itemst' value='0xae74ec'/>
+        <vtable-address name='reaction_productst' value='0xae74d4'/>
+        <vtable-address name='reaction_reagent_itemst' value='0xae74ac'/>
+        <vtable-address name='reaction_reagentst' value='0xae7484'/>
+        <vtable-address name='region_block_event_sphere_fieldst' value='0xaee210'/>
+        <vtable-address name='region_block_eventst' value='0xaee1f8'/>
+        <vtable-address name='renderer_2d' value='0xa9c580'/>
+        <vtable-address name='renderer_2d_base' value='0xa9c554'/>
+        <vtable-address name='renderer_accum_buffer' value='0xa9c624'/>
+        <vtable-address name='renderer_framebuffer' value='0xa9c660'/>
+        <vtable-address name='renderer_offscreen' value='0xaee228'/>
+        <vtable-address name='renderer_once' value='0xa9c5ac'/>
+        <vtable-address name='renderer_opengl' value='0xa9c518'/>
+        <vtable-address name='renderer_partial' value='0xa9c5e8'/>
+        <vtable-address name='renderer_vbo' value='0xa9c69c'/>
+        <vtable-address name='resource_allotment_specifier_anvilst' value='0xaef530'/>
+        <vtable-address name='resource_allotment_specifier_armor_bodyst' value='0xaef440'/>
+        <vtable-address name='resource_allotment_specifier_armor_bootsst' value='0xaef47c'/>
+        <vtable-address name='resource_allotment_specifier_armor_glovesst' value='0xaef468'/>
+        <vtable-address name='resource_allotment_specifier_armor_helmst' value='0xaef490'/>
+        <vtable-address name='resource_allotment_specifier_armor_pantsst' value='0xaef454'/>
+        <vtable-address name='resource_allotment_specifier_backpackst' value='0xaef580'/>
+        <vtable-address name='resource_allotment_specifier_bagst' value='0xaef5a8'/>
+        <vtable-address name='resource_allotment_specifier_bedst' value='0xaef5bc'/>
+        <vtable-address name='resource_allotment_specifier_bonest' value='0xaef5e4'/>
+        <vtable-address name='resource_allotment_specifier_boxst' value='0xaef404'/>
+        <vtable-address name='resource_allotment_specifier_cabinetst' value='0xaef3dc'/>
+        <vtable-address name='resource_allotment_specifier_chairst' value='0xaef3f0'/>
+        <vtable-address name='resource_allotment_specifier_cheesest' value='0xaef684'/>
+        <vtable-address name='resource_allotment_specifier_clothing_bodyst' value='0xaef4a4'/>
+        <vtable-address name='resource_allotment_specifier_clothing_bootsst' value='0xaef4e0'/>
+        <vtable-address name='resource_allotment_specifier_clothing_glovesst' value='0xaef4cc'/>
+        <vtable-address name='resource_allotment_specifier_clothing_helmst' value='0xaef4f4'/>
+        <vtable-address name='resource_allotment_specifier_clothing_pantsst' value='0xaef4b8'/>
+        <vtable-address name='resource_allotment_specifier_clothst' value='0xaef38c'/>
+        <vtable-address name='resource_allotment_specifier_craftsst' value='0xaef3a0'/>
+        <vtable-address name='resource_allotment_specifier_cropst' value='0xaef364'/>
+        <vtable-address name='resource_allotment_specifier_extractst' value='0xaef670'/>
+        <vtable-address name='resource_allotment_specifier_flaskst' value='0xaef594'/>
+        <vtable-address name='resource_allotment_specifier_gemsst' value='0xaef544'/>
+        <vtable-address name='resource_allotment_specifier_hornst' value='0xaef5f8'/>
+        <vtable-address name='resource_allotment_specifier_leatherst' value='0xaef558'/>
+        <vtable-address name='resource_allotment_specifier_meatst' value='0xaef5d0'/>
+        <vtable-address name='resource_allotment_specifier_metalst' value='0xaef418'/>
+        <vtable-address name='resource_allotment_specifier_pearlst' value='0xaef648'/>
+        <vtable-address name='resource_allotment_specifier_powderst' value='0xaef6ac'/>
+        <vtable-address name='resource_allotment_specifier_quiverst' value='0xaef56c'/>
+        <vtable-address name='resource_allotment_specifier_shellst' value='0xaef60c'/>
+        <vtable-address name='resource_allotment_specifier_skinst' value='0xaef698'/>
+        <vtable-address name='resource_allotment_specifier_soapst' value='0xaef65c'/>
+        <vtable-address name='resource_allotment_specifier_stonest' value='0xaef3b4'/>
+        <vtable-address name='resource_allotment_specifier_tablest' value='0xaef3c8'/>
+        <vtable-address name='resource_allotment_specifier_tallowst' value='0xaef620'/>
+        <vtable-address name='resource_allotment_specifier_threadst' value='0xaef378'/>
+        <vtable-address name='resource_allotment_specifier_toothst' value='0xaef634'/>
+        <vtable-address name='resource_allotment_specifier_weapon_meleest' value='0xaef508'/>
+        <vtable-address name='resource_allotment_specifier_weapon_rangedst' value='0xaef51c'/>
+        <vtable-address name='resource_allotment_specifier_woodst' value='0xaef42c'/>
+        <vtable-address name='resource_allotment_specifierst' value='0xaef350'/>
+        <vtable-address name='script_step_conditionalst' value='0xaee3fc'/>
+        <vtable-address name='script_step_constructtopiclistst' value='0xaee44c'/>
+        <vtable-address name='script_step_dipeventst' value='0xaee49c'/>
+        <vtable-address name='script_step_diphistoryst' value='0xaee488'/>
+        <vtable-address name='script_step_discussst' value='0xaee460'/>
+        <vtable-address name='script_step_invasionst' value='0xaee4b0'/>
+        <vtable-address name='script_step_setvarst' value='0xaee424'/>
+        <vtable-address name='script_step_simpleactionst' value='0xaee410'/>
+        <vtable-address name='script_step_textviewerst' value='0xaee474'/>
+        <vtable-address name='script_step_topicdiscussionst' value='0xaee438'/>
+        <vtable-address name='script_stepst' value='0xaee3e8'/>
+        <vtable-address name='script_var_longst' value='0xaee3e0'/>
+        <vtable-address name='script_var_unitst' value='0xaee3d8'/>
+        <vtable-address name='site_realization_building_info_castle_courtyardst' value='0xaef33c'/>
+        <vtable-address name='site_realization_building_info_castle_towerst' value='0xaef328'/>
+        <vtable-address name='site_realization_building_info_castle_wallst' value='0xaef314'/>
+        <vtable-address name='site_realization_building_infost' value='0xaef300'/>
+        <vtable-address name='squad_order_defend_burrowsst' value='0xaaddbc'/>
+        <vtable-address name='squad_order_kill_listst' value='0xa9c1dc'/>
+        <vtable-address name='squad_order_movest' value='0xa9c19c'/>
+        <vtable-address name='squad_order_patrol_routest' value='0xaaddfc'/>
+        <vtable-address name='squad_order_trainst' value='0xaade3c'/>
+        <vtable-address name='squad_orderst' value='0xa9c0e4'/>
+        <vtable-address name='task_kill_nemesisst' value='0xa89930'/>
+        <vtable-address name='task_seek_nemesisst' value='0xa8995c'/>
+        <vtable-address name='taskst' value='0xa898d8'/>
+        <vtable-address name='text_info_element_longst' value='0xa9c508'/>
+        <vtable-address name='text_info_element_stringst' value='0xa9c4f8'/>
+        <vtable-address name='text_info_elementst' value='0xa9c4e8'/>
+        <vtable-address name='type_info' value='0xa7e5c0'/>
+        <vtable-address name='viewscreen_adventure_logst' value='0xa98810'/>
+        <vtable-address name='viewscreen_announcelistst' value='0xaad238'/>
+        <vtable-address name='viewscreen_barterst' value='0xae387c'/>
+        <vtable-address name='viewscreen_buildinglistst' value='0xaad4a0'/>
+        <vtable-address name='viewscreen_buildingst' value='0xaad524'/>
+        <vtable-address name='viewscreen_choose_start_sitest' value='0xaef1a4'/>
+        <vtable-address name='viewscreen_civlistst' value='0xaad474'/>
+        <vtable-address name='viewscreen_conversationst' value='0xa89904'/>
+        <vtable-address name='viewscreen_createquotast' value='0xaad3c4'/>
+        <vtable-address name='viewscreen_customize_unitst' value='0xa95988'/>
+        <vtable-address name='viewscreen_dungeon_monsterstatusst' value='0xa98868'/>
+        <vtable-address name='viewscreen_dungeon_wrestlest' value='0xa9883c'/>
+        <vtable-address name='viewscreen_dungeonmodest' value='0xa987e4'/>
+        <vtable-address name='viewscreen_dwarfmodest' value='0xa9c124'/>
+        <vtable-address name='viewscreen_entityst' value='0xaad448'/>
+        <vtable-address name='viewscreen_export_graphical_mapst' value='0xaad104'/>
+        <vtable-address name='viewscreen_export_regionst' value='0xaad130'/>
+        <vtable-address name='viewscreen_game_cleanerst' value='0xaad1e0'/>
+        <vtable-address name='viewscreen_itemst' value='0xaad4f8'/>
+        <vtable-address name='viewscreen_jobmanagementst' value='0xaad398'/>
+        <vtable-address name='viewscreen_jobst' value='0xaad550'/>
+        <vtable-address name='viewscreen_justicest' value='0xaad2e8'/>
+        <vtable-address name='viewscreen_kitchenprefst' value='0xaad264'/>
+        <vtable-address name='viewscreen_layer_arena_creaturest' value='0xaad5a8'/>
+        <vtable-address name='viewscreen_layer_assigntradest' value='0xae39b0'/>
+        <vtable-address name='viewscreen_layer_choose_language_namest' value='0xaef1fc'/>
+        <vtable-address name='viewscreen_layer_currencyst' value='0xaad6b0'/>
+        <vtable-address name='viewscreen_layer_export_play_mapst' value='0xa95b54'/>
+        <vtable-address name='viewscreen_layer_militaryst' value='0xaffa78'/>
+        <vtable-address name='viewscreen_layer_musicsoundst' value='0xa95b28'/>
+        <vtable-address name='viewscreen_layer_noblelistst' value='0xaffde4'/>
+        <vtable-address name='viewscreen_layer_overall_healthst' value='0xaad62c'/>
+        <vtable-address name='viewscreen_layer_reactionst' value='0xaad684'/>
+        <vtable-address name='viewscreen_layer_squad_schedulest' value='0xaad57c'/>
+        <vtable-address name='viewscreen_layer_stockpilest' value='0xa95cb4'/>
+        <vtable-address name='viewscreen_layer_stone_restrictionst' value='0xaad658'/>
+        <vtable-address name='viewscreen_layer_unit_actionst' value='0xaad5d4'/>
+        <vtable-address name='viewscreen_layer_unit_healthst' value='0xaad600'/>
+        <vtable-address name='viewscreen_layer_unit_relationshipst' value='0xa95afc'/>
+        <vtable-address name='viewscreen_layer_workshop_profilest' value='0xa95ad0'/>
+        <vtable-address name='viewscreen_layer_world_gen_param_presetst' value='0xa95c88'/>
+        <vtable-address name='viewscreen_layer_world_gen_paramst' value='0xa95c5c'/>
+        <vtable-address name='viewscreen_layerst' value='0xa95aa4'/>
+        <vtable-address name='viewscreen_legendsst' value='0xaad188'/>
+        <vtable-address name='viewscreen_loadgamest' value='0xa95930'/>
+        <vtable-address name='viewscreen_meetingst' value='0xae38a8'/>
+        <vtable-address name='viewscreen_movieplayerst' value='0xac1fec'/>
+        <vtable-address name='viewscreen_new_regionst' value='0xaad15c'/>
+        <vtable-address name='viewscreen_noblest' value='0xaad4cc'/>
+        <vtable-address name='viewscreen_optionst' value='0xa95904'/>
+        <vtable-address name='viewscreen_overallstatusst' value='0xaad314'/>
+        <vtable-address name='viewscreen_petst' value='0xaad290'/>
+        <vtable-address name='viewscreen_pricest' value='0xaad2bc'/>
+        <vtable-address name='viewscreen_reportlistst' value='0xaad20c'/>
+        <vtable-address name='viewscreen_requestagreementst' value='0xae3984'/>
+        <vtable-address name='viewscreen_savegamest' value='0xa9595c'/>
+        <vtable-address name='viewscreen_selectitemst' value='0xa9c0b8'/>
+        <vtable-address name='viewscreen_setupadventurest' value='0xa98894'/>
+        <vtable-address name='viewscreen_setupdwarfgamest' value='0xaef1d0'/>
+        <vtable-address name='viewscreen_storesst' value='0xaad340'/>
+        <vtable-address name='viewscreen_textviewerst' value='0xae37f8'/>
+        <vtable-address name='viewscreen_titlest' value='0xaad1b4'/>
+        <vtable-address name='viewscreen_topicmeeting_fill_land_holder_positionsst' value='0xae392c'/>
+        <vtable-address name='viewscreen_topicmeeting_takerequestsst' value='0xae3900'/>
+        <vtable-address name='viewscreen_topicmeetingst' value='0xae38d4'/>
+        <vtable-address name='viewscreen_tradeagreementst' value='0xae3958'/>
+        <vtable-address name='viewscreen_tradegoodsst' value='0xae3850'/>
+        <vtable-address name='viewscreen_tradelistst' value='0xae3824'/>
+        <vtable-address name='viewscreen_treasurelistst' value='0xaad41c'/>
+        <vtable-address name='viewscreen_unitjobsst' value='0xaad3f0'/>
+        <vtable-address name='viewscreen_unitst' value='0xa959b4'/>
+        <vtable-address name='viewscreen_wagesst' value='0xaad36c'/>
+        <vtable-address name='viewscreenst' value='0xa898ac'/>
+        <vtable-address name='world_construction_bridgest' value='0xb01708'/>
+        <vtable-address name='world_construction_roadst' value='0xb016c0'/>
+        <vtable-address name='world_construction_square_bridgest' value='0xb01678'/>
+        <vtable-address name='world_construction_square_roadst' value='0xb01648'/>
+        <vtable-address name='world_construction_square_tunnelst' value='0xb01660'/>
+        <vtable-address name='world_construction_square_wallst' value='0xb01690'/>
+        <vtable-address name='world_construction_squarest' value='0xb01630'/>
+        <vtable-address name='world_construction_tunnelst' value='0xb016d8'/>
+        <vtable-address name='world_construction_wallst' value='0xb016f0'/>
+        <vtable-address name='world_constructionst' value='0xb016a8'/>
+        <vtable-address name='world_gen_param_basest' value='0xa95b80'/>
+        <vtable-address name='world_gen_param_charst' value='0xa95c04'/>
+        <vtable-address name='world_gen_param_memberst' value='0xa95bd8'/>
+        <vtable-address name='world_gen_param_seedst' value='0xa95c30'/>
+        <vtable-address name='world_gen_param_valuest' value='0xa95bac'/>
     </symbol-table>
                             .-"""-.
                            '       \

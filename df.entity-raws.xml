@@ -1,7 +1,7 @@
 <data-definition>
-    <enum-type type-name='entity_raw_flags'>
-        <enum-item name='CIV_CONTROLLABLE'/>
-        <enum-item name='INDIV_CONTROLLABLE'/>
+    <enum-type type-name='entity_raw_flags'> bay12: EntityDefFlagType
+        <enum-item name='CIV_CONTROLLABLE'/> SITE_CONTROLLABLE
+        <enum-item name='INDIV_CONTROLLABLE'/> ALL_MAIN_POPS_CONTROLLABLE
         <enum-item name='LAYER_LINKED'/>
         <enum-item name='INDOOR_WOOD'/>
         <enum-item name='WOOD_ARMOR'/>
@@ -51,7 +51,7 @@
         <enum-item name='UNDEAD_CANDIDATE'/>
         <enum-item/>
         <enum-item name='SKULKING'/>
-        <enum-item/>
+        <enum-item name='HAS_LAND_HOLDER'/>
         <enum-item name='MERCHANT_NOBILITY'/>
 
         <enum-item name='TREE_CAP_DIPLOMACY'/>
@@ -66,27 +66,21 @@
         <enum-item name='WILL_ACCEPT_TRIBUTE'/>
     </enum-type>
 
-    <enum-type type-name='site_type'>
+    <enum-type type-name='site_type'> bay12: SiteType
         <enum-item name='PLAYER_FORTRESS'/>
         <enum-item name='DARK_FORTRESS'/>
         <enum-item name='CAVE'/>
         <enum-item name='CAVE_DETAILED'/>
         <enum-item name='TREE_CITY'/>
         <enum-item name='CITY'/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='IMPORTANT_LOCATION'/>
+        <enum-item name='LAIR'/>
         <enum-item name='FORTRESS'/>
         <enum-item/>
     </enum-type>
 
-    <enum-type type-name='world_construction_type'>
-        <enum-item name='ROAD'/>
-        <enum-item name='TUNNEL'/>
-        <enum-item name='BRIDGE'/>
-        <enum-item name='WALL'/>
-    </enum-type>
-
-    <enum-type type-name='ethic_type'>
+    <enum-type type-name='ethic_type' base-type='int16_t'> bay12: EthicType
+        <enum-item name='NONE' value='-1'/>
         <enum-item name='KILL_ENTITY_MEMBER'/>
         <enum-item name='KILL_NEUTRAL'/>
         <enum-item name='KILL_ENEMY'/>
@@ -111,7 +105,7 @@
         <enum-item name='MAKE_TROPHY_ANIMAL'/>
     </enum-type>
 
-    <enum-type type-name='ethic_response' base-type='int16_t'>
+    <enum-type type-name='ethic_response' base-type='int16_t'> bay12: EthicResponseType
         <enum-item name='NOT_APPLICABLE'/>
         <enum-item name='ACCEPTABLE'/>
         <enum-item name='PERSONAL_MATTER'/>
@@ -130,61 +124,46 @@
         <enum-item name='UNTHINKABLE'/>
     </enum-type>
 
-    <struct-type type-name='entity_raw' instance-vector='$global.world.raws.entities'>
+    <enum-type type-name='entity_name_type' base-type='int16_t'> bay12: EntityDefSelector
+        <enum-item name='OTHER' comment='MAIN'/>
+        <enum-item name='CIV'/>
+        <enum-item name='SITE'/>
+        <enum-item name='VESSEL'/>
+        <enum-item name='MILITARY_UNIT'/>
+        <enum-item name='RELIGION'/>
+        <enum-item name='TEMPLE'/>
+        <enum-item name='WAR'/>
+        <enum-item name='BATTLE'/>
+        <enum-item name='SIEGE'/>
+        <enum-item name='ROAD'/>
+        <enum-item name='BRIDGE'/>
+        <enum-item name='TUNNEL'/>
+        <enum-item name='WALL'/>
+    </enum-type>
+
+    <struct-type type-name='entity_raw' original-name='entity_defst' instance-vector='$global.world.raws.entities.all'>
         <stl-string name='code'/>
 
         <code-helper name='describe'>$.translation</code-helper>
 
-        <stl-vector name='creature_ids'>
-            <int16_t ref-target='creature_raw'/>
-        </stl-vector>
-        <stl-vector name='creatures'>
-            <pointer type-name='creature_raw'/>
-        </stl-vector>
+        <stl-vector name='creature_ids' type-name='int16_t' ref-target='creature_raw'/>
+        <stl-vector name='creatures' pointer-type='stl-string'/>
 
-        <compound name='equipment'>
-            <stl-vector name='digger_id'>
-                <int16_t ref-target='itemdef_weaponst'/>
-            </stl-vector>
-            <stl-vector name='weapon_id'>
-                <int16_t ref-target='itemdef_weaponst'/>
-            </stl-vector>
-            <stl-vector name='armor_id'>
-                <int16_t ref-target='itemdef_armorst'/>
-            </stl-vector>
-            <stl-vector name='ammo_id'>
-                <int16_t ref-target='itemdef_ammost'/>
-            </stl-vector>
-            <stl-vector name='helm_id'>
-                <int16_t ref-target='itemdef_helmst'/>
-            </stl-vector>
-            <stl-vector name='gloves_id'>
-                <int16_t ref-target='itemdef_glovesst'/>
-            </stl-vector>
-            <stl-vector name='shoes_id'>
-                <int16_t ref-target='itemdef_shoesst'/>
-            </stl-vector>
-            <stl-vector name='pants_id'>
-                <int16_t ref-target='itemdef_pantsst'/>
-            </stl-vector>
-            <stl-vector name='shield_id'>
-                <int16_t ref-target='itemdef_shieldst'/>
-            </stl-vector>
-            <stl-vector name='trapcomp_id'>
-                <int16_t ref-target='itemdef_trapcompst'/>
-            </stl-vector>
-            <stl-vector name='toy_id'>
-                <int16_t ref-target='itemdef_toyst'/>
-            </stl-vector>
-            <stl-vector name='instrument_id'>
-                <int16_t ref-target='itemdef_instrumentst'/>
-            </stl-vector>
-            <stl-vector name='tool_id'>
-                <int16_t ref-target='itemdef_toolst'/>
-            </stl-vector>
-            <stl-vector name='siegeammo_id'>
-                <int16_t ref-target='itemdef_siegeammost'/>
-            </stl-vector>
+        <compound name='equipment'> not an actual compound
+            <stl-vector name='digger_id' type-name='int16_t' ref-target='itemdef_weaponst'/>
+            <stl-vector name='weapon_id' type-name='int16_t' ref-target='itemdef_weaponst'/>
+            <stl-vector name='armor_id' type-name='int16_t' ref-target='itemdef_armorst'/>
+            <stl-vector name='ammo_id' type-name='int16_t' ref-target='itemdef_ammost'/>
+            <stl-vector name='helm_id' type-name='int16_t' ref-target='itemdef_helmst'/>
+            <stl-vector name='gloves_id' type-name='int16_t' ref-target='itemdef_glovesst'/>
+            <stl-vector name='shoes_id' type-name='int16_t' ref-target='itemdef_shoesst'/>
+            <stl-vector name='pants_id' type-name='int16_t' ref-target='itemdef_pantsst'/>
+            <stl-vector name='shield_id' type-name='int16_t' ref-target='itemdef_shieldst'/>
+            <stl-vector name='trapcomp_id' type-name='int16_t' ref-target='itemdef_trapcompst'/>
+            <stl-vector name='toy_id' type-name='int16_t' ref-target='itemdef_toyst'/>
+            <stl-vector name='instrument_id' type-name='int16_t' ref-target='itemdef_instrumentst'/>
+            <stl-vector name='tool_id' type-name='int16_t' ref-target='itemdef_toolst'/>
+            <stl-vector name='siegeammo_id' type-name='int16_t' ref-target='itemdef_siegeammost'/>
 
             <stl-vector name='armor_rarity' type-name='int8_t'/>
             <stl-vector name='helm_rarity' type-name='int8_t'/>
@@ -192,48 +171,20 @@
             <stl-vector name='shoes_rarity' type-name='int8_t'/>
             <stl-vector name='pants_rarity' type-name='int8_t'/>
 
-            <stl-vector name='digger_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='weapon_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='armor_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='ammo_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='helm_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='gloves_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='shoes_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='pants_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='shield_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='trapcomp_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='toy_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='instrument_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='siegeammo_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='tool_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
+            <stl-vector name='digger_str' pointer-type='stl-string'/>
+            <stl-vector name='weapon_str' pointer-type='stl-string'/>
+            <stl-vector name='armor_str' pointer-type='stl-string'/>
+            <stl-vector name='ammo_str' pointer-type='stl-string'/>
+            <stl-vector name='helm_str' pointer-type='stl-string'/>
+            <stl-vector name='gloves_str' pointer-type='stl-string'/>
+            <stl-vector name='shoes_str' pointer-type='stl-string'/>
+            <stl-vector name='pants_str' pointer-type='stl-string'/>
+            <stl-vector name='shield_str' pointer-type='stl-string'/>
+            <stl-vector name='trapcomp_str' pointer-type='stl-string'/>
+            <stl-vector name='toy_str' pointer-type='stl-string'/>
+            <stl-vector name='instrument_str' pointer-type='stl-string'/>
+            <stl-vector name='siegeammo_str' pointer-type='stl-string'/>
+            <stl-vector name='tool_str' pointer-type='stl-string'/>
         </compound>
 
         <stl-vector name='currency_value' type-name='int32_t'
@@ -242,47 +193,37 @@
         <df-flagarray name='flags' index-enum='entity_raw_flags'/>
         <stl-string name='translation'/>
 
-        <compound name='symbols'>
-            <static-array name='symbols1' count='14'>
-                <static-array count='12'>
-                    <stl-vector type-name='int32_t'/>
-                </static-array>
+        <compound name='symbols'> not an actual compound
+            <static-array name='symbols_major' type-name='language_word_table' index-enum='entity_name_type' count='14'/>
+            <static-array name='symbols_minor' type-name='language_word_table' index-enum='entity_name_type' count='14'/>
+            <static-array name='select_symbol' index-enum='entity_name_type' count='14'>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
-            <static-array name='symbols2' count='14'>
-                <static-array count='12'>
-                    <stl-vector type-name='int32_t'/>
-                </static-array>
+            <static-array name='subselect_symbol' index-enum='entity_name_type' count='14'>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
-            <static-array name='symbols3' count='14'>
-                <stl-vector/>
-            </static-array>
-            <static-array name='symbols4' count='14'>
-                <stl-vector/>
-            </static-array>
-            <static-array name='cull_symbol' count='14'>
-                <stl-vector/>
+            <static-array name='cull_symbol' index-enum='entity_name_type' count='14'>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
         </compound>
 
-        <compound name='habitat'>
-            <static-array name='sphere_alignment' type-name='int32_t' count='130' index-enum='sphere_type'/>
-            <static-array name='art_facet_modifier' type-name='int32_t' count='4' index-enum='art_facet_type'/>
-            <static-array name='art_image_element_modifier' type-name='int32_t' count='5' index-enum='art_image_element_type'/>
-            <static-array name='item_improvement_modifier' type-name='int32_t' count='9' index-enum='improvement_type'/>
-            <int32_t name='adventure_tier'/>
-            <static-array name='friendly_color' type-name='int16_t' count='3'/>
+        <static-array name='sphere_alignment' type-name='int32_t' count='130' index-enum='sphere_type'/>
+        <static-array name='art_facet_modifier' type-name='int32_t' count='4' index-enum='art_facet_type'/>
+        <static-array name='art_image_element_modifier' type-name='int32_t' count='5' index-enum='art_image_element_type'/>
+        <static-array name='item_improvement_modifier' type-name='int32_t' count='9' index-enum='improvement_type'/>
+        <int32_t name='adventure_tier'/>
+        <static-array name='friendly_color' type-name='int16_t' count='3'/>
 
-            <int32_t name='default_site_type'/>
-            <static-array name='likes_site' type-name='int8_t' count='10' index-enum='site_type'/>
-            <static-array name='tolerates_site' type-name='int8_t' count='10' index-enum='site_type'/>
+        <enum base-type='int32_t' name='default_site_type' type-name='world_site_type'/>
+        <static-array name='likes_site' type-name='int8_t' count='10' index-enum='site_type'/>
+        <static-array name='tolerates_site' type-name='int8_t' count='10' index-enum='site_type'/>
 
-            <static-array name='biome_support' type-name='int32_t' count='51' index-enum='biome_type'/>
-            <static-array name='start_biome' type-name='int8_t' count='51' index-enum='biome_type'/>
+        <static-array name='biome_support' type-name='int32_t' count='51' index-enum='biome_type'/>
+        <static-array name='start_biome' type-name='int8_t' count='51' index-enum='biome_type'/>
 
-            <static-array name='active_season' type-name='int8_t' count='4'/>
-        </compound>
+        <static-array name='active_season' type-name='int8_t' count='4' index-enum='season'/>
 
-        <compound name='progress_trigger'>
+        <compound name='progress_trigger'>  not an actual compound
             <int16_t name='population'/>
             <int16_t name='production'/>
             <int16_t name='trade'/>
@@ -299,14 +240,12 @@
         <int32_t name='max_pop_number'/>
         <int32_t name='max_starting_civ_number'/>
 
-        <stl-vector name='religion'>
-            <int16_t/>
-        </stl-vector>
+        <stl-vector name='religion' type-name='int16_t'/>
         <stl-vector name='religion_sphere'>
-            <int16_t/>
+            <enum base-type='int16_t' type-name='sphere_type'/>
         </stl-vector>
 
-        <compound name='jobs'>
+        <compound name='jobs'> not an actual compound
             <static-array name='permitted_job' type-name='bool'
                           index-enum='profession' count='106'/>
             <static-array name='permitted_labor' type-name='bool'
@@ -318,30 +257,25 @@
                           index-enum='world_construction_type' count='4'/>
         </compound>
 
-        <stl-vector name='positions'>
-            <pointer type-name='entity_position_raw'/>
-        </stl-vector>
+        <stl-vector name='positions' pointer-type='entity_position_raw'/>
 
         <static-array name='variable_positions' type-name='int8_t'
                       index-enum='entity_position_responsibility' count='25'/>
 
-        <stl-vector name='tissue_style'>
-            <pointer/>
+        <stl-vector name='tissue_styles'>
+            <pointer> bay12: entity_def_tissue_stylest
+                <stl-string name='name'/>
+                <stl-vector name='preferred_shapings' type-name='tissue_style_type'/>
+                <int16_t name='maintain_length_min'/>
+                <int16_t name='maintain_length_max'/>
+            </pointer>
         </stl-vector>
 
-        <compound name='workshops'>
-            <stl-vector name='permitted_building_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='permitted_building_id'>
-                <int32_t ref-target='building_def'/>
-            </stl-vector>
-            <stl-vector name='permitted_reaction_str'>
-                <pointer type-name='stl-string'/>
-            </stl-vector>
-            <stl-vector name='permitted_reaction_id'>
-                <int32_t/>
-            </stl-vector>
+        <compound name='workshops'> not an actual compound
+            <stl-vector name='permitted_building_str' pointer-type='stl-string'/>
+            <stl-vector name='permitted_building_id' type-name='int32_t' ref-target='building_def'/>
+            <stl-vector name='permitted_reaction_str' pointer-type='stl-string'/>
+            <stl-vector name='permitted_reaction_id' type-name='int32_t' ref-target='reaction'/>
         </compound>
 
         <compound name='land_holder_trigger'>
@@ -352,11 +286,11 @@
 
         <int32_t name='banditry'/>
 
-        <stl-vector name='unk2'/>
-        <stl-vector name='currency'/>
+        <stl-vector pointer-type='stl-string' name='currency_str1'/>
+        <stl-vector pointer-type='stl-string' name='currency_str2'/>
     </struct-type>
 
-    <enum-type type-name='entity_position_raw_flags'>
+    <enum-type type-name='entity_position_raw_flags'> bay12: EntityDefPositionFlagType
         <enum-item name='SITE'/>
         <enum-item name='ELECTED'/>
         <enum-item name='CONQUERED_SITE'/>
@@ -384,7 +318,8 @@
         <enum-item name='QUEST_GIVER'/>
     </enum-type>
 
-    <enum-type type-name='entity_position_responsibility'>
+    <enum-type type-name='entity_position_responsibility' base-type='int16_t'> bay12: PositionResponsibilityType
+        <enum-item name='NONE' value='-1'/>
         <enum-item name='LAW_MAKING'/>
         <enum-item name='LAW_ENFORCEMENT'/>
         <enum-item name='RECEIVE_DIPLOMATS'/>
@@ -412,28 +347,24 @@
         <enum-item name='HEALTH_MANAGEMENT'/>
     </enum-type>
 
-    <struct-type type-name='entity_position_raw'>
+    <struct-type type-name='entity_position_raw' original-name='entity_def_positionst'>
         <stl-string name='code'/>
         <int32_t name='id'/>
         <df-flagarray name='flags' index-enum='entity_position_raw_flags'/>
 
         <static-array name='allowed_creature_str' count='2'>
-            <stl-vector><pointer type-name='stl-string'/></stl-vector>
+            <stl-vector pointer-type='stl-string'/>
         </static-array>
-        <stl-vector name='allowed_creature' type-name='int32_t'/>
-        <stl-vector name='allowed_class'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='allowed_creature' type-name='int32_t' ref-target='creature_raw'/>
+        <stl-vector name='allowed_class' pointer-type='stl-string'/>
 
         <static-array name='rejected_creature_str' count='2'>
-            <stl-vector><pointer type-name='stl-string'/></stl-vector>
+            <stl-vector pointer-type='stl-string'/>
         </static-array>
-        <stl-vector name='rejected_creature' type-name='int32_t'/>
-        <stl-vector name='rejected_class'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='rejected_creature' type-name='int32_t' ref-target='creature_raw'/>
+        <stl-vector name='rejected_class' pointer-type='stl-string'/>
 
-        <static-array type-name='stl-string' name='name' count='2'/>
+        <static-array type-name='stl-string' name='name' count='2'/> bay12: string[EntityDefPositionStringType]
         <static-array type-name='stl-string' name='name_female' count='2'/>
         <static-array type-name='stl-string' name='name_male' count='2'/>
         <static-array type-name='stl-string' name='spouse' count='2'/>
@@ -444,9 +375,7 @@
 
         <int16_t name='squad_size'/>
 
-        <stl-vector name='commander_str'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='commander_str' pointer-type='stl-string'/>
         <stl-vector name='commander_id' type-name='int32_t'/>
         <stl-vector name='commander_types' type-name='int16_t'/>
 
@@ -458,14 +387,10 @@
         <stl-string name='replaced_by_str'/>
         <int32_t name='replaced_by'/>
 
-        <stl-vector name='appointed_by_str'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='appointed_by_str' pointer-type='stl-string'/>
         <stl-vector name='appointed_by' type-name='int32_t'/>
 
-        <stl-vector name='succession_by_position_str'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='succession_by_position_str' pointer-type='stl-string'/>
         <stl-vector name='succession_by_position' type-name='int32_t'/>
 
         <static-array type-name='bool' name='responsibilities' count='25' index-enum='entity_position_responsibility'/>
@@ -475,10 +400,12 @@
         <int32_t name='required_cabinets'/>
         <int32_t name='required_racks'/>
         <int32_t name='required_stands'/>
-        <int32_t name='required_office'/>
+
+        <int32_t name='required_office'/> bay12: int32_t[DemandRooms]
         <int32_t name='required_bedroom'/>
         <int32_t name='required_dining'/>
         <int32_t name='required_tomb'/>
+
         <int32_t name='mandate_max'/>
         <int32_t name='demand_max'/>
     </struct-type>

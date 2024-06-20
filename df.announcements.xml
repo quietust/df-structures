@@ -5,7 +5,7 @@
         <enum-item name='FEATURE_DISCOVERY'/>
         <enum-item name='STRUCK_DEEP_METAL'/>
         <enum-item name='STRUCK_MINERAL'/>
-        <enum-item name='STRUCT_ECONOMIC_MINERAL'/>
+        <enum-item name='STRUCK_ECONOMIC_MINERAL'/>
         <enum-item name='COMBAT_TWIST_WEAPON'/>
         <enum-item name='COMBAT_LET_ITEM_DROP'/>
         <enum-item name='COMBAT_START_CHARGE'/>
@@ -56,9 +56,9 @@
         <enum-item name='AMBUSH_DEFENDER'/>
         <enum-item name='AMBUSH_RESIDENT'/>
         <enum-item name='AMBUSH_THIEF'/>
-        <enum-item name='AMBUSH_SUPPORT_SKULKING'/>
-        <enum-item name='AMBUSH_SUPPORT_NATURE'/>
-        <enum-item name='AMBUSH_SUPPORT'/>
+        <enum-item name='AMBUSH_THIEF_SUPPORT_SKULKING'/>
+        <enum-item name='AMBUSH_THIEF_SUPPORT_NATURE'/>
+        <enum-item name='AMBUSH_THIEF_SUPPORT'/>
         <enum-item name='AMBUSH_MISCHIEVIOUS'/>
         <enum-item name='AMBUSH_SNATCHER'/>
         <enum-item name='AMBUSH_SNATCHER_SUPPORT'/>
@@ -146,7 +146,7 @@
         <enum-item name='CREATURE_STEALS_OBJECT'/>
     </enum-type>
 
-    <bitfield-type type-name='announcement_flags'>
+    <bitfield-type type-name='announcement_flags'> bay12: INIT_ANNOUNCEMENT_FLAG_*
         <flag-bit name='DO_MEGA' comment='BOX'/>
         <flag-bit name='PAUSE' comment='P'/>
         <flag-bit name='RECENTER' comment='R'/>
@@ -156,12 +156,12 @@
         <flag-bit name='UNIT_COMBAT_REPORT_ALL_ACTIVE' comment='UCR_A'/>
     </bitfield-type>
 
-    <struct-type type-name='announcements'>
+    <struct-type type-name='announcements' original-name='d_init_announcementst'>
         <static-array name='flags' type-name='announcement_flags'
                       count='144' index-enum='announcement_type'/>
     </struct-type>
 
-    <struct-type type-name='report'
+    <struct-type type-name='report' original-name='announcementst'
                  instance-vector='$global.world.status.reports' key-field='id'>
         <enum base-type='int16_t' name='type' type-name='announcement_type'
               comment='valid only if coordinates are'/>
@@ -174,10 +174,10 @@
 
         <int32_t name='duration' init-value='100'/>
 
-        <bitfield name='flags' base-type='uint8_t'>
+        <bitfield name='flags' base-type='uint8_t'> bay12: ANNOUNCEMENTFLAG_*
             <flag-bit name='continuation'
                       comment='When split into multiple lines, set on all but the first'/>
-            <flag-bit name='unk1'/>
+            <flag-bit name='unconscious'/>
             <flag-bit name='announcement'/>
         </bitfield>
 
@@ -190,7 +190,7 @@
         <int32_t name='time'/>
     </struct-type>
 
-    <struct-type type-name='popup_message'>
+    <struct-type type-name='popup_message' original-name='mega_announcementst'>
         <stl-string name='text'/>
 
         <int16_t name='color' init-value='7'/>

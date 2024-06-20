@@ -1,18 +1,18 @@
 <data-definition>
-    <enum-type type-name='creature_raw_flags'>
-        <enum-item/>
-        <enum-item name='EQUIPMENT_WAGON'/>
-        <enum-item name='MUNDANE'/>
-        <enum-item name='VERMIN_EATER'/>
-        <enum-item name='VERMIN_GROUNDER'/>
-        <enum-item name='VERMIN_ROTTER'/>
-        <enum-item name='VERMIN_SOIL'/>
-        <enum-item name='VERMIN_SOIL_COLONY'/>
+    <enum-type type-name='creature_raw_flags'> bay12: CreatureDefFlagType
+        <enum-item name='EQUIPMENT' comment="[EQUIPMENT_WAGON]"/>
+        <enum-item name='EQUIPMENT_WAGON' comment="[EQUIPMENT_WAGON]"/>
+        <enum-item name='MUNDANE' comment="[MUNDANE]"/>
+        <enum-item name='VERMIN_EATER' comment="[VERMIN_EATER] and [PENETRATEPOWER]"/>
+        <enum-item name='VERMIN_GROUNDER' comment="[VERMIN_GROUNDER]"/>
+        <enum-item name='VERMIN_ROTTER' comment="[VERMIN_ROTTER]"/>
+        <enum-item name='VERMIN_SOIL' comment="[VERMIN_SOIL]"/>
+        <enum-item name='VERMIN_SOIL_COLONY' comment="[VERMIN_SOIL_COLONY]"/>
 
-        <enum-item name='LARGE_ROAMING'/>
-        <enum-item name='VERMIN_FISH'/>
-        <enum-item name='LOOSE_CLUSTERS'/>
-        <enum-item name='FANCIFUL'/>
+        <enum-item name='LARGE_ROAMING' comment="[LARGE_ROAMING]"/>
+        <enum-item name='VERMIN_FISH' comment="[VERMIN_FISH]"/>
+        <enum-item name='LOOSE_CLUSTERS' comment="[LOOSE_CLUSTERS]"/>
+        <enum-item name='FANCIFUL' comment="[FANCIFUL]"/>
         <enum-item name='BIOME_MOUNTAIN'/>
         <enum-item name='BIOME_GLACIER'/>
         <enum-item name='BIOME_TUNDRA'/>
@@ -70,78 +70,71 @@
         <enum-item name='BIOME_RIVER_TROPICAL_FRESHWATER'/>
         <enum-item name='BIOME_RIVER_TROPICAL_BRACKISHWATER'/>
         <enum-item name='BIOME_RIVER_TROPICAL_SALTWATER'/>
-        <enum-item name='GOOD'/>
+        <enum-item name='GOOD' comment="[GOOD]"/>
 
-        <enum-item name='EVIL'/>
-        <enum-item name='SAVAGE'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='EVIL' comment="[EVIL]"/>
+        <enum-item name='SAVAGE' comment="[SAVAGE]"/>
+        <enum-item name='TWO_GENDERS'/>
+        <enum-item name='MATES_TO_BREED' comment='capable of breeding, [MALE] and [FEMALE] tags'/>
+        <enum-item name='HAS_MALE' comment="[MALE]"/>
+        <enum-item name='HAS_FEMALE' comment="[FEMALE]"/>
+        <enum-item name='SMALL_RACE' comment="any vermin"/>
+        <enum-item name='HAS_ANY_INTELLIGENT_LEARNS'/>
 
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='HAS_ANY_VERMIN_HATEABLE' comment="[VERMIN_HATEABLE]"/>
+        <enum-item name='OCCURS_AS_ENTITY_RACE' comment="included in entity_defaults.txt"/>
+        <enum-item name='HAS_ANY_LARGE_PREDATOR' comment="[LARGE_PREDATOR]"/>
+        <enum-item name='HAS_ANY_CURIOUS_BEAST'/>
+        <enum-item name='HAS_ANY_BENIGN' comment="[BENIGN]"/>
+        <enum-item name='HAS_ANY_NATURAL_ANIMAL' comment="[NATURAL]"/>
+        <enum-item name='HAS_ANY_MEGABEAST' comment="[MEGABEAST]"/>
+        <enum-item name='HAS_ANY_SEMIMEGABEAST' comment="[SEMIMEGABEAST]"/>
 
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='HAS_ANY_POWER'/>
+        <enum-item name='HAS_ANY_VERMIN_MICRO' comment="[VERMIN_MICRO]"/>
+        <enum-item name='HAS_ANY_NOT_FIREIMMUNE'/>
+        <enum-item name='HAS_ANY_CANNOT_BREATHE_WATER'/>
+        <enum-item name='HAS_ANY_CANNOT_BREATHE_AIR' comment="[AQUATIC]"/>
+        <enum-item name='HAS_ANY_NOT_FLIER'/>
+        <enum-item name='HAS_ANY_CAN_SWIM'/>
+        <enum-item name='HAS_ANY_COMMON_DOMESTIC' comment="[COMMON_DOMESTIC]"/>
 
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item name='GENERATED'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item name='DOES_NOT_EXIST'/>
-        <enum-item/>
+        <enum-item name='HAS_ANY_UTTERANCES' comment="[UTTERANCES]"/>
+        <enum-item name='HAS_ANY_INTELLIGENT_SPEAKS'/>
+        <enum-item name='HAS_ANY_FEATURE_BEAST' comment="[FEATURE_BEAST]"/>
+        <enum-item name='GENERATED' comment="[GENERATED]"/>
+        <enum-item name='HAS_ANY_TITAN' comment="[TITAN]"/>
+        <enum-item name='HAS_ANY_UNIQUE_DEMON' comment="[UNIQUE_DEMON]"/>
+        <enum-item name='DOES_NOT_EXIST' comment="[DOES_NOT_EXIST]"/>
+        <enum-item name='HAS_ANY_NOT_LIVING' comment="[NOT_LIVING]"/>
 
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item name='ARTIFICIAL_HIVEABLE'/>
+        <enum-item name='HAS_ANY_MISCHIEVOUS' comment="[MISCHIEVOUS]"/>
+        <enum-item name='HAS_ANY_FLIER' comment="[FLIER]"/>
+        <enum-item name='HAS_ANY_DEMON'/>
+        <enum-item name='HAS_ANY_NIGHT_CREATURE'/>
+        <enum-item name='HAS_ANY_NIGHT_CREATURE_HUNTER' comment="[NIGHT_CREATURE_HUNTER]"/>
+        <enum-item name='HAS_ANY_NIGHT_CREATURE_BOGEYMAN' comment="[NIGHT_CREATURE_BOGEYMAN]"/>
+        <enum-item name='HAS_ANY_CARNIVORE'/>
+        <enum-item name='ARTIFICIAL_HIVEABLE' comment="[ARTIFICIAL_HIVEABLE]"/>
 
         <enum-item name='UBIQUITOUS'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
     </enum-type>
 
-    <enum-type type-name='caste_raw_flags'>
-        <enum-item name='AMPHIBIOUS'/>
-        <enum-item name='AQUATIC'/>
+    <enum-type type-name='caste_raw_flags'> bay12: CreatureCasteFlagType
+        <enum-item name='CAN_BREATHE_WATER'/>
+        <enum-item name='CANNOT_BREATHE_AIR'/>
         <enum-item name='LOCKPICKER'/>
         <enum-item name='MISCHIEVOUS'/>
         <enum-item name='PATTERNFLIER'/>
-        <enum-item name='CURIOUSBEAST_ANY'/>
-        <enum-item name='CURIOUSBEAST_ITEM'/>
-        <enum-item name='CURIOUSBEAST_GUZZLER'/>
+        <enum-item name='CURIOUS_BEAST'/>
+        <enum-item name='CURIOUS_BEAST_ITEM'/>
+        <enum-item name='CURIOUS_BEAST_GUZZLER'/>
 
         <enum-item name='FLEEQUICK'/>
         <enum-item name='AT_PEACE_WITH_WILDLIFE'/>
-        <enum-item name='SWIMS_LEARNED'/>
+        <enum-item name='CAN_SWIM'/>
         <enum-item name='CANNOT_UNDEAD'/>
-        <enum-item name='CURIOUSBEAST_EATER'/>
+        <enum-item name='CURIOUS_BEAST_EATER'/>
         <enum-item name='NO_EAT'/>
         <enum-item name='NO_DRINK'/>
         <enum-item name='NO_SLEEP'/>
@@ -174,15 +167,15 @@
         <enum-item name='NO_DIZZINESS'/>
 
         <enum-item name='NO_FEVERS'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='NO_UNIT_TYPE_COLOR'/>
+        <enum-item name='NO_CONNECTIONS_FOR_MOVEMENT'/>
+        <enum-item name='SUPERNATURAL'/>
         <enum-item name='AMBUSHPREDATOR'/>
-        <enum-item/>
+        <enum-item name='GNAWER'/>
         <enum-item name='NOT_BUTCHERABLE'/>
         <enum-item name='COOKABLE_LIVE'/>
 
-        <enum-item/>
+        <enum-item name='HAS_SECRETION'/>
         <enum-item name='FIREBREATH'/>
         <enum-item name='DRAGONFIREBREATH'/>
         <enum-item name='MEANDERER'/>
@@ -191,13 +184,13 @@
         <enum-item name='PET'/>
         <enum-item name='PET_EXOTIC'/>
 
-        <enum-item/>
-        <enum-item name='CAN_SPEAK'/>
-        <enum-item name='CAN_LEARN'/>
+        <enum-item name='HAS_ROTTABLE'/>
+        <enum-item name='CAN_SPEAK' comment='aka INTELLIGENT_SPEAKS'/>
+        <enum-item name='CAN_LEARN' comment='aka INTELLIGENT_LEARNS'/>
         <enum-item name='UTTERANCES'/>
         <enum-item name='BONECARN'/>
         <enum-item name='CARNIVORE'/>
-        <enum-item name='UNDERSWIM'/>
+        <enum-item name='AQUATIC_UNDERSWIM'/>
         <enum-item name='NOEXERT'/>
 
         <enum-item name='NOPAIN'/>
@@ -205,13 +198,13 @@
         <enum-item name='NOBREATHE'/>
         <enum-item name='NOSTUN'/>
         <enum-item name='NONAUSEA'/>
-        <enum-item name='BLOOD'/>
+        <enum-item name='HAS_BLOOD'/>
         <enum-item name='TRANCES'/>
         <enum-item name='NOEMOTION'/>
 
         <enum-item name='SLOW_LEARNER'/>
         <enum-item name='NOSTUCKINS'/>
-        <enum-item name='PUS'/>
+        <enum-item name='HAS_PUS'/>
         <enum-item name='NOSKULL'/>
         <enum-item name='NOSKIN'/>
         <enum-item name='NOBONES'/>
@@ -220,7 +213,7 @@
 
         <enum-item name='NOFEAR'/>
         <enum-item name='CANOPENDOORS'/>
-        <enum-item/>
+        <enum-item name='ITEMCORPSE' comment='set if the tag is present; corpse parts go to map_renderer.cursor_other'/>
         <enum-item name='GETS_WOUND_INFECTIONS'/>
         <enum-item name='NOSMELLYROT'/>
         <enum-item name='REMAINS_UNDETERMINED'/>
@@ -236,9 +229,9 @@
         <enum-item name='VEGETATION'/>
         <enum-item name='MAGICAL'/>
 
-        <enum-item name='NATURAL'/>
-        <enum-item name='BABY'/>
-        <enum-item name='CHILD'/>
+        <enum-item name='NATURAL_ANIMAL'/>
+        <enum-item name='HAS_BABYSTATE'/>
+        <enum-item name='HAS_CHILDSTATE'/>
         <enum-item name='MULTIPLE_LITTER_RARE'/>
         <enum-item name='MOUNT'/>
         <enum-item name='MOUNT_EXOTIC'/>
@@ -264,17 +257,17 @@
         <enum-item name='LISP'/>
 
         <enum-item name='GETS_INFECTIONS_FROM_ROT'/>
-        <enum-item/>
+        <enum-item name='HAS_SOLDIER_TILE'/>
         <enum-item name='ALCOHOL_DEPENDENT'/>
-        <enum-item name='SWIMS_INNATE'/>
+        <enum-item name='CAN_SWIM_INNATE'/>
         <enum-item name='POWER'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='TENDONS'/>
+        <enum-item name='LIGAMENTS'/>
+        <enum-item name='HAS_TILE'/>
 
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='HAS_COLOR'/>
+        <enum-item name='HAS_GLOW_TILE'/>
+        <enum-item name='HAS_GLOW_COLOR'/>
         <enum-item name='FEATURE_BEAST'/>
         <enum-item name='TITAN'/>
         <enum-item name='UNIQUE_DEMON'/>
@@ -288,7 +281,7 @@
         <enum-item name='MANNERISM_POSTURE'/>
         <enum-item name='MANNERISM_STRETCH'/>
         <enum-item name='MANNERISM_EYELIDS'/>
-        <enum-item name='NIGHT_CREATURE_ANY'/>
+        <enum-item name='NIGHT_CREATURE'/>
 
         <enum-item name='NIGHT_CREATURE_HUNTER'/>
         <enum-item name='NIGHT_CREATURE_BOGEYMAN'/>
@@ -303,76 +296,181 @@
         <enum-item name='RETURNS_VERMIN_KILLS_TO_OWNER'/>
         <enum-item name='HUNTS_VERMIN'/>
         <enum-item name='ADOPTS_OWNER'/>
-        <enum-item name='SOUND_ALERT'/>
-        <enum-item name='SOUND_PEACEFUL_INTERMITTENT'/>
+        <enum-item name='HAS_SOUND_ALERT'/>
+        <enum-item name='HAS_SOUND_PEACEFUL_INTERMITTENT'/>
     </enum-type>
 
+    <enum-type type-name='body_part_raw_flags'> bay12: BodyPartFlagType
+        <enum-item name='HEAD'/>
+        <enum-item name='UPPERBODY'/>
+        <enum-item name='LOWERBODY'/>
+        <enum-item name='SIGHT'/>
+        <enum-item name='EMBEDDED'/>
+        <enum-item name='INTERNAL'/>
+        <enum-item name='CIRCULATION'/>
+        <enum-item name='SKELETON'/>
 
-    <struct-type type-name='body_part_layer_raw'>
+        <enum-item name='LIMB'/>
+        <enum-item name='GRASP'/>
+        <enum-item name='STANCE'/>
+        <enum-item name='GUTS'/>
+        <enum-item name='BREATHE'/>
+        <enum-item name='SMALL'/>
+        <enum-item name='THROAT'/>
+        <enum-item name='JOINT'/>
+
+        <enum-item name='THOUGHT'/>
+        <enum-item name='NERVOUS'/>
+        <enum-item name='RIGHT'/>
+        <enum-item name='LEFT'/>
+        <enum-item name='HEAR'/>
+        <enum-item name='SMELL'/>
+        <enum-item name='FLIER'/>
+        <enum-item name='DIGIT'/>
+
+        <enum-item name='MOUTH'/>
+        <enum-item name='APERTURE'/>
+        <enum-item name='SOCKET'/>
+        <enum-item name='TOTEMABLE'/>
+        <enum-item name='HAS_TENDONS'/>
+        <enum-item name='HAS_LIGAMENTS'/>
+        <enum-item name='UNDER_PRESSURE'/>
+        <enum-item name='CANNOT_WRESTLE'/>
+
+        <enum-item name='VERMIN_BUTCHER_ITEM'/>
+        <enum-item name='CONNECTOR'/>
+        <enum-item name='HAS_CONNECTOR_CHILD'/>
+        <enum-item name='EXTRA_BUTCHER_OBJECT'/>
+        <enum-item name='PREVENTS_PARENT_COLLAPSE'/>
+        <enum-item name='HAS_PREVENTS_PARENT_COLLAPSE_CHILD'/>
+    </enum-type>
+
+    <enum-type type-name='appearance_modifier_type' base-type='int16_t'> bay12: AppearanceModifierType
+        <enum-item name='HEIGHT'/>
+        <enum-item name='BROADNESS'/>
+        <enum-item name='LENGTH'/>
+        <enum-item name='CLOSE_SET'/>
+        <enum-item name='DEEP_SET'/>
+        <enum-item name='HIGH_POSITION'/>
+        <enum-item name='LARGE_IRIS'/>
+        <enum-item name='WRINKLY'/>
+
+        <enum-item name='CURLY'/>
+        <enum-item name='CONVEX'/>
+        <enum-item name='DENSE'/>
+        <enum-item name='THICKNESS'/>
+        <enum-item name='UPTURNED'/>
+        <enum-item name='SPLAYED_OUT'/>
+        <enum-item name='HANGING_LOBES'/>
+        <enum-item name='GAPS'/>
+
+        <enum-item name='HIGH_CHEEKBONES'/>
+        <enum-item name='BROAD_CHIN'/>
+        <enum-item name='JUTTING_CHIN'/>
+        <enum-item name='SQUARE_CHIN'/>
+        <enum-item name='ROUND_VS_NARROW'/>
+        <enum-item name='GREASY'/>
+        <enum-item name='DEEP_VOICE'/>
+        <enum-item name='RASPY_VOICE'/>
+    </enum-type>
+
+    <enum-type type-name='body_part_layer_flags'> bay12: TissueLayerFlagType
+        <enum-item name='CONNECTS'/>
+        <enum-item name='MAJOR_ARTERIES'/>
+    </enum-type>
+
+    <enum-type type-name='appearance_modifier_growth_interval' base-type='int16_t'> bay12: AppearanceModifierRateScaleType
+        <enum-item name='DAILY'/>
+        <enum-item name='WEEKLY'/>
+        <enum-item name='MONTHLY'/>
+        <enum-item name='YEARLY'/>
+    </enum-type>
+
+    <enum-type type-name='body_part_position_type' base-type='int16_t'> bay12: BodyPartPositionType
+        <enum-item name='FRONT'/>
+        <enum-item name='BACK'/>
+        <enum-item name='SIDES'/>
+        <enum-item name='RIGHT'/>
+        <enum-item name='LEFT'/>
+        <enum-item name='TOP'/>
+        <enum-item name='BOTTOM'/>
+    </enum-type>
+
+    <enum-type type-name='body_part_relation_type' base-type='int16_t'> bay12: BodyPartRelationType
+        <enum-item name='AROUND'/>
+        <enum-item name='SURROUNDED_BY'/>
+        <enum-item name='ABOVE'/>
+        <enum-item name='BELOW'/>
+        <enum-item name='IN_FRONT'/>
+        <enum-item name='BEHIND'/>
+        <enum-item name='CLEANS'/>
+        <enum-item name='CLEANED_BY'/>
+    </enum-type>
+
+    <struct-type type-name='body_part_layer_raw' original-name='tissue_layerst'>
         <stl-string name='layer_name'/>
 
         <code-helper name='describe'>$.layer_name</code-helper>
 
-        <int32_t name='tissue_id'/>
+        <int32_t name='tissue_id' refers-to='$$._upglobal._upglobal._upglobal._upglobal._upglobal.tissue[$]'/>
 
-        <df-flagarray name='flags'/>
+        <df-flagarray name='flags' index-enum='body_part_layer_flags'/>
 
-        <int32_t name='unk2'/>
+        <int32_t name='part_fraction' comment='total 1000'/>
 
         <int32_t name='healing_rate'/>
         <int32_t name='vascular'/>
         <int32_t name='pain_receptors'/>
 
-        <int32_t name='unk6'/>
-        <int16_t name='unk7'/>
+        <enum name='position' type-name='body_part_position_type'/>
+        <enum name='relation' type-name='body_part_relation_type'/>
+        <int16_t name='relation_bp'/>
 
-        <stl-vector name='unk8'/>
+        <stl-vector name='bp_modifiers' type-name='int32_t'
+                    refers-to='$$._global._upglobal._upglobal._upglobal.bp_appearance.modifier_idx[$].refers-to'/>
 
         <int32_t name='layer_id' comment='across all body parts'/>
 
-        <int32_t name='unk10'/>
-        <int32_t name='unk11'/>
+        For subordinate layers:
+        <int32_t name='parent_idx' refers-to='$$._global._upglobal.layers[$]'/>
+        <int32_t name='parent_layer_id'/>
+
         <int32_t name='layer_depth' comment='-1 for skin and internal organs'/>
-        <int32_t name='unk13'/>
-        <int32_t name='unk14'/>
-        <int32_t name='unk15'/>
+        <int32_t name='leak_barrier_id' comment='layer that stops TISSUE_LEAKS, but unused and broken'/>
+        <int32_t name='nonsolid_id'/>
+        <int32_t name='styleable_id'/>
     </struct-type>
 
-    <struct-type type-name='body_part_raw'>
-        <stl-string name='part_code'/>
-        <stl-string name='part_name'/>
+    <struct-type type-name='body_part_raw' original-name='bodypartst'>
+        <stl-string name='token'/> bay12: string[BodyPartStrings]
+        <stl-string name='category'/>
 
-        <code-helper name='describe'>$.part_name</code-helper>
+        <code-helper name='describe'>$.token</code-helper>
 
-        <int16_t name='con_part_id'/>
+        <int16_t name='con_part_id'/> bay12: int16[BodyPartShorts]
 
-        <df-flagarray name='flags'/>
+        <df-flagarray name='flags' index-enum='body_part_raw_flags'/>
 
-        <stl-vector name='layers'>
-            <pointer type-name='body_part_layer_raw'/>
-        </stl-vector>
+        <stl-vector name='layers' pointer-type='body_part_layer_raw'/>
 
-        <int32_t name='unk2'/>
-        <int32_t name='unk3'/>
-        <int32_t name='unk4'/>
-        <int32_t name='unk5'/>
+        <int32_t name='fraction_total'/>
+        <int32_t name='fraction_base'/>
+        <int32_t name='fraction_fat'/>
+        <int32_t name='fraction_muscle'/>
+
         <int32_t name='relsize'/>
-        <int32_t name='unk7'/>
+        <int32_t name='number'/>
 
-        <int16_t name='unk7b'/>
+        <enum name='position' type-name='body_part_position_type'/>
 
-        <stl-vector name='name_singular'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
-        <stl-vector name='name_plural'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='name_singular' pointer-type='stl-string'/>
+        <stl-vector name='name_plural' pointer-type='stl-string'/>
 
         <pointer name='bp_relation_part_id'>
             <stl-vector type-name='int16_t'/>
         </pointer>
         <pointer name='bp_relation_code'>
-            <stl-vector type-name='int16_t'/> // 0 around of, 1 around by
+            <stl-vector type-name='body_part_relation_type'/>
         </pointer>
         <pointer name='bp_relation_coverage'>
             <stl-vector type-name='int16_t'/>
@@ -382,48 +480,129 @@
         <uint16_t name='max_temp'/>
         <uint16_t name='temp_factor'/>
 
-        <int32_t name='unused'/>
+        <int32_t name='numbered_idx' comment='defined only if number field nonzero'
+                 refers-to='$$._global._upglobal.numbered_masks[$]'/>
 
-        <int32_t name='unk11'/>
-        <int16_t name='unk12'/>
+        <int16_t name='insulation_fat'/>
+        <int16_t name='insulation_muscle'/>
+        <int16_t name='insulation_base'/>
     </struct-type>
 
-    <struct-type type-name='color_modifier_raw'>
-        <stl-vector name='color_indexes'>
-            <int32_t ref-target='descriptor_color'/>
-        </stl-vector>
-        <stl-vector type-name='int32_t' name='unk2'/>
+    <enum-type type-name='replacement_method_type' base-type='int16_t'> bay12: ReplacementMethodType
+        <enum-item name='FADE'/>
+        <enum-item name='ROOT'/>
+    </enum-type>
 
-        <stl-vector type-name='int16_t' name='unk3'/>
-        <stl-vector type-name='int16_t' name='unk4'/>
+    <enum-type type-name='word_property_type' base-type='int16_t'> bay12: WordPropertyType
+        <enum-item name='SINGULAR'/>
+        <enum-item name='PLURAL'/>
+    </enum-type>
 
-        <int16_t name='unk5' />
+    <enum-type type-name='genetic_model_type' base-type='int16_t'> bay12: GeneticModelType
+        <enum-item name='MIX'/>
+        <enum-item name='DOMINANT_LESS'/>
+        <enum-item name='DOMINANT_MORE'/>
+    </enum-type>
+
+    <struct-type type-name='color_modifier_raw' original-name='tl_color_modifierst' key-field='id'>
+        <code-helper name='describe'> $.part </code-helper>
+
+        <stl-vector type-name='int32_t' name='pattern_index' ref-target='descriptor_pattern'/>
+        <stl-vector type-name='int32_t' name='pattern_frequency'/>
+
+        <stl-vector name='body_part_id' type-name='int16_t'
+                    refers-to='$$._global._upglobal.body_info.body_parts[$]'/>
+        <stl-vector name='tissue_layer_id' type-name='int16_t'
+                    refers-to='$$._global.body_part_id[$$._key].refers-to.layers[$]'
+                    index-refers-to='$$._global.body_part_id[$].refers-to'/>
+
+        <enum name='replacement_method' type-name='replacement_method_type'/>
         <int32_t name='start_date'/>
         <int32_t name='end_date'/>
-        <int32_t name='unk6' />
+        <int32_t name='importance' />
         <stl-string name="part" />
-        <int16_t name="unk_6c"/>
-        <int16_t name="unk_6e"/>
-        <int32_t name="unk_70"/>
-        <int32_t name="unk_74"/>
-        <stl-vector name="unk_78">
-            <pointer/>
-        </stl-vector>
-        <stl-vector name="unk_88">
-            <pointer/>
-        </stl-vector>
+        <enum name='noun_property' type-name='word_property_type'/>
+        <enum name='genetic_model' type-name='genetic_model_type'/>
+        <int32_t name="genetic_index"/>
+        <int32_t name="id"/>
+        <stl-vector name="color_pattern_string" pointer-type='stl-string'/>
+        <stl-vector name="frequency_string" pointer-type='stl-string'/>
     </struct-type>
 
-    <struct-type type-name='caste_body_info'>
+    <struct-type type-name='appearance_modifierst'>
+        <code-helper name='describe'> $.type </code-helper>
+        <enum type-name='appearance_modifier_type' base-type='int16_t' name='type'/>
+        <static-array type-name='int16_t' count='7' name='ranges'/>
+        <static-array type-name='int16_t' count='6' name='desc_range'/>
+        <int16_t name='growth_rate'/>
+        <enum type-name='appearance_modifier_growth_interval' base-type='int16_t' name='growth_interval'/>
+        <int16_t name='growth_min'/>
+        <int16_t name='growth_max'/>
+        <int32_t name='growth_start' comment='in days'/>
+        <int32_t name='growth_end'/>
+        <int32_t name='importance'/>
+        <stl-string name='noun'/>
+        <enum name='noun_property' type-name='word_property_type'/>
+        <enum name='genetic_model' type-name='genetic_model_type'/>
+        <int32_t name='genetic_index'/>
+    </struct-type>
+
+    <struct-type type-name='body_appearance_modifier' original-name='body_appearance_modifierst' key-field='id'>
+        <compound name='modifier' type-name='appearance_modifierst'/>
+        <int32_t name='id'/>
+    </struct-type>
+
+    <struct-type type-name='bp_appearance_modifier' original-name='bp_appearance_modifierst' key-field='id'>
+        <compound name='modifier' type-name='appearance_modifierst'/>
+
         <stl-vector name='body_parts'>
-            <pointer type-name='body_part_raw'/>
+            <int16_t refers-to='$$._global._parent._global.body_info.body_parts[$]'/>
         </stl-vector>
-
-        <stl-vector name='attacks'>
-            <pointer/>
+        <stl-vector name='tissue_layer'>
+            <int16_t refers-to='$$._parent._parent.body_parts[$$._key].refers-to.layers[$]'/>
         </stl-vector>
+        <int32_t name='id'/>
+    </struct-type>
 
-        <int32_t name='unk8'/>
+    <enum-type type-name='specialattack_type' base-type='int32_t'> bay12: SpecialAttackType
+        <enum-item name='INJECT_EXTRACT'/>
+        <enum-item name='SUCK_BLOOD'/>
+        <enum-item name='INTERACTION'/>
+    </enum-type>
+
+    <struct-type type-name='caste_attack' original-name='attackdefst'>
+        <stl-string name='name'/>
+        <stl-string name='verb_3rd'/>
+        <stl-string name='verb_2nd'/>
+        <bitfield name='flags' base-type='uint16_t'>
+            <flag-bit name='with'/>
+            <flag-bit name='latch'/>
+            <flag-bit name='main'/>
+            <flag-bit name='edge'/>
+            <flag-bit name='independent_multiattack'/>
+            <flag-bit name='bad_multiattack'/>
+        </bitfield>
+        <stl-vector type-name='specialattack_type' name='specialattack_type'/>
+        <stl-vector type-name='int16_t' name='specialattack_mat_type' comment='extract injected'/>
+        <stl-vector type-name='int32_t' name='specialattack_mat_index'/>
+        <stl-vector type-name='matter_state' name='specialattack_mat_state'/>
+        <static-array count='3' name='specialattack_temp_mat' comment='parsed during second pass'><stl-vector pointer-type='stl-string'/></static-array>
+        <stl-vector type-name='int32_t' name='specialattack_min' comment='amount of extract injected or blood sucked'/>
+        <stl-vector type-name='int32_t' name='specialattack_max'/>
+        <int32_t name='contact_perc'/>
+        <int32_t name='penetration_perc'/>
+        <stl-vector type-name='int16_t' name='body_part_idx'/>
+        <stl-vector type-name='int16_t' name='tissue_layer_idx'/>
+        <enum base-type="int16_t" type-name="job_skill" name="skill"/>
+        <int32_t name='velocity_modifier'/>
+    </struct-type>
+
+    <struct-type type-name='caste_body_info' original-name='bodyst'>
+        <stl-vector name='body_parts' pointer-type='body_part_raw'/>
+
+        <stl-vector name='attacks' pointer-type='caste_attack'/>
+
+        <int32_t name='total_relsize' comment='unless INTERNAL or EMBEDDED'/>
 
         <stl-vector name='layer_part' index-refers-to='$$._global.layer_idx[$].refers-to'>
             <int16_t refers-to='$$._global.body_parts[$]'/>
@@ -431,7 +610,10 @@
         <stl-vector name='layer_idx'>
             <int16_t refers-to='$$._global.layer_part[$$._key].refers-to.layers[$]'/>
         </stl-vector>
-        <stl-vector name='unk10'/>
+
+        <stl-vector type-name='uint32_t' name='numbered_masks'
+                    comment='1 bit per instance of a numbered body part'/>
+
         <stl-vector name='layer_nonsolid' index-refers-to='$$._global.layer_part[$].refers-to'>
             Index in nonsolid_layers if applicable
             <int32_t refers-to='$$._global.nonsolid_layers[$].refers-to'/>
@@ -440,19 +622,57 @@
         <stl-vector name='nonsolid_layers'>
             For blood, magma, iron men etc, lists BLOOD/MAGMA/GAS layers.
             For other titans and FBs, lists all layers. For ordinary, empty.
-            <int32_t refers-to='$$._global.layer_part[$].refers-to'/>
+            <int32_t refers-to='$$._global.layer_idx[$].refers-to'/>
         </stl-vector>
 
         <compound name='materials' type-name='material_vec_ref'/>
 
-        <int32_t name='unk15a'/>
-        <int32_t name='unk15b'/>
-        <int32_t name='unk15c'/>
-        <int32_t name='unk15d'/>
+        <int32_t name='fraction_total'/>
+        <int32_t name='fraction_base'/>
+        <int32_t name='fraction_fat'/>
+        <int32_t name='fraction_muscle'/>
     </struct-type>
 
-    <struct-type type-name='caste_raw'>
-        <stl-string name='caste_id'/>
+    <enum-type type-name='lair_characteristic_type' base-type='int16_t'> bay12: LairCharacteristicType
+        <enum-item name='HAS_DOORS'/>
+    </enum-type>
+
+    <enum-type type-name='habit_type' base-type='int16_t'> bay12: HabitType
+        <enum-item name='GRIND_BONE_MEAL'/>
+        <enum-item name='COOK_BLOOD'/>
+        <enum-item name='GRIND_VERMIN'/>
+        <enum-item name='COOK_VERMIN'/>
+        <enum-item name='COOK_PEOPLE'/>
+        <enum-item name='COLLECT_TROPHIES'/>
+        <enum-item name='EAT_BONE_PORRIDGE'/>
+        <enum-item name='USE_ANY_MELEE_WEAPON'/>
+        <enum-item name='COLLECT_WEALTH'/>
+        <enum-item name='GIANT_NEST'/>
+    </enum-type>
+
+    <enum-type type-name='creature_sound_type'> bay12: CreatureSoundType, no base type in this version
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='ALERT'/>
+        <enum-item name='PEACEFUL_INTERMITTENT'/>
+    </enum-type>
+
+    <enum-type type-name='creature_sound_method_type'> bay12: CreatureSoundMethodType, no base type in this version
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='VOCALIZATION'/>
+    </enum-type>
+
+    <struct-type type-name='creature_soundst'>
+        <enum name='type' type-name='creature_sound_type'/>
+        <int32_t name='range' init-value='100'/>
+        <int32_t name='period' init-value='1000'/>
+        <enum name='method' type-name='creature_sound_method_type'/>
+        <stl-string name='verb_2nd'/>
+        <stl-string name='verb_3rd'/>
+        <stl-string name='noun'/>
+    </struct-type>
+
+    <struct-type type-name='caste_raw' original-name='creature_castest'>
+        <stl-string name='caste_id'/> bay12: string[CreatureCasteStrings]
 
         <code-helper name='describe'>(fmt "~:(~A ~A~)" $.caste_id $.caste_name[0])</code-helper>
         <code-helper name='find-instance'>$global.world.raws.creatures.all[$$].caste[$]</code-helper>
@@ -471,22 +691,22 @@
             <comment>fingers[2], nose, ear, head, eyes, mouth, hair, knuckles, lips, cheek, nails, f eet, arms, hands, tongue, leg</comment>
         </static-array>
 
-        <uint8_t name='caste_tile'/>
+        <uint8_t name='caste_tile'/> bay12: uchar[CreatureCasteUChar]
         <uint8_t name='caste_soldier_tile'/>
         <uint8_t name='caste_alttile'/>
         <uint8_t name='caste_soldier_alttile'/>
         <uint8_t name='caste_glowtile'/>
 
-        <uint16_t name='homeotherm'/>
-        <int16_t name='unk1_1'/>
-        <int16_t name='unk1_2'/>
+        <uint16_t name='homeotherm'/> bay12: ushort[CreatureCasteUShort]
+        <uint16_t name='min_temp'/>
+        <uint16_t name='max_temp'/>
         <uint16_t name='fixed_temp'/>
 
-        <static-array type-name='int16_t' name='caste_color' count='3'/>
+        <static-array type-name='int16_t' name='caste_color' count='3'/> bay12: short[CreatureCasteShort]
 
         <compound name='misc'>
-            <int16_t name='litter_size_min'/>
             <int16_t name='litter_size_max'/>
+            <int16_t name='litter_size_min'/>
             <int16_t name='penetratepower'/>
             <int16_t name='vermin_bite_chance'/>
             <int16_t name='grasstrample'/>
@@ -510,37 +730,41 @@
             <int32_t name='viewrange'/>
             <int32_t name='maxage_min'/>
             <int32_t name='maxage_max'/>
-            <static-array type-name='int32_t' name='unk3' count='2'/>
+            <int32_t name='baby_age'/>
+            <int32_t name='child_age'/>
             <int32_t name='swim_speed'/>
             <int32_t name='trade_capacity'/>
-            <int32_t name='unk4'/>
+            <int32_t name='army_strength'/>
             <int32_t name='pop_ratio'/>
             <int32_t name='adult_size'/>
-            <static-array type-name='int32_t' name='unk5' count='4'/>
+            <int32_t name='bone_mat' ref-target='material' aux-value='$$.bone_matidx'/>
+            <int32_t name='bone_matidx'/>
+            <int32_t name='fish_mat_index' refers-to='(food-mat-by-idx $Fish $)'/>
+            <int32_t name='egg_mat_index' refers-to='(food-mat-by-idx $Eggs $)'/>
             <static-array type-name='int32_t' name='attack_trigger' count='3'/>
             <int32_t name='egg_size'/>
             <int32_t name='grazer'/>
             <int32_t name='petvalue_divisor'/>
             <int32_t name='prone_to_rage'/>
-            <static-array type-name='int32_t' name='unk6' count='29'/>
+            <static-array type-name='int32_t' name='unused_30' count='29'/>
         </compound>
 
-        <compound name='personality'>
-            <static-array type-name='int16_t' name='a' count='30' index-enum='personality_facet_type'/>
-            <static-array type-name='int16_t' name='b' count='30' index-enum='personality_facet_type'/>
-            <static-array type-name='int16_t' name='c' count='30' index-enum='personality_facet_type'/>
+        <compound name='personality'> bay12: creature_personality_profilest
+            <static-array type-name='int16_t' name='min' count='30' index-enum='personality_facet_type'/>
+            <static-array type-name='int16_t' name='med' count='30' index-enum='personality_facet_type'/>
+            <static-array type-name='int16_t' name='max' count='30' index-enum='personality_facet_type'/>
         </compound>
 
         <df-flagarray name='flags' index-enum='caste_raw_flags'/>
 
-        <int32_t name='unk7'/>
+        <int32_t name='index' comment='global across creatures'/>
 
         <compound name='body_info' type-name='caste_body_info'/>
 
-        <stl-vector name='caste_speech_1'/>
-        <stl-vector name='caste_speech_2'/>
+        <stl-vector name='caste_speech_idx' type-name='int32_t'/>
+        <stl-vector name='caste_speech_token' pointer-type='stl-string'/>
 
-        <static-array name='skill_rates' count='4'>
+        <static-array name='skill_rates' count='4'> learn_ip_perc, last_used, rust, demote
             <static-array type-name='int32_t' count='116' index-enum='job_skill'/>
         </static-array>
 
@@ -561,37 +785,64 @@
             <static-array type-name='int32_t' name='ment_att_cap_perc' count='13' index-enum='mental_attribute_type'/>
         </compound>
 
-        <int8_t name='gender'/>
+        <enum name='sex' type-name='pronoun_type'/>
 
-        <stl-vector type-name='int32_t' name='body_size_1'/>
-        <stl-vector type-name='int32_t' name='body_size_2'/>
+        <stl-vector type-name='int32_t' name='body_size' comment='age in ticks'/>
+        <stl-vector type-name='int32_t' name='body_size_day' comment='size at the age at the same index in body_size'/>
 
-        <stl-vector name='unk_1164'/>
-        <stl-vector name='unk_1174'/>
-        <stl-vector name='unk_1184'/>
-        <stl-vector name='unk_1194'/>
-        <stl-vector name='unk_11a4'/>
-        <stl-vector name='unk_11b4' type-name='int16_t'/>
-        <stl-vector name='unk_11c4' type-name='int16_t'/>
-        <stl-vector name='unk_11d4' type-name='int32_t'/>
-        <stl-vector name='color_modifiers'>
-            <pointer type-name='color_modifier_raw'/>
+        <stl-vector name='body_appearance_modifiers' pointer-type='body_appearance_modifier'/>
+
+        <compound name='bp_appearance'>
+            <stl-vector name='modifiers' pointer-type='bp_appearance_modifier'/>
+
+            <stl-vector name='modifier_idx' type-name='int32_t'
+                        refers-to='$$._parent._parent.modifiers[$]'
+                        index-refers-to='$$._parent.part_idx[$].refers-to'/>
+            <stl-vector name='part_idx' type-name='int16_t'
+                        refers-to='$$._global.body_info.body_parts[$]'/>
+            <stl-vector name='layer_idx' type-name='int16_t'
+                        refers-to='$$._parent._parent.part_idx[$$._key].refers-to.layers[$]'
+                        index-refers-to='$$._parent.part_idx[$].refers-to'/>
+
+            -- Subset of modifiable layers, i.e. where layer_idx != -1
+            <stl-vector name='style_part_idx' type-name='int16_t'
+                        refers-to='$$._global.body_info.body_parts[$]'/>
+            <stl-vector name='style_layer_idx' type-name='int16_t'
+                        refers-to='$$._parent._parent.style_part_idx[$$._key].refers-to.layers[$]'
+                        index-refers-to='$$._parent.style_part_idx[$].refers-to'/>
+            <stl-vector name='style_list_idx' type-name='int32_t'
+                        refers-to='$$._parent._parent.modifier_idx[$].refers-to'
+                        index-refers-to='$$._parent.style_layer_idx[$].refers-to'/>
+        </compound>
+        <stl-vector name='color_modifiers' pointer-type='color_modifier_raw'/>
+        <stl-vector name='tissue_styles' pointer-type='tissue_style_raw'/>
+        <stl-vector name='shearable_tissue_layer'>
+            <pointer> bay12: shearable_tissue_layerst
+                <enum name='type' type-name='appearance_modifier_type'/>
+                <int16_t name='length'/>
+
+                <stl-vector name='part_idx' type-name='int16_t'/>
+                <stl-vector name='layer_idx' type-name='int16_t'/>
+                <stl-vector name='bp_modifiers_idx' type-name='int32_t'/>
+                -- unit can be sheared at farmers if it has one u.appearance.bp_modifiers[$.bp_modifiers_idx[i]] >= $.length
+            </pointer>
         </stl-vector>
-        <stl-vector name='unk_11f4'/>
-        <stl-vector name='unk_1204'/>
 
-        <static-array name='unk16a' count='4'>
-            <stl-vector/>
+        <static-array name='body_app_mode_rate_index' count='4'>
+            <stl-vector type-name='int32_t'/>
         </static-array>
-        <static-array name='unk16b' count='4'>
-            <stl-vector/>
+        <static-array name='bp_app_mode_rate_index' count='4'>
+            <stl-vector type-name='int32_t'/>
         </static-array>
 
-        <static-array type-name='int32_t' name='unk18' count='2'/>
+        <int32_t name='appearance_gene_count'/>
+        <int32_t name='color_gene_count'/>
 
-        <stl-vector type-name='int16_t' name='natural_skill_id'/>
+        <stl-vector name='natural_skill_id'>
+            <enum base-type='int16_t' type-name='job_skill'/>
+        </stl-vector>
         <stl-vector type-name='int32_t' name='natural_skill_exp'/>
-        <stl-vector type-name='int32_t' name='natural_skill_lvl'/>
+        <stl-vector type-name='skill_rating' name='natural_skill_lvl'/>
 
         <compound name='caste_profession_name'>
             <static-array type-name='stl-string' name='singular' count='106' index-enum='profession'/>
@@ -602,9 +853,7 @@
             <stl-vector type-name='int16_t' name='extract_mat'/>
             <stl-vector type-name='int32_t' name='extract_matidx'/>
             <static-array name='extract_str' count='3'>
-                <stl-vector>
-                    <pointer type-name='stl-string'/>
-                </stl-vector>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
 
             <int16_t name='milkable_mat'/>
@@ -666,44 +915,57 @@
             <stl-vector type-name='int16_t' name='egg_material_mattype'/>
             <stl-vector type-name='int32_t' name='egg_material_matindex'/>
             <static-array name='egg_material_str' count='3'>
-                <stl-vector>
-                    <pointer type-name='stl-string'/>
-                </stl-vector>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
 
             <stl-vector name='lays_unusual_eggs_itemtype'>
                 <enum base-type='int16_t' type-name='item_type'/>
             </stl-vector>
-            <stl-vector name='lays_unusual_eggs_itemsubtype'/>
+            <stl-vector name='lays_unusual_eggs_itemsubtype' type-name='int16_t'/>
             <stl-vector type-name='int16_t' name='lays_unusual_eggs_mattype'/>
             <stl-vector type-name='int32_t' name='lays_unusual_eggs_matindex'/>
             <static-array name='lays_unusual_eggs_str' count='5'>
-                <stl-vector>
-                    <pointer type-name='stl-string'/>
-                </stl-vector>
+                <stl-vector pointer-type='stl-string'/>
             </static-array>
         </compound>
 
-        <stl-vector name='unk22'/>
-
-        <stl-vector name='creature_class'>
-            <pointer type-name='stl-string'/>
+        <stl-vector name='secretion'>
+            <pointer> bay12: secretion_profilest
+                <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+                <int32_t name='mat_index'/>
+                <enum type-name='matter_state' base-type='int16_t' name='mat_state'/>
+                <stl-string name="mat_str1"/>
+                <stl-string name="mat_str2"/>
+                <stl-string name="mat_str3"/>
+                <stl-vector name="body_part_id" type-name="int16_t" refers-to='$$._upglobal.body_info.body_parts[$]'/>
+                <stl-vector name="layer_id" type-name="int16_t" refers-to='$$._parent._parent.body_part_id[$$._key].refers-to.layers[$]'/>
+            </pointer>
         </stl-vector>
 
-        <compound name='unknown2'>
-            <stl-vector name='unk23a' type-name='int32_t'/>
-            <stl-vector name='unk23b' type-name='int32_t'/>
-            <stl-vector name='unk23c' type-name='int32_t'/>
+        <stl-vector name='creature_class' pointer-type='stl-string'/>
 
-            <df-flagarray name='unk24_flags'/>
-            <df-flagarray name='unk25_flags'/>
+        <compound name='unknown2'> not actually a compound
+            <stl-vector name='injected_syndrome_idx' type-name='int32_t'/>
+            <stl-vector name='contact_syndrome_idx' type-name='int32_t'/>
+            <stl-vector name='inhaled_syndrome_idx' type-name='int32_t'/>
 
-            <static-array type-name='int32_t' name='unk26' count='33'/>
+            <df-flagarray name='mannerism_flag'/>
+            <df-flagarray name='mannerism_situation_flag'/>
 
+            <static-array name='armor_sizes' count='4' comment='index by UBSTEP'>
+                <static-array type-name='int32_t' count='4' comment='index by LBSTEP'/>
+            </static-array>
+            <static-array type-name='int32_t' name='pants_sizes' count='4' comment='index by LBSTEP'/>
+            <int32_t name='helm_size'/>
+            <static-array type-name='int32_t' name='shield_sizes' count='4' comment='index by UPSTEP'/>
+            <static-array type-name='int32_t' name='shoes_sizes' count='4' comment='index by UPSTEP'/>
+            <static-array type-name='int32_t' name='gloves_sizes' count='4' comment='index by UPSTEP'/>
+
+            for world generation
             <compound name='materials' type-name='material_vec_ref'/>
-            <stl-vector name='unk_2f20' type-name='int16_t'/>
-            <stl-vector name='unk_2f30' type-name='int8_t'/>
-            <stl-vector name='unk_2f40' type-name='int32_t'/>
+            <stl-vector name='material_states' type-name='matter_state'/>
+            <stl-vector name='material_small' type-name='int8_t'/>
+            <stl-vector name='material_butcher_amount' type-name='int32_t'/>
 
             muscle:
             <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
@@ -711,20 +973,77 @@
         </compound>
 
         <static-array type-name='int32_t' name='habit_num' count='2'/>
-        <static-array name='habit' count='2'><stl-vector/></static-array>
-        <static-array name='lair' count='2'><stl-vector/></static-array>
-        <static-array name='lair_characteristic' count='2'><stl-vector/></static-array>
-        <static-array name='lair_hunter_speech' count='2'><stl-vector/></static-array>
-        <static-array name='unk29' count='2'><stl-vector/></static-array>
-        <static-array name='specific_food' count='2'><stl-vector/></static-array>
+        <stl-vector name='habit_type' type-name='habit_type'/>
+        <stl-vector name='habit_chance' type-name='int32_t'/>
+        <stl-vector name='lair_type' type-name='lair_type'/>
+        <stl-vector name='lair_chance' type-name='int32_t'/>
+        <stl-vector name='lair_characteristic_type' type-name='lair_characteristic_type'/>
+        <stl-vector name='lair_characteristic_chance' type-name='int32_t'/>
+        <compound name='lair_hunter_speech'>
+            <stl-vector name='index' type-name='int32_t'/>
+            <stl-vector name='token' pointer-type='stl-string'/>
+        </compound>
+        <compound name='specific_food'>
+            <stl-vector name='creature' type-name='int32_t' ref-target='creature_raw'/>
+            <stl-vector name='plant' type-name='int32_t' ref-target='plant_raw'/>
+            <stl-vector name='creature_str' pointer-type='stl-string'/>
+            <stl-vector name='plant_str' pointer-type='stl-string'/>
+        </compound>
 
-        <stl-vector name='sound'><pointer/></stl-vector>
-        <stl-vector type-name='int32_t' name='sound_alert'/>
-        <stl-vector type-name='int32_t' name='sound_peaceful_intermittent'/>
+        <stl-vector name='sound' pointer-type='creature_soundst'/>
+        <static-array name='sound_index' count='2' index-enum='creature_sound_type'>
+            <stl-vector type-name='int32_t'/>
+        </static-array>
     </struct-type>
 
-    <struct-type type-name='creature_raw' instance-vector='$global.world.raws.creatures.all'>
-        <stl-string name='creature_id'/>
+    <enum-type type-name='creature_graphics_role'> bay12:CreatureTextureType
+        <enum-item name='DEFAULT'/>
+        <enum-item name='LAW_ENFORCE'/>
+        <enum-item name='TAX_ESCORT'/>
+        <enum-item name='ZOMBIE'/>
+        <enum-item name='SKELETON'/>
+        <enum-item name='ADVENTURER'/>
+        <enum-item name='GHOST'/>
+    </enum-type>
+
+    <enum-type type-name='tissue_style_type' base-type='int16_t'> bay12: TissueLayerShapingType
+        <enum-item name='NEATLY_COMBED'/>
+        <enum-item name='BRAIDED'/>
+        <enum-item name='DOUBLE_BRAIDS'/>
+        <enum-item name='PONY_TAILS'/>
+        <enum-item name='CLEAN_SHAVEN'/>
+    </enum-type>
+
+    <struct-type type-name='tissue_style_raw' key-field='id' original-name='tissue_style_unitst'>
+        <stl-string name="token"/>
+        <code-helper name='describe'>$.token</code-helper>
+
+        <stl-vector name='part_idx' type-name='int16_t'
+                    refers-to='$$._global._upglobal.body_info.body_parts[$]'/>
+        <stl-vector name='layer_idx' type-name='int16_t'
+                    refers-to='$$._parent._parent.part_idx[$$._key].refers-to.layers[$]'
+                    index-refers-to='$$._parent.part_idx[$].refers-to'/>
+
+        <stl-vector name="styles" type-name="tissue_style_type"/>
+
+        <stl-vector name="list_idx" type-name="int32_t"
+                    refers-to='$$._global._upglobal.bp_appearance.style_layer_idx[$].refers-to'/>
+
+        <int32_t name="id"/>
+
+        <stl-string name="noun"/>
+        <enum type-name='word_property_type' name="word_type"/>
+    </struct-type>
+
+    <enum-type type-name='genetic_modifier_type' base-type='int32_t'> bay12: GeneticModifierType
+        <enum-item name='BODY_APP'/>
+        <enum-item name='BP_APP'/>
+        <enum-item name='TISSUE_COLOR'/>
+        <enum-item name='TISSUE_STYLE'/>
+    </enum-type>
+
+    <struct-type type-name='creature_raw' instance-vector='$global.world.raws.creatures.all' original-name='creature_defst'>
+        <stl-string name='creature_id'/> bay12: string[CreatureDefStrings]
 
         <code-helper name='describe'>$.creature_id</code-helper>
 
@@ -732,134 +1051,141 @@
         <static-array type-name='stl-string' name='general_baby_name' count='2'/>
         <static-array type-name='stl-string' name='general_child_name' count='2'/>
 
-        <uint8_t name='creature_tile'/>
+        <uint8_t name='creature_tile'/> bay12: uchar[CreatureDefUChar]
         <uint8_t name='creature_soldier_tile'/>
         <uint8_t name='alttile'/>
         <uint8_t name='soldier_alttile'/>
         <uint8_t name='glowtile'/>
 
-        <uint16_t name='temperature1'/>
+        <uint16_t name='temperature1'/> bay12: ushort[CreatureDefUShort]
         <uint16_t name='temperature2'/>
 
-        <int16_t name='frequency'/>
+        <int16_t name='frequency'/> bay12: short[CreatureDefShort]
         <static-array type-name='int16_t' name='population_number' count='2'/>
         <static-array type-name='int16_t' name='cluster_number' count='2'/>
         <static-array type-name='int16_t' name='triggerable_group' count='2'/>
         <static-array type-name='int16_t' name='color' count='3'/>
         <static-array type-name='int16_t' name='glowcolor' count='3'/>
 
-        <int32_t name='adultsize'/>
+        <int32_t name='adultsize'/> bay12: int32_t[CreatureDefLong]
 
-        <stl-vector name='prefstring'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='prefstring' pointer-type='stl-string'/>
 
-        <stl-vector type-name='int16_t' name='sphere'/>
-        <stl-vector name='caste'>
-            <pointer type-name='caste_raw'/>
-        </stl-vector>
+        <stl-vector type-name='sphere_type' name='sphere'/>
+        <stl-vector name='caste' pointer-type='caste_raw'/>
 
         <stl-vector type-name='int32_t' name='pop_ratio'/>
 
         <df-flagarray name='flags' index-enum='creature_raw_flags'/>
 
-        <compound name='stuff'>
-            <static-array name='stuff1' count='2'>
-                <static-array type-name='int32_t' count='7'/>
+        <compound name='graphics'>
+            <static-array name='texpos' type-name='int32_t'
+                          count='7' index-enum='creature_graphics_role'/>
+            <static-array name='texpos_gs' type-name='int32_t'
+                          count='7' index-enum='creature_graphics_role'/>
+
+            <static-array name='entity_link_texpos'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='12' type-name='int32_t' index-enum='histfig_entity_link_type'/>
+            </static-array>
+            <static-array name='entity_link_texpos_gs'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='12' type-name='int32_t' index-enum='histfig_entity_link_type'/>
             </static-array>
 
-            <static-array name='stuff2a' count='7'>
-                <static-array type-name='int32_t' count='12'/>
+            <static-array name='site_link_texpos'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='6' type-name='int32_t' index-enum='histfig_site_link_type'/>
+            </static-array>
+            <static-array name='site_link_texpos_gs'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='6' type-name='int32_t' index-enum='histfig_site_link_type'/>
             </static-array>
 
-            <static-array name='stuff2b' count='7'>
-                <static-array type-name='int32_t' count='12'/>
+            <static-array name='profession_texpos'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array type-name='int32_t' index-enum='profession' count='106'/>
+            </static-array>
+            <static-array name='profession_texpos_gs'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array type-name='int32_t' index-enum='profession' count='106'/>
             </static-array>
 
-            <static-array type-name='int32_t' name='unk3' count='84'/>
+            <static-array name='add_color' type-name='bool'
+                          count='7' index-enum='creature_graphics_role'/>
 
-            <static-array name='stuff3a' count='7'>
-                <static-array type-name='int32_t' count='106'/>
+            <static-array name='entity_link_add_color'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='12' type-name='bool' index-enum='histfig_entity_link_type'/>
             </static-array>
 
-            <static-array name='stuff3b' count='7'>
-                <static-array type-name='int32_t' count='106'/>
+            <static-array name='site_link_add_color'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array count='6' type-name='bool' index-enum='histfig_site_link_type'/>
             </static-array>
 
-            <static-array type-name='int8_t' name='stuff4' count='7'/>
-
-            <static-array name='stuff2c' count='7'>
-                <static-array type-name='int8_t' count='12'/>
-            </static-array>
-
-            <static-array type-name='int8_t' name='unk4' count='42'/>
-
-            <static-array name='stuff3c' count='7'>
-                <static-array type-name='int8_t' count='106'/>
+            <static-array name='profession_add_color'
+                          count='7' index-enum='creature_graphics_role'>
+                <static-array type-name='bool' index-enum='profession' count='106'/>
             </static-array>
         </compound>
 
-        <stl-vector name='unk5'/>
-        <stl-vector name='speech1'/>
-        <stl-vector name='speech2'/>
-        <stl-vector name='speech3'/>
+        <stl-vector name='speech_index' type-name='int32_t'/>
+        <stl-vector name='speech_token1' pointer-type='stl-string'/>
+        <stl-vector name='speech_token2' pointer-type='stl-string'/>
+        <stl-vector name='speech_token3' pointer-type='stl-string'/>
 
-        <stl-vector name='material'>
-            <pointer type-name='material'/>
-        </stl-vector>
-        <stl-vector type-name='pointer' name='tissue'/>
+        <stl-vector name='material' pointer-type='material'/>
+        <stl-vector name='tissue' pointer-type='tissue'/>
 
         <compound name='profession_name'>
             <static-array type-name='stl-string' name='singular' count='106' index-enum='profession'/>
             <static-array type-name='stl-string' name='plural' count='106' index-enum='profession'/>
         </compound>
 
-        <pointer name='unk6pa'/>
-        <pointer name='unk6pb'/>
+        <int32_t name='underground_layer_min'/>
+        <int32_t name='underground_layer_max'/>
 
-        <stl-vector type-name='int32_t' name='unk6'/>
-        <stl-vector type-name='int32_t' name='unk7'/>
+        <stl-vector name='modifier_class' type-name='genetic_modifier_type'/>
+        <stl-vector type-name='int32_t' name='modifier_num_patterns'
+                    comment='for color modifiers, == number of items in their pattern_* vectors'/>
 
-        <stl-vector type-name='int32_t' name='hive_product_0'/>
-        <stl-vector type-name='int32_t' name='hive_product_1'/>
-        <stl-vector type-name='int16_t' name='hive_product_2'/>
-        <stl-vector type-name='int16_t' name='hive_product_3'/>
-        <stl-vector type-name='int16_t' name='hive_product_4'/>
-        <stl-vector type-name='int32_t' name='hive_product_5'/>
+        <compound name='hive_product'>
+            <stl-vector type-name='int32_t' name='number'/>
+            <stl-vector type-name='int32_t' name='time'/>
 
-        <static-array name='hive_product_tmpstr' count='5'>
-            <stl-vector>
-                <pointer type-name='stl-string'/>
+            <stl-vector name='item_type'>
+                <enum base-type='int16_t' type-name='item_type'/>
             </stl-vector>
-        </static-array>
+            <stl-vector type-name='int16_t' name='item_subtype'/>
+            <compound name='material' type-name='material_vec_ref'/>
 
-        <int32_t name='unk8'/>
+            <stl-vector pointer-type='stl-string' name='tmpstr1'/>
+            <stl-vector pointer-type='stl-string' name='tmpstr2'/>
+            <stl-vector pointer-type='stl-string' name='tmpstr3'/>
+            <stl-vector pointer-type='stl-string' name='tmpstr4'/>
+            <stl-vector pointer-type='stl-string' name='tmpstr5'/>
+        </compound>
 
-        <stl-vector name='raws'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <int32_t name='next_modifier_id'/>
+
+        <stl-vector name='raws' pointer-type='stl-string'/>
     </struct-type>
 
-    <struct-type type-name='creature_variation_convert_tag'>
+    <struct-type type-name='creature_variation_convert_tag' original-name='creature_variation_subord_tag_conversionst'>
         <stl-string name='cvct_master'/>
         <stl-string name='cvct_target'/>
         <stl-string name='cvct_replacement'/>
     </struct-type>
 
-    <struct-type type-name='creature_variation' instance-vector='$global.world.raws.creature_variations'>
+    <struct-type type-name='creature_variation' instance-vector='$global.world.raws.creature_variations.all' original-name='creature_variationst'>
         <stl-string name='id'/>
-        <stl-vector name='cv_convert_tag'>
-            <pointer type-name='creature_variation_convert_tag'/>
-        </stl-vector>
-        <stl-vector name='cv_new_tag'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
-        <stl-vector name='cv_remove_tag'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='cv_convert_tag' pointer-type='creature_variation_convert_tag'/>
+        <stl-vector name='cv_new_tag' pointer-type='stl-string'/>
+        <stl-vector name='cv_remove_tag' pointer-type='stl-string'/>
     </struct-type>
 
-    <enum-type type-name='body_part_template_flags'>
+    <enum-type type-name='body_part_template_flags'> bay12: CreatureBodyPartFlagType
         <enum-item name='HEAD'/>
         <enum-item name='UPPERBODY'/>
         <enum-item name='LOWERBODY'/>
@@ -896,7 +1222,8 @@
         <enum-item name='CONNECTOR'/>
     </enum-type>
 
-    <enum-type type-name='body_part_template_contype' base-type='int16_t'>
+    <enum-type type-name='body_part_template_contype' base-type='int16_t'> bay12: CreatureBodyPartParentTypes
+        <enum-item name='NONE' value='-1'/>
         <enum-item name='UPPERBODY'/>
         <enum-item name='LOWERBODY'/>
         <enum-item name='HEAD'/>
@@ -904,7 +1231,7 @@
         <enum-item name='STANCE'/>
     </enum-type>
 
-    <struct-type type-name='body_part_template'>
+    <struct-type type-name='body_part_template' original-name='creaturebody_partst'>
         <stl-string name='id'/>
         <stl-string name='con'/>
         <stl-string name='category'/>
@@ -916,22 +1243,24 @@
         <int32_t name='default_relsize'/>
         <int32_t name='number'/>
 
-        <stl-vector name='name_singular' comment='first comes from BP, rest come from INDIVIDUAL_NAME'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
-        <stl-vector name='name_plural'>
-            <pointer type-name='stl-string'/>
-        </stl-vector>
+        <stl-vector name='name_singular' pointer-type='stl-string' comment='first comes from BP, rest come from INDIVIDUAL_NAME'/>
+        <stl-vector name='name_plural' pointer-type='stl-string'/>
     </struct-type>
 
-    <struct-type type-name='body_template' instance-vector='$global.world.raws.body_templates'>
+    <struct-type type-name='body_template' instance-vector='$global.world.raws.creaturebody.body' original-name='creaturebody_defst'>
+        <stl-string name='id' comment='in bay12 this is a static array with one member'/>
+        <stl-vector name='parts' pointer-type='body_part_template'/>
+    </struct-type>
+
+    <struct-type type-name='creaturebody_glossst' instance-vector='$global.world.raws.creaturebody.bodygloss'>
         <stl-string name='id'/>
-        <stl-vector name='parts'>
-            <pointer type-name='body_part_template'/>
-        </stl-vector>
+        <stl-string name='old_singular'/>
+        <stl-string name='new_singular'/>
+        <stl-string name='old_plural'/>
+        <stl-string name='new_plural'/>
     </struct-type>
 
-    <enum-type type-name='tissue_template_flags'>
+    <enum-type type-name='tissue_flags'> bay12: TissueFlagType
         <enum-item name='THICKENS_ON_STRENGTH'/>
         <enum-item name='THICKENS_ON_ENERGY_STORAGE'/>
         <enum-item name='ARTERIES'/>
@@ -958,53 +1287,96 @@
         <enum-item name='SPLINTABLE'/>
     </enum-type>
 
-    <struct-type type-name='tissue_template' instance-vector='$global.world.raws.tissue_templates'>
+    <enum-type type-name='tissue_shape_type'> bay12: TissueShapeType
+        <enum-item name='LAYER'/>
+        <enum-item name='STRANDS'/>
+        <enum-item name='FEATHERS'/>
+        <enum-item name='SCALES'/>
+        <enum-item name='CUSTOM'/>
+    </enum-type>
+
+    <struct-type type-name='tissue_template' instance-vector='$global.world.raws.tissue_templates.all' original-name='tissue_templatest'>
         <stl-string name='id'/>
-        <df-flagarray name='flags' index-enum='tissue_template_flags'/>
+        <df-flagarray name='flags' index-enum='tissue_flags'/>
         <stl-string name='tissue_name_singular'/>
         <stl-string name='tissue_name_plural'/>
         <static-array name='tissue_material_str' type-name='stl-string' count='3'/>
-        <int32_t/>
-        <int32_t/>
+        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <int32_t name='mat_index'/>
         <int32_t name='relative_thickness'/>
         <int32_t name='healing_rate'/>
         <int32_t name='vascular'/>
         <int32_t name='pain_receptors'/>
-        <int16_t name='tissue_shape'/>
-        <int32_t/>
+        <enum name='tissue_shape' type-name='tissue_shape_type'/>
+        <int32_t name='custom_shape' init-value='-1'/>
         <int16_t name='insulation'/>
         <stl-string name='subordinate_to_tissue'/>
-        <int16_t name='tissue_mat_state'/>
+        <enum base-type='int16_t' name='tissue_mat_state' type-name='matter_state'/>
         <stl-string name='tissue_shape_str'/>
     </struct-type>
 
-    <struct-type type-name='body_detail_plan' instance-vector='$global.world.raws.body_detail_plans'>
+    <struct-type type-name='tissue' key-field='id' original-name='tissue_definitionst'>
         <stl-string name='id'/>
-        <stl-vector name='add_material_name'> <pointer type-name='stl-string'/> </stl-vector>
-        <stl-vector name='add_material_template'> <pointer type-name='stl-string'/> </stl-vector>
-        <stl-vector name='add_tissue_name'> <pointer type-name='stl-string'/> </stl-vector>
-        <stl-vector name='add_tissue_template'> <pointer type-name='stl-string'/> </stl-vector>
-        <stl-vector name='unk5c'/>
-        <stl-vector name='unk6c'/>
-        <stl-vector name='unk7c'/>
-        <stl-vector name='bp_layers_selection'/>
-        <stl-vector name='bp_layers_criteria'/>
-        <stl-vector name='bp_layers_tissue'/>
-        <stl-vector name='bp_layers_thickness'/>
-        <stl-vector name='bp_layers_position'/>
-        <stl-vector name='bp_layers_over_under'/>
-        <stl-vector name='bp_relsize_selection'/>
-        <stl-vector name='bp_relsize_criteria'/>
-        <stl-vector name='bp_relsize_value'/>
-        <stl-vector name='bp_position_selection'/>
-        <stl-vector name='bp_position_criteria'/>
-        <stl-vector name='bp_position_value'/>
-        <stl-vector name='bp_relation_selection_1'/>
-        <stl-vector name='bp_relation_criteria_1'/>
-        <stl-vector name='bp_relation_value_1'/>
-        <stl-vector name='bp_relation_selection_2'/>
-        <stl-vector name='bp_relation_criteria_2'/>
-        <stl-vector name='bp_relation_extent'/>
+        <df-flagarray name='flags' index-enum='tissue_flags'/>
+        <stl-string name='tissue_name_singular'/>
+        <stl-string name='tissue_name_plural'/>
+        <static-array name='tissue_material_str' type-name='stl-string' count='3'/>
+        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <int32_t name='mat_index'/>
+        <int32_t name='relative_thickness'/>
+        <int32_t name='healing_rate'/>
+        <int32_t name='vascular'/>
+        <int32_t name='pain_receptors'/>
+        <enum name='tissue_shape' type-name='tissue_shape_type'/>
+        <int32_t name='custom_shape' init-value='-1'/>
+        <int16_t name='insulation'/>
+        <stl-string name='subordinate_to_tissue'/>
+        <int32_t name='parent_tissue' refers-to='$$._global._upglobal.tissue[$]'/>
+        <enum base-type='int16_t' name='tissue_mat_state' type-name='matter_state'/>
+        <uint16_t name='heatdam_point'/>
+        <uint16_t name='colddam_point'/>
+        <uint16_t name='ignite_point'/>
+        <uint16_t name='melting_point'/>
+        <uint16_t name='boiling_point'/>
+        <uint16_t name='spec_heat'/>
+        <stl-string name='tissue_shape_str'/>
+    </struct-type>
+
+    <struct-type type-name='body_detail_plan' instance-vector='$global.world.raws.body_detail_plans.all' original-name='body_detail_planst'>
+        <stl-string name='id'/>
+
+        <stl-vector name='add_material_name' pointer-type='stl-string'/>
+        <stl-vector name='add_material_template' pointer-type='stl-string'/>
+
+        <stl-vector name='add_tissue_name' pointer-type='stl-string'/>
+        <stl-vector name='add_tissue_template' pointer-type='stl-string'/>
+
+        <stl-vector name='tissue_bp_group' type-name='creature_interaction_effect_target_mode'/>
+        <stl-vector name='tissue_bp_token' pointer-type='stl-string'/>
+        <stl-vector name='tissue_token' pointer-type='stl-string'/>
+
+        <stl-vector name='bp_layers_thickness' type-name='int32_t'/>
+        <stl-vector name='bp_layers_selection' type-name='body_part_position_type'/>
+        <stl-vector name='bp_layers_tissue' type-name='int16_t'/>
+        <stl-vector name='bp_layers_criteria' pointer-type='stl-string'/>
+        <stl-vector name='bp_layers_position' type-name='body_part_relation_type'/>
+        <stl-vector name='bp_layers_over_under' type-name='int8_t'/>
+
+        <stl-vector name='bp_relsize_selection' type-name='creature_interaction_effect_target_mode'/>
+        <stl-vector name='bp_relsize_criteria' pointer-type='stl-string'/>
+        <stl-vector name='bp_relsize_value' type-name='int32_t'/>
+
+        <stl-vector name='bp_position_selection' type-name='creature_interaction_effect_target_mode'/>
+        <stl-vector name='bp_position_criteria' pointer-type='stl-string'/>
+        <stl-vector name='bp_position_value' type-name='int16_t'/>
+
+        <stl-vector name='bp_relation_selection_1' type-name='creature_interaction_effect_target_mode'/>
+        <stl-vector name='bp_relation_criteria_1' pointer-type='stl-string'/>
+        <stl-vector name='bp_relation_value_1' type-name='int16_t'/>
+
+        <stl-vector name='bp_relation_selection_2' type-name='creature_interaction_effect_target_mode'/>
+        <stl-vector name='bp_relation_criteria_2' pointer-type='stl-string'/>
+        <stl-vector name='bp_relation_extent' type-name='int16_t'/>
     </struct-type>
 </data-definition>
 
