@@ -157,7 +157,7 @@
     <class-type type-name='interaction_effect_create_itemst' inherits-from='interaction_effect'>
         <enum name='item_type' type-name='item_type' base-type='int16_t' comment='IE_ITEM'/>
         <int16_t name='item_subtype' comment='IE_ITEM'/>
-        <int16_t name='mat_type' comment='IE_ITEM'/>
+        <enum name='mat_type' type-name='material_type' base-type='int16_t' comment='IE_ITEM'/>
         <int32_t name='mat_index' init-value='-1' comment='IE_ITEM'/>
         <int16_t name='probability' comment='IE_ITEM'/>
         <int16_t name='quantity' comment='IE_ITEM'/>
@@ -421,7 +421,7 @@
 
     <class-type type-name='interaction_target_materialst' inherits-from='interaction_target'>
         <static-array name='material_str' type-name='stl-string' count='3'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <enum name='mat_state' type-name='matter_state'/>
         <enum type-name='breath_attack_type' name='breath_attack_type'/>

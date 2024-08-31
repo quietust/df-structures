@@ -340,13 +340,9 @@
         <int32_t name='year'/>
         <int32_t name='year_tick'/>
 
-        <stl-vector name='item_types'>
-            <enum type-name='item_type'/>
-        </stl-vector>
-        <stl-vector name='item_subtypes'>
-            <int16_t refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
-        </stl-vector>
-        <stl-vector name='mat_types' type-name='int16_t' ref-target='material'/>
+        <stl-vector name='item_types' type-name='item_type'/>
+        <stl-vector name='item_subtypes' type-name='int16_t'/>
+        <stl-vector name='mat_types' type-name='material_type'/>
         <stl-vector name='mat_indices' type-name='int32_t'/>
         <stl-vector name='item_counts' type-name='int32_t'/>
 
@@ -419,7 +415,7 @@
         <int32_t name='histfig_id' ref-target='historical_figure'/>
         <enum type-name='item_type' name='item_type'/>
         <int16_t name='item_subtype'/>
-        <int16_t name='mat_type'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <uint8_t name='triggered'/>
         <compound type-name='coord_path' name='tiles'/>
@@ -583,7 +579,7 @@
 
     <struct-type type-name='coin_batch' original-name='coinbatchst' instance-vector='$global.world.coin_batches'>
         <int32_t name='year'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name='entity' ref-target='historical_entity'/>
         <int32_t name='ruler' ref-target='historical_figure'/>

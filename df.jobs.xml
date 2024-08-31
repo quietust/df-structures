@@ -149,7 +149,7 @@
 
         <bitfield name='flags' type-name='job_flags'/>
 
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index' init-value='-1'/>
         <int16_t name='spell' init-value='-1' comment='almost certainly no longer used'/>
         <enum name='item_type' type-name='item_type' comment='for Bait Trap jobs; otherwise uninitialized'/>
@@ -307,7 +307,7 @@
     <struct-type type-name='job_item' original-name='job_req_elementst'>
         <enum name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index' init-value='-1'/>
 
         <bitfield name='flags1' type-name='job_item_flags1'/>
@@ -335,7 +335,7 @@
         <bitfield name='job_details_flags' base-type='uint32_t' since='v0.43.01'> bay12: JRE_JOB_DETAILS_FLAG_*
             <flag-bit name='have_set_job_details'/>
         </bitfield>
-        <int16_t name='job_details_mat_type' ref-target='material' aux-value='$$.mat_index' since='v0.43.01'/>
+        <enum name='job_details_mat_type' type-name='material_type' since='v0.43.01'/>
         <int32_t name='job_details_mat_index' init-value='-1' since='v0.43.01'/>
         <bitfield name='job_details_item_flags2' type-name='job_item_flags2' since='v0.43.01'/>
     </struct-type>
@@ -343,7 +343,7 @@
     <struct-type type-name='job_item_filter' original-name='itemsearchst'>
         <enum name="item_type" type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index' init-value='-1'/>
 
         <bitfield name="flags1" type-name='job_item_flags1'/>
@@ -447,7 +447,7 @@
 
         <stl-string name="reaction_name"/>
 
-        <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name="mat_index" init-value='-1'/>
 
         <compound name='specflag' type-name='job_spec_flags'/>
@@ -487,7 +487,7 @@
         <int32_t name='compare_val'/>
         <enum name='item_type' type-name='item_type' init-value='NONE'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)' init-value='-1'/>
-        <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name="mat_index" init-value='-1'/>
         <bitfield name='flags1' type-name='job_item_flags1'/>
         <bitfield name='flags2' type-name='job_item_flags2'/>
@@ -519,7 +519,7 @@
         <stl-string name="reaction_name"/>
         <enum name='item_type' type-name='item_type' init-value='NONE'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name="mat_index"/>
         <compound name='specflag' type-name='job_spec_flags'/>
         <compound name='specdata' type-name='job_spec_data'/>
@@ -554,7 +554,7 @@
         <enum base-type='int16_t' name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
 
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
 
         <int16_t name='amount_total'/>
@@ -597,7 +597,7 @@
 
         <enum name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name="mat_index" init-value='-1'/>
 
         <int32_t name='timeout_counter' comment='counts once per 10 frames'/>
@@ -747,7 +747,7 @@
         <enum type-name='killjob_exception_type' name='type'/>
         <enum type-name='item_type' name='item_type'/>
         <int16_t name='item_subtype'/>
-        <int16_t name='item_material'/>
+        <enum name='item_material' type-name='material_type'/>
         <int32_t name='item_matgloss'/>
         <bitfield name="item_flag1" type-name='job_item_flags1'/>
         <bitfield name="item_flag2" type-name='job_item_flags2'/>

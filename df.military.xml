@@ -11,7 +11,7 @@
         <enum base-type='int16_t' name="item_type" type-name='item_type'/>
         <int16_t name="item_subtype" refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <enum name="material_class" type-name='entity_material_category'/>
-        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <enum name='mattype' type-name='material_type'/>
         <int32_t name='matindex'/>
 
         <int32_t name="color"/>
@@ -25,7 +25,7 @@
         <enum name="item_type" type-name='item_type'/>
         <int16_t name="item_subtype" refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <enum name="material_class" type-name='entity_material_category'/>
-        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <enum name='mattype' type-name='material_type'/>
         <int32_t name='matindex'/>
 
         <int32_t name="amount"/>
@@ -787,7 +787,7 @@
         <stl-vector name='creature_class' pointer-type='stl-string' comment="Usually 'GENERAL_POISON' and 'MAMMAL'. Seen something else for undead"/>
         <enum type-name='item_type' name='item_type' comment='for tent'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type' comment='for tents'/>
         <int32_t name='mat_index'/>
         <stl-vector name='items' pointer-type='item' since='v0.44.07'/>
     </struct-type>

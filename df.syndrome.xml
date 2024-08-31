@@ -403,7 +403,7 @@
         <stl-string name="mat_str1"/>
         <stl-string name="mat_str2"/>
         <stl-string name="mat_str3"/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name="fraction_mul"/>
         <int32_t name="fraction_div"/>

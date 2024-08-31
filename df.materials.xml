@@ -55,7 +55,7 @@
         </enum-item>
     </enum-type>
 
-    <enum-type type-name='builtin_mats' base-type='int16_t'> bay12: MaterialType
+    <enum-type type-name='material_type' base-type='int16_t'> bay12: MaterialType
         <enum-item name='INORGANIC'/>
         <enum-item name='AMBER'/>
         <enum-item name='CORAL'/>
@@ -75,10 +75,72 @@
         <enum-item name='FILTH_Y'/>
         <enum-item name='UNKNOWN_SUBSTANCE'/>
         <enum-item name='GRIME'/>
-        CREATURE_1 thru CREATURE_200
-        HIST_FIG_1 thru HIST_FIG_200
-        PLANT_1 thru PLANT_200
-        UNUSED01 thru UNUSED40
+
+        -- Yes, this is a mess, but it's Toady's mess
+        <enum-item name='CREATURE_1'/><enum-item name='CREATURE_2'/><enum-item name='CREATURE_3'/><enum-item name='CREATURE_4'/><enum-item name='CREATURE_5'/><enum-item name='CREATURE_6'/><enum-item name='CREATURE_7'/><enum-item name='CREATURE_8'/><enum-item name='CREATURE_9'/><enum-item name='CREATURE_10'/>
+        <enum-item name='CREATURE_11'/><enum-item name='CREATURE_12'/><enum-item name='CREATURE_13'/><enum-item name='CREATURE_14'/><enum-item name='CREATURE_15'/><enum-item name='CREATURE_16'/><enum-item name='CREATURE_17'/><enum-item name='CREATURE_18'/><enum-item name='CREATURE_19'/><enum-item name='CREATURE_20'/>
+        <enum-item name='CREATURE_21'/><enum-item name='CREATURE_22'/><enum-item name='CREATURE_23'/><enum-item name='CREATURE_24'/><enum-item name='CREATURE_25'/><enum-item name='CREATURE_26'/><enum-item name='CREATURE_27'/><enum-item name='CREATURE_28'/><enum-item name='CREATURE_29'/><enum-item name='CREATURE_30'/>
+        <enum-item name='CREATURE_31'/><enum-item name='CREATURE_32'/><enum-item name='CREATURE_33'/><enum-item name='CREATURE_34'/><enum-item name='CREATURE_35'/><enum-item name='CREATURE_36'/><enum-item name='CREATURE_37'/><enum-item name='CREATURE_38'/><enum-item name='CREATURE_39'/><enum-item name='CREATURE_40'/>
+        <enum-item name='CREATURE_41'/><enum-item name='CREATURE_42'/><enum-item name='CREATURE_43'/><enum-item name='CREATURE_44'/><enum-item name='CREATURE_45'/><enum-item name='CREATURE_46'/><enum-item name='CREATURE_47'/><enum-item name='CREATURE_48'/><enum-item name='CREATURE_49'/><enum-item name='CREATURE_50'/>
+        <enum-item name='CREATURE_51'/><enum-item name='CREATURE_52'/><enum-item name='CREATURE_53'/><enum-item name='CREATURE_54'/><enum-item name='CREATURE_55'/><enum-item name='CREATURE_56'/><enum-item name='CREATURE_57'/><enum-item name='CREATURE_58'/><enum-item name='CREATURE_59'/><enum-item name='CREATURE_60'/>
+        <enum-item name='CREATURE_61'/><enum-item name='CREATURE_62'/><enum-item name='CREATURE_63'/><enum-item name='CREATURE_64'/><enum-item name='CREATURE_65'/><enum-item name='CREATURE_66'/><enum-item name='CREATURE_67'/><enum-item name='CREATURE_68'/><enum-item name='CREATURE_69'/><enum-item name='CREATURE_70'/>
+        <enum-item name='CREATURE_71'/><enum-item name='CREATURE_72'/><enum-item name='CREATURE_73'/><enum-item name='CREATURE_74'/><enum-item name='CREATURE_75'/><enum-item name='CREATURE_76'/><enum-item name='CREATURE_77'/><enum-item name='CREATURE_78'/><enum-item name='CREATURE_79'/><enum-item name='CREATURE_80'/>
+        <enum-item name='CREATURE_81'/><enum-item name='CREATURE_82'/><enum-item name='CREATURE_83'/><enum-item name='CREATURE_84'/><enum-item name='CREATURE_85'/><enum-item name='CREATURE_86'/><enum-item name='CREATURE_87'/><enum-item name='CREATURE_88'/><enum-item name='CREATURE_89'/><enum-item name='CREATURE_90'/>
+        <enum-item name='CREATURE_91'/><enum-item name='CREATURE_92'/><enum-item name='CREATURE_93'/><enum-item name='CREATURE_94'/><enum-item name='CREATURE_95'/><enum-item name='CREATURE_96'/><enum-item name='CREATURE_97'/><enum-item name='CREATURE_98'/><enum-item name='CREATURE_99'/><enum-item name='CREATURE_100'/>
+        <enum-item name='CREATURE_101'/><enum-item name='CREATURE_102'/><enum-item name='CREATURE_103'/><enum-item name='CREATURE_104'/><enum-item name='CREATURE_105'/><enum-item name='CREATURE_106'/><enum-item name='CREATURE_107'/><enum-item name='CREATURE_108'/><enum-item name='CREATURE_109'/><enum-item name='CREATURE_110'/>
+        <enum-item name='CREATURE_111'/><enum-item name='CREATURE_112'/><enum-item name='CREATURE_113'/><enum-item name='CREATURE_114'/><enum-item name='CREATURE_115'/><enum-item name='CREATURE_116'/><enum-item name='CREATURE_117'/><enum-item name='CREATURE_118'/><enum-item name='CREATURE_119'/><enum-item name='CREATURE_120'/>
+        <enum-item name='CREATURE_121'/><enum-item name='CREATURE_122'/><enum-item name='CREATURE_123'/><enum-item name='CREATURE_124'/><enum-item name='CREATURE_125'/><enum-item name='CREATURE_126'/><enum-item name='CREATURE_127'/><enum-item name='CREATURE_128'/><enum-item name='CREATURE_129'/><enum-item name='CREATURE_130'/>
+        <enum-item name='CREATURE_131'/><enum-item name='CREATURE_132'/><enum-item name='CREATURE_133'/><enum-item name='CREATURE_134'/><enum-item name='CREATURE_135'/><enum-item name='CREATURE_136'/><enum-item name='CREATURE_137'/><enum-item name='CREATURE_138'/><enum-item name='CREATURE_139'/><enum-item name='CREATURE_140'/>
+        <enum-item name='CREATURE_141'/><enum-item name='CREATURE_142'/><enum-item name='CREATURE_143'/><enum-item name='CREATURE_144'/><enum-item name='CREATURE_145'/><enum-item name='CREATURE_146'/><enum-item name='CREATURE_147'/><enum-item name='CREATURE_148'/><enum-item name='CREATURE_149'/><enum-item name='CREATURE_150'/>
+        <enum-item name='CREATURE_151'/><enum-item name='CREATURE_152'/><enum-item name='CREATURE_153'/><enum-item name='CREATURE_154'/><enum-item name='CREATURE_155'/><enum-item name='CREATURE_156'/><enum-item name='CREATURE_157'/><enum-item name='CREATURE_158'/><enum-item name='CREATURE_159'/><enum-item name='CREATURE_160'/>
+        <enum-item name='CREATURE_161'/><enum-item name='CREATURE_162'/><enum-item name='CREATURE_163'/><enum-item name='CREATURE_164'/><enum-item name='CREATURE_165'/><enum-item name='CREATURE_166'/><enum-item name='CREATURE_167'/><enum-item name='CREATURE_168'/><enum-item name='CREATURE_169'/><enum-item name='CREATURE_170'/>
+        <enum-item name='CREATURE_171'/><enum-item name='CREATURE_172'/><enum-item name='CREATURE_173'/><enum-item name='CREATURE_174'/><enum-item name='CREATURE_175'/><enum-item name='CREATURE_176'/><enum-item name='CREATURE_177'/><enum-item name='CREATURE_178'/><enum-item name='CREATURE_179'/><enum-item name='CREATURE_180'/>
+        <enum-item name='CREATURE_181'/><enum-item name='CREATURE_182'/><enum-item name='CREATURE_183'/><enum-item name='CREATURE_184'/><enum-item name='CREATURE_185'/><enum-item name='CREATURE_186'/><enum-item name='CREATURE_187'/><enum-item name='CREATURE_188'/><enum-item name='CREATURE_189'/><enum-item name='CREATURE_190'/>
+        <enum-item name='CREATURE_191'/><enum-item name='CREATURE_192'/><enum-item name='CREATURE_193'/><enum-item name='CREATURE_194'/><enum-item name='CREATURE_195'/><enum-item name='CREATURE_196'/><enum-item name='CREATURE_197'/><enum-item name='CREATURE_198'/><enum-item name='CREATURE_199'/><enum-item name='CREATURE_200'/>
+        <enum-item name='HIST_FIG_1'/><enum-item name='HIST_FIG_2'/><enum-item name='HIST_FIG_3'/><enum-item name='HIST_FIG_4'/><enum-item name='HIST_FIG_5'/><enum-item name='HIST_FIG_6'/><enum-item name='HIST_FIG_7'/><enum-item name='HIST_FIG_8'/><enum-item name='HIST_FIG_9'/><enum-item name='HIST_FIG_10'/>
+        <enum-item name='HIST_FIG_11'/><enum-item name='HIST_FIG_12'/><enum-item name='HIST_FIG_13'/><enum-item name='HIST_FIG_14'/><enum-item name='HIST_FIG_15'/><enum-item name='HIST_FIG_16'/><enum-item name='HIST_FIG_17'/><enum-item name='HIST_FIG_18'/><enum-item name='HIST_FIG_19'/><enum-item name='HIST_FIG_20'/>
+        <enum-item name='HIST_FIG_21'/><enum-item name='HIST_FIG_22'/><enum-item name='HIST_FIG_23'/><enum-item name='HIST_FIG_24'/><enum-item name='HIST_FIG_25'/><enum-item name='HIST_FIG_26'/><enum-item name='HIST_FIG_27'/><enum-item name='HIST_FIG_28'/><enum-item name='HIST_FIG_29'/><enum-item name='HIST_FIG_30'/>
+        <enum-item name='HIST_FIG_31'/><enum-item name='HIST_FIG_32'/><enum-item name='HIST_FIG_33'/><enum-item name='HIST_FIG_34'/><enum-item name='HIST_FIG_35'/><enum-item name='HIST_FIG_36'/><enum-item name='HIST_FIG_37'/><enum-item name='HIST_FIG_38'/><enum-item name='HIST_FIG_39'/><enum-item name='HIST_FIG_40'/>
+        <enum-item name='HIST_FIG_41'/><enum-item name='HIST_FIG_42'/><enum-item name='HIST_FIG_43'/><enum-item name='HIST_FIG_44'/><enum-item name='HIST_FIG_45'/><enum-item name='HIST_FIG_46'/><enum-item name='HIST_FIG_47'/><enum-item name='HIST_FIG_48'/><enum-item name='HIST_FIG_49'/><enum-item name='HIST_FIG_50'/>
+        <enum-item name='HIST_FIG_51'/><enum-item name='HIST_FIG_52'/><enum-item name='HIST_FIG_53'/><enum-item name='HIST_FIG_54'/><enum-item name='HIST_FIG_55'/><enum-item name='HIST_FIG_56'/><enum-item name='HIST_FIG_57'/><enum-item name='HIST_FIG_58'/><enum-item name='HIST_FIG_59'/><enum-item name='HIST_FIG_60'/>
+        <enum-item name='HIST_FIG_61'/><enum-item name='HIST_FIG_62'/><enum-item name='HIST_FIG_63'/><enum-item name='HIST_FIG_64'/><enum-item name='HIST_FIG_65'/><enum-item name='HIST_FIG_66'/><enum-item name='HIST_FIG_67'/><enum-item name='HIST_FIG_68'/><enum-item name='HIST_FIG_69'/><enum-item name='HIST_FIG_70'/>
+        <enum-item name='HIST_FIG_71'/><enum-item name='HIST_FIG_72'/><enum-item name='HIST_FIG_73'/><enum-item name='HIST_FIG_74'/><enum-item name='HIST_FIG_75'/><enum-item name='HIST_FIG_76'/><enum-item name='HIST_FIG_77'/><enum-item name='HIST_FIG_78'/><enum-item name='HIST_FIG_79'/><enum-item name='HIST_FIG_80'/>
+        <enum-item name='HIST_FIG_81'/><enum-item name='HIST_FIG_82'/><enum-item name='HIST_FIG_83'/><enum-item name='HIST_FIG_84'/><enum-item name='HIST_FIG_85'/><enum-item name='HIST_FIG_86'/><enum-item name='HIST_FIG_87'/><enum-item name='HIST_FIG_88'/><enum-item name='HIST_FIG_89'/><enum-item name='HIST_FIG_90'/>
+        <enum-item name='HIST_FIG_91'/><enum-item name='HIST_FIG_92'/><enum-item name='HIST_FIG_93'/><enum-item name='HIST_FIG_94'/><enum-item name='HIST_FIG_95'/><enum-item name='HIST_FIG_96'/><enum-item name='HIST_FIG_97'/><enum-item name='HIST_FIG_98'/><enum-item name='HIST_FIG_99'/><enum-item name='HIST_FIG_100'/>
+        <enum-item name='HIST_FIG_101'/><enum-item name='HIST_FIG_102'/><enum-item name='HIST_FIG_103'/><enum-item name='HIST_FIG_104'/><enum-item name='HIST_FIG_105'/><enum-item name='HIST_FIG_106'/><enum-item name='HIST_FIG_107'/><enum-item name='HIST_FIG_108'/><enum-item name='HIST_FIG_109'/><enum-item name='HIST_FIG_110'/>
+        <enum-item name='HIST_FIG_111'/><enum-item name='HIST_FIG_112'/><enum-item name='HIST_FIG_113'/><enum-item name='HIST_FIG_114'/><enum-item name='HIST_FIG_115'/><enum-item name='HIST_FIG_116'/><enum-item name='HIST_FIG_117'/><enum-item name='HIST_FIG_118'/><enum-item name='HIST_FIG_119'/><enum-item name='HIST_FIG_120'/>
+        <enum-item name='HIST_FIG_121'/><enum-item name='HIST_FIG_122'/><enum-item name='HIST_FIG_123'/><enum-item name='HIST_FIG_124'/><enum-item name='HIST_FIG_125'/><enum-item name='HIST_FIG_126'/><enum-item name='HIST_FIG_127'/><enum-item name='HIST_FIG_128'/><enum-item name='HIST_FIG_129'/><enum-item name='HIST_FIG_130'/>
+        <enum-item name='HIST_FIG_131'/><enum-item name='HIST_FIG_132'/><enum-item name='HIST_FIG_133'/><enum-item name='HIST_FIG_134'/><enum-item name='HIST_FIG_135'/><enum-item name='HIST_FIG_136'/><enum-item name='HIST_FIG_137'/><enum-item name='HIST_FIG_138'/><enum-item name='HIST_FIG_139'/><enum-item name='HIST_FIG_140'/>
+        <enum-item name='HIST_FIG_141'/><enum-item name='HIST_FIG_142'/><enum-item name='HIST_FIG_143'/><enum-item name='HIST_FIG_144'/><enum-item name='HIST_FIG_145'/><enum-item name='HIST_FIG_146'/><enum-item name='HIST_FIG_147'/><enum-item name='HIST_FIG_148'/><enum-item name='HIST_FIG_149'/><enum-item name='HIST_FIG_150'/>
+        <enum-item name='HIST_FIG_151'/><enum-item name='HIST_FIG_152'/><enum-item name='HIST_FIG_153'/><enum-item name='HIST_FIG_154'/><enum-item name='HIST_FIG_155'/><enum-item name='HIST_FIG_156'/><enum-item name='HIST_FIG_157'/><enum-item name='HIST_FIG_158'/><enum-item name='HIST_FIG_159'/><enum-item name='HIST_FIG_160'/>
+        <enum-item name='HIST_FIG_161'/><enum-item name='HIST_FIG_162'/><enum-item name='HIST_FIG_163'/><enum-item name='HIST_FIG_164'/><enum-item name='HIST_FIG_165'/><enum-item name='HIST_FIG_166'/><enum-item name='HIST_FIG_167'/><enum-item name='HIST_FIG_168'/><enum-item name='HIST_FIG_169'/><enum-item name='HIST_FIG_170'/>
+        <enum-item name='HIST_FIG_171'/><enum-item name='HIST_FIG_172'/><enum-item name='HIST_FIG_173'/><enum-item name='HIST_FIG_174'/><enum-item name='HIST_FIG_175'/><enum-item name='HIST_FIG_176'/><enum-item name='HIST_FIG_177'/><enum-item name='HIST_FIG_178'/><enum-item name='HIST_FIG_179'/><enum-item name='HIST_FIG_180'/>
+        <enum-item name='HIST_FIG_181'/><enum-item name='HIST_FIG_182'/><enum-item name='HIST_FIG_183'/><enum-item name='HIST_FIG_184'/><enum-item name='HIST_FIG_185'/><enum-item name='HIST_FIG_186'/><enum-item name='HIST_FIG_187'/><enum-item name='HIST_FIG_188'/><enum-item name='HIST_FIG_189'/><enum-item name='HIST_FIG_190'/>
+        <enum-item name='HIST_FIG_191'/><enum-item name='HIST_FIG_192'/><enum-item name='HIST_FIG_193'/><enum-item name='HIST_FIG_194'/><enum-item name='HIST_FIG_195'/><enum-item name='HIST_FIG_196'/><enum-item name='HIST_FIG_197'/><enum-item name='HIST_FIG_198'/><enum-item name='HIST_FIG_199'/><enum-item name='HIST_FIG_200'/>
+        <enum-item name='PLANT_1'/><enum-item name='PLANT_2'/><enum-item name='PLANT_3'/><enum-item name='PLANT_4'/><enum-item name='PLANT_5'/><enum-item name='PLANT_6'/><enum-item name='PLANT_7'/><enum-item name='PLANT_8'/><enum-item name='PLANT_9'/><enum-item name='PLANT_10'/>
+        <enum-item name='PLANT_11'/><enum-item name='PLANT_12'/><enum-item name='PLANT_13'/><enum-item name='PLANT_14'/><enum-item name='PLANT_15'/><enum-item name='PLANT_16'/><enum-item name='PLANT_17'/><enum-item name='PLANT_18'/><enum-item name='PLANT_19'/><enum-item name='PLANT_20'/>
+        <enum-item name='PLANT_21'/><enum-item name='PLANT_22'/><enum-item name='PLANT_23'/><enum-item name='PLANT_24'/><enum-item name='PLANT_25'/><enum-item name='PLANT_26'/><enum-item name='PLANT_27'/><enum-item name='PLANT_28'/><enum-item name='PLANT_29'/><enum-item name='PLANT_30'/>
+        <enum-item name='PLANT_31'/><enum-item name='PLANT_32'/><enum-item name='PLANT_33'/><enum-item name='PLANT_34'/><enum-item name='PLANT_35'/><enum-item name='PLANT_36'/><enum-item name='PLANT_37'/><enum-item name='PLANT_38'/><enum-item name='PLANT_39'/><enum-item name='PLANT_40'/>
+        <enum-item name='PLANT_41'/><enum-item name='PLANT_42'/><enum-item name='PLANT_43'/><enum-item name='PLANT_44'/><enum-item name='PLANT_45'/><enum-item name='PLANT_46'/><enum-item name='PLANT_47'/><enum-item name='PLANT_48'/><enum-item name='PLANT_49'/><enum-item name='PLANT_50'/>
+        <enum-item name='PLANT_51'/><enum-item name='PLANT_52'/><enum-item name='PLANT_53'/><enum-item name='PLANT_54'/><enum-item name='PLANT_55'/><enum-item name='PLANT_56'/><enum-item name='PLANT_57'/><enum-item name='PLANT_58'/><enum-item name='PLANT_59'/><enum-item name='PLANT_60'/>
+        <enum-item name='PLANT_61'/><enum-item name='PLANT_62'/><enum-item name='PLANT_63'/><enum-item name='PLANT_64'/><enum-item name='PLANT_65'/><enum-item name='PLANT_66'/><enum-item name='PLANT_67'/><enum-item name='PLANT_68'/><enum-item name='PLANT_69'/><enum-item name='PLANT_70'/>
+        <enum-item name='PLANT_71'/><enum-item name='PLANT_72'/><enum-item name='PLANT_73'/><enum-item name='PLANT_74'/><enum-item name='PLANT_75'/><enum-item name='PLANT_76'/><enum-item name='PLANT_77'/><enum-item name='PLANT_78'/><enum-item name='PLANT_79'/><enum-item name='PLANT_80'/>
+        <enum-item name='PLANT_81'/><enum-item name='PLANT_82'/><enum-item name='PLANT_83'/><enum-item name='PLANT_84'/><enum-item name='PLANT_85'/><enum-item name='PLANT_86'/><enum-item name='PLANT_87'/><enum-item name='PLANT_88'/><enum-item name='PLANT_89'/><enum-item name='PLANT_90'/>
+        <enum-item name='PLANT_91'/><enum-item name='PLANT_92'/><enum-item name='PLANT_93'/><enum-item name='PLANT_94'/><enum-item name='PLANT_95'/><enum-item name='PLANT_96'/><enum-item name='PLANT_97'/><enum-item name='PLANT_98'/><enum-item name='PLANT_99'/><enum-item name='PLANT_100'/>
+        <enum-item name='PLANT_101'/><enum-item name='PLANT_102'/><enum-item name='PLANT_103'/><enum-item name='PLANT_104'/><enum-item name='PLANT_105'/><enum-item name='PLANT_106'/><enum-item name='PLANT_107'/><enum-item name='PLANT_108'/><enum-item name='PLANT_109'/><enum-item name='PLANT_110'/>
+        <enum-item name='PLANT_111'/><enum-item name='PLANT_112'/><enum-item name='PLANT_113'/><enum-item name='PLANT_114'/><enum-item name='PLANT_115'/><enum-item name='PLANT_116'/><enum-item name='PLANT_117'/><enum-item name='PLANT_118'/><enum-item name='PLANT_119'/><enum-item name='PLANT_120'/>
+        <enum-item name='PLANT_121'/><enum-item name='PLANT_122'/><enum-item name='PLANT_123'/><enum-item name='PLANT_124'/><enum-item name='PLANT_125'/><enum-item name='PLANT_126'/><enum-item name='PLANT_127'/><enum-item name='PLANT_128'/><enum-item name='PLANT_129'/><enum-item name='PLANT_130'/>
+        <enum-item name='PLANT_131'/><enum-item name='PLANT_132'/><enum-item name='PLANT_133'/><enum-item name='PLANT_134'/><enum-item name='PLANT_135'/><enum-item name='PLANT_136'/><enum-item name='PLANT_137'/><enum-item name='PLANT_138'/><enum-item name='PLANT_139'/><enum-item name='PLANT_140'/>
+        <enum-item name='PLANT_141'/><enum-item name='PLANT_142'/><enum-item name='PLANT_143'/><enum-item name='PLANT_144'/><enum-item name='PLANT_145'/><enum-item name='PLANT_146'/><enum-item name='PLANT_147'/><enum-item name='PLANT_148'/><enum-item name='PLANT_149'/><enum-item name='PLANT_150'/>
+        <enum-item name='PLANT_151'/><enum-item name='PLANT_152'/><enum-item name='PLANT_153'/><enum-item name='PLANT_154'/><enum-item name='PLANT_155'/><enum-item name='PLANT_156'/><enum-item name='PLANT_157'/><enum-item name='PLANT_158'/><enum-item name='PLANT_159'/><enum-item name='PLANT_160'/>
+        <enum-item name='PLANT_161'/><enum-item name='PLANT_162'/><enum-item name='PLANT_163'/><enum-item name='PLANT_164'/><enum-item name='PLANT_165'/><enum-item name='PLANT_166'/><enum-item name='PLANT_167'/><enum-item name='PLANT_168'/><enum-item name='PLANT_169'/><enum-item name='PLANT_170'/>
+        <enum-item name='PLANT_171'/><enum-item name='PLANT_172'/><enum-item name='PLANT_173'/><enum-item name='PLANT_174'/><enum-item name='PLANT_175'/><enum-item name='PLANT_176'/><enum-item name='PLANT_177'/><enum-item name='PLANT_178'/><enum-item name='PLANT_179'/><enum-item name='PLANT_180'/>
+        <enum-item name='PLANT_181'/><enum-item name='PLANT_182'/><enum-item name='PLANT_183'/><enum-item name='PLANT_184'/><enum-item name='PLANT_185'/><enum-item name='PLANT_186'/><enum-item name='PLANT_187'/><enum-item name='PLANT_188'/><enum-item name='PLANT_189'/><enum-item name='PLANT_190'/>
+        <enum-item name='PLANT_191'/><enum-item name='PLANT_192'/><enum-item name='PLANT_193'/><enum-item name='PLANT_194'/><enum-item name='PLANT_195'/><enum-item name='PLANT_196'/><enum-item name='PLANT_197'/><enum-item name='PLANT_198'/><enum-item name='PLANT_199'/><enum-item name='PLANT_200'/>
+        <enum-item name='UNUSED_1'/><enum-item name='UNUSED_2'/><enum-item name='UNUSED_3'/><enum-item name='UNUSED_4'/><enum-item name='UNUSED_5'/><enum-item name='UNUSED_6'/><enum-item name='UNUSED_7'/><enum-item name='UNUSED_8'/><enum-item name='UNUSED_9'/><enum-item name='UNUSED_10'/>
+        <enum-item name='UNUSED_11'/><enum-item name='UNUSED_12'/><enum-item name='UNUSED_13'/><enum-item name='UNUSED_14'/><enum-item name='UNUSED_15'/><enum-item name='UNUSED_16'/><enum-item name='UNUSED_17'/><enum-item name='UNUSED_18'/><enum-item name='UNUSED_19'/><enum-item name='UNUSED_20'/>
+        <enum-item name='UNUSED_21'/><enum-item name='UNUSED_22'/><enum-item name='UNUSED_23'/><enum-item name='UNUSED_24'/><enum-item name='UNUSED_25'/><enum-item name='UNUSED_26'/><enum-item name='UNUSED_27'/><enum-item name='UNUSED_28'/><enum-item name='UNUSED_29'/><enum-item name='UNUSED_30'/>
+        <enum-item name='UNUSED_31'/><enum-item name='UNUSED_32'/><enum-item name='UNUSED_33'/><enum-item name='UNUSED_34'/><enum-item name='UNUSED_35'/><enum-item name='UNUSED_36'/><enum-item name='UNUSED_37'/><enum-item name='UNUSED_38'/><enum-item name='UNUSED_39'/><enum-item name='UNUSED_40'/>
     </enum-type>
 
     <enum-type type-name='material_flags'> bay12: MaterialDefinitionFlagType
@@ -305,7 +367,7 @@
         </compound>
 
         <compound name='hardens_with_water'> not a compound
-            <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+            <enum name='mat_type' type-name='material_type'/>
             <int32_t name='mat_index'/>
 
             <static-array name='str' type-name='stl-string' count='3'/>
@@ -372,9 +434,7 @@
     </struct-type>
 
     <struct-type type-name='material_vec_ref'>
-        <stl-vector name='mat_type'>
-            <int16_t ref-target='material' aux-value='$$._parent.mat_index[$._key]'/>
-        </stl-vector>
+        <stl-vector name='mat_type' type-name='material_type'/>
         <stl-vector name='mat_index' type-name='int32_t'/>
     </struct-type>
 
@@ -473,17 +533,13 @@
 
         <compound name='metal_ore'> not a compound
             <stl-vector name='str' comment='only during parsing' pointer-type='stl-string'/>
-            <stl-vector name='mat_index'>
-                <int16_t ref-target='inorganic_raw'/>
-            </stl-vector>
+            <stl-vector name='mat_index' type-name='int16_t' ref-target='inorganic_raw'/>
             <stl-vector type-name='int16_t' name='probability'/>
         </compound>
 
         <compound name='thread_metal'> not a compound
             <stl-vector name='str' comment='only during parsing' pointer-type='stl-string'/>
-            <stl-vector name='mat_index'>
-                <int16_t ref-target='inorganic_raw'/>
-            </stl-vector>
+            <stl-vector name='mat_index' type-name='int16_t' ref-target='inorganic_raw'/>
             <stl-vector type-name='int16_t' name='probability'/>
         </compound>
 
@@ -491,9 +547,7 @@
 
         <compound name='environment_spec'> not a compound
             <stl-vector name='str' comment='only during parsing' pointer-type='stl-string'/>
-            <stl-vector name='mat_index'>
-                <int16_t ref-target='inorganic_raw'/>
-            </stl-vector>
+            <stl-vector name='mat_index' type-name='int16_t' ref-target='inorganic_raw'/>
             <stl-vector name='inclusion_type'>
                 <enum base-type='int16_t' type-name='inclusion_type'/>
             </stl-vector>
@@ -563,7 +617,7 @@
 
     <struct-type type-name='special_mat_table' original-name='material_infost'>
         <static-array name='organic_types' count='39' index-enum='organic_mat_category'>
-            <stl-vector type-name='int16_t' index-refers-to='(food-mat-by-idx $$._key $)'/>
+            <stl-vector type-name='material_type' index-refers-to='(food-mat-by-idx $$._key $)'/>
         </static-array>
         <static-array name='organic_indexes' count='39' index-enum='organic_mat_category'>
             <stl-vector type-name='int32_t'/>
@@ -573,7 +627,7 @@
             <stl-vector type-name='int32_t'/>
         </static-array>
 
-        <static-array name='builtin' count='659' index-enum='builtin_mats'>
+        <static-array name='builtin' count='659' index-enum='material_type'>
             <pointer type-name='material'/>
         </static-array>
 

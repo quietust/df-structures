@@ -22,14 +22,14 @@
         <enum name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
 
-        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <enum name='mattype' type-name='material_type'/>
         <int32_t name='matindex'/>
 
         -- If shot by a ranged weapon:
         <int32_t name='shooter_item' ref-target='item'/>
         <enum name='shooter_item_type' type-name='item_type'/>
         <int16_t name='shooter_item_subtype' refers-to='(item-subtype-target $$._parent.shooter_item_type $)'/>
-        <int16_t name='shooter_mattype' ref-target='material' aux-value='$$.shooter_matindex'/>
+        <enum name='shooter_mattype' type-name='material_type'/>
         <int32_t name='shooter_matindex'/>
     </struct-type>
 
@@ -1708,7 +1708,7 @@
         <int32_t name='number' init-value='1'/>
         <enum name='prof' type-name='profession'/>
         <int16_t name='race' ref-target='creature_raw'/>
-        <int16_t name='racegloss_material' init-value='-1'/>
+        <enum base-type='int16_t' name='racegloss_material' type-name='material_type'/>
         <int32_t name='racegloss_mat_index' init-value='-1'/>
         <int8_t name='gender' init-value='-1'/>
         <int16_t name='caste' ref-target='caste_raw'/>
@@ -2321,7 +2321,7 @@
                 inherits-from='history_event_masterpiece_createdst'>
         <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum base-type='int16_t' name='mat_type' type-name='material_type'/>
         <int16_t name='mat_index' comment='not int32'/>
         <int32_t name='item_id' ref-target='item'/>
     </class-type>
@@ -2329,22 +2329,22 @@
     <class-type type-name='history_event_masterpiece_created_dye_itemst' inherits-from='history_event_masterpiece_createdst'>
         <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum base-type='int16_t' name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name='item_id' ref-target='item'/>
-        <int16_t name='dye_mat_type' ref-target='material' aux-value='$$.dye_mat_index'/>
+        <enum base-type='int16_t' name='dye_mat_type' type-name='material_type'/>
         <int32_t name='dye_mat_index'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_item_improvementst' inherits-from='history_event_masterpiece_createdst'>
         <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum base-type='int16_t' name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name='item_id' ref-target='item'/>
         <enum name='improvement_type' type-name='improvement_type' base-type='int16_t'/>
         <int32_t name='improvement_subtype'/>
-        <int16_t name='imp_mat_type' ref-target='material' aux-value='$$.imp_mat_index'/>
+        <enum base-type='int16_t' name='imp_mat_type' type-name='material_type'/>
         <int32_t name='imp_mat_index'/>
         <int32_t name='art_id' ref-target='art_image_chunk'/>
         <int16_t name='art_subid' ref-target='art_image' aux-value='$$.art_id'/>
@@ -2483,7 +2483,7 @@
             <compound name='Impaled'>
                 <enum name='item_type' type-name='item_type' base-type='int32_t' comment='always WEAPON?'/>
                 <int32_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-                <int32_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+                <enum name='mat_type' type-name='material_type' base-type='int32_t'/>
                 <int32_t name='mat_index'/>
             </compound>
             <compound name='Piled'>
@@ -2498,7 +2498,7 @@
             </compound>
             <compound name='Hung'>
                 <int32_t name='tree' ref-target='plant_raw'/>
-                <int32_t name='mat_type' ref-target='material' aux-value='$$.mat_index' comment='rope'/>
+                <enum name='mat_type' type-name='material_type' base-type='int32_t'/>
                 <int32_t name='mat_index' comment='rope'/>
             </compound>
             <compound name='Animated'>
@@ -2527,7 +2527,7 @@
         <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
 
-        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
+        <enum name='mattype' type-name='material_type'/>
         <int32_t name='matindex'/>
 
         <int32_t name='item' ref-target='item'/>
@@ -3582,16 +3582,16 @@
 
         <stl-vector name='thief_hf' type-name='int32_t' ref-target='historical_figure'/>
 
-        <stl-vector name='stolen_item_types'><enum base-type='int16_t' type-name='item_type'/></stl-vector>
-        <stl-vector name='stolen_item_subtypes'><int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.stolen_item_types[$$._key] $)'/></stl-vector>
-        <stl-vector name='stolen_mat_types'><int16_t ref-target='material' aux-value='$$._parent.stolen_mat_indices[$._key]'/></stl-vector>
+        <stl-vector name='stolen_item_types' type-name='item_type'/>
+        <stl-vector name='stolen_item_subtypes' type-name='int16_t'/>
+        <stl-vector name='stolen_mat_types' type-name='material_type'/>
         <stl-vector name='stolen_mat_indices' type-name='int32_t'/>
         <stl-vector name='stolen_item_ids' type-name='int32_t' ref-target='item'/>
         <stl-vector name='stolen_item_civ' type-name='int32_t' ref-target='historical_entity'/>
 
-        <stl-vector name='attempted_stolen_item_types'><enum base-type='int16_t' type-name='item_type'/></stl-vector>
-        <stl-vector name='attempted_stolen_item_subtypes'><int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.stolen_item_types[$$._key] $)'/></stl-vector>
-        <stl-vector name='attempted_stolen_mat_types'><int16_t ref-target='material' aux-value='$$._parent.stolen_mat_indices[$._key]'/></stl-vector>
+        <stl-vector name='attempted_stolen_item_types' type-name='item_type'/>
+        <stl-vector name='attempted_stolen_item_subtypes' type-name='int16_t'/>
+        <stl-vector name='attempted_stolen_mat_types' type-name='material_type'/>
         <stl-vector name='attempted_stolen_mat_indices' type-name='int32_t'/>
         <stl-vector name='attempted_stolen_item_ids' type-name='int32_t' ref-target='item'/>
         <stl-vector name='attempted_stolen_item_civ' type-name='int32_t' ref-target='historical_entity'/>

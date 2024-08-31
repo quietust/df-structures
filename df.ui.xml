@@ -357,12 +357,8 @@
 
         <compound name='kitchen'>
             <stl-vector name='item_types' type-name='item_type'/>
-            <stl-vector name='item_subtypes'>
-                <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
-            </stl-vector>
-            <stl-vector name='mat_types'>
-                <int16_t ref-target='material' aux-value='$$._parent.mat_indices[$._key]'/>
-            </stl-vector>
+            <stl-vector name='item_subtypes' type-name='int16_t'/>
+            <stl-vector name='mat_types' type-name='material_type'/>
             <stl-vector name='mat_indices' type-name='int32_t'/>
             <stl-vector name='exc_types' type-name='kitchen_exc_type'/>
         </compound>
@@ -504,8 +500,8 @@
         <stl-vector name='no_fishing_feature_idx' type-name='int16_t'/>
         <stl-vector name='no_fishing_feature_layer' type-name='int32_t' ref-target='world_underground_region'/>
         <stl-vector name='event_collections' type-name='int32_t' ref-target='history_event_collection'/>
-        <stl-vector name='stone_mat_types' type-name='int16_t'/>
-        <stl-vector name='stone_mat_indexes' type-name='int16_t'/>
+        <stl-vector name='stone_mat_types'><enum type-name='material_type' base-type='int16_t'/></stl-vector>
+        <stl-vector name='stone_mat_indexes' type-name='int16_t' comment='not 32-bit matgloss'/>
 
         <compound name='waypoints'> bay12: point_infost
             <stl-vector name='points'>

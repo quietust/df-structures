@@ -579,11 +579,11 @@
             <stl-vector name='valid_craft_guild_type' type-name='profession'/>
             <int32_t name='selected_craft_guild'/>
 
-            <stl-vector name='material' type-name='int16_t'/>
+            <stl-vector name='material' type-name='material_type'/>
             <stl-vector name='matgloss' type-name='int32_t'/>
             <stl-vector name='mat_jobitemflag' type-name='uint32_t'/>
             <stl-vector name='material_count' type-name='int32_t'/>
-            <stl-vector name='material_master' type-name='int16_t'/>
+            <stl-vector name='material_master' type-name='material_type'/>
             <stl-vector name='matgloss_master' type-name='int32_t'/>
             <stl-vector name='mat_jobitemflag_master' type-name='uint32_t'/>
             <stl-vector name='material_count_master' type-name='int32_t'/>
@@ -601,7 +601,7 @@
             <stl-vector name='start_menu_used_mat_item' type-name='int32_t'/>
             <stl-vector name='start_menu_used_mat_item_st' type-name='int32_t'/>
             <stl-vector name='start_menu_used_mat_item_tool_use' type-name='int32_t'/>
-            <stl-vector name='start_menu_used_material' type-name='int16_t'/>
+            <stl-vector name='start_menu_used_material' type-name='material_type'/>
             <stl-vector name='start_menu_used_matgloss' type-name='int32_t'/>
             <stl-vector name='start_menu_used_mat_job_item_flag' type-name='uint32_t'/>
             <stl-vector name='start_menu_used_mat_state' type-name='matter_state'/>
@@ -1020,7 +1020,7 @@
     </class-type>
 
     <class-type type-name='adventure_environment_ingest_materialst' inherits-from='adventure_environment_optionst'>
-        <int16_t name='mat_type'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <enum name='mat_state' type-name='matter_state'/>
     </class-type>
@@ -1128,7 +1128,7 @@
         <pointer name='container' type-name='item'/>
         <compound name='pos1' type-name='coord'/>
         <compound name='pos2' type-name='coord'/>
-        <int16_t name='material'/>
+        <enum name='material' type-name='material_type'/>
         <int32_t name='matgloss'/>
         <enum name='state' type-name='matter_state'/>
     </class-type>

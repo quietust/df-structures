@@ -18,7 +18,7 @@
     </enum-type>
 
     <struct-type type-name='dye_info' comment='not actually a real structure'>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name='dyer' ref-target='historical_figure'/>
         <enum base-type='int16_t' name='quality' type-name='item_quality'/>
@@ -28,7 +28,7 @@
     </struct-type>
 
     <class-type type-name='itemimprovement' original-name='itemimprovementst'>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <int32_t name='maker' ref-target='historical_figure'/>
         <int32_t name='masterpiece_event' ref-target='history_event'/>

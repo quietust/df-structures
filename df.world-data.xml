@@ -1042,7 +1042,7 @@
     <struct-type type-name='region_weather' key-field='id' instance-vector='$global.world.world_data.region_weather' original-name='region_weatherst' comment="only evil weather, not the regular kind">
         <int32_t name='id'/>
         <enum name='type' type-name='region_weather_type' comment="Creeping Gas/Vapor/Dust='cloud' below, FallingMaterial='rain'"/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
         <bitfield name='flags' base-type='uint8_t'> bay12: REGION_WEATHER_FLAG_*
             <flag-bit name='announced'/>

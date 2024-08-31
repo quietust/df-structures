@@ -673,7 +673,7 @@
                 <enum name='type' type-name='service_order_type'/>
                 <enum name='item_type' type-name='item_type'/>
                 <int16_t name='item_subtype'/>
-                <int16_t name='mat_type'/>
+                <enum name='mat_type' type-name='material_type'/>
                 <int32_t name='mat_index'/>
                 <int32_t name='cost'/>
                 <int32_t name='full_cost'/>

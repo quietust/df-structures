@@ -19,6 +19,7 @@ Template for new versions:
 # Future
 
 ## Structures
+- renamed "builtin_mats" to "material_type" and expanded to match Bay12, updated all relevant fields to use it
 
 # 50.13-r4
 

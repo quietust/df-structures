@@ -238,9 +238,9 @@
             <int16_t refers-to='(item-subtype-target $$._global.item_type[$$._key] $)'/>
         </stl-vector>
         <stl-vector name='mat_types'>
-            <int16_t ref-target='material' aux-value='$$._parent.mat_indices[$._key]'/>
+            <enum base-type='int16_t' type-name='material_type'/>
         </stl-vector>
-        <stl-vector name='mat_indices' type-name='int16_t'/>
+        <stl-vector name='mat_indices' type-name='int16_t' comment='not a 32-bit matgloss'/>
         <stl-vector name="mat_cats" type-name='job_material_category'/>
         <stl-vector type-name='int8_t' name='priority'/>
     </struct-type>
@@ -334,9 +334,9 @@
             <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
         </stl-vector>
         <stl-vector name='mat_types'>
-            <int16_t ref-target='material' aux-value='$$._parent.mat_indices[$._key]'/>
+            <enum base-type='int16_t' type-name='material_type'/>
         </stl-vector>
-        <stl-vector name='mat_indices' type-name='int16_t'/> yes, actually int16 even though matgloss should be int32
+        <stl-vector name='mat_indices' type-name='int16_t' comment='not a 32-bit matgloss'/>
     </struct-type>
 
     <enum-type type-name='historical_entity_type' base-type='int16_t'> bay12: EntityType
@@ -621,9 +621,7 @@
             <compound name='seeds' type-name='material_vec_ref'/>
 
             <compound name='wood_products' comment='lye, charcoal, potash, pearlash, and coke'>
-                <stl-vector name='item_type'>
-                    <enum base-type='int16_t' type-name='item_type'/>
-                </stl-vector>
+                <stl-vector name='item_type' type-name='item_type'/>
                 <stl-vector type-name='int16_t' name='item_subtype'/>
                 <compound name='material' type-name='material_vec_ref'/>
             </compound>
@@ -643,14 +641,14 @@
                 <stl-vector name='wagon_puller_castes' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.wagon_puller_races[$._key]'/>
                 <stl-vector name='mount_castes' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.mount_races[$._key]'/>
                 <stl-vector name='minion_castes' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.minion_races[$._key]'/>
-                <stl-vector name='exotic_pet_castes' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.unk728_races[$._key]'/>
+                <stl-vector name='exotic_pet_castes' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.exotic_pet_races[$._key]'/>
             </compound>
 
             <stl-vector name='meat_fish_recipes' pointer-type='entity_recipe'/>
             <stl-vector name='other_recipes' pointer-type='entity_recipe'/>
 
             <static-array name='soldier_mats' count='3' comment='melee, archer1, archer - unused?'>
-                <int16_t name='mat_type' init-value='-1'/>
+                <enum name='mat_type' type-name='material_type'/>
                 <int32_t name='mat_index'/>
             </static-array>
 
@@ -1168,7 +1166,7 @@
         <enum name='image_material_class' type-name='entity_material_category'/>
         <int16_t name='maker_race'/>
         <bitfield name="indiv_choice" type-name='uniform_indiv_choice'/>
-        <int16_t name="mattype" ref-target='material' aux-value='$$.matindex'/>
+        <enum name='mattype' type-name='material_type'/>
         <int32_t name="matindex"/>
         <enum name="material_class" type-name='entity_material_category'/>
     </struct-type>

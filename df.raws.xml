@@ -288,9 +288,7 @@
         -- Interaction effects
 
         <compound name='syndromes'>
-            <stl-vector name='mat_types' index-refers-to='$$._parent.all[$]'>
-                <int16_t ref-target='material' aux-value='$$._parent.mat_indexes[$._key]'/>
-            </stl-vector>
+            <stl-vector name='mat_types' type-name='material_type' index-refers-to='$$._parent.all[$]'/>
             <stl-vector name='mat_indexes' type-name='int32_t'/>
             <stl-vector name='interactions'>
                 <int32_t ref-target='interaction'/>
@@ -300,9 +298,7 @@
         </compound>
 
         <compound name='effects'>
-            <stl-vector name='mat_types' index-refers-to='$$._parent.all[$]'>
-                <int16_t ref-target='material' aux-value='$$._parent.mat_indexes[$._key]'/>
-            </stl-vector>
+            <stl-vector name='mat_types' type-name='material_type' index-refers-to='$$._parent.all[$]'/>
             <stl-vector name='mat_indexes' type-name='int32_t'/>
             <stl-vector name='interactions'>
                 <int32_t ref-target='interaction'/>

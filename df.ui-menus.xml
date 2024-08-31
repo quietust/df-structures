@@ -54,7 +54,7 @@
         <enum name="item_type" type-name='item_type'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
 
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+        <enum name='mat_type' type-name='material_type'/>
         <int32_t name='mat_index'/>
 
         <stl-vector name="candidates">
@@ -248,7 +248,7 @@
 
     <class-type type-name='interface_button_building_material_selectorst'
                 inherits-from='interface_button_buildingst'>
-        <int16_t name='material' ref-target='material' aux-value='$$.matgloss'/>
+        <enum name='material' type-name='material_type'/>
         <int32_t name='matgloss'/>
         <bitfield name='job_item_flag' type-name='job_material_category'/>
         <int8_t name="prepare_interface"/>
@@ -260,7 +260,7 @@
         <stl-string name='mstring'/>
         <enum name='itemtype' type-name='item_type'/>
         <int16_t name='subtype'/>
-        <int16_t name='material' ref-target='material' aux-value='$$.matgloss'/>
+        <enum name='material' type-name='material_type'/>
         <int32_t name='matgloss'/>
         <compound name='specflag' type-name='job_spec_flags'/>
         <compound name='specdata' type-name='job_spec_data'/>
@@ -869,7 +869,7 @@
     <struct-type type-name='labor_kitchen_interface_food_key'>
         <enum name='type' type-name='item_type'/>
         <int16_t name='subtype'/>
-        <int16_t name='mat'/>
+        <enum name='mat' type-name='material_type'/>
         <int32_t name='matg'/>
     </struct-type>
 
@@ -1055,7 +1055,7 @@
                 <stl-vector type-name='int16_t' name='item_subtype_master'/>
                 <stl-bit-vector name='item_type_on'/>
 
-                <stl-vector type-name='int16_t' name='item_material_master'/>
+                <stl-vector type-name='material_type' name='item_material_master'/>
                 <stl-vector type-name='int32_t' name='item_matgloss_master'/>
                 <stl-vector type-name='matter_state' name='item_matstate_master'/>
                 <stl-bit-vector name='item_material_on'/>
@@ -1200,7 +1200,7 @@
             <int32_t name='selected'/>
             <enum name='category' type-name='interface_category_building'/>
 
-            <int16_t name='material' ref-target='material' aux-value='$$.mat_index'/>
+            <enum name='material' type-name='material_type'/>
             <int32_t name='matgloss'/>
             <bitfield name='job_item_flag' type-name='job_material_category'/>
 
@@ -1322,10 +1322,10 @@
             <compound name='search' type-name='coord'/>
             <pointer name='bld' type-name='building'/>
 
-            <stl-vector name='material' type-name='int16_t'/>
+            <stl-vector name='material' type-name='material_type'/>
             <stl-vector name='matgloss' type-name='int32_t'/>
             <stl-vector name='material_count' type-name='int32_t'/>
-            <stl-vector name='material_master' type-name='int16_t'/>
+            <stl-vector name='material_master' type-name='material_type'/>
             <stl-vector name='matgloss_master' type-name='int32_t'/>
             <stl-vector name='material_count_master' type-name='int32_t'/>
             <int32_t name='scroll_position_material'/>
@@ -1746,10 +1746,10 @@
 
             <stl-vector type-name='uniform_category' name='cs_cat'/>
             <stl-vector type-name='int32_t' name='cs_it_spec_item_id'/>
-            <stl-vector type-name='int16_t' name='cs_it_type'/>
+            <stl-vector name='cs_it_type'><enum type-name='item_type' base-type='int16_t'/></stl-vector>
             <stl-vector type-name='int16_t' name='cs_it_subtype'/>
             <stl-vector type-name='entity_material_category' name='cs_civ_mat'/>
-            <stl-vector type-name='int16_t' name='cs_spec_mat'/>
+            <stl-vector type-name='material_type' name='cs_spec_mat'/>
             <stl-vector type-name='int32_t' name='cs_spec_matg'/>
             <stl-vector type-name='int32_t' name='cs_color_pattern_index' comment='ColoredPattern'/>
             <stl-vector type-name='int32_t' name='cs_icp_flag'/>
@@ -1758,14 +1758,14 @@
             <uint32_t name='cs_uniform_flag'/>
 
             <enum name='cs_adding_new_entry_category' type-name='uniform_category'/>
-            <stl-vector type-name='int16_t' name='cs_add_list_type'/>
+            <stl-vector name='cs_add_list_type'><enum type-name='item_type' base-type='int16_t'/></stl-vector>
             <stl-vector type-name='int16_t' name='cs_add_list_subtype'/>
             <stl-vector type-name='uint32_t' name='cs_add_list_flag'/>
             <stl-bit-vector name='cs_add_list_is_foreign'/>
             <bool name='cs_setting_material'/>
             <int32_t name='cs_setting_list_ind'/>
             <stl-vector type-name='entity_material_category' name='cs_setting_material_ent'/>
-            <stl-vector type-name='int16_t' name='cs_setting_material_mat'/>
+            <stl-vector type-name='material_type' name='cs_setting_material_mat'/>
             <stl-vector type-name='int32_t' name='cs_setting_material_matg'/>
             <bool name='cs_setting_color_pattern'/>
             <stl-vector type-name='int32_t' name='cs_setting_color_pattern_index' comment='ColoredPattern'/>
@@ -2367,7 +2367,7 @@
             <int32_t name='current_category'/>
             <stl-vector name='equipment_item_type' type-name='item_type'/>
             <stl-vector name='equipment_item_subtype' type-name='int16_t'/>
-            <stl-vector name='equipment_mat_type' type-name='int16_t'/>
+            <stl-vector name='equipment_mat_type' type-name='material_type'/>
             <stl-vector name='equipment_mat_index' type-name='int32_t'/>
             <stl-vector name='equipment_quantity' type-name='int32_t'/>
 
@@ -2958,7 +2958,7 @@
             <compound name='spatter'> bay12: lookinfo_spatterst
                 <enum base-type='int32_t' name='i_type' type-name='item_type'/>
                 <int32_t name='i_subtype' refers-to='(item-subtype-target $$.i_type $)'/>
-                <int32_t name='mat' ref-target='material' aux-value='$$.matg'/>
+                <enum name='mat_type' type-name='material_type' base-type='int32_t'/>
                 <int32_t name='matg'/>
                 <enum type-name='matter_state' base-type='int32_t' name='matstate'/>
                 <int16_t name='extend'/>
