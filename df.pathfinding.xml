@@ -172,12 +172,12 @@
         <enum-item name='ClayZone'/>
         <enum-item name='ColonyToInstall'/>
         <enum-item name='ReturnColonyToInstall'/>
-        <enum-item name='Nonsense'/>
+        <enum-item name='Graze'/>
     </enum-type>
 
     <enum-type type-name='unit_station_type' base-type='int32_t'> bay12: StationType
         <enum-item name='None' value='-1'/>
-        <enum-item name='Nonsense' comment='INITIAL_SITE'/>
+        <enum-item name='InitialSite'/>
         <enum-item name='DungeonCommander'/>
         <enum-item name='InsaneMood'/>
         <enum-item name='UndeadHunt'/>
@@ -213,6 +213,7 @@
         <enum-item name='SquadDefendBurrow'/>
         <enum-item name='SquadDefendBurrowFromTarget'/>
         <enum-item name='LairHunter'/>
+        <enum-item name='Graze'/>
     </enum-type>
 
     <bitfield-type type-name='pathfinding_flags'> bay12: PATH_PERMIT_*

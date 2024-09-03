@@ -477,14 +477,12 @@
         <enum-item name='CutGlass'/>
         <enum-item name='RoughGem'/>
         <enum-item name='CutGem'/>
-        <enum-item name='CutStone'/>
         <enum-item name='Goods'>
             <item-attr name='is_category' value='true'/>
         </enum-item>
         <enum-item name='GoodsType'/>
         <enum-item name='GoodsStone'/>
         <enum-item name='GoodsMetal'/>
-        <enum-item name='GoodsGem'/>
         <enum-item name='GoodsOther'/>
         <enum-item name='GoodsCoreQuality'/>
         <enum-item name='GoodsTotalQuality'/>

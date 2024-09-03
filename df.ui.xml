@@ -422,7 +422,6 @@
             <int32_t name='next_id'/>
             <int32_t name='sel_index' refers-to='$$._parent.list[$]'/>
             <int32_t name='sel_id' ref-target='burrow'/>
-            <bool name='in_confirm_delete'/>
             <bool name='in_add_units_mode'/>
             <stl-vector name='list_units' pointer-type='unit'/>
             <stl-bit-vector name='sel_units' index-refers-to='$$._parent.list_units[$]'/>

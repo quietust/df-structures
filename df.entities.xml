@@ -69,7 +69,14 @@
     <struct-type type-name='tradegoodslistst'>
         <pointer name='it' type-name='item'/>
         <int32_t name='dist'/>
-        <int8_t name='tag'/>
+        <enum base-type='int8_t' name="tag">
+            <enum-item name='RemoveTrading' value='-2'/>
+            <enum-item name='RemovePending'/>
+            <enum-item name='None'/>
+            <enum-item name='AddPending'/>
+            <enum-item name='Pending'/>
+            <enum-item name='Trading'/>
+        </enum>
         <bool name='prohibited'/>
         <int32_t name='value'/>
         <bool name='expanded_container'/>
@@ -87,7 +94,6 @@
         <stl-vector name='subcat1' type-name='int16_t'/>
         <stl-vector name='subcat2' type-name='int16_t'/>
         <stl-vector name='amount' type-name='int32_t'/>
-        <stl-bit-vector name='expanded'/>
     </struct-type>
 
     <struct-type type-name='itemlistst'>
@@ -526,10 +532,10 @@
             <int32_t name='next_style_id'/>
         </compound>
 
-        <stl-vector name='unk41'>
+        <stl-vector name='land_holders'>
             <pointer>
-                <int32_t/>
-                <int16_t/>
+                <int32_t name='civ_id' ref-target='historical_entity'/>
+                <int16_t name='land_holder_rank'/>
             </pointer>
         </stl-vector>
         <stl-vector name='squads' type-name='int32_t' ref-target='squad'/>
@@ -632,10 +638,30 @@
         <stl-vector name='attacked_site_id' type-name='int32_t' comment='used during world gen'/>
         <stl-vector name='attacked_site_timer' type-name='int32_t' comment='used during world gen'/>
 
-        <static-array name='unk26' count='173' type-name='int32_t' comment='Uninitialized'/>
-        <static-array name='town_labor_hours' count='15' type-name='int32_t'/>
+        <int32_t name='total_pop'/>
+        <int32_t name='eating_pop_carn'/>
+        <int32_t name='eating_pop_omni'/>
+        <int32_t name='working_pop'/>
+        <int32_t name='working_e_pop'/>
+        <int32_t name='layabout_pool'/>
+        <int32_t name='peasant_pool'/>
+        <int32_t name='peasant_labor_hours'/>
+        <int32_t name='total_food_veg'/>
+        <int32_t name='total_food_carn'/>
+        <static-array name='trade_current_amount' count='37' index-enum='trade_category_type' type-name='int32_t'/>
+        <static-array name='trade_needed_amount' count='37' index-enum='trade_category_type' type-name='int32_t'/>
+        <static-array name='trade_wanted_amount' count='37' index-enum='trade_category_type' type-name='int32_t'/>
+        <static-array name='trade_maximum_buy_price' count='37' index-enum='trade_category_type' type-name='int32_t'/>
+        <static-array name='town_labor_hours' count='15' index-enum='town_labor_type' type-name='int32_t'/>
+        <static-array name='town_labor_unk' count='15' index-enum='town_labor_type' type-name='int32_t'/>
 
-        <stl-vector name='unk28' type-name='pointer' comment='empty'/>
+        <stl-vector name='debts'>
+            <pointer> bay12: world_gen_entity_debtst
+                <int32_t name='enid' ref-target='historical_entity'/>
+                <int32_t name='amount'/>
+                <int32_t name='age_weeks'/>
+            </pointer>
+        </stl-vector>
     </struct-type>
 
     <struct-type type-name='entity_tissue_style' original-name='entity_tissue_stylest' key-field='id'>

@@ -38,8 +38,8 @@
             <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index' comment='just a guess'/>
             <int32_t name='mat_index'/>
         </pointer>
-        <stl-vector type-name='int32_t'/>
-        <int32_t/>
+        <stl-vector name='items' type-name='int32_t' ref-target='item'/>
+        <int32_t name='site_id' ref-target='world_site'/>
 
         <virtual-methods>
             <vmethod ret-type='abstract_building_type' name='getType'/>
@@ -277,10 +277,10 @@
         <stl-vector name='edges' pointer-type='site_realization_edgest'/>
         <stl-vector name='faces' pointer-type='site_realization_facest'/>
         <stl-vector name='buildings' pointer-type='site_realization_building'/>
-        <int32_t name="num_buildings"/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='next_node'/>
+        <int32_t name='next_edge'/>
+        <int32_t name='next_face'/>
+        <int32_t name="next_building"/>
         <static-array name='mini_tiles' count='17'>
             <static-array count='17' type-name='uint8_t'/>
         </static-array>
@@ -291,39 +291,10 @@
     </struct-type>
 
     <enum-type type-name='site_realization_building_type' base-type='int32_t'> bay12: SiteRealizationBuildingType
-        Probably only a tiny fraction of these are used
         <enum-item name='cottage_plot'/>
         <enum-item name='castle_wall'/>
         <enum-item name='castle_tower'/>
         <enum-item name='castle_courtyard'/>
-        <enum-item name='house'/>
-        <enum-item name='temple'/>
-        <enum-item name='tomb'/>
-        <enum-item name='shop_house'/>
-        <enum-item name='warehouse'/>
-        <enum-item name='market_square'/>
-        10
-        <enum-item name='pasture'/>
-        <enum-item name='waste'/>
-        <enum-item name='courtyard'/>
-        <enum-item name='well'/>
-        <enum-item name='vault'/>
-        <enum-item name='great_tower'/>
-        <enum-item name='trenches'/>
-        <enum-item name='tree_house'/>
-        <enum-item name='hillock_house'/>
-        <enum-item name='mead_hall'/>
-        20
-        <enum-item name='fortress_entrance'/>
-        <enum-item name='library'/>
-        <enum-item name='tavern'/>
-        <enum-item name='counting_house'/>
-        <enum-item name='guild_hall'/>
-        <enum-item name='city_tower'/>
-        <enum-item name='shrine'/>
-        <enum-item name='meadow'/>
-        <enum-item name='dormitory'/>
-        <enum-item name='dininghall'/>
     </enum-type>
 
     <struct-type type-name='site_realization_nodest'>
@@ -360,22 +331,22 @@
         <stl-vector name='face' pointer-type='site_realization_facest'/>
         <pointer name='neighbor_face_1' type-name='site_realization_facest'/>
         <pointer name='neighbor_face_2' type-name='site_realization_facest'/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='x1'/>
+        <int32_t name='x2'/>
+        <int32_t name='y1'/>
+        <int32_t name='y2'/>
         <bitfield name='flags' base-type='uint32_t'> bay12: SITE_REALIZATION_FACE_FLAG_*
             <flag-bit name='tagged_for_resources'/>
         </bitfield>
         <int32_t/>
-        <int32_t/>
+        <int32_t name='seed'/>
         -- not saved
-        <pointer/>
-        <int32_t/>
-        <int32_t/>
-        <pointer/>
-        <pointer/>
-        <int8_t/>
+        <pointer name='face_bits' is-array='true' type-name='uint8_t'/>
+        <int32_t name='face_width'/>
+        <int32_t name='face_height'/>
+        <pointer name='edge_bits_1' is-array='true' type-name='uint8_t'/>
+        <pointer name='edge_bits_2' is-array='true' type-name='uint8_t'/>
+        <int8_t name='edge_dir'/>
     </struct-type>
 
     <enum-type type-name='site_realization_building_facing_type' base-type='int32_t'> bay12: SiteRealizationBuildingFacingType
@@ -444,9 +415,6 @@
             <flag-bit name='se_fortified'/>
             <flag-bit name='central_gate'/>
         </bitfield>
-<!-- Either this field or the one above is absent
-        <int32_t name="door_pos"/>
--->
         <int32_t name="start_x"/>
         <int32_t name="start_y"/>
         <int32_t name="start_z"/>

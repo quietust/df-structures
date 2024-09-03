@@ -228,7 +228,7 @@
         <flag-bit name="horn" comment='check for material flag HORN'/>
         <flag-bit name="pearl" comment='check for material flag PEARL'/>
         <flag-bit name="plaster_containing"/>
-        <flag-bit comment='unused'/>
+        <flag-bit name='hospital' comment='not actually respected'/>
 
         <flag-bit name="soap" comment='check for material flag SOAP'/>
         <flag-bit name="body_part" comment='itemtype CORPSE or CORPSEPIECE'/>

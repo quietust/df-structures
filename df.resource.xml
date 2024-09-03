@@ -45,6 +45,65 @@
         <enum-item name='POWDER'/>
     </enum-type>
 
+    <enum-type type-name='town_labor_type' base-type='int32_t'> bay12: TownLaborType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='CLOTH'/>
+        <enum-item name='TANNING'/>
+        <enum-item name='CLOTHING_CLOTH'/>
+        <enum-item name='CLOTHING_LEATHER'/>
+        <enum-item name='CRAFTS_BONE_CARVER'/>
+        <enum-item name='GEM_CUTTER'/>
+        <enum-item name='METAL_WEAPON_SMITH'/>
+        <enum-item name='WOOD_WEAPON_SMITH'/>
+        <enum-item name='BLACK_SMITH'/>
+        <enum-item name='METAL_ARMOR_SMITH'/>
+        <enum-item name='METAL_CRAFTER'/>
+        <enum-item name='LEATHER_ACCESSORIES'/>
+        <enum-item name='FURNITURE_WOOD'/>
+        <enum-item name='FURNITURE_STONE'/>
+        <enum-item name='FURNITURE_METAL'/>
+    </enum-type>
+
+    <enum-type type-name='trade_category_type' base-type='int32_t'> bay12: TradeCategoryType
+        <enum-item name='FOOD_CARN'/>
+        <enum-item name='FOOD_OMNI'/>
+        <enum-item name='WEARABLE_CLOTHING_HELM'/>
+        <enum-item name='WEARABLE_CLOTHING_BODY'/>
+        <enum-item name='WEARABLE_CLOTHING_PANTS'/>
+        <enum-item name='WEARABLE_CLOTHING_GLOVES'/>
+        <enum-item name='WEARABLE_CLOTHING_BOOTS'/>
+        <enum-item name='CRAFTS'/>
+        <enum-item name='THREAD'/>
+        <enum-item name='CLOTH'/>
+        <enum-item name='SKIN'/>
+        <enum-item name='LEATHER'/>
+        <enum-item name='BONE_CARVABLE'/>
+        <enum-item name='METAL_WEAPON'/>
+        <enum-item name='METAL_WEAPON_RANGED'/>
+        <enum-item name='METAL_ANVIL'/>
+        <enum-item name='METAL_AMMO'/>
+        <enum-item name='METAL_DIGGER'/>
+        <enum-item name='METAL_ARMOR'/>
+        <enum-item name='METAL_HARD'/>
+        <enum-item name='STONE'/>
+        <enum-item name='ROUGH_GEMS'/>
+        <enum-item name='LEATHER_ACCESSORIES'/>
+        <enum-item name='TABLE'/>
+        <enum-item name='CHAIR'/>
+        <enum-item name='BOX'/>
+        <enum-item name='BED'/>
+        <enum-item name='CABINET'/>
+        <enum-item name='WOOD'/>
+        <enum-item name='GEMS'/>
+        <enum-item name='WEAPON_MELEE'/>
+        <enum-item name='WEAPON_RANGED'/>
+        <enum-item name='WEARABLE_ARMOR_HELM'/>
+        <enum-item name='WEARABLE_ARMOR_BODY'/>
+        <enum-item name='WEARABLE_ARMOR_PANTS'/>
+        <enum-item name='WEARABLE_ARMOR_GLOVES'/>
+        <enum-item name='WEARABLE_ARMOR_BOOTS'/>
+    </enum-type>
+
     <class-type type-name='resource_allotment_specifier' original-name='resource_allotment_specifierst'>
         <uint32_t name='flags'/>
         <virtual-methods>

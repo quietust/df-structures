@@ -43,9 +43,16 @@
         <enum-item name='AttackConfirm'/>
     </enum-type>
 
+    <enum-type type-name='talk_circumstance_type' base-type='int32_t'> bay12: TalkCircumstanceType
+        <enum-item name='NORMAL'/>
+        <enum-item name='ASSUME_IDENTITY'/>
+        <enum-item name='SLEEP_PERMISSION'/>
+    </enum-type>
+
     <struct-type type-name='talk_list_optionst'>
         <int32_t name='unit_id' ref-target='unit'/>
         <int32_t name='histfig_id' ref-target='historical_figure'/>
+        <enum name='circumstance' type-name='talk_circumstance_type'/>
     </struct-type>
 
     <struct-type type-name='conversation' original-name='conversationst'>
@@ -61,6 +68,23 @@
         <compound name='speaker' type-name='talk_list_optionst'/>
         <compound name='audience' type-name='talk_list_optionst'/>
         <compound name='talkee' type-name='talk_list_optionst'/>
+
+        <stl-vector name='death_target_nem' pointer-type='nemesis_record'/>
+        <stl-vector name='death_targeter_entity' pointer-type='historical_entity'/>
+        <bool name='had_death_target'/>
+
+        <pointer name='quest_referral_nem' type-name='nemesis_record'/>
+        <pointer name='quest_referral_entity' type-name='historical_entity'/>
+        <bool name='said_referral'/>
+        <bool name='asked_permission'/>
+
+        <stl-vector name='reportable_he' pointer-type='history_event'/>
+        <stl-vector name='reportable_task' pointer-type='adv_task'/>
+        <stl-vector name='reportable_hf' pointer-type='historical_figure'/>
+
+        <pointer name='recorded_sleep_permission_zone' type-name='building_civzonest'/>
+        <bool name='bogeyman_warnings'/>
+        <int32_t name='party_size'/>
 
         <stl-vector name='speech'>
             <pointer> bay12: utterancest

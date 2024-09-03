@@ -89,6 +89,7 @@
         <enum-item name='WATER'/>
         <enum-item name='MAGMA'/>
         <enum-item name='BUILDING_PRESENT'/>
+        <enum-item name='OUTSIDE'/>
         <enum-item name='CLOSE_TO_EDGE'/>
         <enum-item name='INSIDE'/>
         <enum-item name='NEED_OPEN_AIR'/>
@@ -196,7 +197,7 @@
 
     <class-type type-name='interface_button_building_new_jobst'
                 inherits-from='interface_button_buildingst'>
-        <enum name='job_type' type-name='job_type'/>
+        <enum name='job_type' type-name='job_type' base-type='int32_t'/>
         <stl-string name='reaction_name'/>
         <enum name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype'/>
@@ -315,24 +316,22 @@
         <compound name='unit'>
             <stl-vector name='inv_items' pointer-type='unit_inventory_item'/>
             <stl-vector name='inv_spatters' pointer-type='unit_spatter'/>
-
-            <pointer name='unk_2a' type-name='entity_position'/>
-            <pointer name='unk_2b' type-name='entity_position_assignment'/>
-            <pointer name='unk_2c' type-name='entity_position'/>
-            <bool name='unk3'/>
-            <bool name='unk4'/>
-            <bool name='squad_list_opened'/>
-            <bool name='unk5'/>
-            <pointer type-name='squad' name='rename_squad'/>
-
-            <stl-vector name='list' type-name='int32_t' refers-to='$global.world.units.active[$]'/>
-
-            <int8_t name='unk_a0'/>
-            <int8_t name='unk_a1'/>
-
-            <stl-vector name='skill_id' type-name='int32_t' refers-to='$global.ui_selected_unit.index.refers-to.status.current_soul.skills[$]'/>
-
         </compound>
+
+        <compound name='hospital'>
+            <int32_t name='cur_scroll'/>
+            <int32_t name='bed_count'/>
+            <int32_t name='table_count'/>
+            <int32_t name='traction_bench_count'/>
+            <int32_t name='box_count'/>
+        </compound>
+
+        <stl-vector name='viewunit_list' type-name='int32_t' refers-to='$global.world.units.active[$]'/>
+
+        <bool name='exporting_local'/>
+        <bool name='mouse_zone'/>
+
+        <stl-vector name='skill_id' type-name='int32_t' refers-to='$global.ui_selected_unit.index.refers-to.status.current_soul.skills[$]'/>
 
         <bool name="show_combat"/>
         <bool name="show_labor"/>
@@ -340,21 +339,19 @@
 
         <int32_t name="barracks_squad_cursor"/>
 
-        <compound name='barracks'>
-            <stl-vector name='squads' pointer-type='squad'/>
-            <stl-vector name='uses'>
-                <bitfield type-name='squad_use_flags'/>
-            </stl-vector>
+        <stl-vector name='barracks_squads' pointer-type='squad'/>
+        <stl-vector name='barracks_squad_uses'>
+            <bitfield type-name='squad_use_flags'/>
+        </stl-vector>
 
-            <bool name="in_rename"/>
-            <bool name="in_positions"/>
-            <pointer name="position_squad" type-name='squad'/>
-            <int32_t name="position_cursor"/>
+        <bool name="in_rename"/>
+        <bool name="in_positions"/>
+        <pointer name="position_squad" type-name='squad'/>
+        <int32_t name="position_cursor"/>
 
-            <bool name="in_position_squads"/>
-            <stl-vector name='position_squads' pointer-type='squad'/>
-            <int32_t name="position_squad_cursor"/>
-        </compound>
+        <bool name="in_position_squads"/>
+        <stl-vector name='position_squads' pointer-type='squad'/>
+        <int32_t name="position_squad_cursor"/>
 
         <compound name='minimap'> bay12: minimapst
             -- Abstract representation of contents; updated by need_scan
@@ -380,7 +377,6 @@
                 <static-array count='23' type-name='int16_t'/>
             </static-array>
         </compound>
-
 
         <compound name='command_line'> bay12: command_linest
             <stl-string name='original'/>

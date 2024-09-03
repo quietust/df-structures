@@ -339,10 +339,6 @@
 
         <enum-item name='VERMIN_BUTCHER_ITEM'/>
         <enum-item name='CONNECTOR'/>
-        <enum-item name='HAS_CONNECTOR_CHILD'/>
-        <enum-item name='EXTRA_BUTCHER_OBJECT'/>
-        <enum-item name='PREVENTS_PARENT_COLLAPSE'/>
-        <enum-item name='HAS_PREVENTS_PARENT_COLLAPSE_CHILD'/>
     </enum-type>
 
     <enum-type type-name='appearance_modifier_type' base-type='int16_t'> bay12: AppearanceModifierType
@@ -661,6 +657,17 @@
         <enum-item name='VOCALIZATION'/>
     </enum-type>
 
+    <enum-type type-name='breath_attack_type' base-type='int16_t'> bay12: BreathAttackType
+        <enum-item name='TRAILING_DUST_FLOW'/>
+        <enum-item name='TRAILING_VAPOR_FLOW'/>
+        <enum-item name='TRAILING_GAS_FLOW'/>
+        <enum-item name='SOLID_GLOB'/>
+        <enum-item name='LIQUID_GLOB'/>
+        <enum-item name='UNDIRECTED_GAS'/>
+        <enum-item name='UNDIRECTED_VAPOR'/>
+        <enum-item name='UNDIRECTED_DUST'/>
+    </enum-type>
+
     <struct-type type-name='creature_soundst'>
         <enum name='type' type-name='creature_sound_type'/>
         <int32_t name='range' init-value='100'/>
@@ -870,7 +877,7 @@
 
             <int16_t name='vermin_bite_mat'/>
             <int32_t name='vermin_bite_matidx'/>
-            <int16_t name='vermin_bite_chance'/>
+            <enum type-name='matter_state' base-type='int16_t' name='vermin_bite_state'/>
             <static-array name='vermin_bite_str' count='3'>
                 <stl-string/>
             </static-array>
@@ -910,7 +917,7 @@
                     <pointer type-name='stl-string'/>
                 </stl-vector>
             </static-array>
-            <stl-vector type-name='int16_t' name='material_breath_attack_type'/>
+            <stl-vector type-name='breath_attack_type' name='material_breath_attack_type'/>
 
             <stl-vector type-name='int16_t' name='egg_material_mattype'/>
             <stl-vector type-name='int32_t' name='egg_material_matindex'/>
@@ -1128,12 +1135,20 @@
                           count='7' index-enum='creature_graphics_role'>
                 <static-array type-name='bool' index-enum='profession' count='106'/>
             </static-array>
+
+            <stl-vector name='positions'>
+                <pointer> bay12: creature_position_graphicst
+                    <stl-string name='position_token'/>
+                    <static-array name='texpos' type-name='int32_t' count='7' index-enum='creature_graphics_role'/>
+                    <static-array name='texpos_gs' type-name='int32_t' count='7' index-enum='creature_graphics_role'/>
+                    <static-array name='add_color' type-name='bool' count='7' index-enum='creature_graphics_role'/>
+                </pointer>
+            </stl-vector>
         </compound>
 
+        <stl-vector name='speech_unk' type-name='int8_t' comment='initialized to -1'/>
         <stl-vector name='speech_index' type-name='int32_t'/>
-        <stl-vector name='speech_token1' pointer-type='stl-string'/>
-        <stl-vector name='speech_token2' pointer-type='stl-string'/>
-        <stl-vector name='speech_token3' pointer-type='stl-string'/>
+        <stl-vector name='speech_token' pointer-type='stl-string'/>
 
         <stl-vector name='material' pointer-type='material'/>
         <stl-vector name='tissue' pointer-type='tissue'/>
@@ -1287,7 +1302,7 @@
         <enum-item name='SPLINTABLE'/>
     </enum-type>
 
-    <enum-type type-name='tissue_shape_type'> bay12: TissueShapeType
+    <enum-type type-name='tissue_shape_type' base-type='int16_t'> bay12: TissueShapeType
         <enum-item name='LAYER'/>
         <enum-item name='STRANDS'/>
         <enum-item name='FEATHERS'/>

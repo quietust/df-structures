@@ -463,8 +463,7 @@
         <int32_t name='population_id' ref-target='entity_population'/>
         <int32_t name='invasion_id' ref-target='invasion_info'/>
 
-        <compound name='patrol_route' type-name='coord_path'
-                  comment='used by necromancers for corpse locations, siegers etc'/>
+        <compound name='patrol_route' type-name='coord_path'/>
         <int32_t name='patrol_index'/>
 
         <stl-vector name='specific_refs' pointer-type='specific_ref'/>
@@ -758,8 +757,8 @@
         <stl-vector name='used_items' pointer-type='unit_item_use' comment='Contains worn clothes, armor, weapons, arrows fired by archers'/>
 
         <compound name='enemy'> not a compound
-            <stl-vector name='unk_850'/>
-            <stl-vector name='unk_860' type-name='int32_t'/>
+            <stl-vector name='just_talked_unit' type-name='int32_t' ref-target='unit'/>
+            <stl-vector name='sound_timer' type-name='int32_t'/>
 
             <int32_t name='enemy_status_slot' refers-to='$global.world.enemy_status_cache.rel_map[$]'/>
             <int32_t name='last_temperature_check'/>
@@ -965,7 +964,6 @@
     <bitfield-type type-name='wound_damage_flags2'> bay12: UNIT_WOUND_LAYER_FLAG2_*
         <flag-bit name='needs_setting'/>
         <flag-bit name='entire_surface'/>
-        <flag-bit name='gelded'/>
     </bitfield-type>
 
     <struct-type type-name='unit_wound' original-name='unit_woundst' key-field='id'>

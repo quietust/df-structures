@@ -17,10 +17,6 @@
             <flag-bit name='active'/>
             <flag-bit name='siege' comment='announced'/>
             <flag-bit name='layer_source'/>
-            <flag-bit name='undead_source'/>
-            <flag-bit name='want_parley'/>
-            <flag-bit name='parley'/>
-            <flag-bit name='created_parley'/>
         </bitfield>
         <enum type-name='mission_type' name='mission'/>
     </struct-type>

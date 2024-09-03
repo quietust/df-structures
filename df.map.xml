@@ -146,6 +146,14 @@
         <enum-item name='UpdateLiquid'/>
         <enum-item name='UpdateLiquidTwice'
                    comment='Protects UpdateLiquid from being cleared the first time.'/>
+        <enum-item name='RepathOnFreeze'
+                  comment='reindex_pathfinding set and flag cleared if temperature below 10000'/>
+        <enum-item name='RepathOnMelt'
+                  comment='reindex_pathfinding set and flag cleared if temperature above 10000'/>
+        <enum-item name='HasAquifer'
+                  comment='has at least one "water_table" designation flag'/>
+        <enum-item name='CheckAquifer'
+                  comment='bay12: NEARBY_WATER_TABLE; has tiles that may get flooded by an adjacent aquifer'/>
     </enum-type>
 
     <bitfield-type type-name='z_level_flags'> bay12: TEMP_BLOCK_FLAG_*
@@ -427,10 +435,6 @@
         <compound name='tile_bitmask' type-name='tile_bitmask'/>
         <bitfield name='flags' base-type='uint32_t'> bay12: MINERAL_EVENT_FLAG_*
             <flag-bit name='discovered'/>
-            <flag-bit name='cluster'/>
-            <flag-bit name='vein'/>
-            <flag-bit name='cluster_small'/>
-            <flag-bit name='cluster_one'/>
         </bitfield>
         <custom-methods>
             <cmethod name='has_assignments'/>

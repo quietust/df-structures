@@ -391,6 +391,7 @@
             </vmethod>
 
             <vmethod ret-type='int32_t' name='getFreeCapacity'>
+                <bool name='exclude_in_room'/>
                 <bool name='subtract_pending_jobs'/>
             </vmethod>
             <vmethod ret-type='bool' name='canStoreItem'>
@@ -549,6 +550,10 @@
         <enum-item name="ThroneRoom"/>
         <enum-item name="ActivityZone"/>
         <enum-item name="Temple"/>
+        <enum-item name='Kitchen'/>
+        <enum-item name='CaptiveRoom'/>
+        <enum-item name='TowerTop'/>
+        <enum-item name='Courtyard'/>
     </enum-type>
 
     <class-type type-name='building_civzonest' inherits-from='building'>
@@ -567,11 +572,11 @@
             <flag-bit name='pen_pasture'/>
             <flag-bit name='clay'/>
         </bitfield>
-        <int32_t comment='-1'/>
-        <int32_t comment='-1'/>
-        <int32_t comment='-1'/>
+        <int32_t name='site_id' ref-target='world_site'/>
+        <int32_t name='ab_id' ref-target='abstract_building'/>
+        <int32_t name='srb_id' ref-target='site_realization_building'/>
         <int32_t name='zone_num'/>
-        <int32_t/>
+        <int32_t name='pasture_flag'/>
         <bitfield name='pit_flags' base-type='uint32_t'> bay12: CIVZONE_POND_FLAG_*
             <flag-bit name='keep_filled'/>
             <flag-bit name='check_occupants'/>

@@ -803,8 +803,9 @@
         <pointer name="region_map" is-array='true'>
             <pointer is-array='true' type-name='region_map_entry'/>
         </pointer>
-        <pointer name="variant_flag" type-name='uint16_t' is-array='true' comment='size: dimx*dimy'/>
-        <pointer name='corner_variant_flag' type-name='uint8_t' is-array='true' comment='size: (dimx+1)*(dimy+1)'/>
+        <pointer name="feature_map_seed" type-name='uint32_t' is-array='true' comment='size: ((dimx+15)>>4)*((dimy+15)>>4)'/>
+        <int16_t name='olookx'/>
+        <int16_t name='olooky'/>
 
         <stl-vector name="embark_notes" pointer-type='embark_note'/>
 

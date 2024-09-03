@@ -171,6 +171,7 @@
             <enum-item name="Entities"/>
             <enum-item name="Sites"/>
             <enum-item name="Regions"/>
+            <enum-item name="Layers"/>
         </enum>
         <int16_t name="local_area_x1" comment="rectangle of 0 in local view"/>
         <int16_t name="local_area_x2"/>
@@ -546,24 +547,8 @@
         <int32_t name="undead_mode"/>
     </class-type>
 
-    <struct-type type-name='assign_trade_status'>
-        <pointer name='item' type-name='item'/>
-        <int32_t name="distance"/>
-        <enum base-type='int8_t' name="status">
-            <enum-item name='RemoveTrading' value='-2'/>
-            <enum-item name='RemovePending'/>
-            <enum-item name='None'/>
-            <enum-item name='AddPending'/>
-            <enum-item name='Pending'/>
-            <enum-item name='Trading'/>
-        </enum>
-        <bool name='unk' comment='mandate?'/>
-        <int32_t name="value"/>
-        <int32_t name="weight"/>
-    </struct-type>
-
     <class-type type-name='viewscreen_layer_assigntradest' inherits-from='viewscreen_layer'>
-        <stl-vector name='info' pointer-type='assign_trade_status'/>
+        <stl-vector name='info' pointer-type='tradegoodslistst'/>
         <pointer name='depot' type-name='building_tradedepotst'/>
         <static-array name='lists' count='61'>
             <stl-vector type-name='int32_t' refers-to='$$._global.info[$]'/>
@@ -579,14 +564,12 @@
         <pointer name='entity' type-name='historical_entity'/>
         <pointer name='name' type-name='language_name'/>
         <enum name='type' type-name='language_name_type' base-type='int32_t'/>
-        <enum name='current_component' type-name='language_name_component'/>
-        <int32_t name='cur_slot'/>
+        <int32_t name='selected_place'/>
+        <enum name='cur_word_place' type-name='language_word_table_index'/>
         <compound name='dictionary' type-name='language_word_table'/>
         <stl-vector name='list_word' type-name='int32_t' ref-target='language_word'/>
-        <stl-vector name='list_part' index-refers-to='$$._parent.list_word[$].ref-target'>
-            <enum base-type='int32_t' type-name='part_of_speech'/>
-        </stl-vector>
-        <stl-string name='selector'/>
+        <stl-vector name='list_part' index-refers-to='$$._parent.list_word[$].ref-target'><enum type-name='part_of_speech' base-type='int32_t'/></stl-vector>
+        <stl-string name='cull_str'/>
     </class-type>
 
     <class-type type-name='viewscreen_layer_currencyst' inherits-from='viewscreen_layer'>
@@ -1357,19 +1340,15 @@
         <int8_t name='editing_title'/>
         <int8_t name='popup_deleteset'/>
         <int8_t name='popup_changedimensions'/>
-        <int8_t name='unk_11'/>
         <uint16_t name='custom_size_x'/>
         <uint16_t name='custom_size_y'/>
         <int8_t name='popup_abort'/>
         <int8_t name='popup_goon'/>
         <int8_t name='unsaved_changes'/>
         <int8_t name='simple_mode' comment='0=advanced params, 1=create new world'/>
-        <int8_t name='unk_20'/>
-        <int8_t name='unk_21'/>
 
         create new world
-        <int16_t name='cursor_line'/>
-
+        <int32_t name='cursor_line'/>
         <int32_t name='world_size'/>
         <int32_t name='history'/>
         <int32_t name='number_civs'/>
@@ -1380,8 +1359,8 @@
 
         <int8_t name='worldgen_paused'/>
         <int8_t name='worldgen_rejected'/>
-        <stl-vector name='unk_32' pointer-type='stl-string' comment='rejection related'/>
-        <stl-vector name='unk_33' pointer-type='stl-string' comment='fullscreen popup'/>
+        <stl-vector name='reject_box' pointer-type='stl-string' comment='rejection related'/>
+        <stl-vector name='text_box' pointer-type='stl-string' comment='fullscreen popup'/>
     </class-type>
 
     <class-type type-name='viewscreen_noblest' inherits-from='viewscreen'>
@@ -1507,21 +1486,22 @@
 
     <struct-type type-name='embark_profile'>
         <stl-string name='name'/>
-        <stl-vector name='skill_type' type-name='int16_t'/>
+        <stl-vector name='skill_type' type-name='job_skill'/>
         <stl-vector name='skill_dwarf_idx' type-name='int16_t'/>
         <stl-vector name='skill_level' type-name='int16_t'/>
 
         <stl-vector name='reclaim_dwarf_idx' type-name='int16_t'/>
-        <stl-vector name='reclaim_prof1' type-name='int16_t'/>
-        <stl-vector name='reclaim_prof2' type-name='int16_t'/>
+        <stl-vector name='reclaim_prof1' type-name='profession'/>
+        <stl-vector name='reclaim_prof2' type-name='profession'/>
 
-        <stl-vector name='item_type' type-name='int16_t'/>
+        <stl-vector name='item_type' type-name='item_type'/>
         <stl-vector name='item_subtype' type-name='int16_t'/>
         <stl-vector name='material' type-name='int16_t'/>
-        <stl-vector name='matgloss' type-name='int16_t'/>
+        <stl-vector name='matgloss' type-name='int32_t'/>
         <stl-vector name='item_count' type-name='int32_t'/>
 
         <stl-vector name='pet_race' type-name='int32_t' ref-target='creature_raw'/>
+        <stl-vector name='pet_caste' type-name='int16_t'/>
         <stl-vector name='pet_prof' type-name='profession'/>
         <stl-vector name='pet_count' type-name='int32_t'/>
     </struct-type>
@@ -1566,7 +1546,7 @@
         <int8_t name='in_problems'/>
         <int8_t name='in_save_profile'/>
         <int8_t name='profile_name_conflict'/>
-        <compound name='unk1' type-name='embark_item_choice'/>
+        <compound name='etl' type-name='embark_item_choice'/>
         <stl-vector/>
         <compound name='fort_name' type-name='language_name'/>
         <compound name='group_name' type-name='language_name'/>
@@ -1574,7 +1554,7 @@
         <compound name='location' type-name='starter_infost'/>
         <stl-vector name='units' pointer-type='unit'/>
         <stl-vector name='items' pointer-type='item'/>
-        <int32_t/>
+        <int32_t name='wagon_num'/>
         <int32_t name='points_remaining'/>
         <enum base-type='int16_t' name='add_item_type' type-name='item_type'/>
         <int16_t name='add_item_subtype' refers-to='(item-subtype-target $$._parent.add_item_type $)'/>
@@ -1591,18 +1571,8 @@
         <int16_t name='in_group_mode'/>
         <stl-vector name="category_total" type-name='int32_t' index-enum='item_type'/>
         <stl-vector name="category_busy" type-name='int32_t' index-enum='item_type'/>
-        <stl-vector name="items" pointer-type='item'/>
-        <stl-vector name='group_item_type'>
-            <enum base-type='int16_t' type-name='item_type'/>
-        </stl-vector>
-        <stl-vector name="group_item_subtype">
-            <int16_t refers-to='(item-subtype-target $$._global.group_item_type[$$._key] $)'/>
-        </stl-vector>
-        <stl-vector name="group_mat_type">
-            <int16_t ref-target='material' aux-value='$$._global.group_mat_index[$._key]'/>
-        </stl-vector>
-        <stl-vector name="group_mat_index" type-name='int16_t'/>
-        <stl-vector name="group_count" type-name='int32_t'/>
+        <compound name='i_list' type-name='itemlistst'/>
+        <compound name='a_list' type-name='abstractitemlistst'/>
         <stl-vector name="category_order">
             <enum base-type='int16_t' type-name='item_type'/>
         </stl-vector>
@@ -1679,6 +1649,7 @@
         <pointer name='entity_diplomat' type-name='historical_entity'/>
         <pointer name='entity_fortress' type-name='historical_entity'/>
         <stl-vector name="position_ids" type-name='int32_t' ref-target='entity_position_raw'/>
+        <stl-vector name="position_number" type-name='int16_t'/>
         <stl-vector name="selected_histfig_ids" type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name="candidate_histfig_ids" type-name='int32_t' ref-target='historical_figure'/>
         <int32_t name='position_cursor'/>

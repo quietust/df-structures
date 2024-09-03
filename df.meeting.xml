@@ -246,7 +246,9 @@
         <int32_t name='pet_unit_id' ref-target='unit'/>
         <compound name='name' type-name='language_name'/>
         <code-helper name='describe'>(describe-obj $.name)</code-helper>
-        <int32_t name='unk3'/>
+        <bitfield name='flags' base-type='uint32_t'>
+            <flag-bit name='named'/>
+        </bitfield>
         <int32_t name='owner_id' ref-target='unit'/>
     </struct-type>
 

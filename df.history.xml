@@ -40,12 +40,13 @@
 
     <enum-type type-name='whereabouts_type' base-type='int16_t'> bay12: HistFigStateType
         <enum-item name='NONE' value='-1'/>
-        <enum-item name='wanderer' comment="wandering the wilds/region/depths of the world (none/region/underground_region)"/>
-        <enum-item name='settler' comment="site/region, region only for dead 'monsters'"/>
-        <enum-item name='refugee' comment="into region only for dead. refugees and abucted-imprisoned-turned"/>
-        <enum-item name='army_died' comment="either no record of participation in battle, or character died and defender won (character on either side)"/>
-        <enum-item name='army_survived' comment="either no record of participation in battle, or character survived and defender won (character on either side)"/>
-        <enum-item name='visitor' comment="'visited' as last movement seems to be the key"/>
+        <enum-item name='wandering'/>
+        <enum-item name='scouting'/>
+        <enum-item name='hunting'/>
+        <enum-item name='settled'/>
+        <enum-item name='snatcher'/>
+        <enum-item name='thief'/>
+        <enum-item name='refugee'/>
     </enum-type>
 
     <enum-type type-name='season' base-type='int8_t'> bay12: SeasonType, int32
@@ -197,10 +198,6 @@
         <enum-item name='Aunt'/>
         --  60
         <enum-item name='Uncle'/>
-        <enum-item name='Niece'/>
-        <enum-item name='Nephew'/>
-        <enum-item name='Sibling'/>
-        <enum-item name='Grandchild'/>
     </enum-type>
 
     <struct-type type-name='historical_figure' instance-vector='$global.world.history.figures' key-field='id'
@@ -476,10 +473,14 @@
             <vmethod name='getSentence'>
                 <pointer type-name='stl-string' name='str'/> "In x, some event happened"
                 <pointer type-name='history_event_context' name='context'/>
+                <bool name='translated'/>
+                <bool name='glyphs_only'/>
             </vmethod>
             <vmethod name='getPhrase'>
                 <pointer type-name='stl-string' name='str'/> "the happening of some event"
                 <pointer type-name='history_event_context' name='context'/>
+                <bool name='translated'/>
+                <bool name='glyphs_only'/>
             </vmethod>
             <vmethod name='populateArtImage'>
                 <pointer type-name='art_image' name='image'/>
@@ -982,7 +983,6 @@
             <enum-item name='Flayed'/>
             <enum-item name='Hung'/>
             <enum-item name='Mutilated'/>
-            <enum-item name='Animated'/>
         </enum>
         <compound name='abuse_data' is-union='true'>
             <compound name='Impaled'>
@@ -1249,10 +1249,6 @@
         <enum-item name='HISTORICAL_COLLECTION'/>
         <enum-item name='ETHIC'/>
         <enum-item name='CANNOT_COMMUNICATE'/>
-        <enum-item name='RELATIVES'/>
-        <enum-item name='POSSESS_CLAIMED_ARTIFACT'/>
-        <enum-item name='KILL_EVERYBODY'/>
-        <enum-item name='DISTURBING_ONCE_ETERNAL_REST'/>
     </enum-type>
 
     <struct-type type-name='diplomatic_evaluationst'>
@@ -1455,12 +1451,12 @@
         <int32_t name='total_powers' comment='also includes megabeasts'/>
         <int32_t name='total_megabeasts'/>
         <int32_t name='total_semimegabeasts'/>
+        <stl-vector name='secret_events' type-name='int32_t' ref-target='history_event'/>
         <stl-vector name='live_megabeasts' pointer-type='historical_figure'/>
         <stl-vector name='live_semimegabeasts' pointer-type='historical_figure'/>
         <stl-vector name='hf_allbeasts' pointer-type='historical_figure' comment='megabeasts AND semimegabeasts'/>
-        <stl-vector/>
-        <stl-vector/>
-        <stl-vector/>
+        <stl-vector name='hf_beast_actor' pointer-type='historical_figure' comment='creatures that have gone on rampages'/>
+        <stl-vector name='deleted_hfid' type-name='int32_t'/>
         <bool name='do_not_remove_from_vector'/>
         <stl-vector name='active_event_collections' pointer-type='history_event_collection'/>
         <bool name='hf_temp_var_clear'/>
