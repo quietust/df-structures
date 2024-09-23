@@ -390,7 +390,7 @@
                 <ret-type> <pointer type-name='activity_event_participants'/> </ret-type>
             </vmethod>
             <vmethod name='dismiss'> <bool name='children_too'/> </vmethod>
-            <vmethod name='removeParticipant'> <int32_t name='histfig'/> <int32_t name='unit'/> <bool name='moving_to_related'/> </vmethod>
+            <vmethod name='removeParticipant'> <int32_t name='histfig'/> <int32_t name='unit'/> </vmethod>
 
             <vmethod name='process'><pointer type-name='unit'/></vmethod>
             <vmethod ret-type='bool' name='checkDrillInvalid'>

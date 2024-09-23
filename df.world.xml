@@ -28,8 +28,8 @@
 
     <enum-type type-name='units_other_id'>
         <enum-item name='ANY_RIDER'/>
+        <enum-item name='ANY_PET'/>
         <enum-item name='ANY_BABY'/>
-        <enum-item name='ANY_BABY2'/>
     </enum-type>
 
     <struct-type type-name='ocean_wave_maker' original-name='event_ocean_wave_generatorst'>

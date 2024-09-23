@@ -423,7 +423,7 @@
         </compound>
     </struct-type>
 
-    <enum-type type-name='ui_unit_view_mode'> bay12: UnitViewModes
+    <enum-type type-name='ui_unit_view_mode' base-type='int32_t'> bay12: UnitViewModes, no base type
         <enum-item name='General'/>
         <enum-item name='Inventory'/>
         <enum-item name='Preferences'/>

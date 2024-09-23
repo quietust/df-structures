@@ -1038,7 +1038,6 @@
         <bitfield name='flags' base-type='uint8_t'> bay12: EVENTFLOW_FLAG_*
             <flag-bit name='DEAD'/>
             <flag-bit name='FAST'/>
-            <flag-bit name='CREEPING'/>
         </bitfield>
         <int32_t name='guide_id' ref-target='flow_guide'/>
     </struct-type>

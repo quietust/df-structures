@@ -21,60 +21,54 @@
     <symbol-table name="v0.31.25 SDL" os-type="windows">
         <binary-timestamp value="0x4D90764F"/>
 
-        <!-- .data -->
+        <!-- ordered the same as in game_v.h -->
+        <global-address name='enabler' value='0x14ee4d8'/>
+        <global-address name='gview' value='0x14f6070'/>
+
+        <global-address name="flows" value="0x184bedc" />
+        <global-address name="timed_events" value="0x14ee78c" />
+
+        <global-address name='jobvalue' value='0xec4640'/>
+        <global-address name='jobvalue_setter' value='0xec4220'/>
+
+        <global-address name='buildreq' value='0x1849e88'/>
+
+        <global-address name="window_x" value="0xEB0984" />
+        <global-address name="window_y" value="0xEDEBA0" />
+        <global-address name="window_z" value="0xEDEB7C" />
+
+        <global-address name='cur_season' value='0xe182a2'/>
+        <global-address name='cur_season_tick' value='0xe18180'/>
+
+        <global-address name="cur_rain" value="0xef7270" />
+        <global-address name="cur_snow" value="0xec4a60" />
+        <global-address name="cur_rain_counter" value="0xef725c" />
+        <global-address name="cur_snow_counter" value="0xeb0988" />
+        <global-address name="current_weather" value="0x14EC7A0" />
+        <global-address name="weathertimer" value="0xedeb8c" />
+
+        <global-address name='cur_year' value='0xef7268'/>
+        <global-address name="process_dig" value="0x14ec7bb" />
+        <global-address name="process_jobs" value="0x14ec7c4" />
+        <global-address name='cur_year_tick' value='0xec5170'/>
+        <global-address name='cur_year_tick_advmode' value='0xe1829c'/>
 
         <global-address name='cursor' value='0xb347f0'/>
         <global-address name='selection_rect' value='0xb347fc'/>
-
         <global-address name="gamemode" value="0xB34814" />
         <global-address name="gametype" value="0xB34818" />
+        <global-address name="save_on_exit" value="0x14ec7c5" />
 
-        <global-address name='standingorder_gatherstone' value='0xb348a4'/>
-        <global-address name='standingorder_gatherwood' value='0xb348a5'/>
-        <global-address name='standingorder_gatherfood' value='0xb348a6'/>
-        <global-address name='standingorder_gatherbodies' value='0xb348a7'/>
-        <global-address name='standingorder_gatherrefuse' value='0xb348a8'/>
-        <global-address name='standingorder_gatheranimals' value='0xb348a9'/>
-        <global-address name='standingorder_gatherfurniture' value='0xb348aa'/>
-        <global-address name='standingorder_allharvest' value='0xb348ab'/>
-        <global-address name='standingorder_loom' value='0xb348ac'/>
-        <global-address name='standingorder_collect_web' value='0xb348ad'/>
-        <global-address name='standingorder_slaughter' value='0xb348ae'/>
-        <global-address name='standingorder_butcher' value='0xb348af'/>
-        <global-address name='standingorder_tan' value='0xb348b0'/>
-        <global-address name='standingorder_fishery' value='0xb348b1'/>
-        <global-address name='standingorder_kitchen' value='0xb348b2'/>
-        <global-address name='standingorder_kiln' value='0xb348b3'/>
-        <global-address name='standingorder_smelt' value='0xb348b4'/>
-        <global-address name='standingorder_other' value='0xb348b5'/>
-        <global-address name='standingorder_autoforbid_projectile' value='0xb348b6'/>
-        <global-address name='standingorder_autoforbid_other_items' value='0xb348b7'/>
+        <global-address name='ui_workshop_job_cursor' value='0x14ec79c'/>
+        <global-address name='ui_building_item_cursor' value='0xef7264'/>
+        <global-address name='modeseason' value='0xef726c'/>
+        <global-address name='ui_workshop_in_add' value='0xeb0992'/>
+        <global-address name='ui_lever_target_type' value='0xe182a3'/>
 
-        <global-address name='ui_menu_width' value='0xb348c8'/>
-        <global-address name='option_exceptions' value='0xb348cb'/>
-
-        <global-address name='standingorder_mixfoods' value='0xb348cc'/>
-
-        <global-address name='gps' value='0xb34d10'/>
-
-        <!-- .bss -->
-
-        -- large structures
-        <global-address name='enabler' value='0x14ee4d8'/>
-        <global-address name='gview' value='0x14f6070'/>
-        <global-address name='buildreq' value='0x1849e88'/>
-        <global-address name='plotinfo' value='0x14ee7e0'/>
-        <global-address name='adventure' value='0x185bf38'/>
-        <global-address name='world' value='0x16b0a58'/>
-        <global-address name='game' value='0x1848648'/>
-        <global-address name='map_renderer' value='0x184bef0'/>
-        <global-address name='texture' value='0x184ae28'/>
-        <global-address name='init' value='0x184ae58'/>
-        <global-address name='d_init' value='0x1848350'/>
-
-        -- vectors (mostly)
-        <global-address name="flows" value="0x184bedc" />
-        <global-address name="timed_events" value="0x14ee78c" />
+        <global-address name='ui_building_resize_radius' value='0xe182a0'/>
+        <global-address name='ui_building_in_resize' value='0x14ec7c6'/>
+        <global-address name='ui_building_in_assign' value='0x14ec7c7'/>
+        <global-address name='buildjob_mastering' value='0x14ec7c8'/>
         <global-address name="ui_building_assign_type" value="0x185c124" />
         <global-address name="ui_building_assign_is_marked" value="0x14ee7cc" />
         <global-address name="ui_building_assign_units" value="0x16b0a48" />
@@ -83,58 +77,68 @@
         <global-address name="buildjob_flowx" value="0x185c144" />
         <global-address name="buildjob_flowy" value="0x14ee79c" />
         <global-address name="buildjob_flowz" value="0xef7258" />
+        <global-address name='buildjob_item1' value='0xe18294'/>
+
+        <global-address name='ui_selected_unit' value='0xef2430'/>
+        <global-address name='squadcount' value='0xef2434'/>
+        <global-address name='ui_unit_view_mode' value='0xec4a5c'/>
+        <global-address name='ui_look_cursor' value='0xedeb98'/>
+        <global-address name="pause_state" value="0x14EC7C9" />
+
+        <global-address name='standing_orders_gather_minerals' value='0xb348a4'/>
+        <global-address name='standing_orders_gather_wood' value='0xb348a5'/>
+        <global-address name='standing_orders_gather_food' value='0xb348a6'/>
+        <global-address name='standing_orders_gather_bodies' value='0xb348a7'/>
+        <global-address name='standing_orders_gather_refuse' value='0xb348a8'/>
+        <global-address name='standing_orders_gather_animals' value='0xb348a9'/>
+        <global-address name='standing_orders_gather_furniture' value='0xb348aa'/>
+        <global-address name='standing_orders_farmer_harvest' value='0xb348ab'/>
+        <global-address name='standing_orders_auto_loom' value='0xb348ac'/>
+        <global-address name='standing_orders_auto_collect_webs' value='0xb348ad'/>
+        <global-address name='standing_orders_zoneonly_drink' value='0x14ec7ca'/>
+        <global-address name='standing_orders_zoneonly_fish' value='0x14ec7cb'/>
+        <global-address name='standing_orders_auto_slaughter' value='0xb348ae'/>
+        <global-address name='standing_orders_auto_butcher' value='0xb348af'/>
+        <global-address name='standing_orders_auto_tan' value='0xb348b0'/>
+        <global-address name='standing_orders_auto_fishery' value='0xb348b1'/>
+        <global-address name='standing_orders_auto_kitchen' value='0xb348b2'/>
+        <global-address name='standing_orders_auto_kiln' value='0xb348b3'/>
+        <global-address name='standing_orders_auto_smelter' value='0xb348b4'/>
+        <global-address name='standing_orders_auto_other' value='0xb348b5'/>
+        <global-address name='standing_orders_use_dyed_cloth' value='0x14ec7cc'/>
+        <global-address name='standing_orders_gather_refuse_outside' value='0x14ec7cd'/>
+        <global-address name='standing_orders_gather_vermin_remains' value='0x14ec7ce'/>
+        <global-address name='standing_orders_dump_corpses' value='0x14ec7cf'/>
+        <global-address name='standing_orders_dump_skulls' value='0x14ec7d0'/>
+        <global-address name='standing_orders_dump_skins' value='0x14ec7d1'/>
+        <global-address name='standing_orders_dump_bones' value='0x14ec7d2'/>
+        <global-address name='standing_orders_dump_hair' value='0x14ec7d3'/>
+        <global-address name='standing_orders_dump_shells' value='0x14ec7d4'/>
+        <global-address name='standing_orders_dump_other' value='0x14ec7d5'/>
+        <global-address name='standing_orders_forbid_used_ammo' value='0xb348b6'/>
+        <global-address name='standing_orders_forbid_own_dead' value='0x14ec7d6'/>
+        <global-address name='standing_orders_forbid_other_nohunt' value='0x14ec7d7'/>
+        <global-address name='standing_orders_forbid_own_dead_items' value='0x14ec7d8'/>
+        <global-address name='standing_orders_forbid_other_dead_items' value='0xb348b7'/>
+
         <global-address name="created_item_type" value="0x16b0a18" />
         <global-address name="created_item_subtype" value="0x185c114" />
         <global-address name="created_item_mattype" value="0x1848638" />
         <global-address name="created_item_matindex" value="0x14ee7ac" />
         <global-address name="created_item_count" value="0x14ee77c" />
+
+        <global-address name='plotinfo' value='0x14ee7e0'/>
+        <global-address name='adventure' value='0x185bf38'/>
+        <global-address name='world' value='0x16b0a58'/>
+        <global-address name='game' value='0x1848648'/>
+        <global-address name='gps' value='0xb34d10'/>
+        <global-address name='map_renderer' value='0x184bef0'/>
+        <global-address name='texture' value='0x184ae28'/>
+        <global-address name='init' value='0x184ae58'/>
+        <global-address name='d_init' value='0x1848350'/>
+
+        <global-address name='ui_menu_width' value='0xb348c8'/>
         <global-address name='ui_look_list' value='0x185c104'/>
-        <global-address name="dunginv" value="0x16b0a28" />
-        <global-address name="dunginv_inv" value="0x185c0f4" />
-        <global-address name="dunginv_depth" value="0x184833c" />
-        <global-address name="dunginv_flag" value="0x16b0a38" />
-        <global-address name="dunginv_index" value="0x185c134" />
-        <global-address name="dung_targlist" value="0x184ae18" />
-
-        -- primitives
-        <global-address name="pause_state" value="0x14EC7C9" />
-        <global-address name="process_dig" value="0x14ec7bb" />
-        <global-address name="process_jobs" value="0x14ec7c4" />
-
-        <global-address name="window_x" value="0xEB0984" />
-        <global-address name="window_y" value="0xEDEBA0" />
-        <global-address name="window_z" value="0xEDEB7C" />
-        <global-address name="save_on_exit" value="0x14ec7c5" />
-
-        <global-address name="current_weather" value="0x14EC7A0" />
-        <global-address name="weathertimer" value="0xedeb8c" />
-        <global-address name="cur_rain" value="0xef7270" />
-        <global-address name="cur_rain_counter" value="0xef725c" />
-        <global-address name="cur_snow" value="0xec4a60" />
-        <global-address name="cur_snow_counter" value="0xeb0988" />
-
-        <global-address name='ui_building_in_assign' value='0x14ec7c7'/>
-        <global-address name='ui_building_in_resize' value='0x14ec7c6'/>
-        <global-address name='ui_building_resize_radius' value='0xe182a0'/>
-        <global-address name='ui_building_item_cursor' value='0xef7264'/>
-        <global-address name='ui_look_cursor' value='0xedeb98'/>
-        <global-address name='ui_selected_unit' value='0xef2430'/>
-        <global-address name='ui_unit_view_mode' value='0xec4a5c'/>
-        <global-address name='ui_workshop_in_add' value='0xeb0992'/>
-        <global-address name='ui_workshop_job_cursor' value='0x14ec79c'/>
-        <global-address name='ui_lever_target_type' value='0xe182a3'/>
-        <global-address name='modeseason' value='0xef726c'/>
-        <global-address name='buildjob_mastering' value='0x14ec7c8'/>
-        <global-address name='buildjob_item1' value='0xe18294'/>
-
-        <global-address name='cur_year' value='0xef7268'/>
-        <global-address name='cur_year_tick' value='0xec5170'/>
-        <global-address name='cur_year_tick_advmode' value='0xe1829c'/>
-        <global-address name='cur_season' value='0xe182a2'/>
-        <global-address name='cur_season_tick' value='0xe18180'/>
-
-        <global-address name='jobvalue' value='0xec4640'/>
-        <global-address name='jobvalue_setter' value='0xec4220'/>
 
         <global-address name='olookx' value='0xec4218'/>
         <global-address name='olooky' value='0xe5d0d0'/>
@@ -144,12 +148,16 @@
         <global-address name='oscrollz' value='0xe18188'/>
         <global-address name='page' value='0xec5064'/>
         <global-address name='dunginv_relitem' value='0xe18298'/>
+        <global-address name="dunginv" value="0x16b0a28" />
+        <global-address name="dunginv_inv" value="0x185c0f4" />
+        <global-address name="dunginv_depth" value="0x184833c" />
+        <global-address name="dunginv_flag" value="0x16b0a38" />
+        <global-address name="dunginv_index" value="0x185c134" />
         <global-address name='throwitem' value='0xedeb80'/>
         <global-address name='dung_target' value='0xedeba4'/>
+        <global-address name="dung_targlist" value="0x184ae18" />
         <global-address name='interactitem' value='0xeb0994'/>
         <global-address name='interactinvslot' value='0xedeb88'/>
-        <global-address name='dung_buildinginteract' value='0xe182a4'/>
-
         <global-address name='dung_attackmode' value='0xeb0990'/>
         <global-address name='dung_dodgemode' value='0xedeb78'/>
         <global-address name='dung_chargedefendmode' value='0xec421c'/>
@@ -157,22 +165,7 @@
         <global-address name='handleannounce' value='0xeb098a'/>
         <global-address name='preserveannounce' value='0xeb0993'/>
         <global-address name='updatelightstate' value='0xeb098b'/>
-
-        <global-address name='standingorder_zone_drinking' value='0x14ec7ca'/>
-        <global-address name='standingorder_zone_fishing' value='0x14ec7cb'/>
-        <global-address name='standingorder_dyed_clothes' value='0x14ec7cc'/>
-        <global-address name='standingorder_gatherrefuse_outside' value='0x14ec7cd'/>
-        <global-address name='standingorder_gatherrefuse_outside_vermin' value='0x14ec7ce'/>
-        <global-address name='standingorder_gatherrefuse_chasm_corpses' value='0x14ec7cf'/>
-        <global-address name='standingorder_gatherrefuse_chasm_skulls' value='0x14ec7d0'/>
-        <global-address name='standingorder_gatherrefuse_chasm_skins' value='0x14ec7d1'/>
-        <global-address name='standingorder_gatherrefuse_chasm_bones' value='0x14ec7d2'/>
-        <global-address name='standingorder_gatherrefuse_chasm_strand_tissue' value='0x14ec7d3'/>
-        <global-address name='standingorder_gatherrefuse_chasm_shell' value='0x14ec7d4'/>
-        <global-address name='standingorder_gatherrefuse_chasm_othernonmetal' value='0x14ec7d5'/>
-        <global-address name='standingorder_autoforbid_your_corpse' value='0x14ec7d6'/>
-        <global-address name='standingorder_autoforbid_other_corpse' value='0x14ec7d7'/>
-        <global-address name='standingorder_autoforbid_your_items' value='0x14ec7d8'/>
+        <global-address name='dung_buildinginteract' value='0xe182a4'/>
 
         <global-address name='item_next_id' value='0xe5d0d4'/>
         <global-address name='unit_next_id' value='0xec5068'/>
@@ -209,6 +202,16 @@
         <global-address name='debug_noberserk' value='0x14ec7e3'/>
         <global-address name='debug_turbospeed' value='0x14ec7e4'/>
 
+        <global-address name='standing_orders_job_cancel_announce' value='0xb348cb'/>
+        <global-address name='standing_orders_mix_food' value='0xb348cc'/>
+
+        <global-address name='mt_index' value='0xeb0958'/>
+        <global-address name='mt_cur_buffer' value='0x14ec798'/>
+        <global-address name='mt_virtual_buffer' value='0x14ec788'/>
+        <global-address name='mt_buffer' value='0xec5178'/>
+        <global-address name='basic_seed' value='0xe5d0cc'/>
+
+        <!-- special entries, not associated with actual globals -->
         <global-address name='keydisplay' value='0x14ee750'/>
 
         <!-- vtable pointers -->

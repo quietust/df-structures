@@ -247,7 +247,7 @@
                 <int16_t name='x'/> <int16_t name='y'/> <int16_t name='z'/>
             </vmethod>
             <vmethod name='process'>
-                <pointer name='action' comment='actionst'/> <pointer name='soldier' type-name='unit'/>
+                <pointer name='soldier' type-name='unit'/>
             </vmethod>
             <vmethod ret-type='squad_order_cannot_reason' name='reasonCannot'>
                 <pointer name='soldier' type-name='unit'/>

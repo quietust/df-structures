@@ -39,8 +39,6 @@
 
         <flag-bit name='temps_computed' comment='melting/boiling/ignite/etc. points'/>
         <flag-bit name='weight_computed'/>
-        <flag-bit name='top_open'/>
-        <flag-bit name='from_worldgen' comment='bay12: DO_NOT_RETAIN_IN_CREATION_ZONE'/>
     </bitfield-type>
 
     <enum-type type-name='item_magicness_type'> bay12: ItemPowers, no base type
@@ -120,6 +118,7 @@
 
     <enum-type type-name='slab_engraving_type' base-type='int16_t'> bay12: EngravingIntentType
         <enum-item name='Slab' comment='NONE' value='-1'/>
+        <enum-item name='Memorial' comment='MEMORIAL'/>
         <enum-item name='CraftShopSign' comment='STORE_CRAFTS'/>
         <enum-item name='WeaponsmithShopSign' comment='STORE_WEAPON'/>
         <enum-item name='ArmorsmithShopSign' comment='STORE_ARMOR'/>
