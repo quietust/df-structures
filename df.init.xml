@@ -98,7 +98,7 @@
         <df-flagarray name='flag' index-enum='init_window_flags'/>
     </struct-type>
 
-    <struct-type type-name='init'>
+    <struct-type type-name='init' original-name='initst'>
         <compound name='display' type-name='init_display'/>
         <compound name='media' type-name='init_media'/>
         <compound name='input' type-name='init_input'/>

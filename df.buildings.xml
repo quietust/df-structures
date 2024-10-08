@@ -1,5 +1,6 @@
 <data-definition>
-    <enum-type type-name='building_type'>
+    <enum-type type-name='building_type'> bay12: BuildingType
+        <enum-attr name='name' use-key-name='true'/>
         <enum-attr name='classname'/>
 
         <enum-item name="NONE" value='-1'/>
@@ -17,12 +18,14 @@
             <item-attr name='classname' value='building_coffinst'/>
         </enum-item>
         <enum-item name="FarmPlot">
+            <item-attr name='name' value='Farm Plot'/>
             <item-attr name='classname' value='building_farmplotst'/>
         </enum-item>
         <enum-item name="Furnace">
             <item-attr name='classname' value='building_furnacest'/>
         </enum-item>
         <enum-item name="TradeDepot">
+            <item-attr name='name' value='Trade Depot'/>
             <item-attr name='classname' value='building_tradedepotst'/>
         </enum-item>
         <enum-item name="Shop">
@@ -38,9 +41,11 @@
             <item-attr name='classname' value='building_boxst'/>
         </enum-item>
         <enum-item name="Weaponrack">
+            <item-attr name='name' value='Weapon Rack'/>
             <item-attr name='classname' value='building_weaponrackst'/>
         </enum-item>
         <enum-item name="Armorstand">
+            <item-attr name='name' value='Armor Stand'/>
             <item-attr name='classname' value='building_armorstandst'/>
         </enum-item>
         <enum-item name="Workshop">
@@ -53,9 +58,11 @@
             <item-attr name='classname' value='building_statuest'/>
         </enum-item>
         <enum-item name="WindowGlass">
+            <item-attr name='name' value='Glass Window'/>
             <item-attr name='classname' value='building_window_glassst'/>
         </enum-item>
         <enum-item name="WindowGem">
+            <item-attr name='name' value='Gem Window'/>
             <item-attr name='classname' value='building_window_gemst'/>
         </enum-item>
         <enum-item name="Well">
@@ -65,24 +72,29 @@
             <item-attr name='classname' value='building_bridgest'/>
         </enum-item>
         <enum-item name="RoadDirt">
+            <item-attr name='name' value='Dirt Road'/>
             <item-attr name='classname' value='building_road_dirtst'/>
         </enum-item>
         <enum-item name="RoadPaved">
+            <item-attr name='name' value='Paved Road'/>
             <item-attr name='classname' value='building_road_pavedst'/>
         </enum-item>
         <enum-item name="SiegeEngine">
+            <item-attr name='name' value='Siege Engine'/>
             <item-attr name='classname' value='building_siegeenginest'/>
         </enum-item>
         <enum-item name="Trap">
             <item-attr name='classname' value='building_trapst'/>
         </enum-item>
         <enum-item name="AnimalTrap">
+            <item-attr name='name' value='Animal Trap'/>
             <item-attr name='classname' value='building_animaltrapst'/>
         </enum-item>
         <enum-item name="Support">
             <item-attr name='classname' value='building_supportst'/>
         </enum-item>
         <enum-item name="ArcheryTarget">
+            <item-attr name='name' value='Archery Target'/>
             <item-attr name='classname' value='building_archerytargetst'/>
         </enum-item>
         <enum-item name="Chain">
@@ -95,6 +107,7 @@
             <item-attr name='classname' value='building_stockpilest'/>
         </enum-item>
         <enum-item name="Civzone">
+            <item-attr name='name' value='Zone'/>
             <item-attr name='classname' value='building_civzonest'/>
         </enum-item>
         <enum-item name="Weapon">
@@ -104,6 +117,7 @@
             <item-attr name='classname' value='building_wagonst'/>
         </enum-item>
         <enum-item name="ScrewPump">
+            <item-attr name='name' value='Screw Pump'/>
             <item-attr name='classname' value='building_screw_pumpst'/>
         </enum-item>
         <enum-item name="Construction">
@@ -113,33 +127,42 @@
             <item-attr name='classname' value='building_hatchst'/>
         </enum-item>
         <enum-item name="GrateWall">
+            <item-attr name='name' value='Wall Grate'/>
             <item-attr name='classname' value='building_grate_wallst'/>
         </enum-item>
         <enum-item name="GrateFloor">
+            <item-attr name='name' value='Floor Grate'/>
             <item-attr name='classname' value='building_grate_floorst'/>
         </enum-item>
         <enum-item name="BarsVertical">
+            <item-attr name='name' value='Vertical Bars'/>
             <item-attr name='classname' value='building_bars_verticalst'/>
         </enum-item>
         <enum-item name="BarsFloor">
+            <item-attr name='name' value='Floor Bars'/>
             <item-attr name='classname' value='building_bars_floorst'/>
         </enum-item>
         <enum-item name="GearAssembly">
+            <item-attr name='name' value='Gear Assembly'/>
             <item-attr name='classname' value='building_gear_assemblyst'/>
         </enum-item>
         <enum-item name="AxleHorizontal">
+            <item-attr name='name' value='Horizontal Axle'/>
             <item-attr name='classname' value='building_axle_horizontalst'/>
         </enum-item>
         <enum-item name="AxleVertical">
+            <item-attr name='name' value='Vertical Axle'/>
             <item-attr name='classname' value='building_axle_verticalst'/>
         </enum-item>
         <enum-item name="WaterWheel">
+            <item-attr name='name' value='Water Wheel'/>
             <item-attr name='classname' value='building_water_wheelst'/>
         </enum-item>
         <enum-item name="Windmill">
             <item-attr name='classname' value='building_windmillst'/>
         </enum-item>
         <enum-item name="TractionBench">
+            <item-attr name='name' value='Traction Bench'/>
             <item-attr name='classname' value='building_traction_benchst'/>
         </enum-item>
         <enum-item name="Slab">
@@ -149,6 +172,7 @@
             <item-attr name='classname' value='building_nestst'/>
         </enum-item>
         <enum-item name="NestBox">
+            <item-attr name='name' value='Nest Box'/>
             <item-attr name='classname' value='building_nest_boxst'/>
         </enum-item>
         <enum-item name="Hive">
@@ -159,18 +183,18 @@
         </enum-item>
     </enum-type>
 
-    <bitfield-type type-name='building_flags'>
+    <bitfield-type type-name='building_flags'> bay12: BUILDINGFLAG_*
         <flag-bit name='exists' comment='actually built, not just ordered'/>
         <flag-bit name='site_blocked' comment='items on ground on site'/>
         <flag-bit name='room_collision' comment='major intersection with another room?'/>
-        <flag-bit/>
+        <flag-bit name='mastering_pile'/>
         <flag-bit name='justice'/>
         <flag-bit name='almost_deleted' comment='when requesting delete while in_update'/>
-        <flag-bit name='in_update'/>
+        <flag-bit name='in_update' comment='skip_finalize_blast'/>
         <flag-bit name='from_worldgen'/>
     </bitfield-type>
 
-    <bitfield-type type-name='door_flags' base-type='uint16_t'>
+    <bitfield-type type-name='door_flags' base-type='uint16_t'> bay12: BUILDINGFLAG_DOOR_*, BUILDINGFLAG_HATCH_*
         <flag-bit name='forbidden'/>
         <flag-bit name='internal'/>
         <flag-bit name='taken_by_invaders'/>
@@ -180,17 +204,25 @@
         <flag-bit name='pet_passable'/>
     </bitfield-type>
 
-    <bitfield-type type-name='gate_flags' base-type='uint16_t'>
+    <bitfield-type type-name='gate_flags' base-type='uint16_t'>bay12: BUILDINGFLAG_BRIDGE_*, BUILDINGFLAG_FLOODGATE_*, BUILDINGFLAG_GRATE_WALL_*, BUILDINGFLAG_GRATE_FLOOR_*, BUILDINGFLAG_BARS_VERTICAL_*, BUILDINGFLAG_BARS_FLOOR_*
         <flag-bit name='closed'/>
         <flag-bit name='closing'/>
         <flag-bit name='opening'/>
-        <flag-bit name='collapsing' comment='?; bridge'/>
-        <flag-bit name='has_support' comment='bridge'/>
+        <flag-bit name='collapsing' comment='bridge only'/>
+        <flag-bit name='has_support' comment='bridge only'/>
     </bitfield-type>
 
-    <struct-type type-name='building_extents'>
-        <pointer name='extents' type-name='uint8_t' is-array='true'>
-            <comment>0 - not room; 1 in stockpile; 2 wall; 3 inner; 4 distance boundary.</comment>
+    <enum-type type-name='building_extents_type' base-type='int8_t'> bay12: ???
+        <enum-item name='None' value='0'/>
+        <enum-item name='Stockpile'/>
+        <enum-item name='Wall'/>
+        <enum-item name='Interior'/>
+        <enum-item name='DistanceBoundary'/>
+    </enum-type>
+
+    <struct-type type-name='building_extents' comment='not actually a real structure'>
+        <pointer name='extents' is-array='true'>
+            <enum type-name='building_extents_type'/>
         </pointer>
         <int32_t name='x'/>
         <int32_t name='y'/>
@@ -198,7 +230,7 @@
         <int32_t name='height'/>
     </struct-type>
 
-    <struct-type type-name='building_drawbuffer'>
+    <struct-type type-name='building_drawbuffer' original-name='building_printinfost'>
         <static-array name='tile' count='31'>
             <static-array count='31' type-name='uint8_t'/>
         </static-array>
@@ -228,12 +260,12 @@
         <int32_t name='centery'/>
         <int32_t name='z'/>
 
-        <compound name='flags' type-name='building_flags'/>
+        <bitfield name='flags' type-name='building_flags'/>
 
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index' init-value='-1'/>
 
-        <compound name='room' type-name='building_extents'/>
+        <compound name='room' type-name='building_extents' comment='not a compound in bay12'/>
 
         <int32_t name='age'/>
         <int16_t name='race' ref-target='creature_raw'/>
@@ -251,7 +283,7 @@
         <pointer type-name='unit' name='owner'/>
 
         <stl-vector name='job_claim_suppress' comment='after Remv Cre, prevents unit from taking jobs at building'>
-            <pointer>
+            <pointer> bay12: job_restrictionst
                 <pointer name='unit' type-name='unit'/>
                 <int32_t name='timer'/>
             </pointer>
@@ -259,7 +291,7 @@
         <stl-string name='name'/>
 
         <stl-vector name='activities'>
-            <pointer>
+            <pointer> bay12: building_activity_infost
                 <int32_t name='activity_id' ref-target='activity_entry'/>
                 <int32_t name='event_id' ref-target='activity_event' aux-value='$$.activity_id'/>
             </pointer>
@@ -294,24 +326,24 @@
             </vmethod>
             <vmethod name='setFillTimer'>
                 <enum base-type='int32_t' type-name='job_type'/>
-                <int16_t/>
+                <int16_t name='newoff'/>
             </vmethod>
             <vmethod ret-type='bool' name='isOnFire'/>
             <vmethod ret-type='bool' name='isUnpowered' comment='from magma OR machine power'/>
-            <vmethod ret-type='bool' name='canCollapse'/>
+            <vmethod ret-type='bool' name='canCollapse' comment='safe_on_unfreeze_floor'/>
 
             -- 13
 
-            <vmethod ret-type='uint32_t' name='getPassableOccupancy'/>
-            <vmethod ret-type='uint32_t' name='getImpassableOccupancy'/>
-            <vmethod ret-type='bool' name='isPowerSource'/>
+            <vmethod ret-type='tile_building_occ' name='getPassableOccupancy'/>
+            <vmethod ret-type='tile_building_occ' name='getImpassableOccupancy'/>
+            <vmethod ret-type='bool' name='isPowerSource' comment='check_down_for_frozen_machine_rect'/>
             <vmethod name='updateFromWeather'/>
             <vmethod name='updateTemperature'/>
 
             <vmethod name='updateItems'/>
-            <vmethod name='updateTempFromTile'><uint16_t name='temp'/><bool/><bool/></vmethod>
-            <vmethod ret-type='bool' name='isNormalFurniture'/>
-            <vmethod ret-type='bool' name='isFarmPlot'/>
+            <vmethod name='updateTempFromTile'><uint16_t name='temp'/><bool name='main_turn'/><int32_t name='amp'/></vmethod>
+            <vmethod ret-type='bool' name='isNormalFurniture' comment='bay12: item_determines_building_pic'/>
+            <vmethod ret-type='bool' name='isFarmPlot' comment='destroy_not_topple'/>
             <vmethod name='getWorkshopProfile'>
                 <ret-type><pointer type-name='workshop_profile'/></ret-type>
             </vmethod>
@@ -332,21 +364,20 @@
 
             <vmethod name='setSubtype'> <int16_t name='subtype'/> </vmethod>
             <vmethod ret-type='bool' name='isActual'/>
-            <vmethod ret-type='bool' name='isCoffin2'/>
+            <vmethod ret-type='bool' name='keepsOwnerAfterDeath'/>
             <vmethod name='updateAction'/>
-            <vmethod ret-type='bool' name='isStatueOrRestraint'/>
+            <vmethod ret-type='bool' name='isStatueOrRestraint' comment='owned_party_spot'/>
 
             -- 33
 
-            <vmethod name='setMaterialAmount'> <int32_t/> </vmethod>
+            <vmethod name='setMaterialAmount'> <int32_t name='amt'/> </vmethod>
             <vmethod name='setBuildStage'> <int16_t name='stage'/> </vmethod>
             <vmethod ret-type='int32_t' name='getBuildStage'/>
             <vmethod ret-type='int32_t' name='getMaxBuildStage'/>
-            <vmethod ret-type='int32_t' name='getArchitectureValue'
-                     comment='bridge: material*10 rough, material*30 smooth'/>
+            <vmethod ret-type='int32_t' name='getBuildDuration'/>
 
             <vmethod ret-type='bool' name='isSettingOccupancy'/>
-            <vmethod ret-type='bool' name='isActual2'/>
+            <vmethod ret-type='bool' name='trampleOnBuild'/>
             <vmethod ret-type='bool' name='isExtentShaped'/>
             <vmethod name='updateOccupancy'>
                 <int32_t name='abs_x'/> <int32_t name='abs_y'/>
@@ -357,8 +388,7 @@
 
             <vmethod ret-type='int32_t' name='getPersonalValue'> <pointer type-name='unit'/> </vmethod>
             <vmethod ret-type='bool' name='canBeRoom'/>
-            <vmethod ret-type='int32_t' name='getConstructionValue'
-                     comment='bridge: material*10'/>
+            <vmethod ret-type='int32_t' name='getDestroyDuration'/>
             <vmethod name='queueDestroy' comment='same as querying and pressing X'/>
             <vmethod ret-type='bool' name='isImpassableTile'>
                 <int32_t name='rel_x'/> <int32_t name='rel_y'/>
@@ -386,7 +416,7 @@
                 <enum base-type='int16_t' type-name='job_type'/>
             </vmethod>
             <vmethod ret-type='bool' name='canBeRoomSubset'/>
-            <vmethod ret-type='bool' name='isCoffin'/>
+            <vmethod ret-type='bool' name='isCoffin' comment='bay12: uniqueownablebuilding, cannot have more than one room'/>
             <vmethod ret-type='bool' name='canUseSpouseRoom'/>
             <vmethod ret-type='bool' name='canMakeRoom' comment='false if already, or cannot be'/>
 
@@ -394,24 +424,24 @@
 
             <vmethod ret-type='bool' name='isJusticeRestraint'/>
             <vmethod name='detachRestrainedUnit'> <pointer type-name='unit'/> </vmethod>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod ret-type='bool' name='isImpassableAtCreation'
-                     comment='the true set looks like things where the unit should stand aside'/>
+                     comment='bay12: perimdestroyer; the true set looks like things where the unit should stand aside'/>
 
             <vmethod name='categorize' comment='Add to world.buildings.other.*'> <bool name='in_play'/> </vmethod>
             <vmethod name='uncategorize' comment='Remove from world.buildings.other.*'/>
-            <vmethod ret-type='int32_t' name='getBaseValue'/>
+            <vmethod ret-type='int32_t' name='getArchValue'/>
             <vmethod name='setTriggerState'> <int32_t name='new_state' comment='0 = active/open, 1 = inactive/closed'/> </vmethod>
-            <vmethod name='checkAdvmodeLocked'/>
+            <vmethod name='adventurerLogic'/>
 
             -- 73
 
-            <vmethod name='drawAdvmodeUnlockUI'/>
-            <vmethod name='advmodeUnlock'><pointer/></vmethod>
+            <vmethod name='adventurerRender'/>
+            <vmethod name='adventurerFeed'><pointer><stl-set name='events' type-name='interface_key'/></pointer></vmethod>
             <vmethod ret-type='bool' name='needsMagma'/>
             <vmethod name='removeUses'> <bool name='noscatter'/> <bool name='lost'/> </vmethod>
             <vmethod name='deconstructItems'> <bool name='noscatter'/> <bool name='lost'/> </vmethod>
@@ -420,7 +450,7 @@
             <vmethod ret-type='bool' name='isFireSafe' comment='checks contained_items[0] for FIREIMMUNE'><int8_t name='fire_type'/></vmethod>
             <vmethod name='fillSidebarMenu'/>
             <vmethod ret-type='bool' name='isForbidden'/>
-            <vmethod ret-type='bool' name='isHidden'/>
+            <vmethod ret-type='bool' name='isInvisibleToPlayer'/>
 
             -- 83
 
@@ -447,7 +477,7 @@
             </vmethod>
             <vmethod name='getSpecificSquad' ret-type='int32_t'/>
             <vmethod name='getSpecificPosition' ret-type='int32_t'/>
-            <vmethod name='setSpecificSquadPos'><int32_t/><int32_t/></vmethod>
+            <vmethod name='setSpecificSquadPos'><int32_t name='squad_id'/><int32_t name='squad_pos'/></vmethod>
             <vmethod name='clearSpecificSquad'/>
 
             -- 93
@@ -458,9 +488,9 @@
 
     -- stockpile --
 
-    <struct-type type-name='stockpile_links'>
-        <stl-vector name='give_to_pile' pointer-type='building'/>
-        <stl-vector name='take_from_pile' pointer-type='building'/>
+    <struct-type type-name='stockpile_links' original-name='stockpile_link_infost'>
+        <stl-vector name='give_to_pile' pointer-type='building_stockpilest'/>
+        <stl-vector name='take_from_pile' pointer-type='building_stockpilest'/>
         <stl-vector name='give_to_workshop' pointer-type='building'/>
         <stl-vector name='take_from_workshop' pointer-type='building'/>
     </struct-type>
@@ -468,6 +498,7 @@
     <class-type type-name='building_stockpilest' inherits-from='building'>
         <compound type-name='stockpile_settings' name='settings'/>
 
+        <!-- <compound name='storage' comment='stockpile_storage_infost'> -->
         <int16_t name='max_barrels'/>
         <int16_t name='max_bins'/>
         <int16_t name='max_wheelbarrows'/>
@@ -478,10 +509,13 @@
         <stl-vector name='container_item_id' type-name='int32_t' ref-target='item'/>
         <stl-vector name='container_x' type-name='int16_t'/>
         <stl-vector name='container_y' type-name='int16_t'/>
+        <!-- </compound> -->
 
         <compound name='links' type-name='stockpile_links'/>
 
-        <int32_t name='use_links_only'/>
+        <bitfield name='stockpile_flags'> bay12: BUILDINGFLAG_STOCKPILE_FLAG_*
+            <flag-bit name='links_only'/>
+        </bitfield>
         <int32_t name='stockpile_number' init-value='-1'/>
 
         <stl-vector name='linked_stops' pointer-type='hauling_stop'/>
@@ -489,8 +523,8 @@
 
     -- zone --
 
-    <struct-type type-name='hospital_supplies'>
-        <bitfield name='supplies_needed' base-type='uint32_t'>
+    <struct-type type-name='hospital_supplies' original-name='location_infost'>
+        <bitfield name='supplies_needed' base-type='uint32_t'> bay12: LOCATION_INFO_FLAG_*
             <flag-bit name='splints'/>
             <flag-bit name='thread'/>
             <flag-bit name='cloth'/>
@@ -516,7 +550,7 @@
         <int32_t name='supply_recheck_timer'/>
     </struct-type>
 
-    <enum-type type-name='civzone_type' base-type='int16_t'>
+    <enum-type type-name='civzone_type' base-type='int32_t'> bay12: BuildingCivzoneType
         <enum-item name="Home"/>
         <enum-item name="CraftShop"/>
         <enum-item name="Basement"/>
@@ -545,7 +579,7 @@
         <stl-vector name='assigned_units' type-name='int32_t' ref-target='unit'/>
         <stl-vector name='assigned_items' type-name='int32_t' ref-target='item'/>
         <enum base-type='int32_t' name="type" type-name='civzone_type' comment='only saved as int16'/>
-        <bitfield name='zone_flags' base-type='uint32_t'>
+        <bitfield name='zone_flags' base-type='uint32_t'> bay12: CIVZONE_ACTIVITY_FLAG_*
             <flag-bit name='water_source'/>
             <flag-bit name='garbage_dump'/>
             <flag-bit name='sand'/>
@@ -558,21 +592,26 @@
             <flag-bit name='clay'/>
             <flag-bit name='animal_training'/>
         </bitfield>
-        <int32_t init-value='-1'/>
-        <int32_t name="abstract_building_id" init-value='-1' ref-target='abstract_building'/>
-        <int32_t init-value='-1'/>
-        <int32_t init-value='-1'/>
+        <int32_t name='site_id' ref-target='world_site'/>
+        <int32_t name='ab_id' ref-target='abstract_building'/>
+        <int32_t name='srb_id' ref-target='site_realization_building'/>
+        <int32_t name='sr_sul_id' init-value='-1'/>
         <int32_t name='zone_num' init-value='-1'/>
-        <int32_t/>
-        <bitfield name='pit_flags' base-type='uint32_t'>
-            <flag-bit name='is_pond'/>
-            <flag-bit/>
+        <int32_t name='pasture_flag'/>
+        <bitfield name='pit_flags' base-type='uint32_t'> bay12: CIVZONE_POND_FLAG_*
+            <flag-bit name='keep_filled'/>
+            <flag-bit name='check_occupants'/>
         </bitfield>
         <int16_t name='fill_timer'/>
         <compound type-name='hospital_supplies' name='hospital'/>
     </class-type>
 
     -- actual --
+    <enum-type type-name='building_item_role_type' base-type='int16_t' comment='bay12: BuildingItemRoles'>
+        <enum-item name='TEMP'/>
+        <enum-item name='TEMP_PRINTHIDDEN'/>
+        <enum-item name='PERM'/>
+    </enum-type>
 
     <class-type type-name='building_actual' inherits-from='building'
                 original-name='building_actualst'>
@@ -580,9 +619,9 @@
                  comment='0 not started, then 1 or 3 max depending on type'/>
 
         <stl-vector name='contained_items'>
-            <pointer>
+            <pointer> bay12: buildingitemst
                 <pointer name='item' type-name='item'/>
-                <int16_t name='use_mode'/>
+                <enum name='use_mode' type-name='building_item_role_type' comment='bay12: role'/>
             </pointer>
         </stl-vector>
 
@@ -595,18 +634,18 @@
         </virtual-methods>
     </class-type>
 
-    <struct-type type-name='building_design'>
+    <struct-type type-name='building_design' original-name='building_archinfost'>
         <int32_t name='architect' ref-target='historical_figure'/>
-        <int32_t name='unk2' init-value='-1'/>
+        <int32_t name='design_masterpiece_event' ref-target='history_event'/>
         <int16_t name='design_skill'/>
-        <int32_t name='builder1' ref-target='historical_figure'/>
-        <int32_t name='unk5' init-value='-1'/>
+        <int32_t name='builder' ref-target='historical_figure'/>
+        <int32_t name='build_masterpiece_event' ref-target='history_event'/>
         <int16_t name='build_skill'/>
-        <int16_t name='build_timer1' comment='+1 per 10 frames while building'/>
+        <int16_t name='build_timer'/>
         <int32_t name='builder2' ref-target='historical_figure'/>
         <int16_t name='build_timer2'/>
-        <enum base-type='int16_t' name='quality1' type-name='item_quality'/>
-        <enum base-type='int16_t' name='quality2' type-name='item_quality'/>
+        <int16_t name='design_quality'/>
+        <int16_t name='build_quality'/>
         <bitfield name='flags' base-type='uint32_t'>
             <flag-bit name='rough' comment='rough gabbro road'/>
             <flag-bit name='built'/>
@@ -618,46 +657,91 @@
 
     -- workshops --
 
-    <enum-type type-name='furnace_type' base-type='int16_t'>
-        <enum-item name="WoodFurnace"/>
+    <enum-type type-name='furnace_type' base-type='int16_t'>bay12: BuildingFurnaceType
+        <enum-attr name='name' use-key-name='true'/>
+
+        <enum-item name="WoodFurnace">
+            <item-attr name='name' value='Wood Furnace'/>
+        </enum-item>
         <enum-item name="Smelter"/>
-        <enum-item name="GlassFurnace"/>
+        <enum-item name="GlassFurnace">
+            <item-attr name='name' value='Glass Furnace'/>
+        </enum-item>
         <enum-item name="Kiln"/>
-        <enum-item name="MagmaSmelter"/>
-        <enum-item name="MagmaGlassFurnace"/>
-        <enum-item name="MagmaKiln"/>
-        <enum-item name="Custom"/>
+        <enum-item name="MagmaSmelter">
+            <item-attr name='name' value='Magma Smelter'/>
+        </enum-item>
+        <enum-item name="MagmaGlassFurnace">
+            <item-attr name='name' value='Magma Glass Furnace'/>
+        </enum-item>
+        <enum-item name="MagmaKiln">
+            <item-attr name='name' value='Magma Kiln'/>
+        </enum-item>
+        <enum-item name="Custom">
+            <item-attr name='name' value='Custom Furnace'/>
+        </enum-item>
     </enum-type>
 
     <class-type type-name='building_furnacest' inherits-from='building_actual'>
         <stl-vector name='melt_remainder' type-name='int32_t'
                     index-refers-to='(material-by-id 0 $)'/>
 
-        <int16_t name="unk_108"/>
+        <uint16_t name="furnace_flag" comment='unused'/>
 
         <enum base-type='int16_t' name="type" type-name='furnace_type'/>
 
         <compound name='profile' type-name='workshop_profile'/>
-        <compound name='links' type-name='stockpile_links'/>
 
         <int32_t name="custom_type" ref-target='building_def'/>
     </class-type>
 
-    <enum-type type-name='workshop_type' base-type='int16_t'>
-        <enum-item name="Carpenters"/>
-        <enum-item name="Farmers"/>
-        <enum-item name="Masons"/>
-        <enum-item name="Craftsdwarfs"/>
-        <enum-item name="Jewelers"/>
-        <enum-item name="MetalsmithsForge"/>
-        <enum-item name="MagmaForge"/>
-        <enum-item name="Bowyers"/>
-        <enum-item name="Mechanics"/>
-        <enum-item name="Siege"/>
-        <enum-item name="Butchers"/>
-        <enum-item name="Leatherworks"/>
-        <enum-item name="Tanners"/>
-        <enum-item name="Clothiers"/>
+    <enum-type type-name='workshop_type' base-type='int16_t'> bay12: BuildingWorkshopType
+        <enum-attr name='name' use-key-name='true'/>
+
+        <enum-item name="Carpenters">
+            <item-attr name='name' value="Carpenter's Workshop"/>
+        </enum-item>
+        <enum-item name="Farmers">
+            <item-attr name='name' value="Farmer's Workshop"/>
+        </enum-item>
+        <enum-item name="Masons">
+            <item-attr name='name' value="Mason's Workshop"/>
+        </enum-item>
+        <enum-item name="Craftsdwarfs">
+            <item-attr name='name' value="Craftsdwarf's Workshop"/>
+        </enum-item>
+        <enum-item name="Jewelers">
+            <item-attr name='name' value="Jeweler's Workshop"/>
+        </enum-item>
+
+        <enum-item name="MetalsmithsForge">
+            <item-attr name='name' value="Metalsmith's Forge"/>
+        </enum-item>
+        <enum-item name="MagmaForge">
+            <item-attr name='name' value="Magma Forge"/>
+        </enum-item>
+        <enum-item name="Bowyers">
+            <item-attr name='name' value="Bowyer's Workshop"/>
+        </enum-item>
+        <enum-item name="Mechanics">
+            <item-attr name='name' value="Mechanic's Workshop"/>
+        </enum-item>
+        <enum-item name="Siege">
+            <item-attr name='name' value="Siege Workshop"/>
+        </enum-item>
+
+        <enum-item name="Butchers">
+            <item-attr name='name' value="Butcher's Shop"/>
+        </enum-item>
+        <enum-item name="Leatherworks">
+            <item-attr name='name' value="Leather Works"/>
+        </enum-item>
+        <enum-item name="Tanners">
+            <item-attr name='name' value="Tanner's Shop"/>
+        </enum-item>
+        <enum-item name="Clothiers">
+            <item-attr name='name' value="Clothier's Shop"/>
+        </enum-item>
         <enum-item name="Fishery"/>
         <enum-item name="Still"/>
         <enum-item name="Loom"/>
@@ -665,23 +749,27 @@
         <enum-item name="Kennels"/>
         <enum-item name="Kitchen"/>
         <enum-item name="Ashery"/>
-        <enum-item name="Dyers"/>
+        <enum-item name="Dyers">
+            <item-attr name='name' value="Dyer's Shop"/>
+        </enum-item>
         <enum-item name="Millstone"/>
-        <enum-item name="Custom"/>
+        <enum-item name="Custom">
+            <item-attr name='name' value="Custom Workshop"/>
+        </enum-item>
         <enum-item name="Tool"/>
     </enum-type>
 
-    <struct-type type-name='workshop_profile'>
-        <stl-vector name="permitted_workers" type-name='int32_t' ref-target='unit'/>
-        <int32_t name="min_level"/>
-        <int32_t name="max_level" init-value='3000'/>
+    <struct-type type-name='workshop_profile' original-name='workshop_profilest'>
+        <stl-vector name='permitted_workers' type-name='int32_t' ref-target='unit'/>
+        <int32_t name='min_level'/>
+        <int32_t name='max_level' init-value='3000'/>
+        <compound name='links' type-name='stockpile_links'/>
     </struct-type>
 
     <class-type type-name='building_workshopst' inherits-from='building_actual'>
         <enum base-type='int16_t' name="type" type-name='workshop_type'/>
 
         <compound name='profile' type-name='workshop_profile'/>
-        <compound name='links' type-name='stockpile_links'/>
 
         <compound name='machine' type-name='machine_info'/>
 
@@ -705,30 +793,42 @@
     </class-type>
 
     <class-type type-name='building_armorstandst' inherits-from='building_actual'>
-        <int16_t name='unk_c0'/>
+        <uint16_t name='stand_flag' comment='unused'/>
 
         <stl-vector name='squads' pointer-type='building_squad_use'/>
+
         <int32_t name='specific_squad' ref-target='squad'/>
         <int32_t name='specific_position' init-value='-1'/>
     </class-type>
 
     <class-type type-name='building_bars_verticalst' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
     <class-type type-name='building_bars_floorst' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
-    <struct-type type-name='building_users'>
+    <enum-type type-name='building_use_type' base-type='int16_t'> bay12: BuildingUseType
+        <enum-item name="NONE" value='-1'/>
+        <enum-item name="SitForEat"/>
+        <enum-item name="PlaceFoodForEat"/>
+        <enum-item name="Sleep"/>
+        <enum-item name="Rest"/>
+        <enum-item name="BedCarry"/>
+        <enum-item name="Surgery"/>
+        <enum-item name="RestInTraction"/>
+    </enum-type>
+
+    <struct-type type-name='building_users' original-name='building_use_infost'>
         <stl-vector name='unit' type-name='int32_t' ref-target='unit'/>
-        <stl-vector name='mode' type-name='int16_t'/>
+        <stl-vector name='mode' type-name='building_use_type'/>
     </struct-type>
 
     <class-type type-name='building_bedst' inherits-from='building_actual'>
-        <bitfield base-type='uint16_t'>
+        <bitfield name='flags' base-type='int16_t'>
             <flag-bit name='barracks'/>
             <flag-bit name='dormitory'/>
         </bitfield>
@@ -739,14 +839,14 @@
     </class-type>
 
     <class-type type-name='building_boxst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='box_flag' comment='unused'/>
         <stl-vector name='squads' pointer-type='building_squad_use'/>
         <int32_t name='specific_squad' ref-target='squad'/>
         <int32_t name='specific_position' init-value='-1'/>
     </class-type>
 
     <class-type type-name='building_bridgest' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
         <enum name='direction' base-type='int8_t'>
             <enum-item name='Retracting' value='-1'/>
@@ -759,7 +859,7 @@
     </class-type>
 
     <class-type type-name='building_cabinetst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='cabinet_flag'/>
         <stl-vector name='squads' pointer-type='building_squad_use'/>
         <int32_t name='specific_squad' ref-target='squad'/>
         <int32_t name='specific_position' init-value='-1'/>
@@ -768,8 +868,10 @@
     <class-type type-name='building_cagest' inherits-from='building_actual'>
         <stl-vector name='assigned_units' type-name='int32_t' ref-target='unit'/>
         <stl-vector name='assigned_items' type-name='int32_t' ref-target='item'/>
-        <bitfield base-type='uint16_t' name='cage_flags'>
+        <bitfield base-type='uint16_t' name='cage_flags'> bay12: BUILDINGFLAG_CAGE_*
             <flag-bit name='triggered'/>
+            <flag-bit name='aquarium'/>
+            <flag-bit name='check_occupants'/>
         </bitfield>
         <int16_t name='fill_timer'/>
     </class-type>
@@ -777,13 +879,13 @@
     <class-type type-name='building_chainst' inherits-from='building_actual'>
         <pointer name='assigned' type-name='unit'/>
         <pointer name='chained' type-name='unit'/>
-        <bitfield base-type='uint16_t' name='chain_flags'>
+        <bitfield base-type='uint16_t' name='chain_flags'> bay12: BUILDINGFLAG_CHAIN_*
             <flag-bit name='triggered'/>
         </bitfield>
     </class-type>
 
     <class-type type-name='building_chairst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='chair_flag' comment='unused'/>
         <compound name='users' type-name='building_users'/>
     </class-type>
 
@@ -795,7 +897,8 @@
         </bitfield>
     </class-type>
 
-    <enum-type type-name='construction_type' base-type='int16_t'>
+    <enum-type type-name='construction_type' base-type='int16_t'> bay12: BuildingConstructionType
+        <enum-item name="NONE" value='-1' comment='unused'/>
         <enum-item name="Fortification"/>
         <enum-item name="Wall"/>
         <enum-item name="Floor"/>
@@ -840,7 +943,7 @@
     </class-type>
 
     <class-type type-name='building_doorst' inherits-from='building_actual'>
-        <compound name='door_flags' type-name='door_flags' init-value='0x50'/>
+        <bitfield name='door_flags' type-name='door_flags' init-value='0x10'/>
         <int16_t name='close_timer'/>
     </class-type>
 
@@ -849,41 +952,43 @@
             <int16_t ref-target='plant_raw'/>
         </static-array>
         <int32_t name='material_amount'/>
-        <int32_t name='seasonal_fertilize'/>
-        <int8_t init-value='-1'/>
+        <bitfield name='farm_flags' base-type='uint32_t'> bay12: BUILDINGFLAG_FARMPLOT_*
+            <flag-bit name='seasonal_fertilize'/>
+        </bitfield>
+        <enum name='last_season' type-name='season' init-value='None'/>
         <int32_t name='current_fertilization'/>
         <int32_t name='max_fertilization'/>
         <int16_t name='terrain_purge_timer' init-value='500'/>
     </class-type>
 
     <class-type type-name='building_floodgatest' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
     <class-type type-name='building_grate_floorst' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
     <class-type type-name='building_grate_wallst' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
     <class-type type-name='building_hatchst' inherits-from='building_actual'>
-        <compound name='door_flags' type-name='door_flags' init-value='0x50'/>
+        <bitfield name='door_flags' type-name='door_flags' init-value='0x50'/>
         <int16_t name='close_timer'/>
     </class-type>
 
-    <bitfield-type type-name='hive_flags' base-type='uint32_t'>
+    <bitfield-type type-name='hive_flags' base-type='uint32_t'> bay12: BUILDING_HIVE_FLAG_*
         <flag-bit name='do_install'/>
         <flag-bit name='do_gather'/>
         <flag-bit name='ready_split'/>
     </bitfield-type>
 
     <class-type type-name='building_hivest' inherits-from='building_actual'>
-        <compound name='hive_flags' type-name='hive_flags'/>
+        <bitfield name='hive_flags' type-name='hive_flags'/>
         <int32_t name='split_timer' comment='up to 100800'/>
         <int32_t name='activity_timer' comment='up to 100800000; checks timer%hive_product.time[i]==0'/>
         <int32_t name='install_timer' comment='down from 1200'/>
@@ -894,22 +999,20 @@
 
     <class-type type-name='building_nest_boxst' inherits-from='building_actual'>
         <int32_t name='claimed_by' ref-target='unit'/>
-        <int32_t/>
+        <int32_t name='claim_timeout' comment='counts up if the nest box is claimed but empty. when it hits 8400 ticks, the nest box is unclaimed.'/>
     </class-type>
 
     <class-type type-name='building_roadst' inherits-from='building_actual'>
-    </class-type>
-
-    <class-type type-name='building_road_dirtst' inherits-from='building_roadst'>
         <int32_t name='material_amount'/>
     </class-type>
+
+    <class-type type-name='building_road_dirtst' inherits-from='building_roadst'/>
 
     <class-type type-name='building_road_pavedst' inherits-from='building_roadst'>
-        <int32_t name='material_amount'/>
         <int16_t name='terrain_purge_timer' init-value='500'/>
     </class-type>
 
-    <enum-type type-name='shop_type' base-type='int16_t'>
+    <enum-type type-name='shop_type' base-type='int16_t'> bay12: BuildingShopType
         <enum-item name="GeneralStore"/>
         <enum-item name="CraftsMarket"/>
         <enum-item name="ClothingShop"/>
@@ -917,15 +1020,15 @@
     </enum-type>
 
     <class-type type-name='building_shopst' inherits-from='building_actual'>
-        <int32_t name='has_owner'/>
-        <int32_t name='shop_owner' comment='type uncertain - not a unit ID or unit pointer'/>
-        <bitfield name='shop_flags' base-type='int16_t' init-value='1'>
+        <pointer type-name='unit' name='owner'/>
+        <int32_t name='timer' comment='increments until reaching 200,000,000'/>
+        <bitfield name='shop_flags' base-type='uint16_t' init-value='1'> bay12: BUILDINGFLAG_SHOP_*
             <flag-bit name='for_sale'/>
         </bitfield>
         <enum base-type='int16_t' name="type" type-name='shop_type'/>
     </class-type>
 
-    <enum-type type-name='siegeengine_type' base-type='int16_t'>
+    <enum-type type-name='siegeengine_type' base-type='int16_t'> bay12: BuildingSiegeEngineType
         <enum-item name="Catapult"/>
         <enum-item name="Ballista"/>
     </enum-type>
@@ -948,40 +1051,40 @@
     </class-type>
 
     <class-type type-name='building_slabst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='slab_flag' comment='unused'/>
     </class-type>
 
     <class-type type-name='building_statuest' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='statue_flag' comment='unused'/>
     </class-type>
 
     <class-type type-name='building_supportst' inherits-from='building_actual'>
-        <bitfield base-type='uint16_t' name='support_flags'>
+        <bitfield base-type='uint16_t' name='support_flags'> bay12: BUILDINGFLAG_SUPPORT_*
             <flag-bit name='triggered'/>
         </bitfield>
     </class-type>
 
     <class-type type-name='building_tablest' inherits-from='building_actual'>
-        <bitfield name='table_flags' base-type='int16_t'>
+        <bitfield name='table_flags' base-type='uint16_t'> bay12: BUILDINGFLAG_TABLE_*
             <flag-bit name='meeting_hall'/>
         </bitfield>
         <compound name='users' type-name='building_users'/>
     </class-type>
 
     <class-type type-name='building_traction_benchst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='traction_flag' comment='unused'/>
         <compound name='users' type-name='building_users'/>
     </class-type>
 
     <class-type type-name='building_tradedepotst' inherits-from='building_actual'>
-        <bitfield name='trade_flags' base-type='uint32_t'>
+        <bitfield name='trade_flags' base-type='uint32_t'> bay12: BUILDINGFLAG_DEPOT_*
             <flag-bit name='trader_requested'/>
             <flag-bit name='anyone_can_trade'/>
         </bitfield>
-        <int32_t comment='uninitialized'/>
+        <bool name='accessible'/>
     </class-type>
 
-    <enum-type type-name='trap_type' base-type='int16_t'>
+    <enum-type type-name='trap_type' base-type='int16_t'> bay12: BuildingTrapType
         <enum-item name="Lever"/>
         <enum-item name="PressurePlate"/>
         <enum-item name="CageTrap"/>
@@ -990,7 +1093,7 @@
         <enum-item name="TrackStop"/>
     </enum-type>
 
-    <struct-type type-name='pressure_plate_info'>
+    <struct-type type-name='pressure_plate_info' original-name='trigger_profilest'>
         <int32_t name='unit_min' init-value='50000'/>
         <int32_t name='unit_max' init-value='200000'/>
         <int8_t name='water_min' init-value='1'/>
@@ -1000,7 +1103,7 @@
         <int32_t name='track_min' init-value='1' comment='v0.34.08'/>
         <int32_t name='track_max' init-value='2000' comment='v0.34.08'/>
 
-        <bitfield name='flags' init-value='0x10'>
+        <bitfield name='flags' base-type='uint32_t' init-value='0x10'> bay12: BUILDINGFLAG_TRAP_TRIGGER_*
             <flag-bit name='units'/>
             <flag-bit name='water'/>
             <flag-bit name='magma'/>
@@ -1010,12 +1113,21 @@
         </bitfield>
     </struct-type>
 
+    <struct-type type-name='track_stop_info' original-name='track_stop_profilest'>
+        <int32_t name='friction' init-value='50000' comment='v0.34.08'/>
+        <bitfield name='flags' comment='v0.34.08'> bay12: TRACK_STOP_PROFILE_FLAG_*
+            <flag-bit name='use_dump'/>
+        </bitfield>
+        <int32_t name='dump_x_shift' comment='v0.34.08'/>
+        <int32_t name='dump_y_shift' comment='v0.34.08'/>
+    </struct-type>
+
     <class-type type-name='building_trapst' inherits-from='building_actual'>
         <enum base-type='int16_t' name='trap_type' type-name='trap_type'/>
-        <uint8_t name='state' comment='!=0 = pulled, tripped/needs reloading'/>
+        <int8_t name='state' comment='!=0 = pulled, tripped/needs reloading'/>
         <int16_t name='ready_timeout' comment='plate not active if > 0'/>
         <int16_t name='fill_timer'/>
-        <bitfield base-type='uint16_t' name='stop_flags'>
+        <bitfield base-type='uint16_t' name='stop_flags'> bay12: BUILDINGFLAG_TRAP_*
             <flag-bit name='disabled'/>
             <flag-bit name='disabling'/>
             <flag-bit name='enabling'/>
@@ -1024,57 +1136,137 @@
         <stl-vector name='observed_by_civs' type-name='int32_t' ref-target='historical_entity'/>
 
         <compound name='profile' type-name='workshop_profile'/>
-        <compound name='links' type-name='stockpile_links'/>
 
         <compound name='plate_info' type-name='pressure_plate_info'/>
-
-        <int32_t name='friction' init-value='50000' comment='v0.34.08'/>
-        <int32_t name='use_dump' comment='v0.34.08'/>
-        <int32_t name='dump_x_shift' comment='v0.34.08'/>
-        <int32_t name='dump_y_shift' comment='v0.34.08'/>
+        <compound name='track_stop_info' type-name='track_stop_info'/>
         <int8_t name='stop_trigger_timer' comment='v0.34.08'/>
     </class-type>
 
-    <class-type type-name='building_wagonst' inherits-from='building_actual'>
-    </class-type>
+    <class-type type-name='building_wagonst' inherits-from='building_actual'/>
 
     <class-type type-name='building_weaponst' inherits-from='building_actual'>
-        <compound name='gate_flags' type-name='gate_flags' init-value='1'/>
+        <bitfield name='gate_flags' type-name='gate_flags' init-value='1'/>
         <int8_t name='timer'/>
     </class-type>
 
-    <struct-type type-name='building_squad_use'>
+    <struct-type type-name='building_squad_use' original-name='building_squad_infost'>
         <int32_t name='squad_id' ref-target='squad'/>
-        <compound name='mode' type-name='squad_use_flags'/>
+        <bitfield name='mode' type-name='squad_use_flags'/>
     </struct-type>
 
     <class-type type-name='building_weaponrackst' inherits-from='building_actual'>
-        <int16_t name='unk_c0'/>
+        <int16_t name='rack_flags'/>
 
         <stl-vector name='squads' pointer-type='building_squad_use'/>
         <int32_t name='specific_squad' ref-target='squad'/>
     </class-type>
 
     <class-type type-name='building_wellst' inherits-from='building_actual'>
-        <bitfield name='well_flags' base-type='int16_t'>
+        <bitfield name='well_flags' base-type='uint16_t'> bay12: BUILDINGFLAG_WELL_*
             <flag-bit name='lowering'/>
             <flag-bit name='just_raised'/>
         </bitfield>
-        <int8_t/>
+        <bitfield name='well_tag' base-type='uint8_t'> bay12: WELLTAG_*
+            <flag-bit name='north'/>
+            <flag-bit name='south'/>
+            <flag-bit name='east'/>
+            <flag-bit name='west'/>
+            <flag-bit name='northeast'/>
+            <flag-bit name='northwest'/>
+            <flag-bit name='southeast'/>
+            <flag-bit name='southwest'/>
+        </bitfield>
         <int16_t name='bucket_z'/>
         <int8_t name='bucket_timer' comment='0-9; counts up when raising, down when lowering'/>
-        <int16_t name='check_water_timer'/>
+        <int16_t name='check_water_timer' comment='bay12: useless_timer'/>
     </class-type>
 
     <class-type type-name='building_windowst' inherits-from='building_actual'>
-        <int16_t/>
+        <uint16_t name='window_flag' comment='unused'/>
     </class-type>
 
-    <class-type type-name='building_window_glassst' inherits-from='building_windowst'>
-    </class-type>
+    <class-type type-name='building_window_glassst' inherits-from='building_windowst'/>
 
-    <class-type type-name='building_window_gemst' inherits-from='building_windowst'>
-    </class-type>
+    <class-type type-name='building_window_gemst' inherits-from='building_windowst'/>
+
+    <enum-type type-name='dfhack_room_quality_level'>
+        <comment>
+        Not in DF
+
+        Royal Throne Room   | Royal Bedroom   | Royal Dining Room  | Royal Mausoleum
+        Opulent Throne Room | Grand Bedroom   | Grand Dining Room  | Grand Mausoleum
+        Throne Room         | Great Bedroom   | Great Dining Room  | Mausoleum
+        Splendid Office     | Fine Quarters   | Fine Dining Room   | Fine Tomb
+        Decent Office       | Decent Quarters | Decent Dining Room | Tomb
+        Office              | Quarters        | Dining Room        | Burial Chamber
+        Modest Office       | Modest Quarters | Modest Dining Room | Servant's Burial Chamber
+        Meager Office       | Meager Quarters | Meager Dining Room | Grave
+        </comment>
+
+        <enum-attr name='min_value' type-name='int32_t'/>
+        <enum-attr name='office'/>
+        <enum-attr name='bedroom'/>
+        <enum-attr name='dining_room'/>
+        <enum-attr name='burial'/>
+
+        <enum-item name='Meager'>
+            <item-attr name='min_value' value='0'/>
+            <item-attr name='office' value="Meager Office"/>
+            <item-attr name='bedroom' value="Meager Quarters"/>
+            <item-attr name='dining_room' value="Meager Dining Room"/>
+            <item-attr name='burial' value="Grave"/>
+        </enum-item>
+        <enum-item name='Modest'>
+            <item-attr name='min_value' value='100'/>
+            <item-attr name='office' value="Modest Office"/>
+            <item-attr name='bedroom' value="Modest Quarters"/>
+            <item-attr name='dining_room' value="Modest Dining Room"/>
+            <item-attr name='burial' value="Servant's Burial Chamber"/>
+        </enum-item>
+        <enum-item name='Normal'>
+            <item-attr name='min_value' value='250'/>
+            <item-attr name='office' value="Office"/>
+            <item-attr name='bedroom' value="Quarters"/>
+            <item-attr name='dining_room' value="Dining Room"/>
+            <item-attr name='burial' value="Burial Chamber"/>
+        </enum-item>
+        <enum-item name='Decent'>
+            <item-attr name='min_value' value='500'/>
+            <item-attr name='office' value="Decent Office"/>
+            <item-attr name='bedroom' value="Decent Quarters"/>
+            <item-attr name='dining_room' value="Decent Dining Room"/>
+            <item-attr name='burial' value="Tomb"/>
+        </enum-item>
+
+        <enum-item name='Fine'>
+            <item-attr name='min_value' value='1000'/>
+            <item-attr name='office' value="Splendid Office"/>
+            <item-attr name='bedroom' value="Fine Quarters"/>
+            <item-attr name='dining_room' value="Fine Dining Room"/>
+            <item-attr name='burial' value="Fine Tomb"/>
+        </enum-item>
+        <enum-item name='Great'>
+            <item-attr name='min_value' value='1500'/>
+            <item-attr name='office' value="Throne Room"/>
+            <item-attr name='bedroom' value="Great Bedroom"/>
+            <item-attr name='dining_room' value="Great Dining Room"/>
+            <item-attr name='burial' value="Mausoleum"/>
+        </enum-item>
+        <enum-item name='Grand'>
+            <item-attr name='min_value' value='2500'/>
+            <item-attr name='office' value="Opulent Throne Room"/>
+            <item-attr name='bedroom' value="Grand Bedroom"/>
+            <item-attr name='dining_room' value="Grand Dining Room"/>
+            <item-attr name='burial' value="Grand Mausoleum"/>
+        </enum-item>
+        <enum-item name='Royal'>
+            <item-attr name='min_value' value='10000'/>
+            <item-attr name='office' value="Royal Throne Room"/>
+            <item-attr name='bedroom' value="Royal Bedroom"/>
+            <item-attr name='dining_room' value="Royal Dining Room"/>
+            <item-attr name='burial' value="Royal Mausoleum"/>
+        </enum-item>
+    </enum-type>
 </data-definition>
 
 <!--

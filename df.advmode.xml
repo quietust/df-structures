@@ -1,6 +1,6 @@
 <data-definition>
-    <enum-type type-name='ui_advmode_menu' base-type='int16_t'>
-        <enum-item name='Default' value='0'/>
+    <enum-type type-name='ui_advmode_menu'> bay12: AdventureViewModes
+        <enum-item name='Default' value='0'/> MAIN
         <enum-item name='Look'/>
         <enum-item name='Talk'/>
         <enum-item name='Inventory'/>
@@ -45,7 +45,19 @@
         <enum-item name='Unk35'/>
     </enum-type>
 
-    <struct-type type-name='conversation'>
+    <enum-type type-name='talk_circumstance_type' base-type='int32_t'> bay12: TalkCircumstanceType
+        <enum-item name='NORMAL'/>
+        <enum-item name='ASSUME_IDENTITY'/>
+        <enum-item name='SLEEP_PERMISSION'/>
+    </enum-type>
+
+    <struct-type type-name='talk_list_optionst'>
+        <int32_t name='unit_id' ref-target='unit'/>
+        <int32_t name='histfig_id' ref-target='historical_figure'/>
+        <enum name='circumstance' type-name='talk_circumstance_type'/>
+    </struct-type>
+
+    <struct-type type-name='conversation' original-name='conversationst'>
         <stl-string name='conv_title'/>
         <enum base-type='int32_t' name='state'>
             <enum-item name='started'/>
@@ -55,36 +67,31 @@
         </enum>
         <stl-vector type-name='int16_t' name='talk_choices' />
 
-        <int32_t name='unk_30' ref-target='unit'/>
-        <int32_t name='unk_34' ref-target='historical_figure'/>
-        <int32_t name='unk_38'/>
+        <compound name='speaker' type-name='talk_list_optionst'/>
+        <compound name='audience' type-name='talk_list_optionst'/>
+        <compound name='talkee' type-name='talk_list_optionst'/>
 
-        <int32_t name='unk_3c' ref-target='unit'/>
-        <int32_t name='unk_40' ref-target='historical_figure'/>
-        <int32_t name='unk_44'/>
+        <stl-vector name='death_target_nem' pointer-type='nemesis_record'/>
+        <stl-vector name='death_targeter_entity' pointer-type='historical_entity'/>
+        <bool name='had_death_target'/>
 
-        <int32_t name='unk_48' ref-target='unit'/>
-        <int32_t name='unk_4c' ref-target='historical_figure'/>
-        <int32_t name='unk_50'/>
+        <pointer name='quest_referral_nem' type-name='nemesis_record'/>
+        <pointer name='quest_referral_entity' type-name='historical_entity'/>
+        <bool name='said_referral'/>
+        <bool name='asked_permission'/>
 
-        <stl-vector name='unk_54' pointer-type='nemesis_record'/>
-        <stl-vector name='unk_64' pointer-type='historical_entity'/>
-        <int8_t name='unk_74'/>
-        <int32_t name='unk_78'/>
-        <int32_t name='unk_7c'/>
-        <int16_t name='unk_80'/>
-        <stl-vector name='unk_84'/>
-        <stl-vector name='unk_94'/>
-        <stl-vector name='unk_a4'/>
-        <pointer name='location' type-name='building' comment='civzone'/>
-        <int8_t name='unk_b8'/>
-        <int32_t name='unk_bc'/>
+        <stl-vector name='reportable_he' pointer-type='history_event'/>
+        <stl-vector name='reportable_task' pointer-type='adv_task'/>
+        <stl-vector name='reportable_hf' pointer-type='historical_figure'/>
+
+        <pointer name='recorded_sleep_permission_zone' type-name='building_civzonest'/>
+        <bool name='bogeyman_warnings'/>
+        <int32_t name='party_size'/>
+
         <stl-vector name='speech'>
-            <pointer>
+            <pointer> bay12: utterancest
                 <stl-vector name='text' pointer-type='stl-string' comment='wordwrap'/>
-                <int32_t name='speaker' ref-target='unit'/>
-                <int32_t name='unk_14'/>
-                <int32_t name='unk_18'/>
+                <compound name='speaker' type-name='talk_list_optionst'/>
                 <int16_t name='fg'/>
                 <int16_t name='bg'/>
                 <int16_t name='bright'/>
@@ -92,7 +99,7 @@
         </stl-vector>
     </struct-type>
 
-    <struct-type type-name='ui_advmode'>
+    <struct-type type-name='adventurest'>
         <enum base-type='int16_t' name='menu' type-name='ui_advmode_menu'/>
 
         <int16_t name='unk1'/>
@@ -108,146 +115,140 @@
         <bool name='travel_not_moved'/>
         <int8_t name='unk4b'/>
         <uint8_t name='travel_move_countdown'/>
-        <padding size='2'/>
         <int32_t name='tick_counter' comment='goes up to XXX'/>
         <int32_t name='frame_counter' comment='goes up to 10000 (ticks?)'/>
-        <int16_t name='unk6'/>
-        <bool name='sleeping'/>
-        <int32_t name='bogeymen_timer' comment='initialized to 4-7 when the cackling starts'/>
-        <int32_t name='bogeymen_killed'/>
-        <int32_t name='unk9' comment='initialized to 60 when the cackling starts'/>
-        <int32_t name='unk10'/>
+        <int16_t name='last_hour'/>
+        <int8_t name='sleeping'/>
+        <int8_t name='sleep_interrupt'/>
+        <int32_t name='bogeymen_number'/>
+        <int32_t name='bogeymen_killed_this_attack'/>
+        <int32_t name='bogeymen_season_timer'/>
+        <int32_t name='fake_ambush_timer'/>
 
         <stl-vector type-name='int32_t' name='searched_x'/>
         <stl-vector type-name='int32_t' name='searched_y'/>
         <stl-vector type-name='int32_t' name='searched_z'/>
         <stl-vector type-name='int32_t' name='searched_timeout'/>
 
-        <int32_t name='unk15'/>
-        <int32_t name='unk16'/>
-        <int32_t name='unk17'/>
-        <int32_t name='unk18'/>
-        <int32_t name='unk19'/>
+        <int8_t name='can_retire'/>
+        <int32_t name='peasant_time_elapsed'/>
+        <int32_t name='total_time_elapsed'/>
+        <int32_t name='skill_level'/>
+        <int8_t name='need_skill_level'/>
 
-        <stl-vector name='unk20' type-name='int32_t' ref-target='world_site'/>
-        <stl-vector name='unk21' type-name='int32_t'/>
-        <stl-vector name='unk22' type-name='int32_t'/>
+        <stl-vector type-name='int32_t' name='sleep_permission_site' ref-target='world_site'/>
+        <stl-vector type-name='int32_t' name='sleep_permission_srb'/>
+        <stl-vector type-name='int32_t' name='sleep_permission_timer'/>
 
-        <int16_t name='unk23'/>
-        <int16_t name='unk24'/>
-        <int16_t name='unk25'/>
-        <int16_t name='unk26'/>
-        <int32_t name='player_id' refers-to='$global.world.nemesis.all[$]'/>
+        <int16_t name='travel_goal_count'/>
+        <int16_t name='travel_goal_abs_smm_x'/>
+        <int16_t name='travel_goal_abs_smm_y'/>
+        <int32_t name='player_nemesis' ref-target='nemesis_record'/>
 
-        <stl-vector name='talk_targets'>
-            <pointer>
-                <int32_t name='unit_id' ref-target='unit'/>
-                <int32_t name='histfig_id' ref-target='historical_figure'/>
-                <int32_t/>
-            </pointer>
-        </stl-vector>
+        <stl-vector name='talk_targets' pointer-type='talk_list_optionst'/>
         <stl-vector name='conversations' pointer-type='conversation'/>
 
-        <int32_t name="unk_e0"/>
-        <int8_t name="unk_e4"/>
-        <int32_t name="unk_e8"/>
-        <int32_t name="unk_ec"/>
-        <int32_t name="unk_f0"/>
-        <int32_t name="unk_f4"/>
-        <int32_t name="unk_f8"/>
-        <int16_t name="unk_fc"/>
-        <int32_t name="unk_100"/>
-        <int32_t name="unk_104"/>
-        <int32_t name="unk_108"/>
-        <int32_t name="unk_10c"/>
+        <int32_t name="talk_cursor"/>
 
-        <stl-vector name='unk28'/>
-        <stl-vector name='unk29'/>
-        <stl-vector name='unk30'/>
-        <stl-vector name='actions' pointer-type='adventure_movement_option'/>
-        <stl-vector name='unk31' comment='v0.34.08'/>
+        <compound name='custom_combat'> bay12: adventure_custom_combatst
+            <int8_t name="wrestleMoveBegun"/>
+            <int16_t name="wrestle_self_bp"/>
+            <int16_t name="wrestle_other_bp"/>
+            <int32_t name="wrestle_self_item" ref-target='item'/>
+            <int32_t name="wrestle_other_item" ref-target='item'/>
+            <int16_t name="wrestle_attack_type"/>
+            <int16_t name="wrestle_attack_bp"/>
+            <pointer name="attack_item" type-name='item'/>
+            <int16_t name="target_bp"/>
+            <int32_t name="attack_idx"/>
+            <int32_t name="unk_104"/>
+            <int32_t name="unk_108"/>
+            <int32_t name="unk_10c"/>
 
-        <int32_t name='unk32'/>
-        <int16_t name='unk33'/>
-        <int16_t name='unk34'/>
-        <int8_t name='unk35a'/>
-        <int8_t name='unk35b'/>
-        <int8_t name='unk35c'/>
-        <int8_t name='unk35d'/>
-        <int32_t name='unk36'/>
-
-        <compound name='companions'>
-            <stl-vector name='unit' pointer-type='unit'/>
-            <stl-bit-vector name='unit_visible'/>
-            <compound name='unit_position' type-name='coord_path'/>
-
-            <stl-vector name='all_histfigs' comment='includes dead' type-name='int32_t' ref-target='historical_figure'/>
+            <stl-vector name='custom_combat' pointer-type='attack_chance_modifierst'/>
         </compound>
 
-        <stl-vector name='unk37'/>
-        <stl-vector name='unk38'/>
+        <stl-vector name='interact_options' pointer-type='adventure_item_interact_choicest'/>
+        <stl-vector name='commands' pointer-type='adventure_optionst'/>
+        <stl-vector name='movements' pointer-type='adventure_movement_optionst'/>
+        <stl-vector name='movement_item_interact' pointer-type='adventure_movement_optionst'/>
 
-        <int32_t name="unk_1e4"/>
-        <int32_t name="unk_1e8"/>
-        <int32_t name="unk_1ec"/>
-        <int32_t name="unk_1f0"/>
-        <int32_t name="unk_1f4"/>
-        <int32_t name="unk_1f8"/>
-        <int32_t name="unk_1fc"/>
-        <int32_t name="unk_200"/>
+        <int32_t name='sleep_hours'/>
+        <int8_t name='sleep_until_dawn'/>
+        <int8_t name='started_sleep_at_dawn'/>
+        <int8_t name='sleep_sleep'/>
+        <int8_t name='sleeping_indoors'/>
+        <int8_t name='sleeping_underground'/>
+        <int8_t name='handlegameloop' comment='Set to 2 when adventurer is unconscious, etc to prevent player from controlling the unit'/>
+        <int8_t name='projsubloop' comment='Observed to be set to 1 when an item is thrown or fired, or a limb is sent flying after being severed off. Over a number of frames (dependent on the distance travelled by the projectile) this eventually changes to 2 and then finally back to 0 (a number of frames after the projectile has reached its final destination). Sometimes (seemingly when the distance travelled is long) it changes from 1 to 2 and back to 1 immediately midway into this process. The player_control_state is set to 2 until this is complete. Forcing a constant item_projectiles_state of 0 causes item projectiles to hang in the air.'/>
+        <int32_t name='old_target_page'/>
 
-        <stl-string name='unk39'/>
+        <stl-vector name='companion' pointer-type='unit'/>
+        <stl-bit-vector name='companion_visible'/>
+        <compound name='companion_pos' type-name='coord_path'/>
+        <stl-vector name='companion_hf' type-name='int32_t' ref-target='historical_figure'/>
 
-        <int32_t name="unk_220"/>
-        <int32_t name="unk_224"/>
+        <stl-vector name='it_list' pointer-type='interaction_target_instance_listst'/>
+        <stl-vector name='it_list_target_choice' pointer-type='general_ref'/>
+
+        <pointer name="current_interaction_info_ptr" type-name='interaction_informationst'/>
+        <int32_t name="current_interaction_body_action_interaction"/>
+        <int32_t name="current_interaction_usable_interaction_mat_effect_index"/>
+        <pointer name="current_it_list_itt" type-name='interaction_target'/>
+        <int32_t name="current_max_target_number"/>
+        <int32_t name="current_target_range"/>
+        <uint32_t name="current_target_flag"/>
+        <pointer name="current_itlist_itil" type-name='interaction_target_instance_listst'/>
+
+        <stl-string name='pickup_amount_str'/>
+        <int32_t name="pickup_amount_max"/>
+        <int32_t name="pickup_amount_i"/>
     </struct-type>
 
-    <struct-type type-name='quest_list_link'>
+    <struct-type type-name='task_list_link'>
         <code-helper name='describe'>(describe-obj $.item)</code-helper>
         <pointer name='item' type-name='adv_task'/>
-        <pointer name='prev' type-name='quest_list_link'/>
-        <pointer name='next' type-name='quest_list_link'/>
+        <pointer name='prev' type-name='task_list_link'/>
+        <pointer name='next' type-name='task_list_link'/>
     </struct-type>
 
-    <enum-type type-name='adv_task_type' base-type='int32_t'>
-        <enum-item name='KillNemesis'/>
-        <enum-item name='SeekNemesis'/>
+    <enum-type type-name='task_type' base-type='int32_t'>
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='KILL_NEMESIS'/>
+        <enum-item name='SEEK_NEMESIS'/>
     </enum-type>
 
     <class-type type-name='adv_task' original-name='taskst' key-field='id'>
-        <pointer name='link' type-name='quest_list_link'/>
+        <pointer name='link' type-name='task_list_link'/>
 
         <int32_t name='id'/>
 
-        <int32_t name='quest_giver_id' ref-target='historical_figure'/>
+        <int32_t name='giver_hf' ref-target='historical_figure'/>
         <int32_t name='giver_site' ref-target='world_site'/>
-        <int32_t name='unk1'/>
-        <int32_t name='adventurer_id' ref-target='historical_figure'/>
-        <int32_t name='unk2'/>
+        <int32_t name='giver_civ' ref-target='historical_entity'/>
+        <int32_t name='recip_id' ref-target='historical_figure'/>
+        <int32_t name='recip_unk'/>
 
         <compound name='target_pos' type-name='coord2d'/>
         <compound name='giver_pos' type-name='coord2d'/>
-
-        -- 1/16 fraction of target_pos
-        <int16_t name='target_x1' init-value='-1'/>
-        <int16_t name='target_x2' init-value='-1'/>
-        <int16_t name='target_y1' init-value='-1'/>
-        <int16_t name='target_y2' init-value='-1'/>
+        <int16_t name='site_x_min'/>
+        <int16_t name='site_x_max'/>
+        <int16_t name='site_y_min'/>
+        <int16_t name='site_y_max'/>
 
         <virtual-methods>
-            <vmethod name='getType' ret-type='adv_task_type'/>
-            <vmethod name='getStatus' ret-type='int32_t' comment='0 done, 1 not found, 2 not killed?'/>
-            <vmethod name='getDescription'> <pointer type-name='stl-string'/> </vmethod>
-            <vmethod name='onKill'> <int32_t name='histfig_id'/> </vmethod>
-            <vmethod name='updateTargetPos'/>
-
-            <vmethod name='getGoalSite' ret-type='int32_t'/>
-            <vmethod name='getTargetHistFig' ret-type='int32_t'/>
+            <vmethod name='getType' ret-type='task_type'/>
+            <vmethod name='getState' ret-type='int32_t'/>
+            <vmethod name='getDescription'><pointer name='str' type-name='stl-string'/></vmethod>
+            <vmethod name='checkCompleted'><int32_t name='hf' ref-target='historical_figure'/></vmethod>
+            <vmethod name='updateLocation'/>
+            <vmethod name='getSite' ret-type='int32_t'/>
+            <vmethod name='getHistfig' ret-type='int32_t'/>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>
@@ -255,20 +256,159 @@
     <class-type type-name='task_kill_nemesisst' inherits-from='adv_task'>
         <int32_t name='unk3'/>
         <int32_t name='target_site' ref-target='world_site'/>
-        <int32_t name='target_hfid' ref-target='historical_figure'/>
-        <bool name='is_killed'/>
+        <int32_t name='target_hf' ref-target='historical_figure'/>
+        <int8_t name='done'/>
     </class-type>
 
     <class-type type-name='task_seek_nemesisst' inherits-from='adv_task'>
         <int32_t name='unk3'/>
         <int32_t name='target_site' ref-target='world_site'/>
-        <int32_t name='target_hfid' ref-target='historical_figure'/>
+        <int32_t name='target_hf' ref-target='historical_figure'/>
     </class-type>
 
-    <class-type type-name='adventure_movement_option'
-                original-name='adventure_movement_optionst'>
-        ...
+    <class-type type-name='adventure_optionst'>
+        <virtual-methods>
+            <vmethod name='getDescription'><pointer type-name='stl-string'/></vmethod>
+            <vmethod is-destructor='true'/>
+            <vmethod name='getIngestedItem'><ret-type><pointer type-name='item'/></ret-type></vmethod>
+            <vmethod name='performAction'>
+                <pointer type-name='int32_t' name='remove_vermin_idx'/>
+                <pointer type-name='bool' name='did_pick_vermin'/>
+                <pointer type-name='bool' name='did_set_fire'/>
+            </vmethod>
+
+            <vmethod ret-type='int16_t' name='getPlayerPosX'/>
+            <vmethod ret-type='int16_t' name='getPlayerPosY'/>
+            <vmethod ret-type='int16_t' name='getPlayerPosZ'/>
+
+            <vmethod ret-type='int16_t' name='getTargetPosX'/>
+            <vmethod ret-type='int16_t' name='getTargetPosY'/>
+            <vmethod ret-type='int16_t' name='getTargetPosZ'/>
+
+            <vmethod name='deleteSpatter'/>
+            <vmethod ret-type='int32_t'/>
+            <vmethod ret-type='bool'/>
+        </virtual-methods>
     </class-type>
+
+    <class-type type-name='adventure_option_eat_unit_contaminantst' inherits-from='adventure_optionst'>
+        <pointer name='unit' type-name='unit'/>
+        <pointer name='contaminant' type-name='unit_spatter'/>
+    </class-type>
+
+    <class-type type-name='adventure_option_eat_item_contaminantst' inherits-from='adventure_optionst'>
+        <pointer name='unit' type-name='unit'/>
+        <pointer name='inv_item' type-name='unit_inventory_item'/>
+        <pointer name='contaminant' type-name='spatter'/>
+    </class-type>
+
+    <class-type type-name='adventure_option_view_contaminantst' inherits-from='adventure_optionst'>
+        <pointer name='unit' type-name='unit'/>
+        <pointer name='contaminant' type-name='unit_spatter'/>
+    </class-type>
+
+    <class-type type-name='adventure_environment_optionst' inherits-from='adventure_optionst'>
+        <compound name='target_pos' type-name='coord'/>
+        <compound name='player_pos' type-name='coord'/>
+    </class-type>
+
+    <class-type type-name='adventure_environment_pickup_ignite_vegst' inherits-from='adventure_environment_optionst'>
+        <int32_t name='plant_idx'/>
+    </class-type>
+
+    <class-type type-name='adventure_environment_pickup_vermin_eventst' inherits-from='adventure_environment_optionst'>
+        <int32_t name='vermin_idx'/>
+    </class-type>
+
+    <class-type type-name='adventure_environment_ingest_materialst' inherits-from='adventure_environment_optionst'>
+        <int16_t name='material'/>
+        <int32_t name='matgloss'/>
+        <enum name='state' type-name='matter_state'/>
+    </class-type>
+
+    <class-type type-name='adventure_environment_ingest_from_containerst' inherits-from='adventure_environment_optionst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_environment_pickup_make_campfirest' inherits-from='adventure_environment_optionst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_environment_unit_suck_bloodst' inherits-from='adventure_environment_optionst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_movement_optionst'>
+        <compound name='dest' type-name='coord'/>
+        <compound name='source' type-name='coord'/>
+        <virtual-methods>
+            <vmethod name='getDescription'><pointer type-name='stl-string'/></vmethod>
+            <vmethod name='performAction'/>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='adventure_movement_attack_creaturest' inherits-from='adventure_movement_optionst'>
+        <stl-vector name='targets' type-name='int32_t' ref-target='unit'/>
+    </class-type>
+
+    <class-type type-name='adventure_movement_movest' inherits-from='adventure_movement_optionst'>
+        <bitfield name='unit_path_flags' type-name='pathfinding_flags'/>
+    </class-type>
+
+    <class-type type-name='adventure_movement_building_interactst' inherits-from='adventure_movement_optionst'>
+        <int32_t name='building_id' ref-target='building'/>
+    </class-type>
+
+    <class-type type-name='adventure_movement_item_interactst' inherits-from='adventure_movement_optionst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_movement_item_interact_guidest' inherits-from='adventure_movement_item_interactst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_movement_item_interact_pushst' inherits-from='adventure_movement_item_interactst'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_movement_item_interact_ridest' inherits-from='adventure_movement_item_interactst'>
+        TODO
+    </class-type>
+
+
+    <class-type type-name='adventure_item_interact_choicest'>
+        <virtual-methods>
+            <vmethod name='getDescription'><pointer type-name='stl-string'/></vmethod>
+            <vmethod name='performAction'/>
+            <vmethod is-destructor='true'/>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='adventure_item_interact_pull_outst' inherits-from='adventure_item_interact_choicest'/>
+    <class-type type-name='adventure_item_interact_strugglest' inherits-from='adventure_item_interact_choicest'/>
+
+    <class-type type-name='adventure_item_interact_fill_with_materialst' inherits-from='adventure_item_interact_choicest'>
+        <pointer type-name='item' name='item'/>
+        <compound type-name='coord' name='self'/>
+        <compound type-name='coord' name='target'/>
+        <int16_t name='material'/>
+        <int32_t name='matgloss'/>
+        <enum name='state' type-name='matter_state'/>
+    </class-type>
+
+    <class-type type-name='adventure_item_interact_readst' inherits-from='adventure_item_interact_choicest'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_item_interact_heat_from_tilest' inherits-from='adventure_item_interact_choicest'>
+        TODO
+    </class-type>
+
+    <class-type type-name='adventure_item_interact_fill_from_containerst' inherits-from='adventure_item_interact_choicest'>
+        TODO
+    </class-type>
+
+   
 </data-definition>
 
 <!--

@@ -1,5 +1,5 @@
 <data-definition>
-    <enum-type type-name='unit_thought_type'>
+    <enum-type type-name='unit_thought_type'> bay12: Thoughts
         <enum-attr name='value'/>
         <enum-attr name='caption'/>
 

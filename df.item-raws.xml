@@ -1,5 +1,5 @@
 <data-definition>
-    <enum-type type-name='item_type' base-type='int16_t'>
+    <enum-type type-name='item_type' base-type='int16_t'> bay12: ItemType
         <enum-attr name='caption'/>
         <enum-attr name='is_rawable' type-name='bool'/>
         <enum-attr name='is_stackable' type-name='bool'/>
@@ -399,7 +399,7 @@
         </enum-item>
     </enum-type>
 
-    <struct-type type-name='weapon_attack'>
+    <struct-type type-name='weapon_attack' original-name='itemdef_attackst'>
         <bool name='edged'/>
         <int32_t name='contact'/>
         <int32_t name='penetration'/>
@@ -431,7 +431,7 @@
         </virtual-methods>
     </class-type>
 
-    <enum-type type-name='ammo_flags'>
+    <enum-type type-name='ammo_flags'> bay12: ItemDefAmmoFlagType
         <enum-item name='HAS_EDGE_ATTACK'/>
     </enum-type>
 
@@ -449,7 +449,7 @@
         <stl-vector name="attacks" pointer-type='weapon_attack'/>
     </class-type>
 
-    <enum-type type-name='armor_general_flags'>
+    <enum-type type-name='armor_general_flags'> bay12: ClothingDefFlagType
         <enum-item name='SOFT'/>
         <enum-item name='HARD'/>
         <enum-item name='METAL'/>
@@ -464,15 +464,22 @@
         <enum-item name='STRUCTURAL_ELASTICITY_CHAIN_ALL'/>
     </enum-type>
 
-    <struct-type type-name='armor_properties'>
+    <enum-type type-name='clothing_layer_type'> bay12: ClothingLayer, does NOT have matching typedef so use compiler default
+        <enum-item name='UNDER'/>
+        <enum-item name='OVER'/>
+        <enum-item name='ARMOR'/>
+        <enum-item name='COVER'/>
+    </enum-type>
+
+    <struct-type type-name='armor_properties' original-name='clothingdefst'>
         <df-flagarray name='flags' index-enum='armor_general_flags'/>
-        <int32_t name="layer"/>
+        <enum name="layer" type-name='clothing_layer_type'/>
         <int16_t name="layer_size"/>
         <int16_t name="layer_permit"/>
         <int16_t name="coverage"/>
     </struct-type>
 
-    <enum-type type-name='armor_flags'>
+    <enum-type type-name='armor_flags'> bay12: ItemDefArmorFlagType
         <enum-item name='METAL_ARMOR_LEVELS'/>
     </enum-type>
 
@@ -499,7 +506,7 @@
         <int16_t name="level"/>
     </class-type>
 
-    <enum-type type-name='gloves_flags'>
+    <enum-type type-name='gloves_flags'> bay12: ItemDefGlovesFlagType
         <enum-item name='METAL_ARMOR_LEVELS'/>
     </enum-type>
 
@@ -515,7 +522,7 @@
         <compound name='props' type-name='armor_properties'/>
     </class-type>
 
-    <enum-type type-name='helm_flags'>
+    <enum-type type-name='helm_flags'> bay12: ItemDefHelmFlagType
         <enum-item name='METAL_ARMOR_LEVELS'/>
     </enum-type>
 
@@ -541,7 +548,7 @@
         <df-flagarray name='flags' index-enum='instrument_flags'/>
     </class-type>
 
-    <enum-type type-name='pants_flags'>
+    <enum-type type-name='pants_flags'> bay12: ItemDefPantsFlagType
         <enum-item name='METAL_ARMOR_LEVELS'/>
     </enum-type>
 
@@ -571,7 +578,7 @@
         <int32_t name="material_size"/>
     </class-type>
 
-    <enum-type type-name='shoes_flags'>
+    <enum-type type-name='shoes_flags'> bay12: ItemDefShoesFlagType
         <enum-item name='METAL_ARMOR_LEVELS'/>
     </enum-type>
 
@@ -595,7 +602,7 @@
         <stl-string name="ammo_class"/>
     </class-type>
 
-    <enum-type type-name='tool_flags'>
+    <enum-type type-name='tool_flags' base-type='int32_t'> bay12: ItemDefToolFlagType
         <enum-item name='HARD_MAT'/>
         <enum-item name='METAL_MAT'/>
         <enum-item name='HAS_EDGE_ATTACK'/>
@@ -607,7 +614,7 @@
         <enum-item name='FURNITURE'/>
     </enum-type>
 
-    <enum-type type-name='tool_uses' base-type='int16_t'>
+    <enum-type type-name='tool_uses' base-type='int16_t'> bay12: ItemDefToolUseType
         <enum-item name='NONE' value='-1'/>
         <enum-item name='LIQUID_COOKING'/>
         <enum-item name='LIQUID_SCOOP'/>
@@ -636,14 +643,12 @@
         <int32_t name="value"/>
         <uint8_t name="tile"/>
 
-        <stl-vector name="tool_use">
-            <enum base-type='int16_t' type-name='tool_uses'/>
-        </stl-vector>
+        <stl-vector name="tool_use" type-name='tool_uses'/>
 
         <stl-string name="adjective"/>
         <int32_t name="size"/>
-        <enum base-type="int16_t" type-name="job_skill" name="skill_melee"/>
-        <enum base-type="int16_t" type-name="job_skill" name="skill_ranged"/>
+        <enum type-name="job_skill" name="skill_melee"/>
+        <enum type-name="job_skill" name="skill_ranged"/>
         <stl-string name="ranged_ammo"/>
         <int32_t name="two_handed"/>
         <int32_t name="minimum_size"/>
@@ -657,7 +662,7 @@
         <int32_t name="container_capacity"/>
     </class-type>
 
-    <enum-type type-name='toy_flags'>
+    <enum-type type-name='toy_flags'> bay12: ItemDefToyFlagType
         <enum-item name='HARD_MAT'/>
     </enum-type>
 
@@ -667,8 +672,8 @@
         <stl-string name="name_plural"/>
         <df-flagarray name='flags' index-enum='toy_flags'/>
     </class-type>
-    
-    <enum-type type-name='trapcomp_flags'>
+
+    <enum-type type-name='trapcomp_flags'> bay12: ItemDefTrapCompFlagType
         <enum-item name='IS_SCREW'/>
         <enum-item name='IS_SPIKE'/>
         <enum-item name='WOOD'/>
@@ -692,7 +697,7 @@
         <stl-vector name="attacks" pointer-type='weapon_attack'/>
     </class-type>
 
-    <enum-type type-name='weapon_flags'>
+    <enum-type type-name='weapon_flags'> bay12: ItemDefWeaponFlagType
         <enum-item name='CAN_STONE'/>
         <enum-item name='HAS_EDGE_ATTACK'/>
         <enum-item name='TRAINING'/>
@@ -705,8 +710,8 @@
         <stl-string name="adjective"/>
         <int32_t name="size"/>
         <int32_t name="value"/>
-        <enum base-type="int16_t" type-name="job_skill" name="skill_melee"/>
-        <enum base-type="int16_t" type-name="job_skill" name="skill_ranged"/>
+        <enum type-name="job_skill" name="skill_melee"/>
+        <enum type-name="job_skill" name="skill_ranged"/>
         <stl-string name="ranged_ammo"/>
         <int32_t name="two_handed"/>
         <int32_t name="minimum_size"/>

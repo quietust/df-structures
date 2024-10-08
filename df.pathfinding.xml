@@ -172,16 +172,16 @@
         <enum-item name='ClayZone'/>
         <enum-item name='ColonyToInstall'/>
         <enum-item name='ReturnColonyToInstall'/>
-        <enum-item name='Nonsense'/>
+        <enum-item name='Graze'/>
         <enum-item name='SeekBloodSuckVictim'/>
         <enum-item name='SeekSheriff'/>
         <enum-item name='GrabExecutionWeapon'/>
         <enum-item name='TrainAnimal'/>
     </enum-type>
 
-    <enum-type type-name='unit_station_type' base-type='int16_t'>
+    <enum-type type-name='unit_station_type' base-type='int32_t'> bay12: StationType
         <enum-item name='None' value='-1'/>
-        <enum-item name='Nonsense'/>
+        <enum-item name='InitialSite'/>
         <enum-item name='DungeonCommander'/>
         <enum-item name='InsaneMood'/>
         <enum-item name='UndeadHunt'/>
@@ -217,7 +217,36 @@
         <enum-item name='SquadDefendBurrow'/>
         <enum-item name='SquadDefendBurrowFromTarget'/>
         <enum-item name='LairHunter'/>
+        <enum-item name='Graze'/>
     </enum-type>
+
+    <bitfield-type type-name='pathfinding_flags'> bay12: PATH_PERMIT_*
+        <flag-bit name='Desperate' comment='bay12: FORBIDDENTERRAIN'/>
+        <flag-bit name='Reckless' comment='bay12: BONKERS'/>
+        <flag-bit name='BuildingDestroyer1' comment='bay12: WOODENDOOR_IGNORE'/>
+        <flag-bit name='BuildingDestroyer2' comment='bay12: DOOR_IGNORE'/>
+        <flag-bit name='StuckInBuilding' comment='bay12: BUILDING_IGNORE'/>
+        <flag-bit name='AllowUnrevealed' comment='bay12: HIDDEN'/>
+        <flag-bit name='Doors' comment='bay12: DOOR_STOP'/>
+        <flag-bit name='DoorTotal' comment='bay12: DOOR_STOP_TOTAL'/>
+        <flag-bit name='CanLearn' comment='bay12: USE_TRAFFIC'/>
+        <flag-bit name='SolidWall'/>
+        <flag-bit name='JumpCliff' comment='bay12: LEAPER'/>
+        <flag-bit name='Air' comment='bay12: FLY'/>
+        <flag-bit name='ShallowWater' comment='bay12: WATER_TOUCH'/>
+        <flag-bit name='DeepWater' comment='bay12: WATER_SWIM'/>
+        <flag-bit name='Underwater' comment='bay12: WATER_UNDER'/>
+        <flag-bit name='ShallowMagma' comment='bay12: LAVA_TOUCH'/>
+        <flag-bit name='DeepMagma' comment='bay12: LAVA_SWIM'/>
+        <flag-bit name='UnderMagma' comment='bay12: LAVA_UNDER'/>
+        <flag-bit name='InWater' comment='bay12: ENTERING_FROM_WATER'/>
+        <flag-bit name='InMagma' comment='bay12: ENTERING_FROM_LAVA'/>
+        <flag-bit name='WalkLand' comment='bay12: BREATHE_AIR'/>
+        <flag-bit name='ImmobileLand' comment='bay12: ENTERING_FROM_AIR'/>
+        <flag-bit name='ZeroWalkTag' comment='bay12: ENTERING_FROM_LEVEL_MAPLESS'/>
+        <flag-bit name='LevelMapless'/>
+        <flag-bit name='Ghostly'/>
+    </bitfield-type>
 </data-definition>
 
 <!--

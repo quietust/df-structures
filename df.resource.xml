@@ -1,5 +1,5 @@
 <data-definition>
-    <enum-type type-name='resource_allotment_specifier_type'>
+    <enum-type type-name='resource_allotment_specifier_type' base-type='int32_t'> bay12: ResourceAllotmentType
         <enum-item name='CROP'/>
         <enum-item name='STONE'/>
         <enum-item name='METAL'/>
@@ -43,19 +43,136 @@
         <enum-item name='CHEESE'/>
         <enum-item name='SKIN'/>
         <enum-item name='POWDER'/>
+        <enum-item name='AMMO'/>
+        <enum-item name='UNUSED_44'/>
+        <enum-item name='UNUSED_45'/>
+        <enum-item name='UNUSED_46'/>
+        <enum-item name='UNUSED_47'/>
+        <enum-item name='UNUSED_48'/>
+        <enum-item name='UNUSED_49'/>
+        <enum-item name='UNUSED_50'/>
+        <enum-item name='UNUSED_51'/>
+        <enum-item name='UNUSED_52'/>
+        <enum-item name='UNUSED_53'/>
+        <enum-item name='UNUSED_54'/>
+        <enum-item name='UNUSED_55'/>
+        <enum-item name='UNUSED_56'/>
+        <enum-item name='UNUSED_57'/>
+        <enum-item name='UNUSED_58'/>
+        <enum-item name='UNUSED_59'/>
+        <enum-item name='UNUSED_60'/>
+        <enum-item name='UNUSED_61'/>
+        <enum-item name='UNUSED_62'/>
+        <enum-item name='UNUSED_63'/>
+        <enum-item name='UNUSED_64'/>
+        <enum-item name='UNUSED_65'/>
+        <enum-item name='UNUSED_66'/>
+        <enum-item name='UNUSED_67'/>
+        <enum-item name='UNUSED_68'/>
+        <enum-item name='UNUSED_69'/>
+        <enum-item name='UNUSED_70'/>
+        <enum-item name='UNUSED_71'/>
+        <enum-item name='UNUSED_72'/>
+        <enum-item name='UNUSED_73'/>
+        <enum-item name='UNUSED_74'/>
+        <enum-item name='UNUSED_75'/>
+        <enum-item name='UNUSED_76'/>
+        <enum-item name='UNUSED_77'/>
+        <enum-item name='UNUSED_78'/>
+        <enum-item name='UNUSED_79'/>
+        <enum-item name='UNUSED_80'/>
+        <enum-item name='UNUSED_81'/>
+        <enum-item name='UNUSED_82'/>
+        <enum-item name='UNUSED_83'/>
+        <enum-item name='UNUSED_84'/>
+        <enum-item name='UNUSED_85'/>
+        <enum-item name='UNUSED_86'/>
+        <enum-item name='UNUSED_87'/>
+        <enum-item name='UNUSED_88'/>
+        <enum-item name='UNUSED_89'/>
+        <enum-item name='UNUSED_90'/>
+        <enum-item name='UNUSED_91'/>
+        <enum-item name='UNUSED_92'/>
+        <enum-item name='UNUSED_93'/>
+        <enum-item name='UNUSED_94'/>
+        <enum-item name='UNUSED_95'/>
+        <enum-item name='UNUSED_96'/>
+        <enum-item name='UNUSED_97'/>
+        <enum-item name='UNUSED_98'/>
+        <enum-item name='UNUSED_99'/>
+    </enum-type>
+
+    <enum-type type-name='town_labor_type' base-type='int32_t'> bay12: TownLaborType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='CLOTH'/>
+        <enum-item name='TANNING'/>
+        <enum-item name='CLOTHING_CLOTH'/>
+        <enum-item name='CLOTHING_LEATHER'/>
+        <enum-item name='CRAFTS_BONE_CARVER'/>
+        <enum-item name='GEM_CUTTER'/>
+        <enum-item name='METAL_WEAPON_SMITH'/>
+        <enum-item name='WOOD_WEAPON_SMITH'/>
+        <enum-item name='BLACK_SMITH'/>
+        <enum-item name='METAL_ARMOR_SMITH'/>
+        <enum-item name='METAL_CRAFTER'/>
+        <enum-item name='LEATHER_ACCESSORIES'/>
+        <enum-item name='FURNITURE_WOOD'/>
+        <enum-item name='FURNITURE_STONE'/>
+        <enum-item name='FURNITURE_METAL'/>
+    </enum-type>
+
+    <enum-type type-name='trade_category_type' base-type='int32_t'> bay12: TradeCategoryType
+        <enum-item name='FOOD_CARN'/>
+        <enum-item name='FOOD_OMNI'/>
+        <enum-item name='WEARABLE_CLOTHING_HELM'/>
+        <enum-item name='WEARABLE_CLOTHING_BODY'/>
+        <enum-item name='WEARABLE_CLOTHING_PANTS'/>
+        <enum-item name='WEARABLE_CLOTHING_GLOVES'/>
+        <enum-item name='WEARABLE_CLOTHING_BOOTS'/>
+        <enum-item name='CRAFTS'/>
+        <enum-item name='THREAD'/>
+        <enum-item name='CLOTH'/>
+        <enum-item name='SKIN'/>
+        <enum-item name='LEATHER'/>
+        <enum-item name='BONE_CARVABLE'/>
+        <enum-item name='METAL_WEAPON'/>
+        <enum-item name='METAL_WEAPON_RANGED'/>
+        <enum-item name='METAL_ANVIL'/>
+        <enum-item name='METAL_AMMO'/>
+        <enum-item name='METAL_DIGGER'/>
+        <enum-item name='METAL_ARMOR'/>
+        <enum-item name='METAL_HARD'/>
+        <enum-item name='STONE'/>
+        <enum-item name='ROUGH_GEMS'/>
+        <enum-item name='LEATHER_ACCESSORIES'/>
+        <enum-item name='TABLE'/>
+        <enum-item name='CHAIR'/>
+        <enum-item name='BOX'/>
+        <enum-item name='BED'/>
+        <enum-item name='CABINET'/>
+        <enum-item name='WOOD'/>
+        <enum-item name='GEMS'/>
+        <enum-item name='WEAPON_MELEE'/>
+        <enum-item name='WEAPON_RANGED'/>
+        <enum-item name='WEARABLE_ARMOR_HELM'/>
+        <enum-item name='WEARABLE_ARMOR_BODY'/>
+        <enum-item name='WEARABLE_ARMOR_PANTS'/>
+        <enum-item name='WEARABLE_ARMOR_GLOVES'/>
+        <enum-item name='WEARABLE_ARMOR_BOOTS'/>
+        <enum-item name='AMMO'/>
     </enum-type>
 
     <class-type type-name='resource_allotment_specifier' original-name='resource_allotment_specifierst'>
-        <int32_t/>
+        <uint32_t name='flags'/>
 
-        <int32_t comment='v0.34.01-04'/>
-        <int32_t comment='v0.34.01-04'/>
+        <enum name='town_labor' type-name='town_labor_type'/>
+        <int32_t name='last_spec_hours'/>
 
         <virtual-methods>
             <vmethod ret-type='resource_allotment_specifier_type' name='getType'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod is-destructor='true'/>
@@ -63,35 +180,73 @@
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_cropst' inherits-from='resource_allotment_specifier'>
-        <int32_t/>
-        <int32_t/>
-        <static-array count='5' type-name='int32_t'/>
+        <int32_t name='plant_type' ref-target='plant_raw'/>
+        <bitfield name='crop_flags' base-type='uint32_t'> bay12: RAS_CROP_FLAG_*
+            <flag-bit name='edible_raw'/>
+            <flag-bit name='edible_cooked'/>
+            <flag-bit name='thread'/>
+            <flag-bit name='millable'/>
+            <flag-bit name='extractable_vial'/>
+            <flag-bit name='extractable_barrel'/>
+            <flag-bit name='extractable_still_vial'/>
+        </bitfield>
+        <int32_t name='pz_ai_mill_product'/>
+        <int32_t name='pz_ai_extract_still_vial'/>
+        <int32_t name='pz_ai_extract_barrel'/>
+        <int32_t name='pz_ai_extract_vial'/>
+        <int32_t name='pz_ai_thread'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_stonest' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <int32_t/>
-        <static-array count='5' type-name='int32_t'/>
+        <int32_t name='frequency'/>
+        <bitfield name='stone_flags' base-type='uint32_t'> bay12: RAS_STONE_FLAG_*
+            <flag-bit name='metal_ore'/>
+            <flag-bit name='rough_gem'/>
+        </bitfield>
+        <int32_t name='pz_ai_gem'/>
+        <int32_t name='pz_ai_chair'/>
+        <int32_t name='pz_ai_table'/>
+        <int32_t name='pz_ai_box'/>
+        <int32_t name='pz_ai_cabinet'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_metalst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <static-array count='12' type-name='int32_t'/>
+        <bitfield name='metal_flags' base-type='uint32_t'> bay12: RAS_METAL_FLAG_*
+            <flag-bit name='items_weapon'/>
+            <flag-bit name='items_weapon_ranged'/>
+            <flag-bit name='anvil'/>
+            <flag-bit name='ammo'/>
+            <flag-bit name='digger'/>
+            <flag-bit name='armor'/>
+            <flag-bit name='hard'/>
+        </bitfield>
+        <int32_t name='pz_ai_pants'/>
+        <int32_t name='pz_ai_body'/>
+        <int32_t name='pz_ai_boots'/>
+        <int32_t name='pz_ai_gloves'/>
+        <int32_t name='pz_ai_helm'/>
+        <int32_t name='pz_ai_weapon_melee'/>
+        <int32_t name='pz_ai_chair'/>
+        <int32_t name='pz_ai_table'/>
+        <int32_t name='pz_ai_box'/>
+        <int32_t name='pz_ai_cabinet'/>
+        <int32_t name='pz_ai_crafts'/>
+        <int32_t name='pz_ai_ammo'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_woodst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='pz_ai_weapon_ranged'/>
+        <int32_t name='pz_ai_chair'/>
+        <int32_t name='pz_ai_table'/>
+        <int32_t name='pz_ai_box'/>
+        <int32_t name='pz_ai_cabinet'/>
+        <int32_t name='pz_ai_bed'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_armor_bodyst' inherits-from='resource_allotment_specifier'>
@@ -172,32 +327,32 @@
     <class-type type-name='resource_allotment_specifier_threadst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='pz_ai_cloth'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_clothst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='pz_ai_pants'/>
+        <int32_t name='pz_ai_body'/>
+        <int32_t name='pz_ai_boots'/>
+        <int32_t name='pz_ai_gloves'/>
+        <int32_t name='pz_ai_helm'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_leatherst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='pz_ai_pants'/>
+        <int32_t name='pz_ai_body'/>
+        <int32_t name='pz_ai_boots'/>
+        <int32_t name='pz_ai_gloves'/>
+        <int32_t name='pz_ai_helm'/>
+        <int32_t name='pz_ai_quiver'/>
+        <int32_t name='pz_ai_backpack'/>
+        <int32_t name='pz_ai_flask'/>
+        <int32_t name='pz_ai_bag'/>
+        <int32_t name='pz_ai_crafts'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_quiverst' inherits-from='resource_allotment_specifier'>
@@ -258,19 +413,19 @@
     <class-type type-name='resource_allotment_specifier_bonest' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='pz_ai_crafts'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_hornst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='pz_ai_crafts'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_shellst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='pz_ai_crafts'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_tallowst' inherits-from='resource_allotment_specifier'>
@@ -281,7 +436,7 @@
     <class-type type-name='resource_allotment_specifier_toothst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='pz_ai_crafts'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_pearlst' inherits-from='resource_allotment_specifier'>
@@ -297,10 +452,14 @@
     <class-type type-name='resource_allotment_specifier_extractst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <int16_t name='mat_type2' ref-target='material' aux-value='$$.mat_index2'/>
-        <int32_t name='mat_index2'/>
-        <int32_t comment='uninitialized'/>
+        <bitfield name='extract_flags' base-type='uint32_t'> bay12: RAS_EXTRACT_FLAG_*
+            <flag-bit name='edible_raw'/>
+            <flag-bit name='edible_cooked'/>
+            <flag-bit name='cheeseable'/>
+        </bitfield>
+        <int16_t name='cheese_mat_type' ref-target='material' aux-value='$$.mat_index2'/>
+        <int32_t name='cheese_mat_index'/>
+        <int32_t name='pz_ai_cheese'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_cheesest' inherits-from='resource_allotment_specifier'>
@@ -311,16 +470,39 @@
     <class-type type-name='resource_allotment_specifier_skinst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int16_t name='mat_type2' ref-target='material' aux-value='$$.mat_index2'/>
-        <int32_t name='mat_index2'/>
-        <int32_t/>
+        <int16_t name='product_mat_type' ref-target='material' aux-value='$$.mat_index2'/>
+        <int32_t name='product_mat_index'/>
+        <int32_t name='pz_ai_leather'/>
     </class-type>
 
     <class-type type-name='resource_allotment_specifier_powderst' inherits-from='resource_allotment_specifier'>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <bitfield name='extract_flags' base-type='uint32_t'> bay12: RAS_POWDER_FLAG_*
+            <flag-bit name='edible_raw'/>
+            <flag-bit name='edible_cooked'/>
+        </bitfield>
     </class-type>
+
+    <struct-type type-name='pz_butchery_specifierst'>
+        <int32_t name='combined_caste_id'/>
+        <stl-vector name='resource_allotment' type-name='resource_allotment_specifier_type'/>
+        <stl-vector name='allotment_index' type-name='int32_t'/>
+        <stl-vector name='amount' type-name='int32_t'/>
+    </struct-type>
+
+    <struct-type type-name='resource_allotment_data' original-name='production_zonest'
+                 instance-vector='$global.world.world_data.resource_allotments'>
+        <int32_t name='index'/>
+        <static-array name='resource_allotments' count='100'>
+            <stl-vector pointer-type='resource_allotment_specifier'/>
+        </static-array>
+        <int32_t name='center_x'/>
+        <int32_t name='center_y'/>
+        <int32_t name='producing_civilization_enid' ref-target='historical_entity'/>
+        <int32_t name='last_market_stid' ref-target='world_site'/>
+        <stl-vector name='butchery_specifier' pointer-type='pz_butchery_specifierst'/>
+    </struct-type>
 </data-definition>
 
 <!--

@@ -32,15 +32,15 @@
         <global-address name='init'/>
         <global-address name='texture'/>
         <global-address name='timed_events'/>
-        <global-address name='ui'/>
-        <global-address name='ui_advmode'/>
-        <global-address name='ui_build_selector'/>
+        <global-address name='plotinfo'/>
+        <global-address name='adventure'/>
+        <global-address name='buildreq'/>
         <global-address name='ui_building_assign_type'/>
         <global-address name='ui_building_assign_is_marked'/>
         <global-address name='ui_building_assign_units'/>
         <global-address name='ui_building_assign_items'/>
         <global-address name='ui_look_list'/>
-        <global-address name='ui_sidebar_menus'/>
+        <global-address name='game'/>
         <global-address name='world'/>
 
         generated cglobals
@@ -48,8 +48,6 @@
         generated keydisplay
 
         .bss primitive
-
-        <global-address name='announcements'/>
 
         <global-address name='cur_year'/>
         <global-address name='cur_year_tick'/>
@@ -145,15 +143,15 @@
         <global-address name='gview' value='0x1659540'/>
         <global-address name='init' value='0x19ae968'/>
         <global-address name='timed_events'/>
-        <global-address name='ui' value='0x1651C10'/>
-        <global-address name='ui_advmode' value='0x19BFA48'/>
-        <global-address name='ui_build_selector' value='0x19ad978'/>
+        <global-address name='plotinfo' value='0x1651C10'/>
+        <global-address name='adventure' value='0x19BFA48'/>
+        <global-address name='buildreq' value='0x19ad978'/>
         <global-address name='ui_building_assign_type' value='0x19bfcb0'/>
         <global-address name='ui_building_assign_is_marked' value='0x1651bfc'/>
         <global-address name='ui_building_assign_units' value='0x1813f18'/>
         <global-address name='ui_building_assign_items' value='0x1651bec'/>
         <global-address name='ui_look_list' value='0x19bfc90'/>
-        <global-address name='ui_sidebar_menus' value='0x19AC0C0'/>
+        <global-address name='game' value='0x19AC0C0'/>
         <global-address name='world' value='0x1813F28'/>
 
         .bss primitive
@@ -926,15 +924,15 @@
         <global-address name='gview' value='0x165a540'/>
         <global-address name='init' value='0x19af968'/>
         <global-address name='timed_events' value='0x1652bbc'/>
-        <global-address name='ui' value='0x1652c10'/>
-        <global-address name='ui_advmode' value='0x19c0a48'/>
-        <global-address name='ui_build_selector' value='0x19ae978'/>
+        <global-address name='plotinfo' value='0x1652c10'/>
+        <global-address name='adventure' value='0x19c0a48'/>
+        <global-address name='buildreq' value='0x19ae978'/>
         <global-address name='ui_building_assign_type' value='0x19c0cb0'/>
         <global-address name='ui_building_assign_is_marked' value='0x1652bfc'/>
         <global-address name='ui_building_assign_units' value='0x1814f18'/>
         <global-address name='ui_building_assign_items' value='0x1652bec'/>
         <global-address name='ui_look_list' value='0x19c0c90'/>
-        <global-address name='ui_sidebar_menus' value='0x19ad0c0'/>
+        <global-address name='game' value='0x19ad0c0'/>
         <global-address name='world' value='0x1814f28'/>
 
         .bss primitive
@@ -1704,20 +1702,18 @@
         <global-address name='gview' value='0x165a540'/>
         <global-address name='init' value='0x19af968'/>
         <global-address name='timed_events' value='0x1652bbc'/>
-        <global-address name='ui' value='0x1652C10'/>
-        <global-address name='ui_advmode' value='0x19C0A48'/>
-        <global-address name='ui_build_selector' value='0x19ae978'/>
+        <global-address name='plotinfo' value='0x1652C10'/>
+        <global-address name='adventure' value='0x19C0A48'/>
+        <global-address name='buildreq' value='0x19ae978'/>
         <global-address name='ui_building_assign_type' value='0x19c0cb0'/>
         <global-address name='ui_building_assign_is_marked' value='0x1652bfc'/>
         <global-address name='ui_building_assign_units' value='0x1814f18'/>
         <global-address name='ui_building_assign_items' value='0x1652bec'/>
         <global-address name='ui_look_list' value='0x19c0c90'/>
-        <global-address name='ui_sidebar_menus' value='0x19AD0C0'/>
+        <global-address name='game' value='0x19AD0C0'/>
         <global-address name='world' value='0x1814F28'/>
 
         .bss primitive
-
-        <global-address name='announcements' value='0x19acd88'/>
 
         <global-address name='cur_year' value='0x105b32c'/>
         <global-address name='cur_year_tick' value='0x10291e0'/>
@@ -2493,22 +2489,20 @@
         <global-address name='init' value='0x19b1968'/>
         <global-address name='texture' value='0x19b1934'/>
         <global-address name='timed_events' value='0x1654bbc'/>
-        <global-address name='ui' value='0x1654C10'/>
-        <global-address name='ui_advmode' value='0x19C2A48'/>
-        <global-address name='ui_build_selector' value='0x19b0978'/>
+        <global-address name='plotinfo' value='0x1654C10'/>
+        <global-address name='adventure' value='0x19C2A48'/>
+        <global-address name='buildreq' value='0x19b0978'/>
         <global-address name='ui_building_assign_type' value='0x19c2cb0'/>
         <global-address name='ui_building_assign_is_marked' value='0x1654bfc'/>
         <global-address name='ui_building_assign_units' value='0x1816f18'/>
         <global-address name='ui_building_assign_items' value='0x1654bec'/>
         <global-address name='ui_look_list' value='0x19c2c90'/>
-        <global-address name='ui_sidebar_menus' value='0x19AF0C0'/>
+        <global-address name='game' value='0x19AF0C0'/>
         <global-address name='world' value='0x1816F28'/>
 
         <global-address name='keydisplay' value='0x1654b80'/>
 
         .bss primitive
-
-        <global-address name='announcements' value='0x19aed88'/>
 
         <global-address name='cur_year' value='0x105d32c'/>
         <global-address name='cur_year_tick' value='0x102b1e0'/>
@@ -3372,15 +3366,15 @@
         <global-address name='gview' value="0x8eab040"/>
         <global-address name='init' value='0x9808e00'/>
         <global-address name='timed_events' value='0x9065a00'/>
-        <global-address name='ui' value='0x965cee0'/>
-        <global-address name='ui_advmode' value='0x9663e00'/>
-        <global-address name='ui_build_selector' value='0x9066260'/>
+        <global-address name='plotinfo' value='0x965cee0'/>
+        <global-address name='adventure' value='0x9663e00'/>
+        <global-address name='buildreq' value='0x9066260'/>
         <global-address name='ui_building_assign_type' value='0x965cdc0'/>
         <global-address name='ui_building_assign_is_marked' value='0x965cdd0'/>
         <global-address name='ui_building_assign_units' value='0x965cde0'/>
         <global-address name='ui_building_assign_items' value='0x965cdf0'/>
         <global-address name='ui_look_list' value='0x988a4c0'/>
-        <global-address name='ui_sidebar_menus' value='0x97f7540'/>
+        <global-address name='game' value='0x97f7540'/>
         <global-address name='world' value='0x9663fe0'/>
 
         .bss primitive
@@ -4173,15 +4167,15 @@
         <global-address name='gview' value="0x8eac040"/>
         <global-address name='init' value="0x9809e00"/>
         <global-address name='timed_events' value="0x9066a00"/>
-        <global-address name='ui' value="0x965dee0"/>
-        <global-address name='ui_advmode' value="0x9664e00"/>
-        <global-address name='ui_build_selector' value="0x9067260"/>
+        <global-address name='plotinfo' value="0x965dee0"/>
+        <global-address name='adventure' value="0x9664e00"/>
+        <global-address name='buildreq' value="0x9067260"/>
         <global-address name='ui_building_assign_type' value="0x965ddc0"/>
         <global-address name='ui_building_assign_is_marked' value="0x965ddd0"/>
         <global-address name='ui_building_assign_units' value="0x965dde0"/>
         <global-address name='ui_building_assign_items' value="0x965ddf0"/>
         <global-address name='ui_look_list' value="0x988b4c0"/>
-        <global-address name='ui_sidebar_menus' value="0x97f8540"/>
+        <global-address name='game' value="0x97f8540"/>
         <global-address name='world' value="0x9664fe0"/>
 
         .bss primitive
@@ -4972,20 +4966,18 @@
         <global-address name='gview' value='0x8ead420'/>
         <global-address name='init' value='0x980b1e0'/>
         <global-address name='timed_events' value='0x9067de0'/>
-        <global-address name='ui' value='0x965f2c0'/>
-        <global-address name='ui_advmode' value='0x96661e0'/>
-        <global-address name='ui_build_selector' value='0x9068640'/>
+        <global-address name='plotinfo' value='0x965f2c0'/>
+        <global-address name='adventure' value='0x96661e0'/>
+        <global-address name='buildreq' value='0x9068640'/>
         <global-address name='ui_building_assign_type' value='0x965f1a0'/>
         <global-address name='ui_building_assign_is_marked' value='0x965f1b0'/>
         <global-address name='ui_building_assign_units' value='0x965f1c0'/>
         <global-address name='ui_building_assign_items' value='0x965f1d0'/>
         <global-address name='ui_look_list' value='0x988c8a0'/>
-        <global-address name='ui_sidebar_menus' value='0x97f9920'/>
+        <global-address name='game' value='0x97f9920'/>
         <global-address name='world' value='0x96663c0'/>
 
         .bss primitive
-
-        <global-address name='announcements' value='0x980c368'/>
 
         <global-address name='cur_year' value='0x965f140'/>
         <global-address name='cur_year_tick' value='0x965f160'/>
@@ -5789,20 +5781,18 @@
         <global-address name='init' value='0x980e480'/>
         <global-address name='texture' value='0x980e440'/>
         <global-address name='timed_events' value='0x906b080'/>
-        <global-address name='ui' value='0x9662560'/>
-        <global-address name='ui_advmode' value='0x9669480'/>
-        <global-address name='ui_build_selector' value='0x906b8e0'/>
+        <global-address name='plotinfo' value='0x9662560'/>
+        <global-address name='adventure' value='0x9669480'/>
+        <global-address name='buildreq' value='0x906b8e0'/>
         <global-address name='ui_building_assign_type' value='0x9662440'/>
         <global-address name='ui_building_assign_is_marked' value='0x9662450'/>
         <global-address name='ui_building_assign_units' value='0x9662460'/>
         <global-address name='ui_building_assign_items' value='0x9662470'/>
         <global-address name='ui_look_list' value='0x988fb40'/>
-        <global-address name='ui_sidebar_menus' value='0x97fcbc0'/>
+        <global-address name='game' value='0x97fcbc0'/>
         <global-address name='world' value='0x9669660'/>
 
         .bss primitive
-
-        <global-address name='announcements' value='0x980f608'/>
 
         <global-address name='cur_year' value='0x96623e0'/>
         <global-address name='cur_year_tick' value='0x9662400'/>
@@ -6666,15 +6656,15 @@
         <global-address name='gview' value='0xe9c040'/>
         <global-address name='init'/>
         <global-address name='timed_events'/>
-        <global-address name='ui' value='0x15d8c00'/>
-        <global-address name='ui_advmode'/>
-        <global-address name='ui_build_selector'/>
+        <global-address name='plotinfo' value='0x15d8c00'/>
+        <global-address name='adventure'/>
+        <global-address name='buildreq'/>
         <global-address name='ui_building_assign_type'/>
         <global-address name='ui_building_assign_is_marked'/>
         <global-address name='ui_building_assign_units'/>
         <global-address name='ui_building_assign_items'/>
         <global-address name='ui_look_list'/>
-        <global-address name='ui_sidebar_menus'/>
+        <global-address name='game'/>
         <global-address name='world' value='0x15dfd00'/>
 
         .bss primitive
@@ -6742,22 +6732,20 @@
         <global-address name='init' value='0x1786b20'/>
         <global-address name='texture' value='0x1786ae0'/>
         <global-address name='timed_events' value='0x10589e8'/>
-        <global-address name='ui' value='0x15dac00'/>
-        <global-address name='ui_advmode' value='0x15e1b20'/>
-        <global-address name='ui_build_selector' value='0x1059240'/>
+        <global-address name='plotinfo' value='0x15dac00'/>
+        <global-address name='adventure' value='0x15e1b20'/>
+        <global-address name='buildreq' value='0x1059240'/>
         <global-address name='ui_building_assign_type' value='0x15dab24'/>
         <global-address name='ui_building_assign_is_marked' value='0x15dab30'/>
         <global-address name='ui_building_assign_units' value='0x15dab3c'/>
         <global-address name='ui_building_assign_items' value='0x15dab48'/>
         <global-address name='ui_look_list' value='0x18081e8'/>
-        <global-address name='ui_sidebar_menus' value='0x1775260'/>
+        <global-address name='game' value='0x1775260'/>
         <global-address name='world' value='0x15e1d00'/>
 
         <global-address name='keydisplay' value='0x18eca3c'/>
 
         .bss primitive
-
-        <global-address name='announcements' value='0x1787ca8'/>
 
         <global-address name='cur_year' value='0x15daa40'/>
         <global-address name='cur_year_tick' value='0x15daa48'/>

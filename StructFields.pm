@@ -79,6 +79,7 @@ sub add_simple_init($);
 
 my %custom_primitive_handlers = (
     'stl-string' => sub { return "std::string"; },
+    'stl-fstream' => sub { return "std::fstream"; },
 );
 
 my %custom_primitive_inits = (
@@ -450,7 +451,7 @@ sub render_field_metadata_rec($$) {
         my @items = $field->findnodes('ld:item');
         my $count = 0;
         $count |= 1 if is_attr_true($field, 'is-array');
-        $count |= 2 if $in_union;
+        $count |= 2 if $in_union || is_attr_true($field, 'has-bad-pointers');
 
         push @field_defs, [ "${FLD}(POINTER, $name)", auto_identity_reference($items[0]), $count, $enum ];
     } elsif ($meta eq 'static-array') {
@@ -494,8 +495,8 @@ sub render_field_metadata($$\@\%) {
     return generate_field_table {
         render_field_metadata_rec($_, $FLD) for @$fields;
 
-        for my $vmtag (@{$info->{vmethods}||[]}) {
-            my $name = $vmtag->getAttribute('name');
+        for my $mtag (@{$info->{vmethods}||[]}, @{$info->{cmethods}||[]}) {
+            my $name = $mtag->getAttribute('name');
             push @field_defs, [ "METHOD(OBJ_METHOD, $name)" ] if $name;
         }
         for my $name (@{$info->{statics}||[]}) {
@@ -514,6 +515,7 @@ sub emit_struct_fields($$;%) {
     &render_struct_field($_) for @fields;
 
     my $full_name = fully_qualified_name($tag, $name, 1);
+    my $fields_group = lc(substr($full_name, 0, 1));
     my %info;
 
     if ($in_union_body) {
@@ -532,7 +534,7 @@ sub emit_struct_fields($$;%) {
                     "sizeof($full_name), &allocator_fn<${full_name}>, ",
                     type_identity_reference($tag,-parent => 1), ', ',
                     "\"$name\", NULL, $ftable);";
-        } 'fields';
+        } 'fields-' . $fields_group;
 
         return;
     }
@@ -606,7 +608,7 @@ sub emit_struct_fields($$;%) {
                     ($inherits ? "&${inherits}::_identity" : 'NULL'), ',',
                     "$ftable);";
         }
-    } 'fields';
+    } 'fields-' . $fields_group;
 }
 
 1;

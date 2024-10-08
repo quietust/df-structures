@@ -1,10 +1,10 @@
 <data-definition>
-    <enum-type type-name='hauler_type'>
+    <enum-type type-name='hauler_type'> bay12: not actual enum, based on storage_handlerst
         <enum-item name='Any'/>
         <enum-item name='Stone'/>
         <enum-item name='Wood'/>
-        <enum-item name='Item'/>
-        <enum-item name='Bin'/>
+        <enum-item name='Item' comment='Burial'/>
+        <enum-item name='Bin' comment='Item'/>
         <enum-item name='Body'/>
         <enum-item name='Food'/>
         <enum-item name='Refuse'/>
@@ -12,7 +12,7 @@
         <enum-item name='Animal'/>
     </enum-type>
 
-    <enum-type type-name='furniture_type'>
+    <enum-type type-name='furniture_type'> bay12: StockpileFurnitureItemType
         subset of item_type
         <enum-item name='FLOODGATE'/>
         <enum-item name='HATCH_COVER'/>
@@ -52,7 +52,7 @@
         <enum-item name='SAND_BAG'/>
     </enum-type>
 
-    <enum-type type-name='stockpile_category' base-type='int16_t'>
+    <enum-type type-name='stockpile_category' base-type='int16_t'> bay12: DefaultStockPiles
         <enum-item name='Remove' value='-1'/>
         <enum-item name='Animals'/>
         <enum-item name='Food'/>
@@ -71,10 +71,11 @@
         <enum-item name='Wood'/>
         <enum-item name='Weapons'/>
         <enum-item name='Armor'/>
+
         <enum-item name='Custom'/>
     </enum-type>
 
-    <bitfield-type type-name='stockpile_group_set' base-type='uint32_t'>
+    <bitfield-type type-name='stockpile_group_set' base-type='uint32_t'> bay12: STOCKPILE_FLAG_*
         <flag-bit name='animals'/>
         <flag-bit name='food'/>
         <flag-bit name='furniture'/>
@@ -94,17 +95,112 @@
         <flag-bit name='armor'/>
     </bitfield-type>
 
-    <struct-type type-name='stockpile_settings'>
-        <compound name='flags' type-name='stockpile_group_set'/>
+    <enum-type type-name='stockpile_furniture_mat'> bay12: StockpileFurnitureStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
+        <enum-item name='Wood'/>
+        <enum-item name='Plant'/>
+        <enum-item name='Bone'/>
+        <enum-item name='Tooth'/>
+        <enum-item name='Horn'/>
+        <enum-item name='Pearl'/>
+        <enum-item name='Shell'/>
+        <enum-item name='Leather'/>
+        <enum-item name='Silk'/>
+        <enum-item name='Amber'/>
+        <enum-item name='Coral'/>
+        <enum-item name='GlassGreen'/>
+        <enum-item name='GlassClear'/>
+        <enum-item name='GlassCrystal'/>
+        <enum-item name='Yarn'/>
+    </enum-type>
 
-        <compound name='animals'>
+    <enum-type type-name='stockpile_ammo_mat'> bay12: StockpileAmmoStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Wood'/>
+        <enum-item name='Bone'/>
+    </enum-type>
+
+    <enum-type type-name='stockpile_bar_mat'> bay12: StockpileBarStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Coal'/>
+        <enum-item name='Potash'/>
+        <enum-item name='Ash'/>
+        <enum-item name='Pearlash'/>
+        <enum-item name='Soap'/>
+    </enum-type>
+
+    <enum-type type-name='stockpile_block_mat'> bay12: StockpileBlockStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
+        <enum-item name='GlassGreen'/>
+        <enum-item name='GlassClear'/>
+        <enum-item name='GlassCrystal'/>
+        <enum-item name='Wood'/>
+    </enum-type>
+
+    <enum-type type-name='stockpile_finished_mat'> bay12: StockpileFinishedStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
+        <enum-item name='Wood'/>
+        <enum-item name='Plant'/>
+        <enum-item name='Bone'/>
+        <enum-item name='Tooth'/>
+        <enum-item name='Horn'/>
+        <enum-item name='Pearl'/>
+        <enum-item name='Shell'/>
+        <enum-item name='Leather'/>
+        <enum-item name='Silk'/>
+        <enum-item name='Amber'/>
+        <enum-item name='Coral'/>
+        <enum-item name='GlassGreen'/>
+        <enum-item name='GlassClear'/>
+        <enum-item name='GlassCrystal'/>
+        <enum-item name='Yarn'/>
+        <enum-item name='Wax'/>
+    </enum-type>
+
+    <enum-type type-name='stockpile_weapon_mat'> bay12: StockpileWeaponStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
+        <enum-item name='Wood'/>
+        <enum-item name='Plant'/>
+        <enum-item name='Bone'/>
+        <enum-item name='Shell'/>
+        <enum-item name='Leather'/>
+        <enum-item name='Silk'/>
+        <enum-item name='GlassGreen'/>
+        <enum-item name='GlassClear'/>
+        <enum-item name='GlassCrystal'/>
+        <enum-item name='Yarn'/>
+    </enum-type>
+
+    <enum-type type-name='stockpile_armor_mat'> bay12: StockpileArmorStorageType
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
+        <enum-item name='Wood'/>
+        <enum-item name='Plant'/>
+        <enum-item name='Bone'/>
+        <enum-item name='Shell'/>
+        <enum-item name='Leather'/>
+        <enum-item name='Silk'/>
+        <enum-item name='GlassGreen'/>
+        <enum-item name='GlassClear'/>
+        <enum-item name='GlassCrystal'/>
+        <enum-item name='Yarn'/>
+    </enum-type>
+
+    <struct-type type-name='stockpile_settings' original-name='stockpile_parameterst'>
+        <bitfield name='flags' type-name='stockpile_group_set'/>
+
+        <compound name='animals'> bay12: stockpile_parameter_animalst
             <bool name='empty_cages'/>
             <bool name='empty_traps'/>
             <stl-vector type-name='bool' name='enabled'
                         index-refers-to='(find-creature $)'/>
         </compound>
 
-        <compound name='food'>
+        <compound name='food'> bay12: stockpile_parameter_foodst
             <stl-vector type-name='bool' name='meat'
                         index-refers-to='(food-mat-by-idx $Meat $)'/>
             <stl-vector type-name='bool' name='fish'
@@ -146,19 +242,20 @@
             <bool name='prepared_meals'/>
         </compound>
 
-        <compound name='furniture'>
+        <compound name='furniture'> bay12: stockpile_parameter_furniturest
             <stl-vector type-name='bool' name='type' index-enum='furniture_type'/>
-            <stl-vector type-name='bool' name='other_mats'/> 16
+            <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_furniture_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <static-array type-name='bool' name='quality_core' count='7' index-enum='item_quality'/>
             <static-array type-name='bool' name='quality_total' count='7' index-enum='item_quality'/>
-            <bool name='sand_bags'/>
         </compound>
 
-        <int32_t name='unk1'/>
+        <compound name='corpses'> bay12: stockpile_parameter_graveyardst
+            <int32_t name='unused'/>
+        </compound>
 
-        <compound name='refuse'>
+        <compound name='refuse'> bay12: stockpile_parameter_refusest
             <stl-vector type-name='bool' name='type' index-enum='item_type'/>
             <stl-vector type-name='bool' name='corpses'
                         index-refers-to='(find-creature $)'/>
@@ -180,40 +277,40 @@
             <bool name='rotten_raw_hide'/>
         </compound>
 
-        <compound name='stone'>
+        <compound name='stone'> bay12: stockpile_parameter_stonest
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
         </compound>
 
-        <compound name='ore'>
+        <compound name='ore'> bay12: stockpile_parameter_orest
             <stl-vector type-name='bool' name='mats' comment='unused'/>
         </compound>
 
-        <compound name='ammo'>
+        <compound name='ammo'> bay12: stockpile_parameter_ammost
             <stl-vector type-name='bool' name='type'
                         index-refers-to='$global.world.raws.itemdefs.ammo[$]'/>
-            <stl-vector type-name='bool' name='other_mats'/> 2
+            <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_ammo_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <static-array type-name='bool' name='quality_core' count='7' index-enum='item_quality'/>
             <static-array type-name='bool' name='quality_total' count='7' index-enum='item_quality'/>
         </compound>
 
-        <compound name='coins'>
+        <compound name='coins'> bay12: stockpile_parameter_coinsst
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
         </compound>
 
-        <compound name='bars_blocks'>
-            <stl-vector type-name='bool' name='bars_other_mats'/>
-            <stl-vector type-name='bool' name='blocks_other_mats'/>
+        <compound name='bars_blocks'> bay12: stockpile_parameter_barblockst
+            <stl-vector type-name='bool' name='bars_other_mats' index-enum='stockpile_bar_mat'/>
+            <stl-vector type-name='bool' name='blocks_other_mats' index-enum='stockpile_block_mat'/>
             <stl-vector type-name='bool' name='bars_mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <stl-vector type-name='bool' name='blocks_mats'
                         index-refers-to='(material-by-id 0 $)'/>
         </compound>
 
-        <compound name='gems'>
+        <compound name='gems'> bay12: stockpile_parameter_gemst
             <stl-vector type-name='bool' name='rough_other_mats'
                         index-refers-to='(material-by-id $ -1)'/>
             <stl-vector type-name='bool' name='cut_other_mats'
@@ -224,21 +321,21 @@
                         index-refers-to='(material-by-id 0 $)'/>
         </compound>
 
-        <compound name='finished_goods'>
+        <compound name='finished_goods'> bay12: stockpile_parameter_finishedst
             <stl-vector type-name='bool' name='type' index-enum='item_type'/>
-            <stl-vector type-name='bool' name='other_mats'/> 17
+            <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_finished_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <static-array type-name='bool' name='quality_core' count='7' index-enum='item_quality'/>
             <static-array type-name='bool' name='quality_total' count='7' index-enum='item_quality'/>
         </compound>
 
-        <compound name='leather'>
+        <compound name='leather'> bay12: stockpile_parameter_leatherst
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(food-mat-by-idx $Leather $)'/>
         </compound>
 
-        <compound name='cloth'>
+        <compound name='cloth'> bay12: stockpile_parameter_clothst
             <stl-vector type-name='bool' name='thread_silk'
                         index-refers-to='(food-mat-by-idx $Silk $)'/>
             <stl-vector type-name='bool' name='thread_plant'
@@ -257,17 +354,17 @@
                         index-refers-to='(food-mat-by-idx $MetalThread $)'/>
         </compound>
 
-        <compound name='wood'>
+        <compound name='wood'> bay12: stockpile_parameter_woodst
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(find-plant-raw $)'/>
         </compound>
 
-        <compound name='weapons'>
+        <compound name='weapons'> bay12: stockpile_parameter_weaponst
             <stl-vector type-name='bool' name='weapon_type'
                         index-refers-to='$global.world.raws.itemdefs.weapons[$]'/>
             <stl-vector type-name='bool' name='trapcomp_type'
                         index-refers-to='$global.world.raws.itemdefs.trapcomps[$]'/>
-            <stl-vector type-name='bool' name='other_mats'/> 11
+            <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_weapon_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <static-array type-name='bool' name='quality_core' count='7' index-enum='item_quality'/>
@@ -276,7 +373,7 @@
             <bool name='unusable'/>
         </compound>
 
-        <compound name='armor'>
+        <compound name='armor'> bay12: stockpile_parameter_armorst
             <stl-vector type-name='bool' name='body'
                         index-refers-to='$global.world.raws.itemdefs.armor[$]'/>
             <stl-vector type-name='bool' name='head'
@@ -289,7 +386,7 @@
                         index-refers-to='$global.world.raws.itemdefs.pants[$]'/>
             <stl-vector type-name='bool' name='shield'
                         index-refers-to='$global.world.raws.itemdefs.shields[$]'/>
-            <stl-vector type-name='bool' name='other_mats'/> 11
+            <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_armor_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>
             <static-array type-name='bool' name='quality_core' count='7' index-enum='item_quality'/>
@@ -298,11 +395,13 @@
             <bool name='unusable'/>
         </compound>
 
+        <!-- <compound name='misc'> --> bay12: stockpile_parameter_miscst
         <bool name='allow_organic' init-value='true'/>
         <bool name='allow_inorganic' init-value='true'/>
+        <!-- </compound> -->
     </struct-type>
 
-    <enum-type type-name='stockpile_list' base-type='int32_t'>
+    <enum-type type-name='stockpile_list' base-type='int32_t'> bay12: StockPileViewMode
         <enum-attr name='is_category' type-name='bool'/>
 
         <enum-item name='Animals'>
@@ -365,8 +464,8 @@
             <item-attr name='is_category' value='true'/>
         </enum-item>
         <enum-item name='AmmoType'/>
-        <enum-item name='AmmoMetal'/>
         <enum-item name='AmmoOther'/>
+        <enum-item name='AmmoMetal'/>
         <enum-item name='AmmoCoreQuality'/>
         <enum-item name='AmmoTotalQuality'/>
         <enum-item name='Coins'>
@@ -383,10 +482,10 @@
         <enum-item name='Gems'>
             <item-attr name='is_category' value='true'/>
         </enum-item>
-        <enum-item name='RoughGem'/>
         <enum-item name='RoughGlass'/>
-        <enum-item name='CutGem'/>
         <enum-item name='CutGlass'/>
+        <enum-item name='RoughGem'/>
+        <enum-item name='CutGem'/>
         <enum-item name='Goods'>
             <item-attr name='is_category' value='true'/>
         </enum-item>
@@ -441,8 +540,8 @@
         </enum-item>
     </enum-type>
 
-    <struct-type type-name='hauling_route'
-                 instance-vector='$global.ui.hauling.routes' key-field='id'>
+    <struct-type type-name='hauling_route' original-name='hauling_routest'
+                 instance-vector='$global.plotinfo.hauling.routes' key-field='id'>
         <int32_t name='id'/>
         <stl-string name="name"/>
         <stl-vector name="stops" pointer-type='hauling_stop'/>
@@ -454,7 +553,7 @@
         </stl-vector>
     </struct-type>
 
-    <struct-type type-name='hauling_stop' key-field='id'>
+    <struct-type type-name='hauling_stop' original-name='hauling_stopst' key-field='id'>
         <int32_t name='id'/>
         <stl-string name='name'/>
         <compound name='pos' type-name='coord'/>
@@ -468,7 +567,7 @@
         <int32_t name='cart_id' ref-target='item'/>
     </struct-type>
 
-    <struct-type type-name='stop_depart_condition'>
+    <struct-type type-name='stop_depart_condition' original-name='stop_leave_conditionst'>
         <int32_t name='timeout'/>
         <enum base-type='int32_t' name='direction'>
             <enum-item name='North'/>
@@ -491,7 +590,7 @@
                   comment='initialized on first run, and saved'/>
     </struct-type>
 
-    <struct-type type-name='route_stockpile_link'>
+    <struct-type type-name='route_stockpile_link' original-name='stop_stockpile_linkst'>
         <int32_t name='building_id' ref-target='building'/>
         <bitfield name='mode'>
             <flag-bit name='take'/>
@@ -499,7 +598,7 @@
         </bitfield>
     </struct-type>
 
-    <struct-type type-name='vehicle'
+    <struct-type type-name='vehicle' original-name='vehiclest'
                  instance-vector='$global.world.vehicles.all' key-field='id'>
         <int32_t name='id'/>
         <int32_t name='item_id' ref-target='item'/>
@@ -513,11 +612,17 @@
         <int32_t name='speed_y'/>
         <int32_t name='speed_z'/>
 
-        <padding size='16' comment='0'/>
-        <int32_t name='route_id' ref-target='hauling_route'/>
-        <compound name='pos' type-name='coord'/>
+        <int32_t name='fine_x_gain_vel'/>
+        <int32_t name='fine_y_gain_vel'/>
+        <int32_t name='fine_z_gain_vel'/>
+        <bitfield name='flag'>
+            <flag-bit name='ON_TRACK'/>
+        </bitfield>
 
-        <int32_t name='time_stopped' comment='frames, up to 1000'/>
+        <int32_t name='route_id' ref-target='hauling_route'/>
+        <compound name='last_dump' type-name='coord'/>
+
+        <int32_t name='time_stopped' comment='bay12: zero_vel_count; frames, up to 1000'/>
     </struct-type>
 </data-definition>
 

@@ -1,5 +1,17 @@
 <data-definition>
-    <struct-type type-name='graphic'>
+    <enum-type type-name='curses_color' base-type='uint8_t'>
+        Using the color names without "dark" or "light", favoring primaries.
+        <enum-item name='Black'/>
+        <enum-item name='Blue'/>
+        <enum-item name='Green'/>
+        <enum-item name='Cyan'/>
+        <enum-item name='Red'/>
+        <enum-item name='Magenta'/>
+        <enum-item name='Yellow'/>
+        <enum-item name='White'/>
+    </enum-type>
+
+    <struct-type type-name='graphicst'>
         <int32_t name='screenx'/>
         <int32_t name='screeny'/>
         <int8_t name='screenf'/>
@@ -79,12 +91,12 @@
         <enum-item name='zoom_resetgrid'/>
     </enum-type>
 
-    <struct-type type-name='enabler'>
+    <struct-type type-name='enabler' original-name='enablerst' custom-methods="true">
         <bool name='fullscreen'/>
 
         <stl-deque name='overridden_grid_sizes'>
-            <int32_t/>
-            <int32_t/>
+            <int32_t name='x'/>
+            <int32_t name='y'/>
         </stl-deque>
 
         <pointer name='renderer' type-name='renderer'/>
@@ -162,7 +174,7 @@
             <static-array count='3' type-name='s-float'/>
         </static-array>
 
-        <bitfield name='flag'>
+        <bitfield name='flag' base-type='int32_t'>
             <flag-bit name='render'/>
             <flag-bit name='maxfps'/>
         </bitfield>
@@ -184,7 +196,7 @@
 
         <int32_t name='sync'/>
 
-        <stl-vector type-name='pointer' name='text_system'/>
+        <compound name='text_system' type-name='text_systemst'/>
 
         <compound name='simticks'>
             <pointer name='sem'/>
@@ -197,6 +209,37 @@
 
         <uint32_t name='clock'/>
     </struct-type>
+
+    <struct-type type-name='text_systemst'>
+        <stl-vector name='file_info' pointer-type='text_system_file_info'/>
+    </struct-type>
+
+    <struct-type type-name='text_system_file_info'>
+        <int32_t name='index'/>
+        <stl-string name='filename'/>
+        <int8_t name='file_token'/>
+        <int32_t name='number'/>
+    </struct-type>
+
+    <struct-type type-name='text_info'>
+        <stl-vector name='elements' pointer-type='text_info_elementst'/>
+    </struct-type>
+
+    <class-type type-name='text_info_elementst'>
+        <virtual-methods>
+            <vmethod name='getString'><pointer name='val' type-name='stl-string'/></vmethod>
+            <vmethod name='getLong' ret-type='int32_t'/>
+            <vmethod is-destructor='true'/>
+        </virtual-methods>
+    </class-type>
+
+    <class-type type-name='text_info_element_longst' inherits-from='text_info_elementst'>
+        <int32_t name='val'/>
+    </class-type>
+
+    <class-type type-name='text_info_element_stringst' inherits-from='text_info_elementst'>
+        <stl-string name='val'/>
+    </class-type>
 </data-definition>
 
 <!--

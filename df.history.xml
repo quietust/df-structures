@@ -1,5 +1,5 @@
 <data-definition>
-    <struct-type type-name='historical_kills'>
+    <struct-type type-name='historical_kills' original-name='kill_profilest'>
         -- Important
 
         <stl-vector name="events" type-name='int32_t' ref-target='history_event'/>
@@ -8,92 +8,100 @@
 
         <stl-vector name="killed_race" type-name='int16_t' ref-target='creature_raw'/>
         <stl-vector name="killed_caste" type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.killed_race[$._key]'/>
-        <stl-vector name="unk_30" type-name='int32_t' comment='-1'/>
-        <stl-vector name="unk_40" type-name='int32_t' comment='-1'/>
+        <stl-vector name="killed_underground_region" type-name='int32_t' ref-target='world_underground_region'/>
+        <stl-vector name="killed_region" type-name='int32_t' ref-target='world_region'/>
         <stl-vector name="killed_site" type-name='int32_t' ref-target='world_site'/>
-        <stl-vector name="killed_undead">
-            <bitfield base-type='uint16_t'>
-                <flag-bit name='skeletal'/>
-                <flag-bit name='zombie'/>
-                <flag-bit name='ghostly'/>
-            </bitfield>
+        <stl-vector name='killed_undead'>
+            <bitfield type-name='undead_flags'/>
         </stl-vector>
         <stl-vector name="killed_count" type-name='int32_t'/>
     </struct-type>
 
-    <struct-type type-name='history_hit_item'>
-        <int32_t name='item' ref-target='item'/>
-        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
-        <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
+    <bitfield-type type-name='undead_flags' base-type='uint16_t'> bay12: HF_KILL_FLAG_*
+        <flag-bit name='skeletal'/>
+        <flag-bit name='zombie'/>
+        <flag-bit name='ghostly'/>
+    </bitfield-type>
 
+    <struct-type type-name='history_hit_item'> not a real structure, contents declared inline in all known locations
+        <int32_t name='item' ref-target='item'/>
+        <enum name='item_type' type-name='item_type'/>
+        <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
         <int32_t name='matindex'/>
 
         -- If shot by a ranged weapon:
-        <int32_t name='bow_item' ref-target='item'/>
-        <enum base-type='int16_t' name='bow_item_type' type-name='item_type'/>
-        <int16_t name='bow_item_subtype' refers-to='(item-subtype-target $$._parent.bow_item_type $)'/>
-        <int16_t name='bow_mattype' ref-target='material' aux-value='$$.bow_matindex'/>
-        <int32_t name='bow_matindex'/>
+        <int32_t name='shooter_item' ref-target='item'/>
+        <enum name='shooter_item_type' type-name='item_type'/>
+        <int16_t name='shooter_item_subtype' refers-to='(item-subtype-target $$._parent.shooter_item_type $)'/>
+        <int16_t name='shooter_mattype' ref-target='material' aux-value='$$.shooter_matindex'/>
+        <int32_t name='shooter_matindex'/>
     </struct-type>
 
-    <struct-type type-name='historical_figure_info'>
-        <pointer name="spheres">
-            <stl-vector>
-                <enum base-type='int16_t' type-name='sphere_type'/>
-            </stl-vector>
+    <enum-type type-name='whereabouts_type' base-type='int16_t'> bay12: HistFigStateType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='wandering'/>
+        <enum-item name='scouting'/>
+        <enum-item name='hunting'/>
+        <enum-item name='settled'/>
+        <enum-item name='snatcher'/>
+        <enum-item name='thief'/>
+        <enum-item name='refugee'/>
+    </enum-type>
+
+    <enum-type type-name='season' base-type='int8_t'> bay12: SeasonType, int32
+        <enum-item name='None' value='-1'/>
+        <enum-item name='Spring'/>
+        <enum-item name='Summer'/>
+        <enum-item name='Autumn'/>
+        <enum-item name='Winter'/>
+    </enum-type>
+
+    <struct-type type-name='historical_figure_info' original-name='hf_profilest'>
+        <pointer name="spheres"> bay12: metaphysical_profilest
+            <stl-vector name="spheres" type-name='sphere_type'/>
         </pointer>
 
-        <pointer name="skills">
-            <stl-vector name="skills">
-                <enum base-type='int16_t' type-name='job_skill'/>
-            </stl-vector>
+        <pointer name="skills"> bay12: skill_profilest
+            <stl-vector name="skills" type-name='job_skill'/>
             <stl-vector name="points" type-name='int32_t' index-refers-to='$$._parent.skills[$]'/>
-            <stl-vector name="unk_20" type-name='int16_t'/>
-            <stl-vector name="unk_30" type-name='int32_t'/>
-            <stl-vector name="unk_40" type-name='int16_t'/>
-            <stl-vector name="unk_50" type-name='int16_t'/>
-            <int16_t name="unk_60"/>
+            <stl-vector name="professions_held" type-name='profession'/>
+            <stl-vector name="profession_years" type-name='int32_t' comment="Number of years on each profession above. Need not be consecutive, so non registered periods can happen"/>
+            <stl-vector name="states" type-name='whereabouts_type'/>
+            <stl-vector name="state_count" type-name='int16_t'/>
+            <enum base-type='int16_t' name='profession' type-name='profession'/>
         </pointer>
 
-        <pointer name="pets">
+        <pointer name="pets"> bay12: pet_profilest
             <stl-vector type-name='int16_t' ref-target='creature_raw'/>
         </pointer>
 
-        <pointer name="unk_c">
-            <static-array type-name='uint16_t' name='traits'
-                          count='30' index-enum='personality_facet_type'/>
-            <stl-vector name="unk_3c">
-                <pointer>
-                    <int16_t name='a'/>
-                    <int16_t name='b'/>
-                </pointer>
-            </stl-vector>
-            <stl-vector name="unk_4c" type-name='int16_t'/>
-            <stl-vector name="unk_5c" comment='v0.34.01'/>
+        <pointer name="personality"> bay12: personality_profilest
+            <compound name='personality' type-name='unit_personality'/>
+            <stl-vector type-name='int32_t' comment='v0.34.01'/>
         </pointer>
 
-        <pointer name="masterpieces">
+        <pointer name="masterpieces"> bay12: artistic_profilest
             <stl-vector name="events" type-name='int32_t' ref-target='history_event'/>
-            <stl-vector name="events2" type-name='int32_t' ref-target='history_event' comment='ones that were stolen??..'/>
+            <stl-vector name="lost_events" type-name='int32_t' ref-target='history_event' comment='refers to the creation events, not the destruction events'/>
         </pointer>
 
-        <pointer name="unk_14">
-            <int16_t name="unk_0"/>
-            <int32_t name="site" ref-target='world_site'/>
-            <int32_t name="region_id" ref-target='world_region'/>
-            <int32_t name="beast_id" init-value='-1' comment='for FB'/>
-            <compound name='region' type-name='coord2d'/>
-            <int8_t name="unk_14"/>
-            <int32_t name="unk_18"/>
-            <int32_t name="unk_1c"/>
+        <pointer name="whereabouts"> bay12: state_profilest
+            <enum name='state' type-name='whereabouts_type' base-type='int16_t'/>
+            <int32_t name="site_id" ref-target='world_site'/>
+            <int32_t name="subregion_id" ref-target='world_region'/>
+            <int32_t name="feature_layer_id" ref-target='world_underground_region'/>
+            <compound name='region_pos' type-name='coord2d'/>
+            <enum name='body_state' type-name='histfig_body_state' init-value='NONE'/>
+            <int32_t name='body_state_id' init-value='-1' comment="-1/site     /?/region_id/?/site     /site"/>
+            <int32_t name='body_state_sub_id' init-value='-1' comment="-1/structure/?/-1       /?/structure/structure"/>
         </pointer>
 
         <pointer name="kills" type-name='historical_kills'/>
 
-        <pointer name="wounds">
+        <pointer name="wounds"> bay12: body_profilest
             <stl-vector name="events" type-name='int32_t' ref-target='history_event'/>
-            <stl-bit-vector name="status">
+            <stl-bit-vector name="status" comment='missing body parts'>
                 <code-helper name='index-refers-to'>
                     (let* ((info $$._parent._parent._parent)
                            (figure $info._parent._parent)
@@ -103,70 +111,78 @@
             </stl-bit-vector>
         </pointer>
 
-        <pointer name='secret' comment='v0.34.01'>
+        <pointer name='secret' comment='v0.34.01'> bay12: knowledge_profilest
             <stl-vector name="interactions" pointer-type='interaction'/>
-            <int32_t name="unk_10"/>
+            <int32_t name="next_intervention_resistance_year"/>
             <stl-vector name='read_books' pointer-type='written_content'/>
         </pointer>
 
-        <pointer name='curse' comment='v0.34.01'>
+        <pointer name='curse' comment='v0.34.01'> bay12: interaction_profilest
             <stl-vector name="active_interactions" pointer-type='interaction'/>
-            <stl-vector name="active_effects">
-                <pointer/>
-            </stl-vector>
+            <stl-vector name="active_effects" pointer-type='interaction_effect'/>
             <stl-vector name="can_do" pointer-type='interaction'/>
-            <int16_t name="unk_30"/>
-            <int16_t name="unk_32"/>
-            <int32_t name="unk_34"/>
-            <int32_t name="unk_38"/>
-            <int32_t name="unk_3c"/>
-            <int8_t name="unk_40"/>
+            <bitfield name="add_caste_flag" type-name='cie_add_tag_mask1'/>
+            <bitfield name="remove_caste_flag" type-name='cie_add_tag_mask1'/>
+            <bitfield name="add_property" type-name='cie_add_tag_mask2'/>
+            <bitfield name="remove_property" type-name='cie_add_tag_mask2'/>
+            <int8_t name="use_display_name"/>
             <stl-string name="name"/>
             <stl-string name="name_plural"/>
             <stl-string name="name_adjective"/>
             <int32_t name='race' ref-target='creature_raw'/>
             <int16_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
-            <stl-vector name="unk_a0"/>
-            <stl-vector name="unk_b0"/>
-            <stl-vector name="unk_c0" type-name='int32_t'/>
-            <int32_t name="unk_d0"/>
-            <int32_t name="unk_d4"/>
-            <int32_t name="unk_d8"/>
-            <int32_t name="unk_dc"/>
-            <stl-string name="unk_e0"/>
-            <int32_t name="unk_fc"/>
+            <stl-vector name='body_transformation_effects' type-name='int32_t' ref-target='creature_interaction_effect' comment='forced periodic transformations'/>
+            <stl-vector name='voluntary_body_transformation_effects' type-name='int32_t' ref-target='creature_interaction_effect'/>
+            <stl-vector name='body_mat_interaction_effects' type-name='int32_t' ref-target='creature_interaction_effect'/>
+            <int32_t name="original_histfig_id" ref-target='historical_figure' comment='ID of the historical figure who was reanimated to produce undead historical figure'/>
+            <int32_t name="original_race" ref-target='creature_raw' comment='race of the historical figure who was reanimated to produce undead historical figure'/>
+            <int32_t name="original_caste" ref-target='caste_raw' aux-value='$$.original_race' comment='caste of the historical figure who was reanimated to produce undead historical figure'/>
+            <int32_t name="root_body_part_id" comment='ID of the root body part in the corpse or corpse piece which was reanimated to produce undead historical figure'/>
+            <stl-string name="undead_name" comment='display name of reanimated creatures in legends mode'/>
+            <int32_t name="disturbed_heid" ref-target='history_event'/>
         </pointer>
 
-        <pointer name='books' comment='v0.34.01'>
-            <stl-vector pointer-type='artifact_record'/>
+        <pointer name='books' comment='v0.34.01'> bay12: inventory_profilest
+            <stl-vector name='artifact' pointer-type='artifact_record'/>
         </pointer>
 
-        <pointer name='reputation' comment='v0.34.01'>
+        <pointer name='reputation' comment='v0.34.01'> bay12: reputation_profilest
             <stl-vector name="wanted">
-                <pointer>
+                <pointer> bay12: entity_personal_reputation_profilest
                     <int32_t name='entity_id' ref-target='historical_entity'/>
+                    <!-- <compound name='reputation'> bay12: personal_reputationst -->
                     <int32_t name="discovered_year"/>
                     <int32_t name="discovered_time"/>
                     <int32_t name="unsolved_murders"/>
+                    <!-- </compound> -->
                 </pointer>
             </stl-vector>
-            <int32_t name="cur_identity" ref-target='assumed_identity'/>
-            <stl-vector name="all_identities" type-name='int32_t' ref-target='assumed_identity'/>
+            <int32_t name="cur_identity" ref-target='identity'/>
+            <stl-vector name="all_identities" type-name='int32_t' ref-target='identity'/>
         </pointer>
     </struct-type>
 
-    <enum-type type-name='histfig_flags'>
-        <enum-item/>
-        <enum-item/>
+    <enum-type type-name='histfig_flags'> bay12: HistoryFigureFlagType
+        <enum-item name='reveal_artwork'/>
+        <enum-item name='equipment_created'/>
         <enum-item name='deity'/>
         <enum-item name='force'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='skeletal_deity'/>
+        <enum-item name='rotting_deity'/>
+        <enum-item name='worldgen_acted'/>
         <enum-item name='ghost'/>
+        <enum-item name='skin_destroyed'/>
+        <enum-item name='meat_destroyed'/>
+        <enum-item name='bones_destroyed'/>
+        <enum-item name='brag_on_kill'/>
+        <enum-item name='kill_quest'/>
+        <enum-item name='chatworthy'/>
+        <enum-item name='flashes'/>
+        <enum-item name='never_cull'/>
     </enum-type>
 
-    <enum-type type-name='histfig_relationship_type' base-type='int16_t'>
+    <enum-type type-name='histfig_relationship_type' base-type='int32_t'> bay12: FamilyRelationshipType
+        <enum-item name='None' value='-1'/>
         <enum-item name='Mother'/>
         <enum-item name='Father'/>
         <enum-item name='Parent'/>
@@ -232,13 +248,14 @@
         <enum-item name='Nephew'/>
     </enum-type>
 
-    <struct-type type-name='historical_figure' instance-vector='$global.world.history.figures' key-field='id'>
+    <struct-type type-name='historical_figure' instance-vector='$global.world.history.figures' key-field='id'
+                 original-name='history_figurest'>
         <enum base-type='int16_t' name='profession' type-name='profession'/>
 
         <int16_t name='race' ref-target='creature_raw'/>
         <int16_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
 
-        <int8_t name='sex' comment='-1 n/a, 0 female, 1 male'/>
+        <enum name='sex' type-name='pronoun_type'/>
 
         <int32_t name='appeared_year'/>
         <int32_t name='born_year'/>
@@ -272,28 +289,23 @@
         <int32_t name='unit_id' ref-target='unit'/>
         <int32_t name='id'/>
 
-        <int32_t name='unk4'/>
+        <int32_t name='art_count'/>
 
         <stl-vector name='entity_links' pointer-type='histfig_entity_link'/>
         <stl-vector name='site_links' pointer-type='histfig_site_link'/>
         <stl-vector name='histfig_links' pointer-type='histfig_hf_link'/>
 
-        <pointer name='info' type-name='historical_figure_info'/>
+        <pointer name='info' type-name='historical_figure_info' comment='bay12: hf_profilest profile'/>
 
-        <compound name='worldgen'>
-            <pointer name="unk_0" type-name="world_site"/>
-            <pointer name="unk_4" type-name="language_name"/>
-            <pointer name="unk_8" type-name="world_underground_region"/>
-            <pointer name="unk_c">
-                <df-array name="unk_0" type-name='uint8_t'/>
-                <df-array name="unk_8" type-name='int16_t'/>
-            </pointer>
-            <int32_t name="unk_10"/>
-        </compound>
+        <pointer name="worldgen_site" type-name="world_site"/>
+        <pointer name="worldgen_region" type-name="world_region"/>
+        <pointer name="worldgen_layer" type-name="world_underground_region"/>
+        <pointer name="worldgen_genetics" type-name='unit_genes'/>
+        <int32_t name="temp_var"/>
     </struct-type>
 
-    <struct-type type-name='assumed_identity'
-                 instance-vector='$global.world.assumed_identities.all' key-field='id'>
+    <struct-type type-name='identity' original-name='identityst'
+                 instance-vector='$global.world.identities.all' key-field='id'>
         dtor 0x8C17FA0
 
         <int32_t name='id'/>
@@ -316,7 +328,7 @@
         <int32_t name='birth_second'/>
     </struct-type>
 
-    <enum-type type-name='history_event_type'>
+    <enum-type type-name='history_event_type' base-type='int16_t'> bay12: HistoryEventType
         <enum-item name='WAR_ATTACKED_SITE'/>
         <enum-item name='WAR_DESTROYED_SITE'/>
         <enum-item name='CREATED_SITE'/>
@@ -395,18 +407,77 @@
         <enum-item name='ARTIFACT_STORED'/>
     </enum-type>
 
-    <struct-type type-name='history_event_context'>
-        <int32_t/>
-        <int32_t/>
-        <int32_t name='histfig_id_talker' ref-target='historical_figure'/>
-        <int32_t name='histfig_id_listener' ref-target='historical_figure'/>
+    <struct-type type-name='history_event_context' original-name='contextst'>
+        <int32_t name='artifact_id' ref-target='artifact_record'/>
+        <int32_t name='entity_id' ref-target='historical_entity'/>
+        <int32_t name='histfig_id' ref-target='historical_figure'/>
+        <int32_t name='speaker_id' ref-target='historical_figure'/>
+        <int32_t name='site_id' ref-target='world_site'/>
+        <int32_t name='region_id' ref-target='world_region'/>
+        <int32_t name='layer_id' ref-target='world_underground_region'/>
+        <int32_t name='entity_population_id' ref-target='entity_population'/>
+        <int32_t name='abstract_building_id' ref-target='abstract_building'/>
+        <enum name='sphere' type-name='sphere_type' base-type='int16_t'/>
+        <enum name='architectural_element' type-name='architectural_element' base-type='int16_t'/>
+        <enum name='architectural_justification' type-name='architectural_justification' base-type='int16_t'/>
+        <enum name='family_relationship' base-type='int16_t' type-name='histfig_relationship_type' comment='not initialized'/>
+        <int32_t name='number' init-value='1'/>
+        <enum name='prof' type-name='profession'/>
+        <int16_t name='race' ref-target='creature_raw'/>
+        <int16_t name='racegloss_material' init-value='-1'/>
+        <int32_t name='racegloss_mat_index' init-value='-1'/>
+        <int8_t name='gender' init-value='-1'/>
+        <int16_t name='caste' ref-target='caste_raw'/>
+        <bitfield name='undead_flags' type-name='undead_flags'/>
+        <enum name='histfig_state' type-name='whereabouts_type'/>
+        <int32_t name='squad_id' ref-target='squad'/>
+        <int32_t name='formation_id' init-value='-1' comment='ID within world.formations.all'/>
+        <int32_t name='activity_id' ref-target='activity_entry'/>
+        <int32_t name='breed_id' ref-target='breed'/>
+        <int32_t name='battlefield_id' ref-target='battlefield'/>
+        <int32_t name='interaction_instance_id' ref-target='interaction_instance'/>
+        <int32_t name='written_content_id' ref-target='written_content'/>
+        <int32_t name='identity_id' ref-target='identity'/>
+        <int32_t name='incident_id' ref-target='incident'/>
+        <int32_t name='crime_id' ref-target='crime'/>
+        <int32_t name='creation_zone_id' ref-target='world_object_data'/>
+        <int32_t name='vehicle_id' ref-target='vehicle'/>
     </struct-type>
+
+    <enum-type type-name='architectural_element' base-type='int16_t'> bay12: ArchitecturalElement
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='paved_outdoor_area'/>
+        <enum-item name='uneven_pillars'/>
+        <enum-item name='square_of_pillars'/>
+        <enum-item name='pillars_on_the_perimeter'/>
+        <enum-item name='upper_floors'/>
+        <enum-item name='lower_floors'/>
+        <enum-item name='water_pool'/>
+        <enum-item name='lava_pool'/>
+        <enum-item name='stagnant_pool'/>
+        <enum-item name='open_structure'/>
+        <enum-item name='paved_indoor_areas'/>
+        <enum-item name='detailed_surfaces'/>
+    </enum-type>
+
+    <enum-type type-name='architectural_justification' base-type='int16_t'> bay12: Justification
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='representation'/>
+        <enum-item name='proximity'/>
+        <enum-item name='experience'/>
+        <enum-item name='reminder'/>
+        <enum-item name='antithetical'/>
+    </enum-type>
+
+    <enum-type type-name='history_event_flags'> bay12: HistoryEventFlagType
+        <enum-item name='hidden' comment='event is hidden from legends mode when this is set'/>
+    </enum-type>
 
     <class-type type-name='history_event' original-name='history_eventst'
                 instance-vector='$global.world.history.events' key-field='id'>
         <int32_t name='year'/>
         <int32_t name='seconds'/>
-        <df-flagarray name='flags'/>
+        <df-flagarray name='flags' index-enum='history_event_flags'/>
         <int32_t name='id'/>
 
         <virtual-methods>
@@ -439,8 +510,12 @@
             <vmethod ret-type='bool' name='wasHistfigRevived'>
                 <int32_t name='histfig' ref-target='historical_figure'/>
             </vmethod>
-            <vmethod/>
-            <vmethod/>
+            <vmethod ret-type='int32_t' name='get_subregion_encased_hfid'> once used for 40d HFS
+                <int32_t name='region' ref-target='world_region'/>
+            </vmethod>
+            <vmethod ret-type='int32_t' name='get_hfid_encased_srid'> once used for 40d HFS
+                <int32_t name='histfig' ref-target='historical_figure'/>
+            </vmethod>
 
             -- 10
 
@@ -452,7 +527,7 @@
             </vmethod>
             <vmethod name='getRelatedSiteStructureIDs'>
                 <pointer name='vec1'><stl-vector type-name='int32_t' ref-target='world_site'/></pointer>
-                <pointer name='vec2'><stl-vector type-name='int32_t'/></pointer>
+                <pointer name='vec2'><stl-vector type-name='int32_t' ref-target='abstract_building'/></pointer>
             </vmethod>
             <vmethod name='getRelatedArtifactIDs'>
                 <pointer name='vec'><stl-vector type-name='int32_t' ref-target='artifact_record'/></pointer>
@@ -475,7 +550,7 @@
             </vmethod>
             <vmethod ret-type='bool' name='isRelatedToSiteStructure'>
                 <int32_t name='site' ref-target='world_site'/>
-                <int32_t name='structure'/>
+                <int32_t name='structure' ref-target='abstract_building'/>
             </vmethod>
 
             -- 20
@@ -489,46 +564,52 @@
             <vmethod ret-type='bool' name='isRelatedToLayerID'>
                 <int32_t name='region' ref-target='world_underground_region'/>
             </vmethod>
-            <vmethod/>
+            <vmethod ret-type='bool' name='isRelatedToEntityPopulation'>
+                <int32_t name='pop' ref-target='entity_population'/>
+            </vmethod>
             <vmethod ret-type='bool' name='isRelatedToEntityID'>
                 <int32_t name='entity' ref-target='historical_entity'/>
             </vmethod>
 
-            <vmethod/>
+            <vmethod ret-type='bool' name='isRelatedToBreed'>
+                <int32_t name='breed' ref-target='breed'/>
+            </vmethod>
             <vmethod name='getSentence'>
                 <pointer type-name='stl-string' name='str'/> "In x, some event happened"
                 <pointer type-name='history_event_context' name='context'/>
-                <int32_t name='unk1' comment='1'/>
-                <int32_t name='unk2' comment='0'/>
+                <bool name='translated'/>
+                <bool name='glyphs_only'/>
             </vmethod>
             <vmethod name='getPhrase'>
                 <pointer type-name='stl-string' name='str'/> "the happening of some event"
                 <pointer type-name='history_event_context' name='context'/>
-                <int32_t name='unk1' comment='1'/>
-                <int32_t name='unk2' comment='0'/>
+                <bool name='translated'/>
+                <bool name='glyphs_only'/>
             </vmethod>
             <vmethod name='populateArtImage'>
                 <pointer type-name='art_image' name='image'/>
             </vmethod>
-            <vmethod/>
+            <vmethod ret-type='int32_t' name='getImportance'/>
 
             -- 30
 
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
-            <vmethod/>
+            <vmethod ret-type='int32_t' name='getEraImportance'/>
+            <vmethod ret-type='bool' name='isChangedHistfigID'>
+                <int32_t name='histfig' ref-target='historical_figure'/>
+            </vmethod>
+            <vmethod name='categorize' comment='inserts event into world_history.events_death if relevant'/>
+            <vmethod name='uncategorize' comment='removes event from world_history.events_death if relevant'/>
             <vmethod name='generate_xml'>
-                <pointer/>
-                <pointer/>
+                <pointer type-name='stl-fstream'/>
+                <int32_t name='indent'/>
             </vmethod>
 
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
-            <vmethod/>
+            <vmethod name='add_to_classes' comment='records event in historical_entity.diplomacy in both directions if applicable'/>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>
@@ -536,26 +617,27 @@
     <class-type type-name='history_event_war_attacked_sitest' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='attacker_hf' ref-target='historical_figure'/>
-        <int32_t name='defender_hf' ref-target='historical_figure'/>
+        <int32_t name='attacker_general_hf' ref-target='historical_figure'/>
+        <int32_t name='defender_general_hf' ref-target='historical_figure'/>
     </class-type>
 
     <class-type type-name='history_event_war_destroyed_sitest' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_created_sitest' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
-    <enum-type type-name='death_type'>
+    <enum-type type-name='death_type' base-type='int16_t'> bay12: KillCauseType
+        <enum-item name='NONE' value='-1'/>
         <enum-item name='OLD_AGE'/>
         <enum-item name='HUNGER'/>
         <enum-item name='THIRST'/>
@@ -590,7 +672,7 @@
         <enum-item name='BEHEAD' comment='execution during worldgen'/>
         <enum-item name='CRUCIFY' comment='execution during worldgen'/>
         <enum-item name='BURY_ALIVE' comment='execution during worldgen'/>
-        <enum-item name='DROWN_ALT' comment='execution during worldgen'/>
+        <enum-item name='DROWN_BY' comment='execution during worldgen'/>
         <enum-item name='BURN_ALIVE' comment='execution during worldgen'/>
         <enum-item name='FEED_TO_BEASTS' comment='execution during worldgen'/>
         <enum-item name='HACK_TO_PIECES' comment='execution during worldgen'/>
@@ -616,28 +698,25 @@
         <int32_t name='slayer_hf' ref-target='historical_figure'/>
         <int32_t name='slayer_race' ref-target='creature_raw'/>
         <int32_t name='slayer_caste' ref-target='caste_raw' aux-value='$$.slayer_race'/>
-
-        <compound name='weapon' type-name='history_hit_item'/>
-
+        <compound name='weapon' type-name='history_hit_item'/> not actually a compound
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='region' ref-target='world_region'/>
-        <int32_t name='layer' ref-target='world_underground_region'/>
-
-        <enum base-type='int16_t' name='death_cause' type-name='death_type'/>
+        <int32_t name='subregion' ref-target='world_region'/>
+        <int32_t name='feature_layer' ref-target='world_underground_region'/>
+        <enum name='death_cause' type-name='death_type'/>
     </class-type>
 
     <class-type type-name='history_event_add_hf_entity_linkst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <enum base-type='int32_t' name='link_type' type-name='histfig_entity_link_type'/>
-        <int32_t name='position_id' comment='index into entity.positions.own'/>
+        <enum name='link_type' type-name='histfig_entity_link_type' base-type='int32_t'/>
+        <int32_t name='position_id' comment='index into entity.positions.own, or an occupation ID'/>
     </class-type>
 
     <class-type type-name='history_event_remove_hf_entity_linkst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <enum base-type='int32_t' name='link_type' type-name='histfig_entity_link_type'/>
-        <int32_t name='position_id' comment='index into entity.positions.own'/>
+        <enum name='link_type' type-name='histfig_entity_link_type' base-type='int32_t'/>
+        <int32_t name='position_id' comment='index into entity.positions.own, or an occupation ID'/>
     </class-type>
 
     <class-type type-name='history_event_first_contactst' inherits-from='history_event'>
@@ -648,7 +727,7 @@
 
     <class-type type-name='history_event_first_contact_failedst' inherits-from='history_event'>
         <int32_t name='contactor' ref-target='historical_entity'/>
-        <int32_t name='contacted' ref-target='historical_entity'/>
+        <int32_t name='rejector' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
@@ -656,33 +735,33 @@
         <int32_t name='source' ref-target='historical_entity'/>
         <int32_t name='destination' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <enum name='topic' type-name='meeting_topic' base-type='int16_t'/>
         <int32_t name='result' comment='range from -3 to +2'/>
     </class-type>
 
     <class-type type-name='history_event_topicagreement_rejectedst' inherits-from='history_event'>
-        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <enum name='topic' type-name='meeting_topic' base-type='int16_t'/>
         <int32_t name='source' ref-target='historical_entity'/>
         <int32_t name='destination' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_topicagreement_madest' inherits-from='history_event'>
-        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <enum name='topic' type-name='meeting_topic' base-type='int16_t'/>
         <int32_t name='source' ref-target='historical_entity'/>
         <int32_t name='destination' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_war_peace_acceptedst' inherits-from='history_event'>
-        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <enum name='topic' type-name='meeting_topic' base-type='int16_t'/>
         <int32_t name='source' ref-target='historical_entity'/>
         <int32_t name='destination' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_war_peace_rejectedst' inherits-from='history_event'>
-        <enum base-type='int16_t' type-name='meeting_topic' name='topic'/>
+        <enum name='topic' type-name='meeting_topic' base-type='int16_t'/>
         <int32_t name='source' ref-target='historical_entity'/>
         <int32_t name='destination' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
@@ -701,10 +780,18 @@
 
     <class-type type-name='history_event_merchantst' inherits-from='history_event'>
         <int32_t name='source' ref-target='historical_entity'/>
-        <int32_t name='destination' ref-target='historical_entity'/>
+        <int32_t name='destination' ref-target='historical_entity' comment='site government'/>
         <int32_t name='site' ref-target='world_site'/>
-        <df-flagarray name='flags2'/>
+        <df-flagarray name='flags2' index-enum='history_event_merchant_flags'/>
     </class-type>
+
+    <enum-type type-name='history_event_merchant_flags'> bay12: HistoryEventMerchantFlagType
+        <enum-item name='vanished' comment='opposite of communicate in caravan_state'/>
+        <enum-item name='hardship'/>
+        <enum-item name='seized'/>
+        <enum-item name='offended'/>
+        <enum-item name='missing_goods'/>
+    </enum-type>
 
     <class-type type-name='history_event_artifact_hiddenst' inherits-from='history_event'>
         <int32_t name='artifact' ref-target='artifact_record'/>
@@ -722,10 +809,12 @@
 
     <class-type type-name='history_event_artifact_createdst' inherits-from='history_event'>
         <int32_t name='artifact_id' ref-target='artifact_record'/>
-        <int32_t name='unit_id' ref-target='unit'/>
-        <int32_t name='hfid' ref-target='historical_figure'/>
+        <int32_t name='creator_unit_id' ref-target='unit' comment='the unit who created the artifact'/>
+        <int32_t name='creator_hfid' ref-target='historical_figure' comment='the figure who created the artifact'/>
         <int32_t name='site' ref-target='world_site'/>
-        <uint32_t name='flags2' comment='1 = was named, not created'/>
+        <bitfield name='flags2' base-type='uint32_t'> bay12: HISTORY_EVENT_ARTIFACT_CREATED_FLAG_*
+            <flag-bit name='name_only'/>
+        </bitfield>
     </class-type>
 
     <class-type type-name='history_event_artifact_lostst' inherits-from='history_event'>
@@ -747,105 +836,114 @@
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
+    <enum-type type-name='history_event_artifact_dropped_flags'> bay12: HistoryEventArtifactDroppedFlagType
+        <enum-item name='injury'/>
+    </enum-type>
+
     <class-type type-name='history_event_artifact_droppedst' inherits-from='history_event'>
         <int32_t name='artifact' ref-target='artifact_record'/>
         <int32_t name='unit' ref-target='unit'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
-        <df-flagarray name='flags2'/> 1=due to injury
+        <df-flagarray name='flags2' index-enum='history_event_artifact_dropped_flags'/>
     </class-type>
 
     <class-type type-name='history_event_reclaim_sitest' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_hf_destroyed_sitest' inherits-from='history_event'>
-        <int32_t name='histfig' ref-target='historical_figure'/>
-        <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='attacker_hf' ref-target='historical_figure'/>
+        <int32_t name='defender_civ' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_site_diedst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_site_abandonedst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_entity_createdst' inherits-from='history_event'>
-        <int32_t name='civ' ref-target='historical_entity'/>
+        <int32_t name='entity' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
     </class-type>
 
+    <enum-type type-name='entity_action_type' base-type='int32_t'> bay12: EntityActionType
+        <enum-item name='entity_primary_criminals'/>
+        <enum-item name='entity_relocate'/>
+    </enum-type>
+
     <class-type type-name='history_event_entity_actionst' inherits-from='history_event'>
-        <int32_t name='civ' ref-target='historical_entity'/>
+        <int32_t name='entity' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
-        <int32_t name='action'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
+        <enum name='action' type-name='entity_action_type'/>
     </class-type>
 
     <class-type type-name='history_event_entity_incorporatedst' inherits-from='history_event'>
-        <int32_t name='civ1' ref-target='historical_entity'/>
-        <int32_t name='civ2' ref-target='historical_entity'/>
+        <int32_t name='migrant_entity' ref-target='historical_entity'/>
+        <int32_t name='join_entity' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_created_buildingst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
     </class-type>
 
     <class-type type-name='history_event_replaced_buildingst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure_old'/>
-        <int32_t name='structure_new'/>
+        <int32_t name='old_structure' ref-target='abstract_building'/>
+        <int32_t name='new_structure' ref-target='abstract_building'/>
     </class-type>
 
     <class-type type-name='history_event_add_hf_site_linkst' inherits-from='history_event'>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <enum base-type='int32_t' name='type' type-name='histfig_site_link_type'/>
+        <enum name='type' type-name='histfig_site_link_type' base-type='int32_t'/>
     </class-type>
 
     <class-type type-name='history_event_remove_hf_site_linkst' inherits-from='history_event'>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <enum base-type='int32_t' name='type' type-name='histfig_site_link_type'/>
+        <enum name='type' type-name='histfig_site_link_type' base-type='int32_t'/>
     </class-type>
 
     <class-type type-name='history_event_add_hf_hf_linkst' inherits-from='history_event'>
-        <int32_t name='histfig1' ref-target='historical_figure'/>
-        <int32_t name='histfig2' ref-target='historical_figure'/>
-        <enum base-type='int32_t' name='type' type-name='histfig_hf_link_type'/>
+        <int32_t name='hf' ref-target='historical_figure'/>
+        <int32_t name='hf_target' ref-target='historical_figure'/>
+        <enum name='type' type-name='histfig_hf_link_type' base-type='int32_t'/>
     </class-type>
 
     <class-type type-name='history_event_remove_hf_hf_linkst' inherits-from='history_event'>
-        <int32_t name='histfig1' ref-target='historical_figure'/>
-        <int32_t name='histfig2' ref-target='historical_figure'/>
-        <enum base-type='int32_t' name='type' type-name='histfig_hf_link_type'/>
+        <int32_t name='hf' ref-target='historical_figure'/>
+        <int32_t name='hf_target' ref-target='historical_figure'/>
+        <enum name='type' type-name='histfig_hf_link_type' base-type='int32_t'/>
     </class-type>
 
     <class-type type-name='history_event_entity_razed_buildingst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
     </class-type>
 
 
@@ -853,53 +951,49 @@
         <int32_t name='maker' ref-target='historical_figure'/>
         <int32_t name='maker_entity' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
+        <enum name="skill_at_time" type-name='skill_rating'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_arch_designst' inherits-from='history_event_masterpiece_createdst'>
-        <int32_t/>
         <int16_t name='building_type'/>
         <int16_t name='building_subtype'/>
         <int32_t name='building_custom'/>
-        <int32_t/>
+        <int32_t name='building_id' ref-target='building'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_arch_constructst' inherits-from='history_event_masterpiece_createdst'>
-        <int32_t/>
         <int16_t name='building_type'/>
         <int16_t name='building_subtype'/>
         <int32_t name='building_custom'/>
-        <int32_t/>
+        <int32_t name='building_id' ref-target='building'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_itemst'
                 inherits-from='history_event_masterpiece_createdst'>
-        <enum base-type='int32_t' name='skill_used' type-name='job_skill'/>
-        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
+        <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
-        <int16_t name='mat_index'/>
+        <int16_t name='mat_index' comment='not int32'/>
         <int32_t name='item_id' ref-target='item'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_dye_itemst' inherits-from='history_event_masterpiece_createdst'>
-        <int32_t/>
-        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
+        <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
+        <int32_t name='item_id' ref-target='item'/>
         <int16_t name='dye_mat_type' ref-target='material' aux-value='$$.dye_mat_index'/>
         <int32_t name='dye_mat_index'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_item_improvementst' inherits-from='history_event_masterpiece_createdst'>
-        <int32_t/>
-        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
+        <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
-        <int32_t/>
-        <enum base-type='int16_t' name='improvement_type' type-name='improvement_type'/>
+        <int32_t name='item_id' ref-target='item'/>
+        <enum name='improvement_type' type-name='improvement_type' base-type='int16_t'/>
         <int32_t name='improvement_subtype'/>
         <int16_t name='imp_mat_type' ref-target='material' aux-value='$$.imp_mat_index'/>
         <int32_t name='imp_mat_index'/>
@@ -909,20 +1003,17 @@
 
     <class-type type-name='history_event_masterpiece_created_foodst'
                 inherits-from='history_event_masterpiece_createdst'>
-        <int32_t name='unk1'/>
         <int16_t name='item_subtype' refers-to='$global.world.raws.itemdefs.food[$]'/>
         <int32_t name='item_id' ref-target='item'/>
     </class-type>
 
     <class-type type-name='history_event_masterpiece_created_engravingst'
                 inherits-from='history_event_masterpiece_createdst'>
-        <enum base-type='int32_t' name="skill_rating" type-name='skill_rating'
-              comment='at the moment of creation'/>
         <int32_t name='art_id' ref-target='art_image_chunk'/>
         <int16_t name='art_subid' ref-target='art_image' aux-value='$$.art_id'/>
     </class-type>
 
-    <enum-type type-name='masterpiece_loss_type'>
+    <enum-type type-name='masterpiece_loss_type'> bay12: DestructionReason
         <enum-item name='MELT'/>
         <enum-item name='MAGMA'/>
         <enum-item name='FORTIFICATION'/>
@@ -932,16 +1023,21 @@
     </enum-type>
 
     <class-type type-name='history_event_masterpiece_lostst' inherits-from='history_event'>
-        <int32_t/>
+        <int32_t name='creation_event' ref-target='history_event'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
-        <enum base-type='int16_t' name="method" type-name='masterpiece_loss_type'/>
+        <enum name="method" type-name='masterpiece_loss_type' base-type='int16_t'/>
     </class-type>
+
+    <enum-type type-name='reason_type' base-type='int32_t'>
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='UNK0'/>
+    </enum-type>
 
     <class-type type-name='history_event_change_hf_statest' inherits-from='history_event'>
         <int32_t name='hfid' ref-target='historical_figure'/>
-        <int16_t name='state'/> wander, scout, hunt, settle, babysnatch, thief, flee
-        <int32_t name='substate'/> wander/fled
+        <enum name='state' type-name='whereabouts_type'/>
+        <enum name='reason' type-name='reason_type'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
@@ -950,8 +1046,8 @@
 
     <class-type type-name='history_event_change_hf_jobst' inherits-from='history_event'>
         <int32_t name='hfid' ref-target='historical_figure'/>
-        <enum base-type='int16_t' name='new_job' type-name='profession'/>
-        <enum base-type='int16_t' name='old_job' type-name='profession'/>
+        <enum name='new_job' type-name='profession'/>
+        <enum name='old_job' type-name='profession'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
@@ -963,22 +1059,22 @@
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
         <compound name='region_pos' type-name='coord2d'/>
-        <int32_t name='attacker_hf' ref-target='historical_figure'/>
-        <int32_t name='defender_hf' ref-target='historical_figure'/>
+        <int32_t name='attacker_general_hf' ref-target='historical_figure'/>
+        <int32_t name='defender_general_hf' ref-target='historical_figure'/>
     </class-type>
 
     <class-type type-name='history_event_war_plundered_sitest' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_war_site_new_leaderst' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
-        <int32_t name='attacker_newgroup' ref-target='historical_entity'/>
+        <int32_t name='new_site_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
         <stl-vector name='new_leaders' type-name='int32_t' ref-target='historical_figure'/>
     </class-type>
@@ -986,37 +1082,60 @@
     <class-type type-name='history_event_war_site_tribute_forcedst' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_war_site_taken_overst' inherits-from='history_event'>
         <int32_t name='attacker_civ' ref-target='historical_entity'/>
-        <int32_t name='attacker_newgroup' ref-target='historical_entity'/>
+        <int32_t name='new_site_civ' ref-target='historical_entity'/>
         <int32_t name='defender_civ' ref-target='historical_entity'/>
-        <int32_t name='defender_group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
     <class-type type-name='history_event_body_abusedst' inherits-from='history_event'>
-        <stl-vector name='bodies' type-name='int32_t' ref-target='historical_figure'/>
-        <int32_t/>
+        <stl-vector name='bodies' ref-target='historical_figure' type-name='int32_t'/>
+        <int32_t name='victim_entity' ref-target='historical_entity'/>
         <int32_t name='civ' ref-target='historical_entity'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
         <compound name='region_pos' type-name='coord2d'/>
-        <int16_t name='abuse_type'/> impaled, piled, flayed, hung, mutilated, animated
-        <compound name='props' is-union='true'>
-            <compound name='item'>
-                <enum base-type='int16_t' name='item_type' type-name='item_type'/>
+        <enum name='abuse_type' base-type='int16_t'> bay12: BodyAbuseMethodType
+            <enum-item name='Impaled'/>
+            <enum-item name='Piled'/>
+            <enum-item name='Flayed'/>
+            <enum-item name='Hung'/>
+            <enum-item name='Mutilated'/>
+            <enum-item name='Animated'/>
+        </enum>
+        <compound name='abuse_data' is-union='true'>
+            <compound name='Impaled'>
+                <enum name='item_type' type-name='item_type' base-type='int32_t' comment='always WEAPON?'/>
                 <int32_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
-                <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
+                <int32_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
                 <int32_t name='mat_index'/>
             </compound>
-            <int32_t name='structure'/>
-            <int32_t name='pile_type'/> grisly mound, grotesque pillar, gruesome sculpture
+            <compound name='Piled'>
+                <enum name='pile_type' base-type='int32_t'>
+                    <enum-item name='GrislyMound'/>
+                    <enum-item name='GrotesquePillar'/>
+                    <enum-item name='GruesomeSculpture'/>
+                </enum>
+            </compound>
+            <compound name='Flayed'>
+                <int32_t name='structure' ref-target='abstract_building'/>
+            </compound>
+            <compound name='Hung'>
+                <int32_t name='tree' ref-target='plant_raw'/>
+                <int32_t name='mat_type' ref-target='material' aux-value='$$.mat_index' comment='rope'/>
+                <int32_t name='mat_index' comment='rope'/>
+            </compound>
+            <compound name='Animated'>
+                <int32_t name='interaction' ref-target='interaction'/>
+            </compound>
         </compound>
     </class-type>
 
@@ -1030,7 +1149,7 @@
     </class-type>
 
     <class-type type-name='history_event_item_stolenst' inherits-from='history_event'>
-        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
+        <enum name='item_type' type-name='item_type' base-type='int16_t'/>
         <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
 
         <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
@@ -1040,19 +1159,18 @@
         <int32_t name='entity' ref-target='historical_entity'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
 
         <compound name='region_pos' type-name='coord2d'/>
-
-        <int32_t/>
+        <int32_t name='stash_site' ref-target='world_site' comment="location to which the thief brought the loot"/>
     </class-type>
 
     <class-type type-name='history_event_hf_razed_buildingst' inherits-from='history_event'>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
     </class-type>
 
     <class-type type-name='history_event_creature_devouredst' inherits-from='history_event'>
@@ -1066,20 +1184,28 @@
         <int32_t name='layer' ref-target='world_underground_region'/>
     </class-type>
 
+    <enum-type type-name='history_damage_type' base-type='int16_t'> bay12: HistDamageType
+        <enum-item name='BLUDGEON'/>
+        <enum-item name='SLASH'/>
+        <enum-item name='PIERCE'/>
+        <enum-item name='GORE'/>
+        <enum-item name='BURN'/>
+    </enum-type>
+
     <class-type type-name='history_event_hist_figure_woundedst' inherits-from='history_event'>
-        <int32_t name='victim' ref-target='historical_figure'/>
-        <int32_t name='attacker' ref-target='historical_figure'/>
+        <int32_t name='woundee' ref-target='historical_figure'/>
+        <int32_t name='wounder' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
-        <int32_t name='victim_race' ref-target='creature_raw'/>
-        <int16_t name='victim_caste' ref-target='caste_raw' aux-value='$$.victim_race'/>
+        <int32_t name='woundee_race' ref-target='creature_raw'/>
+        <int16_t name='woundee_caste' ref-target='caste_raw' aux-value='$$.woundee_race'/>
         <int16_t name='body_part'/>
-        <int16_t name='injury_type'/>
-        <int8_t name='part_lost'/>
+        <enum name='injury_type' type-name='history_damage_type'/>
+        <bool name='part_lost'/>
     </class-type>
 
-    <enum-type type-name='history_event_simple_battle_subtype'>
+    <enum-type type-name='history_event_simple_battle_subtype' base-type='int16_t'> bay12: SimpleBattleEventType
         <enum-item name='SCUFFLE'/>
         <enum-item name='ATTACK'/>
         <enum-item name='SURPRISE'/>
@@ -1093,21 +1219,21 @@
     </enum-type>
 
     <class-type type-name='history_event_hist_figure_simple_battle_eventst' inherits-from='history_event'>
-        <stl-vector name='side1' type-name='int32_t' ref-target='historical_figure'/>
-        <stl-vector name='side2' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='group1' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='group2' type-name='int32_t' ref-target='historical_figure'/>
 
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
 
-        <enum base-type='int16_t' name='subtype' type-name='history_event_simple_battle_subtype'/>
+        <enum name='subtype' type-name='history_event_simple_battle_subtype'/>
     </class-type>
 
     <class-type type-name='history_event_created_world_constructionst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='construction'/>
-        <int32_t name='construction_parent'/>
+        <int32_t name='master_construction'/>
         <int32_t name='site1' ref-target='world_site'/>
         <int32_t name='site2' ref-target='world_site'/>
     </class-type>
@@ -1121,23 +1247,26 @@
     </class-type>
 
     <class-type type-name='history_event_hist_figure_reach_summitst' inherits-from='history_event'>
-        <stl-vector name='figures' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='group' type-name='int32_t' ref-target='historical_figure'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
         <compound name='region_pos' type-name='coord2d'/>
     </class-type>
 
     <class-type type-name='history_event_hist_figure_travelst' inherits-from='history_event'>
-        <stl-vector name='figures' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='group' type-name='int32_t' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
-        <int32_t name='reason'/> journey, returned, escaped
+        <bitfield name='reason' base-type='uint32_t'> bay12: HISTORY_EVENT_HIST_FIGURE_TRAVEL_FLAG_*
+            <flag-bit name='is_return'/>
+            <flag-bit name='is_escape'/>
+        </bitfield>
         <compound name='region_pos' type-name='coord2d'/>
     </class-type>
 
     <class-type type-name='history_event_hist_figure_new_petst' inherits-from='history_event'>
-        <stl-vector name='figures' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='group' type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name='pets' type-name='int16_t' ref-target='creature_raw'/>
 
         <int32_t name='site' ref-target='world_site'/>
@@ -1149,25 +1278,33 @@
 
     <class-type type-name='history_event_assume_identityst' inherits-from='history_event'>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <int32_t name='identity' ref-target='assumed_identity'/>
+        <int32_t name='identity' ref-target='identity'/>
         <int32_t name='civ' ref-target='historical_entity'/>
     </class-type>
+
+    <enum-type type-name='position_creation_reason_type' base-type='int16_t'> bay12: EntityPositionCreationType
+        <enum-item name='force_of_argument'/>
+        <enum-item name='threat_of_violence'/>
+        <enum-item name='collaboration'/>
+        <enum-item name='wave_of_popular_support'/>
+        <enum-item name='as_a_matter_of_course'/>
+    </enum-type>
 
     <class-type type-name='history_event_create_entity_positionst' inherits-from='history_event'>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='civ' ref-target='historical_entity'/>
-        <int32_t name='group' ref-target='historical_entity'/>
+        <int32_t name='site_civ' ref-target='historical_entity'/>
         <int32_t name='position'/> historical_entity.position
-        <int16_t name='reason'/>
+        <enum name='reason' type-name='position_creation_reason_type'/>
     </class-type>
 
     <class-type type-name='history_event_change_creature_typest' inherits-from='history_event'>
-        <int32_t name='target' ref-target='historical_figure'/>
-        <int32_t name='attacker' ref-target='historical_figure'/>
-        <int32_t name='race_from' ref-target='creature_raw'/>
-        <int32_t name='caste_from' ref-target='caste_raw' aux-value='$$.race_from'/>
-        <int32_t name='race_to' ref-target='creature_raw'/>
-        <int32_t name='caste_to' ref-target='caste_raw' aux-value='$$.race_to'/>
+        <int32_t name='changee' ref-target='historical_figure'/>
+        <int32_t name='changer' ref-target='historical_figure'/>
+        <int32_t name='old_race' ref-target='creature_raw'/>
+        <int32_t name='old_caste' ref-target='caste_raw' aux-value='$$.race_from'/>
+        <int32_t name='new_race' ref-target='creature_raw'/>
+        <int32_t name='new_caste' ref-target='caste_raw' aux-value='$$.race_to'/>
     </class-type>
 
     <class-type type-name='history_event_hist_figure_revivedst' inherits-from='history_event'>
@@ -1175,8 +1312,10 @@
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
-        <enum base-type='int16_t' name='ghost_type' type-name='ghost_type'/>
-        <int32_t name='again'/>
+        <enum name='ghost_type' type-name='ghost_type'/>
+        <bitfield name='flags2' base-type='uint32_t'> bay12: HISTORY_EVENT_HIST_FIGURE_REVIVED_FLAG_*
+            <flag-bit name='again'/>
+        </bitfield>
     </class-type>
 
     <class-type type-name='history_event_hf_learns_secretst' inherits-from='history_event'>
@@ -1184,40 +1323,58 @@
         <int32_t name='teacher' ref-target='historical_figure'/>
         <int32_t name='artifact' ref-target='artifact_record'/>
         <int32_t name='interaction' ref-target='interaction'/>
-        <int32_t/>
+        <int32_t name='interaction_effect'/>
     </class-type>
+
+    <enum-type type-name='histfig_body_state' base-type='int8_t'> bay12: HistFigBodyStateType
+        <enum-item name='Active'/>
+        <enum-item name='BuriedAtSite'/>
+        <enum-item name='UnburiedAtBattlefield'/>
+        <enum-item name='UnburiedAtSubregion'/>
+        <enum-item name='UnburiedAtFeatureLayer'/>
+        <enum-item name='EntombedAtSite'/>
+        <enum-item name='UnburiedAtSite'/>
+    </enum-type>
 
     <class-type type-name='history_event_change_hf_body_statest' inherits-from='history_event'>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <int32_t name='action'/>
+        <enum name='body_state' type-name='histfig_body_state'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
         <compound name='region_pos' type-name='coord2d'/>
     </class-type>
 
     <class-type type-name='history_event_hf_act_on_buildingst' inherits-from='history_event'>
-        <int32_t name='action'/>
+        <enum name='action' base-type='int32_t'> bay12: HFBuildingActionType
+            <enum-item name='Profane'/>
+            <enum-item name='Disturb'/>
+        </enum>
         <int32_t name='histfig' ref-target='historical_figure'/>
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='structure'/>
+        <int32_t name='structure' ref-target='abstract_building'/>
     </class-type>
 
     <class-type type-name='history_event_hf_does_interactionst' inherits-from='history_event'>
-        <int32_t name='attacker' ref-target='historical_figure'/>
+        <int32_t name='doer' ref-target='historical_figure'/>
         <int32_t name='target' ref-target='historical_figure'/>
         <int32_t name='interaction' ref-target='interaction'/>
-        <int32_t/>
+        <int32_t name='source' ref-target='interaction_source' aux-value='$$.interaction'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
     </class-type>
 
+    <enum-type type-name='confrontation_reason_type' base-type='int32_t'> bay12: ConfrontationReasonType
+        <enum-item name='AGELESS'/>
+        <enum-item name='MURDER'/>
+    </enum-type>
+
     <class-type type-name='history_event_hf_confrontedst' inherits-from='history_event'>
         <int32_t name='target' ref-target='historical_figure'/>
         <int32_t name='accuser' ref-target='historical_figure'/>
-        <stl-vector name='reasons' type-name='int32_t'/> murder, not aging
+        <stl-vector name='reasons' type-name='confrontation_reason_type'/>
         <int32_t name='site' ref-target='world_site'/>
         <int32_t name='region' ref-target='world_region'/>
         <int32_t name='layer' ref-target='world_underground_region'/>
@@ -1227,13 +1384,19 @@
     <class-type type-name='history_event_entity_lawst' inherits-from='history_event'>
         <int32_t name='civ' ref-target='historical_entity'/>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <int32_t name='enacted'/>
-        <int32_t name='repealed'/>
+        <bitfield name='add_flags' base-type='uint32_t'> bay12: ENTITY_LAW_FLAG_*
+            <flag-bit name='harsh'/>
+            <flag-bit name='hostile_occupation'/>
+        </bitfield>
+        <bitfield name='remove_flags' base-type='uint32_t'> bay12: ENTITY_LAW_FLAG_*
+            <flag-bit name='harsh'/>
+            <flag-bit name='hostile_occupation'/>
+        </bitfield>
     </class-type>
 
     <class-type type-name='history_event_hf_gains_secret_goalst' inherits-from='history_event'>
         <int32_t name='histfig' ref-target='historical_figure'/>
-        <int32_t name='goal'/>
+        <enum name='goal' type-name='goal_type'/>
     </class-type>
 
     <class-type type-name='history_event_artifact_storedst' inherits-from='history_event'>
@@ -1243,7 +1406,7 @@
         <int32_t name='site' ref-target='world_site'/>
     </class-type>
 
-    <enum-type type-name='history_event_collection_type'>
+    <enum-type type-name='history_event_collection_type' base-type='int16_t'> bay12: HistoryEventCollectionType
         <enum-item name='WAR'/>
         <enum-item name='BATTLE'/>
         <enum-item name='DUEL'/>
@@ -1262,17 +1425,17 @@
         <int32_t name='end_year'/>
         <int32_t name='start_seconds'/>
         <int32_t name='end_seconds'/>
-        <df-flagarray name='flags'/>
+        <df-flagarray name='flags' comment='none actually used'/>
         <int32_t name='id'/>
         <virtual-methods>
             <vmethod ret-type='history_event_collection_type' name='getType'/>
             <vmethod name='generate_xml'>
-                <pointer/>
-                <pointer/>
+                <pointer type-name='stl-fstream'/>
+                <int32_t name='indent'/>
             </vmethod>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod name='categorize'/>
@@ -1281,37 +1444,53 @@
             <vmethod name='getName'><pointer name='string' type-name='stl-string'/></vmethod>
             <vmethod name='getRegionCoords'><pointer name='x' type-name='int16_t'/><pointer name='y' type-name='int16_t'/></vmethod>
             <vmethod name='getParent' ret-type='int32_t'/>
-            <vmethod ret-type='int32_t'/>
+            <vmethod name='getEraImportance' ret-type='int32_t'/>
 
             -- 10
 
-            <vmethod name='isBetweenEntities' ret-type='int32_t'><int32_t name='defender_civ'/><int32_t name='attacker_civ'/></vmethod>
+            <vmethod name='getDiplomacyValue' ret-type='int32_t'><int32_t name='civ'/><int32_t name='target'/></vmethod>
             <vmethod name='updateEndTime'/>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>
 
+    <enum-type type-name='diplomatic_factor_type' base-type='int16_t'> bay12: DiplomaticFactorType
+        <enum-item name='GODLESS'/>
+        <enum-item name='RELIGION_OPPOSED_TO_RELIGION_SPHERE'/>
+        <enum-item name='RELIGION_OPPOSED_TO_LEADER_MPP_SPHERE'/>
+        <enum-item name='MPP_OPPOSED_TO_RELIGION_SPHERE'/>
+        <enum-item name='MPP_OPPOSED_TO_LEADER_MPP_SPHERE'/>
+        <enum-item name='HISTORICAL_EVENT'/>
+        <enum-item name='HISTORICAL_COLLECTION'/>
+        <enum-item name='ETHIC'/>
+        <enum-item name='CANNOT_COMMUNICATE'/>
+    </enum-type>
+
+    <struct-type type-name='diplomatic_evaluationst'>
+        <stl-vector name='personal_type' type-name='diplomatic_factor_type'/>
+        <stl-vector name='personal_hf' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='personal_idx1' type-name='int32_t' comment="varies based on factor"/>
+        <stl-vector name='personal_idx2' type-name='int32_t' comment="varies based on factor"/>
+        <stl-vector name='personal_value' type-name='int32_t'/>
+        <int32_t name='total_personal'/>
+
+        <stl-vector name='general_type' type-name='diplomatic_factor_type'/>
+        <stl-vector name='general_idx1' type-name='int32_t' comment="varies based on factor"/>
+        <stl-vector name='general_idx2' type-name='int32_t' comment="varies based on factor"/>
+        <stl-vector name='general_value' type-name='int32_t'/>
+        <int32_t name='total_general'/>
+
+        <stl-vector name='historical_type' type-name='diplomatic_factor_type'/>
+        <stl-vector name='historical_id_idx' ref-target='history_event' type-name='int32_t'/>
+        <stl-vector name='historical_value' type-name='int32_t'/>
+        <int32_t name='total_historical'/>
+    </struct-type>
+
     <class-type type-name='history_event_collection_warst' inherits-from='history_event_collection'>
         <compound type-name='language_name' name='name'/>
         <stl-vector name='attacker_civ' type-name='int32_t' ref-target='historical_entity'/>
         <stl-vector name='defender_civ' type-name='int32_t' ref-target='historical_entity'/>
-        <compound name='unk'>
-            <stl-vector type-name='int16_t'/>
-            <stl-vector type-name='int32_t'/>
-            <stl-vector type-name='int32_t'/>
-            <stl-vector type-name='int32_t'/>
-            <stl-vector type-name='int32_t'/>
-            <int32_t/>
-            <stl-vector name='ethics_unk1' type-name='int16_t'/>
-            <stl-vector name='disputed_ethics' type-name='ethic_type'/>
-            <stl-vector name='ethics_unk3' type-name='int32_t'/>
-            <stl-vector name='dispute_severities' type-name='int32_t'/>
-            <int32_t name='worst_severity'/>
-            <stl-vector type-name='int16_t'/>
-            <stl-vector type-name='int32_t'/>
-            <stl-vector type-name='int32_t'/>
-            <int32_t/>
-        </compound>
+        <compound name='dipeval' type-name='diplomatic_evaluationst'/>
     </class-type>
 
     <class-type type-name='history_event_collection_battlest' inherits-from='history_event_collection'>
@@ -1326,21 +1505,23 @@
         <stl-vector name='defender_civ' type-name='int32_t' ref-target='historical_entity'/>
         <stl-vector name='attacker_hf' type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name='defender_hf' type-name='int32_t' ref-target='historical_figure'/>
-        <stl-vector name='noncombat_hf' type-name='int32_t' ref-target='historical_figure'/>
+        <stl-vector name='noncombat_hf' type-name='int32_t' ref-target='historical_figure' comment="saw being beheaded, but that's only one checked"/>
 
-        <stl-vector name='attacker_squad_entity_pop' type-name='int32_t'/>
+        <stl-vector name='attacker_squad_entity_pop' type-name='int32_t' ref-target='entity_population'/>
         <stl-vector name='attacker_squad_counts' type-name='int32_t'/>
         <stl-vector name='attacker_squad_deaths' type-name='int32_t'/>
         <stl-vector name='attacker_squad_races' type-name='int32_t' ref-target='creature_raw'/>
         <stl-vector name='attacker_squad_sites' type-name='int32_t' ref-target='world_site'/>
 
-        <stl-vector name='defender_squad_entity_pops' type-name='int32_t'/>
+        <stl-vector name='defender_squad_entity_pops' type-name='int32_t' ref-target='entity_population'/>
         <stl-vector name='defender_squad_counts' type-name='int32_t'/>
         <stl-vector name='defender_squad_deaths' type-name='int32_t'/>
         <stl-vector name='defender_squad_races' type-name='int32_t' ref-target='creature_raw'/>
         <stl-vector name='defender_squad_sites' type-name='int32_t' ref-target='world_site'/>
-
-        <int16_t name='outcome' comment='0 = attacker won, 1 = defender won'/>
+        <enum name='outcome' base-type='int16_t'> bay12: BattleOutcomeType
+            <enum-item name='ATTACKER_WON'/>
+            <enum-item name='DEFENDER_WON'/>
+        </enum>
     </class-type>
 
     <class-type type-name='history_event_collection_duelst' inherits-from='history_event_collection'>
@@ -1353,7 +1534,7 @@
         <int32_t name='attacker_hf' ref-target='historical_figure'/>
         <int32_t name='defender_hf' ref-target='historical_figure'/>
         <int32_t name='ordinal'/>
-        <int8_t/>
+        <int8_t name='attacker_won'/>
     </class-type>
 
     <class-type type-name='history_event_collection_site_conqueredst' inherits-from='history_event_collection'>
@@ -1362,7 +1543,7 @@
 
         <stl-vector name='attacker_civ' type-name='int32_t' ref-target='historical_entity'/>
         <stl-vector name='defender_civ' type-name='int32_t' ref-target='historical_entity'/>
-        <int16_t comment='uninitialized'/>
+        <enum name='main_event_type' type-name='history_event_type'/>
         <int32_t name='ordinal'/>
     </class-type>
 
@@ -1378,7 +1559,7 @@
 
         <stl-vector name='snatcher_hf' type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name='victim_hf' type-name='int32_t' ref-target='historical_figure'/>
-        <stl-vector type-name='int32_t'/>
+        <stl-vector name='attempted_victim_hf' type-name='int32_t' ref-target='historical_figure'/>
         <int32_t name='ordinal'/>
     </class-type>
 
@@ -1393,20 +1574,21 @@
         <int32_t name='victim_civ' ref-target='historical_entity'/>
 
         <stl-vector name='thief_hf' type-name='int32_t' ref-target='historical_figure'/>
+
         <stl-vector name='stolen_item_types'><enum base-type='int16_t' type-name='item_type'/></stl-vector>
         <stl-vector name='stolen_item_subtypes'><int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.stolen_item_types[$$._key] $)'/></stl-vector>
         <stl-vector name='stolen_mat_types'><int16_t ref-target='material' aux-value='$$._parent.stolen_mat_indices[$._key]'/></stl-vector>
         <stl-vector name='stolen_mat_indices' type-name='int32_t'/>
-        <stl-vector name='stolen_item_ids' ref-target='item'/>
+        <stl-vector name='stolen_item_ids' type-name='int32_t' ref-target='item'/>
+        <stl-vector name='stolen_item_civ' type-name='int32_t' ref-target='historical_entity'/>
 
-        <stl-vector type-name='int32_t'/> most likely the same format as above
-        <stl-vector type-name='int16_t'/>
-        <stl-vector type-name='int16_t'/>
-        <stl-vector type-name='int16_t'/>
-        <stl-vector type-name='int32_t'/>
-        <stl-vector type-name='int32_t'/>
+        <stl-vector name='attempted_stolen_item_types'><enum base-type='int16_t' type-name='item_type'/></stl-vector>
+        <stl-vector name='attempted_stolen_item_subtypes'><int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent._parent.stolen_item_types[$$._key] $)'/></stl-vector>
+        <stl-vector name='attempted_stolen_mat_types'><int16_t ref-target='material' aux-value='$$._parent.stolen_mat_indices[$._key]'/></stl-vector>
+        <stl-vector name='attempted_stolen_mat_indices' type-name='int32_t'/>
+        <stl-vector name='attempted_stolen_item_ids' type-name='int32_t' ref-target='item'/>
+        <stl-vector name='attempted_stolen_item_civ' type-name='int32_t' ref-target='historical_entity'/>
 
-        <stl-vector type-name='int32_t'/>
         <int32_t name='ordinal'/>
     </class-type>
 
@@ -1427,7 +1609,7 @@
         <int32_t name='ordinal'/>
     </class-type>
 
-    <enum-type type-name='era_type' base-type='int16_t'>
+    <enum-type type-name='era_type' base-type='int16_t'> bay12: EraType
         <enum-item name='ThreePowers'/>
         <enum-item name='TwoPowers'/>
         <enum-item name='OnePower'/>
@@ -1443,65 +1625,63 @@
         <enum-item name='Emptiness'/>
     </enum-type>
 
-    <struct-type type-name='history_era'>
+    <struct-type type-name='history_era' original-name='erast'>
         <int32_t name='year'/>
-        <compound name='title'>
+        <compound name='title'> bay12: era_infost
             <enum type-name='era_type' name='type'/>
-            <int32_t name='histfig_1' ref-target='historical_figure'/>
-            <int32_t name='histfig_2' ref-target='historical_figure'/>
+            <int32_t name='histfig_1' ref-target='historical_figure' comment='or race'/>
+            <int32_t name='histfig_2' ref-target='historical_figure' comment='or race'/>
             <int32_t name='ordinal'/>
             <stl-string name='name'/>
             <int32_t name='percent' comment='either percentage of single race or percentage of mundane'/>
         </compound>
-        <compound name='details'>
+        <compound name='details'> bay12: era_determinerst
             <int32_t name='living_powers'/>
             <int32_t name='living_megabeasts'/>
             <int32_t name='living_semimegabeasts'/>
-            <int32_t name='power_hf1' ref-target='historical_figure'/>
-            <int32_t name='power_hf2' ref-target='historical_figure'/>
-            <int32_t name='power_hf3' ref-target='historical_figure'/>
+            <static-array name='power_hf' count='3' type-name='int32_t' ref-target='historical_figure'/>
             <stl-vector name='civilized_races' type-name='int32_t' index-refers-to='(find-creature $)'/>
             <int32_t name='civilized_total'/>
             <int32_t name='civilized_mundane'/>
         </compound>
     </struct-type>
 
-    <struct-type type-name='world_history'>
+    <struct-type type-name='world_history' original-name='historyst'>
         dtor 8532fa0
 
         <stl-vector name='events' pointer-type='history_event'/>
-        <stl-vector name='events2' pointer-type='history_event'/>
+        <stl-vector name='events_death' pointer-type='history_event'/>
 
         <stl-vector name='figures' pointer-type='historical_figure'/>
 
         <compound name='event_collections'>
             <stl-vector name='all' pointer-type='history_event_collection'/>
-            <static-array name='other' count='8'>
+            <static-array name='other' count='8' index-enum='history_event_collection_type'>
                 <stl-vector pointer-type='history_event_collection'/>
             </static-array>
         </compound>
 
         <stl-vector name='eras' pointer-type='history_era'/>
-        <stl-vector name='unk1' type-name='int32_t'/>
-        <stl-vector name='unk2' type-name='int16_t'/>
+        <stl-vector name='discovered_art_image_id' type-name='int32_t' ref-target='art_image_chunk'/>
+        <stl-vector name='discovered_art_image_subid' type-name='int16_t' ref-target='art_image' aux-value='$$.discovered_art_image_id[$._key]'/>
 
-        <int32_t/>
+        <int32_t name='total_art'/> some value during worldgen, and at the end equals to the number of entities plus that value
         <int32_t name='total_powers' comment='also includes megabeasts'/>
         <int32_t name='total_megabeasts'/>
         <int32_t name='total_semimegabeasts'/>
-        <stl-vector/>
-        <stl-vector/>
-        <stl-vector/>
-        <stl-vector/>
-        <stl-vector/>
-        <stl-vector/>
-        <bool/>
-        <stl-vector/>
+        <stl-vector name='secret_events' type-name='int32_t' ref-target='history_event'/>
+        <stl-vector name='live_megabeasts' pointer-type='historical_figure'/>
+        <stl-vector name='live_semimegabeasts' pointer-type='historical_figure'/>
+        <stl-vector name='hf_allbeasts' pointer-type='historical_figure' comment='megabeasts AND semimegabeasts'/>
+        <stl-vector name='hf_beast_actor' pointer-type='historical_figure' comment='creatures that have gone on rampages'/>
         <stl-vector comment='v0.34.01'/>
         <stl-vector comment='v0.34.01'/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <stl-vector name='deleted_hfid' type-name='int32_t'/>
+        <bool name='do_not_remove_from_vector'/>
+        <stl-vector name='active_event_collections' pointer-type='history_event_collection'/>
+        <bool name='hf_temp_var_clear'/>
+        <int32_t name='hf_temp_var_start'/>
+        <int32_t name='hf_temp_var_last_advance'/>
     </struct-type>
 </data-definition>
 

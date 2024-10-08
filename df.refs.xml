@@ -62,9 +62,9 @@
 
     <class-type type-name='general_ref' original-name='general_refst'>
         <virtual-methods>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod ret-type='general_ref_type' name='getType'/>
@@ -92,22 +92,22 @@
             <vmethod name='setID'> <int32_t/> </vmethod>
             <vmethod ret-type='int32_t' name='getID'/>
             <vmethod name='setLocation'>
-                <int32_t/>
-                <int32_t/>
-                <int32_t/>
+                <int32_t name='x'/>
+                <int32_t name='y'/>
+                <int32_t name='z'/>
             </vmethod>
             <vmethod name='getLocation'>
-                <pointer type-name='int32_t'/>
-                <pointer type-name='int32_t'/>
-                <pointer type-name='int32_t'/>
+                <pointer name='x' type-name='int32_t'/>
+                <pointer name='y' type-name='int32_t'/>
+                <pointer name='z' type-name='int32_t'/>
             </vmethod>
             <vmethod is-destructor='true'/>
-            <vmethod name='clone'>
+            <vmethod name='clone' comment='bay12: copy'>
                 <ret-type><pointer type-name='general_ref'/></ret-type>
             </vmethod>
-            <vmethod>
-                <int32_t/>
-                <pointer type-name='stl-string'/>
+            <vmethod name='generate_title'>
+                <int32_t name='writing_form'/>
+                <pointer name='title' type-name='stl-string'/>
             </vmethod>
             <vmethod name='getSecretName' comment='for interactions'>
                 <pointer name='str' type-name='stl-string'/>
@@ -145,15 +145,9 @@
 
     <class-type type-name='general_ref_mapsquare' inherits-from='general_ref'
                 original-name='general_ref_mapsquarest'>
-        <enum base-type='int16_t' name='tiletype' type-name='tiletype'/>
+        <enum base-type='uint16_t' name='tiletype' type-name='tiletype'/>
         <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name="mat_index" init-value='-1'/>
-    </class-type>
-
-    <class-type type-name='general_ref_entity_art_image' inherits-from='general_ref'
-                original-name='general_ref_entity_art_imagest'>
-        <int32_t name='entity_id' ref-target='historical_entity'/>
-        <int32_t name='index' comment='lookup in entity.resources.art_image_*'/>
     </class-type>
 
     <class-type type-name='general_ref_projectile' inherits-from='general_ref'
@@ -171,9 +165,20 @@
         <int32_t name='building_id' ref-target='building'/>
     </class-type>
 
+    <class-type type-name='general_ref_building_well_tag' inherits-from='general_ref_building'
+                original-name='general_ref_building_well_tagst'>
+        <uint8_t name='direction'/>
+    </class-type>
+
     <class-type type-name='general_ref_entity' inherits-from='general_ref'
                 original-name='general_ref_entityst'>
         <int32_t name='entity_id' ref-target='historical_entity'/>
+    </class-type>
+
+    <class-type type-name='general_ref_entity_art_image' inherits-from='general_ref'
+                original-name='general_ref_entity_art_imagest'>
+        <int32_t name='entity_id' ref-target='historical_entity'/>
+        <int32_t name='index' comment='lookup in entity.resources.art_image_*'/>
     </class-type>
 
     <class-type type-name='general_ref_locationst' inherits-from='general_ref'>
@@ -272,10 +277,6 @@
     <class-type type-name='general_ref_building_chainst' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_cagedst' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_holderst' inherits-from='general_ref_building'/>
-    <class-type type-name='general_ref_building_well_tag' inherits-from='general_ref_building'
-                original-name='general_ref_building_well_tagst'>
-        <int8_t name='direction'/>
-    </class-type>
     <class-type type-name='general_ref_building_use_target_1st' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_use_target_2st' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_destinationst' inherits-from='general_ref_building'/>
@@ -284,9 +285,10 @@
     <class-type type-name='general_ref_entity_offeredst' inherits-from='general_ref_entity'/>
     <class-type type-name='general_ref_entity_itemownerst' inherits-from='general_ref_entity'/>
 
-    <enum-type type-name='specific_ref_type'>
-        <enum-item/>
-        <enum-item name='UNIT_INVENTORY'/>
+    <enum-type type-name='specific_ref_type' base-type='int16_t'> bay12: ReferenceType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='BUILDING'/>
+        <enum-item name='UNIT'/>
         <enum-item name='JOB'/>
         <enum-item name='BUILDING_PARTY'/>
         <enum-item name='ACTIVITY'/>
@@ -317,32 +319,35 @@
 
         <enum-item name='ART_IMAGE'/>
         <enum-item name='CREATURE_DEF'/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='ENTITY_ART_IMAGE' comment='unused?'/>
+        <enum-item name='ABSTRACT_BUILDING'/>
         <enum-item name='ENTITY_POPULATION'/>
         <enum-item name='BREED'/>
     </enum-type>
 
-    <struct-type type-name='specific_ref'>
+    <struct-type type-name='specific_ref' original-name='referencest'>
         <enum name='type' base-type='int32_t' type-name='specific_ref_type'/>
 
-        <compound is-union='true'>
-            <pointer name='object'/>
+        <compound is-union='true' name='data'>
+            <pointer name='object' comment='raw pointer'/>
             <pointer name='unit' type-name='unit'/>
-            <pointer name='activity' type-name='activity_info'/>
+            <pointer name='party' type-name='party_info'/>
             <pointer name='pet' type-name='pet_info'/>
+            <pointer name='activity' type-name='activity_info'/>
             <pointer name='screen' type-name='viewscreen'/>
-            <pointer name='vermin' type-name='vermin'/>
             <pointer name='effect' type-name='effect_info'/>
+            <pointer name='vermin' type-name='vermin'/>
             <pointer name='job' type-name='job'/>
+            <pointer name='histfig' type-name='historical_figure'/>
+            <pointer name='entity' type-name='historical_entity'/>
         </compound>
-
         <compound is-union='true' name='arg2'>
+            <pointer name='object' comment='raw pointer'/>
             <pointer name='wrestle' type-name='unit_item_wrestle'/>
         </compound>
     </struct-type>
 
-    <enum-type type-name='histfig_entity_link_type'>
+    <enum-type type-name='histfig_entity_link_type' base-type='int16_t'> bay12: HistFigEntityLinkType
         <enum-item name='MEMBER'/>
         <enum-item name='FORMER_MEMBER'/>
         <enum-item name='MERCENARY'/>
@@ -365,9 +370,9 @@
         <virtual-methods>
             <vmethod ret-type='histfig_entity_link_type' name='getType'/>
             <vmethod is-destructor='true'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod ret-type='int32_t' name='getPosition'/>
@@ -391,8 +396,7 @@
     <class-type type-name='histfig_entity_link_enemyst' inherits-from='histfig_entity_link'/>
     <class-type type-name='histfig_entity_link_criminalst' inherits-from='histfig_entity_link'/>
     <class-type type-name='histfig_entity_link_positionst' inherits-from='histfig_entity_link'>
-        <int32_t name='assignment_id'
-                 refers-to='(find-by-id $$._global.entity_id.ref-target.positions.assignments $id $)'/>
+        <int32_t name='assignment_id'/>
         <int32_t name='start_year'/>
     </class-type>
     <class-type type-name='histfig_entity_link_herost' inherits-from='histfig_entity_link'/>
@@ -403,7 +407,7 @@
         <int32_t name='end_year'/>
     </class-type>
 
-    <enum-type type-name='histfig_site_link_type'>
+    <enum-type type-name='histfig_site_link_type' base-type='int16_t'> bay12: HistFigSiteLinkType
         <enum-item name='SHOPKEEPER'/>
         <enum-item name='SEAT_OF_POWER'/>
         <enum-item name='HANGOUT'/>
@@ -420,9 +424,9 @@
         <virtual-methods>
             <vmethod ret-type='histfig_site_link_type' name='getType'/>
             <vmethod is-destructor='true'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod comment='generate_xml'>
@@ -440,7 +444,7 @@
     <class-type type-name='histfig_site_link_lairst' inherits-from='histfig_site_link'/>
     <class-type type-name='histfig_site_link_home_site_realization_sulst' inherits-from='histfig_site_link'/>
 
-    <enum-type type-name='histfig_hf_link_type'>
+    <enum-type type-name='histfig_hf_link_type' base-type='int16_t'> bay12: HistFigHfLinkType
         <enum-item name='MOTHER'/>
         <enum-item name='FATHER'/>
         <enum-item name='SPOUSE'/>
@@ -460,9 +464,9 @@
         <virtual-methods>
             <vmethod ret-type='histfig_hf_link_type' name='getType'/>
             <vmethod is-destructor='true'/>
-            <vmethod name='write_file'> <pointer comment='file_compressorst'/> </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod name='read_file'>
-                <pointer comment='file_compressorst'/>
+                <pointer name='file' type-name='file_compressorst'/>
                 <int32_t name='loadversion'/>
             </vmethod>
             <vmethod comment='generate_xml'>
@@ -483,18 +487,18 @@
     <class-type type-name='histfig_hf_link_masterst' inherits-from='histfig_hf_link'/>
     <class-type type-name='histfig_hf_link_apprenticest' inherits-from='histfig_hf_link'/>
 
-    <enum-type type-name='entity_entity_link_type'>
+    <enum-type type-name='entity_entity_link_type'> bay12: EntityAssociation, no base type
         <enum-item name='PARENT'/>
         <enum-item name='CHILD'/>
     </enum-type>
 
-    <struct-type type-name='entity_entity_link'>
+    <struct-type type-name='entity_entity_link' original-name='entity_associationst'>
         <enum base-type='int16_t' type-name='entity_entity_link_type' name='type'/>
         <int32_t name='target' ref-target='historical_entity'/>
         <int16_t name='strength'/>
     </struct-type>
 
-    <enum-type type-name='entity_site_link_type'>
+    <enum-type type-name='entity_site_link_type' base-type='int32_t'> bay12: EntitySiteProfileLocationType
         <enum-item name='unk_0'/>
         <enum-item name='unk_1'/>
         <enum-item name='unk_2'/>
@@ -504,9 +508,9 @@
         <enum-item name='unk_6'/>
     </enum-type>
 
-    <struct-type type-name='entity_site_link'>
+    <struct-type type-name='entity_site_link' original-name='entity_site_profilest'>
         <enum base-type='int16_t' type-name='entity_site_link_type' name='type'/>
-        <int32_t name='site' ref-target='world_site'/>
+        <int32_t name='target' ref-target='world_site'/>
         <int32_t comment='probably the same as sub_id from histfig_site_link'/>
         <int16_t name='strength'/>
     </struct-type>

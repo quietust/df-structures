@@ -36,7 +36,7 @@
             <item-attr name='generic_building' value='Workshop'/>
             <item-attr name='workshop' value='Millstone'/>
         </enum-item>
-        <enum-item name='ANY_HOSPITAL_STORAGE'>
+        <enum-item name='ANY_HOSPITAL_STORAGE' comment='chestcheck'>
             -- speculated
             <item-attr name='generic_building' value='Box'/>
             <item-attr name='generic_building' value='Cabinet'/>
