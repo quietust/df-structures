@@ -559,7 +559,7 @@
         <int32_t name='hostility_level' comment='bay12: brazenness'/>
         <int32_t name='siege_tier'/>
 
-        <stl-vector name='unk50' type-name='pointer' comment='empty'/>
+        <stl-vector name='army' pointer-type='moving_party' comment='empty'/>
 
         <stl-vector name='hist_figures' pointer-type='historical_figure'/>
         <stl-vector name='nemesis' pointer-type='nemesis_record'/>
@@ -667,7 +667,7 @@
 
         <stl-vector name='burial_request' since='v0.34.01'>
             <pointer> bay12: entity_burial_requestst
-                <int32_t name='civ' ref-target='historical_entity'/>
+                <int32_t name='hfid' ref-target='historical_figure'/>
                 <stl-vector name='prof' type-name='int32_t' comment='profession?'/>
                 <enum name='status' base-type='int32_t'> bay12: EntityBurialRequestStatusType
                     <enum-item name='NEW'/>

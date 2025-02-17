@@ -420,13 +420,14 @@
 
         <virtual-methods>
             <vmethod name='parseRaws'>
-                <pointer/>
-                <pointer/>
-                <pointer/>
+                <pointer type-name='stl-string' name='str'/>
+                <pointer type-name='stl-string' name='maintok'/>
+                <int32_t name='pos'/>
+                <bool name='can_use_internal_tokens'/>
             </vmethod>
             <vmethod name='categorize' comment='add to world.raws.itemdefs.whatever'/>
             <vmethod name='finalize' comment='calculate stuff like base value'/>
-            <vmethod/>
+            <vmethod name='init_material_information'/>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>

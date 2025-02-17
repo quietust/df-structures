@@ -681,21 +681,21 @@
         <int32_t name='wait_period'/>
     </struct-type>
 
+    <struct-type type-name='body_actionst'>
+        <enum base-type='int32_t' name='type'> bay12: BodyActionType
+            <enum-item name='RETRACT_INTO_BP'/>
+            <enum-item name='CAN_DO_INTERACTION'/>
+            <enum-item name='ROOT_AROUND'/>
+        </enum>
+        <compound name='interaction' type-name='interaction_informationst'/>
+    </struct-type>
+
     <struct-type type-name='caste_body_info' original-name='bodyst'>
         <stl-vector name='body_parts' pointer-type='body_part_raw'/>
 
         <stl-vector name='attacks' pointer-type='caste_attack'/>
 
-        <stl-vector name='interactions' comment='v0.34.01'>
-            <pointer> bay12: body_actionst
-                <enum base-type='int32_t' name='type'> bay12: BodyActionType
-                    <enum-item name='RETRACT_INTO_BP'/>
-                    <enum-item name='CAN_DO_INTERACTION'/>
-                    <enum-item name='ROOT_AROUND'/>
-                </enum>
-                <compound name='interaction' type-name='interaction_informationst'/>
-            </pointer>
-        </stl-vector>
+        <stl-vector name='interactions' comment='v0.34.01' pointer-type='body_actionst'/>
 
         <stl-vector name='extra_butcher_objects' comment='v0.34.01'>
             <pointer> bay12: extra_butcher_objectst
@@ -753,9 +753,11 @@
         <int32_t name='fraction_fat'/>
         <int32_t name='fraction_muscle'/>
 
-        <pointer name='clothing_items' comment='v0.34.06'>
-            <stl-vector pointer-type='caste_clothing_item'/>
-        </pointer>
+        <pointer name='clothing_items' comment='v0.34.06' type-name='clothing_needsst'/>
+    </struct-type>
+
+    <struct-type type-name='clothing_needsst'>
+        <stl-vector pointer-type='caste_clothing_item' name='bp'/>
     </struct-type>
 
     <enum-type type-name='lair_characteristic_type' base-type='int16_t'> bay12: LairCharacteristicType
@@ -872,7 +874,9 @@
             <int32_t name='grazer'/>
             <int32_t name='petvalue_divisor'/>
             <int32_t name='prone_to_rage'/>
-            <static-array type-name='int32_t' name='unused_30' count='29'/>
+            <int32_t name='general_material_force_multiplier'/>
+            <int32_t name='general_material_force_divisor'/>
+            <static-array type-name='int32_t' name='unused_30' count='27'/>
         </compound>
 
         <compound name='personality'> bay12: creature_personality_profilest

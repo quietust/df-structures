@@ -170,9 +170,9 @@
 
         <virtual-methods>
             <vmethod name='printSlabStatus' comment='ghost, buried, memorialized'>
-                <int32_t name='x'/>
                 <int32_t name='y'/>
-                <int32_t name='unused'/>
+                <int32_t name='x_min'/>
+                <int32_t name='x_max'/>
             </vmethod>
             <vmethod name='getLabel'>
                 <pointer type-name='stl-string' name='str'/>

@@ -182,16 +182,16 @@
     </class-type>
 
     <class-type type-name='general_ref_locationst' inherits-from='general_ref'>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='x'/>
+        <int32_t name='y'/>
+        <int32_t name='z'/>
     </class-type>
 
     <class-type type-name='general_ref_interactionst' inherits-from='general_ref'>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='interaction_index'/>
+        <int32_t name='interaction_source_index'/>
+        <int32_t name='interaction_target_index'/>
+        <int32_t name='interaction_effect_index'/>
     </class-type>
 
     <class-type type-name='general_ref_abstract_buildingst' inherits-from='general_ref'>
@@ -224,9 +224,9 @@
     </class-type>
 
     <class-type type-name='general_ref_entity_popst' inherits-from='general_ref'>
-        <int32_t/>
+        <int32_t name='entity_pop_id' ref-target='entity_population'/>
         <int32_t name='race' ref-target='creature_raw'/>
-        <int32_t/>
+        <int32_t name='num'/>
         <bitfield name='flags'>
             <flag-bit name='animated_corpse'/>
             <flag-bit name='ghostly'/>
@@ -235,9 +235,9 @@
 
     <class-type type-name='general_ref_creaturest' inherits-from='general_ref'>
         <int32_t name='race' ref-target='creature_raw'/>
-        <int16_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
-        <int32_t/>
-        <int32_t/>
+        <int32_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
+        <int32_t name='entity_pop_id' ref-target='entity_population'/>
+        <int32_t name='num'/>
         <bitfield name='flags'>
             <flag-bit name='animated_corpse'/>
             <flag-bit name='ghostly'/>

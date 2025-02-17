@@ -146,9 +146,6 @@
         <stl-string name='name' comment='IS_NAME'/>
         <stl-string name='hist_string_1' comment='IS_HIST_STRING_1'/>
         <stl-string name='hist_string_2' comment='IS_HIST_STRING_2'/>
-        <stl-string name='trigger_string_second' comment='IS_TRIGGER_STRING_SECOND'/>
-        <stl-string name='trigger_string_third' comment='IS_TRIGGER_STRING_THIRD'/>
-        <stl-string name='trigger_string' comment='IS_TRIGGER_STRING'/>
 
         <virtual-methods>
             <vmethod ret-type='interaction_source_type' name='getType'/>
@@ -261,8 +258,7 @@
         <stl-string name='name'/>
         <stl-string name='manual_input' comment='IT_MANUAL_INPUT'/>
         <enum name='location' type-name='interaction_target_location_type' comment='IT_LOCATION'/>
-        <stl-string name='reference_name' comment='IT_LOCATION:RANDOM_NEARBY_LOCATION'/>
-        <int32_t name='reference_distance' comment='IT_LOCATION:RANDOM_NEARBY_LOCATION'/>
+
         <virtual-methods>
             <vmethod ret-type='interaction_target_type' name='getType'/>
             <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
@@ -280,7 +276,7 @@
             </vmethod>
             <vmethod name='finalize'><int32_t name='idx'/></vmethod>
             <vmethod name='affects_body_component' ret-type='bool'><pointer name='bodypart' type-name='item_body_component'/><pointer name='interaction' type-name='interaction'/></vmethod>
-            <vmethod name='affects_unit' ret-type='bool'><int32_t/><pointer name='interaction' type-name='interaction'/></vmethod>
+            <vmethod name='affects_unit' ret-type='bool'><pointer name='unit' type-name='unit'/><pointer name='interaction' type-name='interaction'/></vmethod>
             <vmethod name='affects_histfig' ret-type='bool'>
                 <pointer name='histfig' type-name='historical_figure'/>
                 <pointer name='interaction' type-name='interaction'/>
@@ -334,12 +330,7 @@
         <enum-item name='WEATHER_FALLING_MATERIAL'/>
         <enum-item name='SPATTER_POWDER'/>
         <enum-item name='SPATTER_LIQUID'/>
-        <enum-item name='UNDIRECTED_ITEM_CLOUD'/>
-        <enum-item name='TRAILING_ITEM_FLOW'/>
-        <enum-item name='SHARP_ROCK'/>
-        other: root around in, lick, head-bump, scratch, tusk, retract into shell, roll into a ball
-        often [CDI:CAN_BE_MUTUAL] but not always
-        <enum-item name='OTHER'/>
+        <enum-item name='MAXNUM' comment='used instead of NONE in can_do_interaction info'/>
     </enum-type>
 
     <class-type type-name='interaction_target_materialst' inherits-from='interaction_target'>

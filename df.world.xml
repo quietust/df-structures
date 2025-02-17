@@ -695,13 +695,13 @@
             <stl-string name='last_history_seed'/>
             <stl-string name='last_name_seed'/>
             <stl-string name='last_creature_seed'/>
+            <bool name='prehistory_initialized'/>
             <bool name='placed_caves'/>
             <bool name='placed_good_evil'/>
             <bool name='placed_megabeasts'/>
             <bool name='placed_other_beasts'/>
             <bool name='made_cave_pops'/>
             <bool name='made_cave_civs'/>
-            <bool name='placed_civs'/>
             <bool name='finished_prehistory'/>
             <stl-vector name='caves' pointer-type='world_site'/>
             <stl-vector name='orig_cave' pointer-type='world_site'/>

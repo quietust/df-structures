@@ -151,6 +151,27 @@
         <enum-item name='MetalFurnitureShopSign'/>
     </enum-type>
 
+    <enum-type type-name='trade_good_purpose' base-type='int16_t'> bay12: TradeGoodPurposeType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='MERCHANT'/>
+        <enum-item name='TRAVELER'/>
+        <enum-item name='RICH_TRAVELER'/>
+        <enum-item name='STORE_CRAFTS'/>
+        <enum-item name='STORE_WEAPON'/>
+        <enum-item name='STORE_ARMOR'/>
+        <enum-item name='STORE_GENERAL'/>
+        <enum-item name='STORE_FOOD'/>
+        <enum-item name='CONTAINER'/>
+        <enum-item name='PRODUCTION_SHODDY'/>
+        <enum-item name='PRODUCTION_BEGINNER'/>
+        <enum-item name='PRODUCTION_MIDDLING'/>
+        <enum-item name='PRODUCTION_HIGH'/>
+        <enum-item name='PRODUCTION_EXCELLENT'/>
+        <enum-item name='TOMB_TREASURE'/>
+        <enum-item name='TREASURE_ROOM'/>
+        <enum-item name='PILLAGE'/>
+    </enum-type>
+
     <enum-type type-name='article_type'> bay12: Article, no base type
         <enum-item name='NONE' value='-1'/>
         <enum-item name='INDEFINITE' comment='a'/>
@@ -345,7 +366,7 @@
                 <int32_t name='shape' ref-target='descriptor_shape'/>
                 <pointer type-name='historical_entity' name='civ'/>
                 <pointer type-name='world_site' name='site'/>
-                <int16_t name='trade_good_purpose'/>
+                <enum type-name='trade_good_purpose' name='purpose'/>
                 <bool name='unshaped' comment='glazed'/>
             </vmethod>
             <vmethod ret-type='bool' name='isWeapon' comment='rackitem, goes in weapon racks'/>

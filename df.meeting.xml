@@ -268,6 +268,19 @@
         </bitfield>
     </struct-type>
 
+    <struct-type type-name='lawactionst'>
+        <pointer name="criminal" type-name='unit'/>
+        <pointer name="officer" type-name='unit'/>
+        <int16_t name="beating"/>
+        <int16_t name="hammer_strikes"/>
+        <int32_t name="prison_counter"/>
+        <int16_t name="unk_10" comment='10080'/>
+        <pointer name="chain" type-name='building'/>
+        <stl-vector name="victims">
+            <pointer type-name="unit"/>
+        </stl-vector>
+    </struct-type>
+
     <struct-type type-name='schedule_info' original-name='schedulest' key-field='id' instance-vector='$global.world.schedules.all'>
         <int32_t name='id'/>
         <int16_t name='ax'/>

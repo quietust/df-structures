@@ -37,7 +37,7 @@
         <enum-item name='Sleep'/>
 
         <enum-item name='Unk30'/>
-        <enum-item name='Unk31'/>
+        <enum-item name='AimForTarget'/>
         <enum-item name='Unk32'/>
         <enum-item name='Unk33'/>
         <enum-item name='Unk34'/>
@@ -102,7 +102,8 @@
     <struct-type type-name='adventurest'>
         <enum base-type='int16_t' name='menu' type-name='ui_advmode_menu'/>
 
-        <int16_t name='unk1'/>
+        <int8_t name='unk1a'/>
+        <int8_t name='unk1b'/>
         <int32_t name='unk2'/>
         <int32_t name='unk3'/>
         <bool name='travel_clouds'/>

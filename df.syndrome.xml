@@ -158,13 +158,13 @@
 
             <vmethod name='parseSynAcquireType'><pointer name='type'/></vmethod>
             <vmethod name='setBodyTransform'><pointer name='race'/><pointer name='caste'/></vmethod>
-            <vmethod name='addPeriodic'><pointer/><pointer/><pointer/></vmethod>
-            <vmethod name='addCounterTrigger'><pointer/><pointer/><pointer/><pointer/></vmethod>
-            <vmethod><pointer/></vmethod>
+            <vmethod name='addPeriodic'><pointer type-name='stl-string'/><pointer type-name='stl-string'/><pointer type-name='stl-string'/></vmethod>
+            <vmethod name='addCounterTrigger'><pointer type-name='stl-string'/><pointer type-name='stl-string'/><pointer type-name='stl-string'/><pointer type-name='stl-string'/></vmethod>
+            <vmethod name='applyEffectToHistfig'><pointer type-name='historical_figure' name='hf'/></vmethod>
 
-            <vmethod/>
-            <vmethod comment='can_do_interaction, returns unk_6c'>
-                <ret-type><pointer><stl-vector/></pointer></ret-type>
+            <vmethod name='finalize'/>
+            <vmethod name='get_interaction_info_ptr'>
+                <ret-type><pointer type-name='interaction_informationst'/></ret-type>
             </vmethod>
         </virtual-methods>
     </class-type>

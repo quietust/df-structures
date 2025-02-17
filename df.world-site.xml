@@ -127,7 +127,7 @@
     <class-type type-name='abstract_building_tombst' inherits-from='abstract_building'>
         <compound name='name' type-name='language_name'/>
         <compound name='entombed' type-name='location_deathst'/>
-        <int32_t/>
+        <int32_t name='rought_side_size'/>
     </class-type>
 
     <class-type type-name='abstract_building_dungeonst' inherits-from='abstract_building'>
@@ -166,7 +166,7 @@
     <struct-type type-name='populacest'>
         <stl-vector name="nemesis" type-name='int32_t' ref-target='nemesis_record'/>
 
-        <stl-vector name="items" type-name='int32_t' ref-target='item'/>
+        <stl-vector name="artifacts" pointer-type='artifact_record'/>
 
         <stl-vector name="animals" pointer-type='world_population'/>
 
@@ -313,6 +313,7 @@
 
     <struct-type type-name='srb_entity_popst'>
         <int32_t name="count"/>
+        <int32_t/>
         <compound name='pop_spec' type-name='entity_pop_specifierst'/>
     </struct-type>
 
@@ -405,7 +406,6 @@
         <int32_t name="up_id"/>
         <stl-vector name='connected_srb_local_id' type-name='int32_t'/>
         <stl-vector name='subord_ab_local_id' type-name='int32_t'/>
-        <stl-vector name='layer_ab_local_id' type-name='int32_t'/>
         <compound name='location_death' type-name='location_deathst'/>
         <stl-vector name='pop' pointer-type='srb_entity_popst'/>
         <stl-vector name='item' pointer-type='srb_itemst'/>

@@ -124,8 +124,8 @@
                 <int16_t name='bin_combine'/>
             </compound>
 
-            <bool name='set_labor_lists' comment='v0.34.03'/>
-            <int32_t comment='v0.34.07'/>
+            <int16_t name='set_labor_lists' comment='v0.34.03'/>
+            <int16_t name='labor_list_skills' comment='v0.34.07'/>
         </compound>
 
         <compound name='feature'> bay12: d_init_featurest
