@@ -177,7 +177,6 @@
         <bool name='check_machine_collapse' comment='bay12: evaluate_machine_stability'/>
     </struct-type>
 
-
     <struct-type type-name='machine_handler' original-name='machine_handlerst'>
         <stl-vector name='all' pointer-type='machine'/>
         <stl-vector name='temp_save' has-bad-pointers='true' pointer-type='machine'/>
@@ -709,7 +708,7 @@
             <stl-vector name='race' type-name='int16_t' ref-target='creature_raw'/>
             <stl-vector name='caste' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.race[$._key]'/>
 
-            <int16_t name='last_selected_race_cast' comment='index into the above two vectors'/>
+            <int32_t name='last_selected_racecaste' comment='index into the above two vectors'/>
 
             <compound type-name='embark_item_choice' name='item_types'/>
 

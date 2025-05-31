@@ -698,7 +698,7 @@
         <int32_t name='watch_time'/>
         <stl-vector name='members'>
             <pointer> bay12: army_nemesisst
-                <int32_t name='nemesis_id' init-value='-1'/>
+                <int32_t name='nemesis_id' ref-target='nemesis_record'/>
                 <int32_t name='hunger_timer'/>
                 <int32_t name='thirst_timer'/>
                 <int32_t name='sleepiness_timer'/>

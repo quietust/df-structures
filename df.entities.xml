@@ -79,13 +79,7 @@
         </enum>
         <bool name='prohibited'/>
         <int32_t name='value'/>
-        <bool name='expanded_container'/>
-        <int32_t name='container_amount'/>
         <int32_t name='sort_value'/>
-    </struct-type>
-
-    <struct-type type-name='assign_trade_itemlistst'>
-        <stl-vector name='tgi' pointer-type='tradegoodslistst'/>
     </struct-type>
 
     <struct-type type-name='abstractitemlistst'>
@@ -120,7 +114,7 @@
             <flag-bit name='communicate' comment='SOMEBODYLIVED; send data to mountainhomes'/>
             <flag-bit name='seized' comment='GOODSSEIZED'/>
             <flag-bit name='offended' comment='NOMORETRADE'/>
-            <flag-bit comment='UNUSED_07'/>
+            <flag-bit name='announce' comment='display merchantintro and merchantexit'/>
             <flag-bit name='greatly_offended' comment='OFFENDED'/>
         </bitfield>
         <int32_t name='import_value' comment='bay12: goodsvalue_initial'/>
@@ -556,7 +550,7 @@
         <int32_t name='hostility_level' comment='bay12: brazenness'/>
         <int32_t name='siege_tier'/>
 
-        <stl-vector name='unk50' type-name='pointer' comment='empty'/>
+        <stl-vector name='army' pointer-type='moving_party' comment='empty'/>
 
         <stl-vector name='hist_figures' pointer-type='historical_figure'/>
         <stl-vector name='nemesis' pointer-type='nemesis_record'/>

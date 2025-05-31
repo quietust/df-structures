@@ -277,12 +277,8 @@
 
         <bool name='is_room'/>
 
-        <stl-vector name='children' comment='other buildings within this room'>
-            <pointer type-name='building'/>
-        </stl-vector>
-        <stl-vector name='parents' comment='rooms this building belongs to'>
-            <pointer type-name='building'/>
-        </stl-vector>
+        <stl-vector name='children' pointer-type='building' comment='other buildings within this room'/>
+        <stl-vector name='parents' pointer-type='building' comment='rooms this building belongs to'/>
 
         <pointer type-name='unit' name='owner'/>
 
@@ -744,7 +740,6 @@
         <int32_t name='max_level' init-value='3000'/>
     </struct-type>
 
-
     <class-type type-name='building_workshopst' inherits-from='building_actual'>
         <enum base-type='int16_t' name="type" type-name='workshop_type'/>
 
@@ -871,8 +866,8 @@
     <class-type type-name='building_coffinst' inherits-from='building_actual'>
         <bitfield name='burial_mode' base-type='uint16_t'>
             <flag-bit name='allow_burial'/>
-            <flag-bit name='no_citizens'/>
             <flag-bit name='no_pets'/>
+            <flag-bit name='no_citizens'/>
         </bitfield>
     </class-type>
 

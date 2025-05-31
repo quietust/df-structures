@@ -171,7 +171,7 @@
             <vmethod name='setColor'>
                 <bool name='selected'/>
             </vmethod>
-            <vmethod/>
+            <vmethod name='makeHidden'/>
             <vmethod is-destructor='true'/>
         </virtual-methods>
     </class-type>
@@ -201,7 +201,7 @@
         <stl-string name='reaction_name'/>
         <enum name='item_type' type-name='item_type'/>
         <int16_t name='item_subtype'/>
-        <int16_t name='mat_type' ref-target='material' aux-value='$$.matgloss'/>
+        <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
         <int32_t name='specflag'/>
         <int32_t name='specdata' init-value='-1'/>

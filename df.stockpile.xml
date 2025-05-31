@@ -12,42 +12,6 @@
         <enum-item name='Animal'/>
     </enum-type>
 
-    <enum-type type-name='furniture_type'> bay12: StockpileFurnitureItemType
-        subset of item_type
-        <enum-item name='FLOODGATE'/>
-        <enum-item name='HATCH_COVER'/>
-        <enum-item name='GRATE'/>
-        <enum-item name='DOOR'/>
-        <enum-item name='CATAPULTPARTS'/>
-        <enum-item name='BALLISTAPARTS'/>
-        <enum-item name='TRAPPARTS'/>
-        <enum-item name='BED'/>
-        <enum-item name='TRACTION_BENCH'/>
-        <enum-item name='WINDOW'/>
-        <enum-item name='CHAIR'/>
-        <enum-item name='TABLE'/>
-        <enum-item name='COFFIN'/>
-        <enum-item name='STATUE'/>
-        <enum-item name='SLAB'/>
-        <enum-item name='QUERN'/>
-        <enum-item name='MILLSTONE'/>
-        <enum-item name='ARMORSTAND'/>
-        <enum-item name='WEAPONRACK'/>
-        <enum-item name='CABINET'/>
-        <enum-item name='ANVIL'/>
-        <enum-item name='BUCKET'/>
-        <enum-item name='BIN'/>
-        <enum-item name='BOX'/>
-        <enum-item name='BAG'/>
-        <enum-item name='SIEGEAMMO'/>
-        <enum-item name='BARREL'/>
-        <enum-item name='BALLISTAARROWHEAD'/>
-        <enum-item name='PIPE_SECTION'/>
-
-        tool types
-        <enum-item name='FOOD_STORAGE'/>
-    </enum-type>
-
     <enum-type type-name='stockpile_category' base-type='int16_t'> bay12: DefaultStockPiles
         <enum-item name='Remove' value='-1'/>
         <enum-item name='Animals'/>
@@ -93,6 +57,7 @@
 
     <enum-type type-name='stockpile_furniture_mat'> bay12: StockpileFurnitureStorageType
         <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
         <enum-item name='Wood'/>
         <enum-item name='Plant'/>
         <enum-item name='Bone'/>
@@ -127,6 +92,7 @@
 
     <enum-type type-name='stockpile_block_mat'> bay12: StockpileBlockStorageType
         <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
         <enum-item name='GlassGreen'/>
         <enum-item name='GlassClear'/>
         <enum-item name='GlassCrystal'/>
@@ -135,6 +101,7 @@
 
     <enum-type type-name='stockpile_finished_mat'> bay12: StockpileFinishedStorageType
         <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
         <enum-item name='Wood'/>
         <enum-item name='Plant'/>
         <enum-item name='Bone'/>
@@ -155,9 +122,11 @@
 
     <enum-type type-name='stockpile_weapon_mat'> bay12: StockpileWeaponStorageType
         <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
         <enum-item name='Wood'/>
         <enum-item name='Plant'/>
         <enum-item name='Bone'/>
+        <enum-item name='Shell'/>
         <enum-item name='Leather'/>
         <enum-item name='Silk'/>
         <enum-item name='GlassGreen'/>
@@ -168,6 +137,7 @@
 
     <enum-type type-name='stockpile_armor_mat'> bay12: StockpileArmorStorageType
         <enum-item name='None' value='-1'/>
+        <enum-item name='Unused'/>
         <enum-item name='Wood'/>
         <enum-item name='Plant'/>
         <enum-item name='Bone'/>
@@ -233,7 +203,7 @@
         </compound>
 
         <compound name='furniture'> bay12: stockpile_parameter_furniturest
-            <stl-vector type-name='bool' name='type' index-enum='furniture_type'/>
+            <stl-vector type-name='bool' name='type' index-enum='item_type'/>
             <stl-vector type-name='bool' name='other_mats' index-enum='stockpile_furniture_mat'/>
             <stl-vector type-name='bool' name='mats'
                         index-refers-to='(material-by-id 0 $)'/>

@@ -643,14 +643,14 @@
             <uint32_t name='vomit_timeout' comment='blocks nausea causing vomit'/>
 
             <uint32_t name='stored_fat' comment='hunger leads to death only when 0'/>
-            <uint32_t name='unk_59c'/>
+            <uint32_t name='undead_damage' comment='incremented by max_impact_inertia, causes death upon reaching body.size_info.length_cur'/>
         </compound>
 
         <compound name='status'> not a compound
             <stl-vector name='misc_traits' pointer-type='unit_misc_trait'/>
 
             <pointer name='eat_history'> bay12: unit_consumption_logst
-                <compound name='food'>
+                <compound name='food'> not a compound
                     <stl-vector name='item_type'>
                         <enum base-type='int16_t' type-name='item_type'/>
                     </stl-vector>
@@ -659,7 +659,7 @@
                     <stl-vector name='year' type-name='int32_t'/>
                     <stl-vector name='year_time' type-name='int32_t'/>
                 </compound>
-                <compound name='drink'>
+                <compound name='drink'> not a compound
                     <stl-vector name='item_type'>
                         <enum base-type='int16_t' type-name='item_type'/>
                     </stl-vector>

@@ -19,7 +19,7 @@
         </enum-item>
         <enum-item name='ACTIVITY_ZONE'>
             <item-attr name='building' value='Civzone'/>
-            <!-- <item-attr name='civzone' value='ActivityZone'/> -->
+            <item-attr name='civzone' value='ActivityZone'/>
         </enum-item>
         <enum-item name='ANY_ACTUAL'>
             -- everything but stockpile and civzone

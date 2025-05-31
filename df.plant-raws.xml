@@ -181,7 +181,6 @@
         <enum-item name='extract_still_vial'/>
         <enum-item name='leaves'/>
     </enum-type>
-
 </data-definition>
 
 <!--

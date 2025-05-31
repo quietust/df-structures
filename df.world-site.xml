@@ -118,19 +118,6 @@
         <compound name='name' type-name='language_name'/>
     </class-type>
 
-    <enum-type type-name='world_site_type'> bay12: SiteType
-        <enum-item name='PlayerFortress'/>
-        <enum-item name='DarkFortress'/>
-        <enum-item name='Cave'/>
-        <enum-item name='MountainHalls'/>
-        <enum-item name='ForestRetreat'/>
-        <enum-item name='Town'/>
-        <enum-item name='ImportantLocation'/>
-        <enum-item name='LairShrine'/>
-        <enum-item name='Fortress'/>
-        <enum-item name='Camp'/>
-    </enum-type>
-
     <enum-type type-name='lair_type' base-type='int16_t'> bay12: LairType
         <enum-item name='NONE' value='-1'/>
         <enum-item name='SIMPLE_MOUND' comment='Night creatures'/>
@@ -206,7 +193,7 @@
         <int32_t name="owner1" ref-target='historical_entity'/>
         <int32_t name="owner2" ref-target='historical_entity'/>
 
-        <enum base-type='int16_t' name="type" type-name='world_site_type'/>
+        <enum base-type='int16_t' name="type" type-name='site_type'/>
 
         <compound name='pos' type-name='coord2d'/>
 

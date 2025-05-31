@@ -68,24 +68,24 @@
             <stl-vector name="professions_held" type-name='profession'/>
             <stl-vector name="profession_years" type-name='int32_t' comment="Number of years on each profession above. Need not be consecutive, so non registered periods can happen"/>
             <stl-vector name="states" type-name='whereabouts_type'/>
-            <stl-vector name="unk_50" type-name='int16_t'/>
+            <stl-vector name="state_count" type-name='int16_t'/>
             <enum base-type='int16_t' name='profession' type-name='profession'/>
         </pointer>
 
-        <pointer name="pets">
+        <pointer name="pets"> bay12: pet_profilest
             <stl-vector type-name='int16_t' ref-target='creature_raw'/>
         </pointer>
 
-        <pointer name="personality">
+        <pointer name="personality"> bay12: personality_profilest
             <compound name='personality' type-name='unit_personality'/>
         </pointer>
 
-        <pointer name="masterpieces">
+        <pointer name="masterpieces"> bay12: artistic_profilest
             <stl-vector name="events" type-name='int32_t' ref-target='history_event'/>
             <stl-vector name="lost_events" type-name='int32_t' ref-target='history_event' comment='refers to the creation events, not the destruction events'/>
         </pointer>
 
-        <pointer name="whereabouts">
+        <pointer name="whereabouts"> bay12: state_profilest
             <enum name='state' type-name='whereabouts_type' base-type='int16_t'/>
             <int32_t name="site_id" ref-target='world_site'/>
             <int32_t name="subregion_id" ref-target='world_region'/>
@@ -95,7 +95,7 @@
 
         <pointer name="kills" type-name='historical_kills'/>
 
-        <pointer name="wounds">
+        <pointer name="wounds"> bay12: body_profilest
             <stl-vector name="events">
                 <int32_t ref-target='history_event'/>
             </stl-vector>
@@ -683,7 +683,6 @@
         <enum-item name='seized'/>
         <enum-item name='offended'/>
         <enum-item name='missing_goods'/>
-        <enum-item name='tribute'/>
     </enum-type>
 
     <class-type type-name='history_event_artifact_hiddenst' inherits-from='history_event'>
@@ -1006,9 +1005,6 @@
                 <int32_t name='mat_type' ref-target='material' aux-value='$$.mat_index' comment='rope'/>
                 <int32_t name='mat_index' comment='rope'/>
             </compound>
-            <compound name='Animated'>
-                <int32_t name='interaction' ref-target='interaction'/>
-            </compound>
         </compound>
     </class-type>
 
@@ -1285,21 +1281,24 @@
         <int32_t name='layer' ref-target='world_underground_region'/>
         <int32_t name='site' ref-target='world_site'/>
         <compound name='region_pos' type-name='coord2d'/>
+
         <stl-vector name='attacker_civ' type-name='int32_t' ref-target='historical_entity'/>
         <stl-vector name='defender_civ' type-name='int32_t' ref-target='historical_entity'/>
         <stl-vector name='attacker_hf' type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name='defender_hf' type-name='int32_t' ref-target='historical_figure'/>
         <stl-vector name='noncombat_hf' type-name='int32_t' ref-target='historical_figure' comment="saw being beheaded, but that's only one checked"/>
+
+        <stl-vector name='attacker_squad_entity_pop' type-name='int32_t'/>
         <stl-vector name='attacker_squad_counts' type-name='int32_t'/>
         <stl-vector name='attacker_squad_deaths' type-name='int32_t'/>
         <stl-vector name='attacker_squad_races' type-name='int32_t' ref-target='creature_raw'/>
         <stl-vector name='attacker_squad_sites' type-name='int32_t' ref-target='world_site'/>
-        <stl-vector name='attacker_squad_flag' type-name='uint32_t' comment="1=animated"/>
+
+        <stl-vector name='defender_squad_entity_pops' type-name='int32_t'/>
         <stl-vector name='defender_squad_counts' type-name='int32_t'/>
         <stl-vector name='defender_squad_deaths' type-name='int32_t'/>
         <stl-vector name='defender_squad_races' type-name='int32_t' ref-target='creature_raw'/>
         <stl-vector name='defender_squad_sites' type-name='int32_t' ref-target='world_site'/>
-        <stl-vector name='defender_squad_flag' type-name='uint32_t' comment="1=animated"/>
         <enum name='outcome' base-type='int16_t'> bay12: BattleOutcomeType
             <enum-item name='ATTACKER_WON'/>
             <enum-item name='DEFENDER_WON'/>

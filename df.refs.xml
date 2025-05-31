@@ -189,32 +189,32 @@
         <enum-item name='UNIT'/>
         <enum-item name='JOB'/>
         <enum-item name='BUILDING_PARTY'/>
-
         <enum-item name='ACTIVITY'/>
+
         <enum-item name='ITEM_GENERAL'/>
         <enum-item name='EFFECT'/>
         <enum-item name='PETINFO_PET'/>
         <enum-item name='PETINFO_OWNER'/>
-
         <enum-item name='VERMIN_EVENT'/>
+
         <enum-item name='VERMIN_ESCAPED_PET'/>
         <enum-item name='ENTITY'/>
         <enum-item name='PLOT_INFO'/>
         <enum-item name='VIEWSCREEN'/>
-
         <enum-item name='UNIT_ITEM_WRESTLE'/>
+
         <enum-item name='NULL_REF'/>
         <enum-item name='HIST_FIG'/>
         <enum-item name='SITE'/>
         <enum-item name='ARTIFACT'/>
-
         <enum-item name='ITEM_IMPROVEMENT'/>
+
         <enum-item name='COIN_FRONT'/>
         <enum-item name='COIN_BACK'/>
         <enum-item name='DETAIL_EVENT'/>
         <enum-item name='SUBREGION'/>
-
         <enum-item name='FEATURE_LAYER'/>
+
         <enum-item name='ART_IMAGE'/>
         <enum-item name='CREATURE_DEF'/>
         <enum-item name='ENTITY_ART_IMAGE' comment='unused?'/>

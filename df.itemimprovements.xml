@@ -32,7 +32,7 @@
         <int32_t name='age_counter'/>
 
         <virtual-methods>
-            <vmethod name='getImage'><pointer type-name='item'/>
+            <vmethod name='getImage'>
                 <ret-type><pointer type-name='art_image'/></ret-type>
             </vmethod>
             <vmethod name='getColorAndShape'>

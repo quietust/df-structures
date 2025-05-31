@@ -122,7 +122,6 @@
         <compound name='feature'> bay12: d_init_featurest
             <df-flagarray name='flags' index-enum='d_init_flags4'/>
         </compound>
-        85266c0
         <compound name='announcements' type-name='announcements'/>
     </struct-type>
 </data-definition>

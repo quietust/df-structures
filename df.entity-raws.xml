@@ -214,7 +214,7 @@
         <int32_t name='adventure_tier'/>
         <static-array name='friendly_color' type-name='int16_t' count='3'/>
 
-        <enum base-type='int32_t' name='default_site_type' type-name='world_site_type'/>
+        <enum base-type='int32_t' name='default_site_type' type-name='site_type'/>
         <static-array name='likes_site' type-name='int8_t' count='10' index-enum='site_type'/>
         <static-array name='tolerates_site' type-name='int8_t' count='10' index-enum='site_type'/>
 
@@ -223,7 +223,7 @@
 
         <static-array name='active_season' type-name='int8_t' count='4' index-enum='season'/>
 
-        <compound name='progress_trigger'>  not an actual compound
+        <compound name='progress_trigger'> not an actual compound
             <int16_t name='population'/>
             <int16_t name='production'/>
             <int16_t name='trade'/>

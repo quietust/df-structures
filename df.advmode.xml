@@ -103,7 +103,7 @@
         <bool name='travel_clouds'/>
         <int8_t/>
         <int8_t/>
-        <int8_t/>
+        <int8_t name='travel_not_moved'/>
         <int8_t/>
         <int8_t name='offloading_site'/>
         <int32_t name='click_per_click'/>
@@ -115,7 +115,6 @@
         <int32_t name='bogeymen_killed_this_attack'/>
         <int32_t name='bogeymen_season_timer'/>
         <int32_t name='fake_ambush_timer'/>
-
 
         <stl-vector type-name='int32_t' name='searched_x'/>
         <stl-vector type-name='int32_t' name='searched_y'/>
@@ -132,31 +131,34 @@
         <stl-vector type-name='int32_t' name='sleep_permission_srb'/>
         <stl-vector type-name='int32_t' name='sleep_permission_timer'/>
 
-        <int16_t/>
-        <int16_t/>
-        <int16_t/>
-        <int16_t/>
-        <int16_t/>
+        <int16_t name='travel_goal_count'/>
+        <int16_t name='travel_goal_gx'/>
+        <int16_t name='travel_goal_gy'/>
+        <int16_t name='travel_goal_rx'/>
+        <int16_t name='travel_goal_ry'/>
         <int32_t name='player_nemesis' ref-target='nemesis_record'/>
         <stl-vector name='talk_targets' pointer-type='talk_list_optionst'/>
         <stl-vector name='conversations' pointer-type='conversation'/>
         <int32_t name='talk_target_cursor'/>
 
-        <int8_t/>
-        <int16_t/>
-        <int16_t/>
-        <int32_t/>
-        <int32_t/>
-        <int16_t/>
-        <int16_t/>
-        <int32_t/>
-        <int16_t/>
-        <int32_t/>
-        <int32_t/>
-        <int32_t/>
-        <int8_t/>
+        <compound name='custom_combat'> bay12: adventure_custom_combatst
+            <int8_t name='wrestleMoveBegun'/>
+            <int16_t name='wrestle_self_bp'/>
+            <int16_t name='wrestle_other_bp'/>
+            <int32_t name='wrestle_self_item' ref-target='item'/>
+            <int32_t name='wrestle_other_item' ref-target='item'/>
+            <int16_t name='wrestle_attack_type'/>
+            <int16_t name='wrestle_attack_bp'/>
+            <pointer name='attack_item' type-name='item'/>
+            <int16_t name='target_bp'/>
+            <int32_t name='attack_idx'/>
+            <int32_t/>
+            <int32_t/>
+            <int8_t/>
 
-        <stl-vector name='custom_combat' pointer-type='attack_chance_modifierst'/>
+            <stl-vector name='custom_combat' pointer-type='attack_chance_modifierst'/>
+        </compound>
+
         <stl-vector name='interact_options' pointer-type='adventure_item_interact_choicest'/>
         <stl-vector name='commands' pointer-type='adventure_optionst'/>
         <stl-vector name='move_options' pointer-type='adventure_movement_optionst'/>
@@ -216,11 +218,13 @@
             <vmethod name='updateLocation'/>
             <vmethod name='getSite' ret-type='int32_t'/>
             <vmethod name='getHistfig' ret-type='int32_t'/>
-            <vmethod name='read_file'/>
-            <vmethod name='write_file'/>
+            <vmethod name='read_file'>
+                <pointer name='file' type-name='file_compressorst'/>
+                <int32_t name='loadversion'/>
+            </vmethod>
+            <vmethod name='write_file'> <pointer name='file' type-name='file_compressorst'/> </vmethod>
             <vmethod is-destructor='true'/>
         </virtual-methods>
-
     </class-type>
 
     <class-type type-name='task_kill_nemesisst' inherits-from='adv_task'>

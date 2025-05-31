@@ -156,12 +156,6 @@
                   comment='bay12: NEARBY_WATER_TABLE; has tiles that may get flooded by an adjacent aquifer'/>
     </enum-type>
 
-    <bitfield-type type-name='z_level_flags'> bay12: TEMP_BLOCK_FLAG_*
-        <flag-bit name='update'/> bay12: ADJUSTMENTS
-        <flag-bit name='can_stop'/> bay12: REMOVE_ADJUSTMENTS_FLAGS
-        <flag-bit name='update_twice'/> bay12: STOP_REMOVE_ADJUSTMENTS_FLAG
-    </bitfield-type>
-
     <enum-type type-name='tile_liquid_temp_flow_dir' base-type='uint16_t'> bay12: FLOW_DIR_TEMP_DIR_*
         <enum-item name='north'/>
         <enum-item name='south'/>

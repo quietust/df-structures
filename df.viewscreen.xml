@@ -27,7 +27,7 @@
         <pointer name='parent' type-name='viewscreen'/>
         <enum base-type='int8_t' name='breakdown_level' type-name='interface_breakdown_types'/>
         <int8_t name='option_key_pressed'/>
-        
+
         <virtual-methods>
             <vmethod name='feed'>
                 <pointer name='events'> <stl-set type-name='interface_key'/></pointer>
@@ -955,8 +955,8 @@
     <class-type type-name='viewscreen_layer_unit_relationshipst' inherits-from='viewscreen_layer'>
         <pointer type-name='unit' name='unit'/>
         <stl-vector pointer-type='stl-string' name='relation_textline'/>1st column text (name, prof)
-        <stl-vector type-name='unit_relationship_type' name='relation_unit_type'/>
-        <stl-vector type-name='histfig_relationship_type' name='relation_histfig_type'/>
+        <stl-vector name='relation_unit_type'><enum type-name='unit_relationship_type' base-type='int16_t'/></stl-vector>
+        <stl-vector name='relation_histfig_type'><enum type-name='histfig_relationship_type' base-type='int16_t'/></stl-vector>
         <stl-vector pointer-type='unit' name='relation_unit'/>0 for deity and other non-units
         <stl-vector pointer-type='historical_figure' name='relation_hg'/>
         <stl-vector type-name='int32_t' name='level'/>5000 for deity, 330 for friend, 30 for acquaintance
@@ -1030,7 +1030,7 @@
         <int16_t name='brush_radius'/>
     </class-type>
 
-    <struct-type type-name='region_snapshot'>
+    <struct-type type-name='region_snapshot' original-name='region_snapshotst'>
         <int32_t name='year'/>
         <compound name='claims' type-name='entity_territoryst'/>
         <stl-vector type-name='int32_t' name='site_id' ref-target='world_site'/>
@@ -1726,7 +1726,6 @@
     <class-type type-name='viewscreen_wagesst' inherits-from='viewscreen'>
         <int16_t name='profession_category'/>
     </class-type>
-
 </data-definition>
 
 <!--

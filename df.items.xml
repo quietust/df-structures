@@ -126,6 +126,19 @@
         <enum-item name='FoodShopSign' comment='STORE_FOOD'/>
     </enum-type>
 
+    <enum-type type-name='trade_good_purpose' base-type='int16_t'> bay12: TradeGoodPurposeType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='MERCHANT'/>
+        <enum-item name='TRAVELER'/>
+        <enum-item name='RICH_TRAVELER'/>
+        <enum-item name='STORE_CRAFTS'/>
+        <enum-item name='STORE_WEAPON'/>
+        <enum-item name='STORE_ARMOR'/>
+        <enum-item name='STORE_GENERAL'/>
+        <enum-item name='STORE_FOOD'/>
+        <enum-item name='CONTAINER'/>
+    </enum-type>
+
     <enum-type type-name='article_type'> bay12: Article, no base type
         <enum-item name='NONE' value='-1'/>
         <enum-item name='INDEFINITE' comment='a'/>
@@ -300,7 +313,7 @@
                 <int32_t name='mat_index'/>
                 <pointer type-name='historical_entity' name='civ'/>
                 <pointer type-name='world_site' name='site'/>
-                <int16_t name='trade_good_purpose'/>
+                <enum type-name='trade_good_purpose' name='purpose'/>
             </vmethod>
             <vmethod ret-type='bool' name='isWeapon' comment='rackitem, goes in weapon racks'/>
             <vmethod ret-type='bool' name='isArmorNotClothing'/>

@@ -563,7 +563,6 @@
     <enum-type type-name='specialattack_type' base-type='int32_t'> bay12: SpecialAttackType
         <enum-item name='INJECT_EXTRACT'/>
         <enum-item name='SUCK_BLOOD'/>
-        <enum-item name='INTERACTION'/>
     </enum-type>
 
     <struct-type type-name='caste_attack' original-name='attackdefst'>
@@ -821,6 +820,7 @@
                         refers-to='$$._parent._parent.modifier_idx[$].refers-to'
                         index-refers-to='$$._parent.style_layer_idx[$].refers-to'/>
         </compound>
+
         <stl-vector name='color_modifiers' pointer-type='color_modifier_raw'/>
         <stl-vector name='tissue_styles' pointer-type='tissue_style_raw'/>
         <stl-vector name='shearable_tissue_layer'>
@@ -1146,7 +1146,7 @@
             </stl-vector>
         </compound>
 
-        <stl-vector name='speech_unk' type-name='int8_t' comment='initialized to -1'/>
+        <stl-vector name='speech_gender' type-name='pronoun_type'/>
         <stl-vector name='speech_index' type-name='int32_t'/>
         <stl-vector name='speech_token' pointer-type='stl-string'/>
 

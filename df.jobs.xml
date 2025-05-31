@@ -328,7 +328,7 @@
         <pointer name="job" type-name='job'/>
         <pointer name="building" type-name='building'/>
 
-        <int32_t name='total_dim_count' since='v0.43.05'/>
+        <int32_t name='total_dim_count'/>
 
         <stl-vector name='burrows' type-name='int32_t' ref-target='burrow'/>
         <bool name="use_burrows"/>
