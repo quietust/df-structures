@@ -1,5 +1,6 @@
 <data-definition>
-    <enum-type type-name='general_ref_type'>
+    <enum-type type-name='general_ref_type'> bay12: GeneralRef, no base type
+        <enum-item name='NONE' value='-1'/>
         <enum-item name="ARTIFACT"/>
         <enum-item name="IS_ARTIFACT"/>
         <enum-item name="NEMESIS"/>
@@ -121,20 +122,20 @@
                 <pointer type-name='int32_t' name='out_z'/>
             </vmethod>
             <vmethod is-destructor='true'/>
-            <vmethod name='clone'>
+            <vmethod name='clone' comment='bay12: copy'>
                 <ret-type><pointer type-name='general_ref'/></ret-type>
             </vmethod>
-            <vmethod>
-                <int32_t/>
-                <pointer type-name='stl-string'/>
+            <vmethod name='generateTitle' comment='bay12: generate_title'>
+                <enum type-name='written_content_type' name='form'/>
+                <pointer type-name='stl-string' name='title'/>
             </vmethod>
-            <vmethod name='getDescription'>
+            <vmethod name='getDescription' comment='bay12: descriptive_string'>
                 <pointer name='str' type-name='stl-string'/>
             </vmethod>
-            <vmethod name='getDescription2'>
+            <vmethod name='getDescription2' comment='bay12: short_name'>
                 <pointer name='str' type-name='stl-string'/>
             </vmethod>
-            <vmethod name='getDescription3' comment='for scholar flags'>
+            <vmethod name='getDescription3' comment='bay12: unique_xml_name'>
                 <pointer name='str' type-name='stl-string'/>
             </vmethod>
         </virtual-methods>
@@ -171,7 +172,7 @@
 
     <class-type type-name='general_ref_mapsquare' inherits-from='general_ref'
                 original-name='general_ref_mapsquarest'>
-        <enum base-type='int16_t' name='tiletype' type-name='tiletype'/>
+        <enum base-type='uint16_t' name='tiletype' type-name='tiletype'/>
         <int16_t name="mat_type" ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name="mat_index" init-value='-1'/>
     </class-type>
@@ -211,9 +212,9 @@
 
     <class-type type-name='general_ref_interactionst' inherits-from='general_ref'>
         <int32_t name='interaction_id' ref-target='interaction'/>
-        <int32_t name='source_id' ref-target='interaction_source' aux-value='$$.interaction_id'/>
-        <int32_t name='unk_08'/>
-        <int32_t name='unk_0c'/>
+        <int32_t name='source_idx' ref-target='interaction_source' aux-value='$$.interaction_id'/>
+        <int32_t name='target_idx' ref-target='interaction_target'/>
+        <int32_t name='effect_idx' ref-target='interaction_effect'/>
     </class-type>
 
     <class-type type-name='general_ref_abstract_buildingst' inherits-from='general_ref'>
@@ -226,7 +227,7 @@
     </class-type>
 
     <class-type type-name='general_ref_spherest' inherits-from='general_ref'>
-        <enum base-type='int16_t' name='sphere_type' type-name='sphere_type'/>
+        <enum name='sphere_type' type-name='sphere_type'/>
     </class-type>
 
     <class-type type-name='general_ref_sitest' inherits-from='general_ref'>
@@ -246,18 +247,18 @@
     </class-type>
 
     <class-type type-name='general_ref_entity_popst' inherits-from='general_ref'>
-        <int32_t name='unk_1'/>
+        <int32_t name='pop_id' ref-target='entity_population'/>
         <int32_t name='race' ref-target='creature_raw'/>
-        <int32_t name='unk_2'/>
-        <bitfield name='flags' type-name='undead_flags'/>
+        <int32_t name='num'/>
+        <bitfield name='flags' type-name='undead_flags'/> bay12: GEN_REF_EPOP_FLAG_*
     </class-type>
 
     <class-type type-name='general_ref_creaturest' inherits-from='general_ref'>
         <int32_t name='race' ref-target='creature_raw'/>
         <int32_t name='caste' ref-target='caste_raw' aux-value='$$.race'/>
-        <int32_t name='unk_1'/>
-        <int32_t name='unk_2'/>
-        <bitfield name='flags' type-name='undead_flags'/>
+        <int32_t name='pop_id' ref-target='entity_population'/>
+        <int32_t name='num'/>
+        <bitfield name='flags' type-name='undead_flags'/> bay12: GEN_REF_CREATURE_FLAG_*
     </class-type>
 
     <class-type type-name='general_ref_knowledge_scholar_flagst' inherits-from='general_ref'>
@@ -270,12 +271,12 @@
     </class-type>
 
     <class-type type-name='general_ref_value_levelst' inherits-from='general_ref'>
-        <enum name='value' base-type='int32_t' type-name='value_type'/>
+        <enum name='value' type-name='value_type'/>
         <int32_t name='level' comment='see http://dwarffortresswiki.org/index.php/DF2014:Personality_trait'/>
     </class-type>
 
     <class-type type-name='general_ref_languagest' inherits-from='general_ref'>
-        <int32_t name='unk_1'/>
+        <int32_t name='language_idx'/>
     </class-type>
 
     <class-type type-name='general_ref_written_contentst' inherits-from='general_ref'>
@@ -302,9 +303,9 @@
     <class-type type-name='general_ref_unit_milkeest' inherits-from='general_ref_unit'/>
     <class-type type-name='general_ref_unit_traineest' inherits-from='general_ref_unit'/>
     <class-type type-name='general_ref_unit_itemownerst' inherits-from='general_ref_unit'>
-        <bitfield name='flags' since='v0.34.06'>
+        <bitfield name='flags' since='v0.34.06' base-type='uint32_t'> bay12: GENERAL_REF_UNIT_ITEMOWNER_FLAG_*
             <flag-bit name='litter'
-                      comment='apparetly set after 1000 ticks, then confiscated in 1000 more ticks'/>
+                      comment='PROBATION; set after 1000 ticks, then confiscated in 1000 more ticks'/>
         </bitfield>
     </class-type>
     <class-type type-name='general_ref_unit_tradebringerst' inherits-from='general_ref_unit'/>
@@ -333,7 +334,7 @@
     <class-type type-name='general_ref_building_holderst' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_well_tag' inherits-from='general_ref_building'
                 original-name='general_ref_building_well_tagst'>
-        <int8_t name='direction'/>
+        <uint8_t name='direction'/>
     </class-type>
     <class-type type-name='general_ref_building_use_target_1st' inherits-from='general_ref_building'/>
     <class-type type-name='general_ref_building_use_target_2st' inherits-from='general_ref_building'/>
@@ -344,11 +345,11 @@
     <class-type type-name='general_ref_entity_offeredst' inherits-from='general_ref_entity'/>
     <class-type type-name='general_ref_entity_itemownerst' inherits-from='general_ref_entity'/>
 
-    <enum-type type-name='specific_ref_type'>
+    <enum-type type-name='specific_ref_type' base-type='int16_t'> bay12: ReferenceType
         <enum-attr name='union_field'/>
 
         <enum-item name='NONE' value='-1'/>
-        <enum-item/>
+        <enum-item name='BUILDING'/>
         <enum-item name='UNIT'>
             <item-attr name='union_field' value='unit'/>
         </enum-item>
@@ -402,13 +403,13 @@
 
         <enum-item name='ART_IMAGE'/>
         <enum-item name='CREATURE_DEF'/>
-        <enum-item name='ENTITY_ART_IMAGE'/>
-        <enum-item/>
+        <enum-item name='ENTITY_ART_IMAGE' comment='unused?'/>
+        <enum-item name='ABSTRACT_BUILDING'/>
         <enum-item name='ENTITY_POPULATION'/>
         <enum-item name='BREED'/>
     </enum-type>
 
-    <struct-type type-name='specific_ref'>
+    <struct-type type-name='specific_ref' original-name='referencest'>
         <enum name='type' base-type='int32_t' type-name='specific_ref_type'/>
 
         <compound is-union='true' name='data' union-tag-attr='union_field'>
@@ -422,13 +423,13 @@
             <pointer name='histfig' type-name='historical_figure'/>
             <pointer name='entity' type-name='historical_entity'/>
             <compound name='wrestle'>
-                <pointer name='unk_1'/>
+                <pointer name='unit' type-name='unit'/>
                 <pointer name='item' type-name='unit_item_wrestle'/>
             </compound>
         </compound>
     </struct-type>
 
-    <enum-type type-name='histfig_entity_link_type'>
+    <enum-type type-name='histfig_entity_link_type' base-type='int16_t'> bay12: HistFigEntityLinkType
         <enum-item name='MEMBER'/>
         <enum-item name='FORMER_MEMBER'/>
         <enum-item name='MERCENARY'/>
@@ -460,8 +461,8 @@
                 <pointer name='file' type-name='file_compressorst'/>
                 <enum name='loadversion' type-name='save_version'/>
             </vmethod>
-            <vmethod/>
-            <vmethod/>
+            <vmethod ret-type='int32_t' name='getSquadId'/>
+            <vmethod ret-type='int32_t' name='getSquadPosition'/>
             <vmethod ret-type='int32_t' name='getPosition'/>
             <vmethod ret-type='int32_t' name='getOccupation'/>
             <vmethod ret-type='int32_t' name='getPositionStartYear'/>
@@ -500,26 +501,26 @@
         <int32_t name='start_year'/>
     </class-type>
     <class-type type-name='histfig_entity_link_squadst' inherits-from='histfig_entity_link'>
-        <int32_t name='squad_id'/>
+        <int32_t name='squad_id' ref-target='squad'/>
         <int32_t name='squad_position'/>
         <int32_t name='start_year'/>
     </class-type>
     <class-type type-name='histfig_entity_link_former_squadst' inherits-from='histfig_entity_link'>
-        <int32_t name='squad_id'/>
+        <int32_t name='squad_id' ref-target='squad'/>
         <int32_t name='start_year'/>
         <int32_t name='end_year'/>
     </class-type>
     <class-type type-name='histfig_entity_link_occupationst' inherits-from='histfig_entity_link'>
-        <int32_t name='occupation_id'/>
+        <int32_t name='occupation_id' ref-target='occupation'/>
         <int32_t name='start_year'/>
     </class-type>
     <class-type type-name='histfig_entity_link_former_occupationst' inherits-from='histfig_entity_link'>
-        <int32_t name='occupation_id'/>
+        <int32_t name='occupation_id' ref-target='occupation'/>
         <int32_t name='start_year'/>
         <int32_t name='end_year'/>
     </class-type>
 
-    <enum-type type-name='histfig_site_link_type'>
+    <enum-type type-name='histfig_site_link_type' base-type='int16_t'> bay12: HistFigSiteLinkType
         <enum-item name='OCCUPATION'/>
         <enum-item name='SEAT_OF_POWER'/>
         <enum-item name='HANGOUT'/>
@@ -544,7 +545,7 @@
                 <pointer name='file' type-name='file_compressorst'/>
                 <enum name='loadversion' type-name='save_version'/>
             </vmethod>
-            <vmethod comment='generate_xml'>
+            <vmethod name='generate_xml'>
                 <pointer type-name='stl-fstream'/>
                 <int32_t name='indent'/>
             </vmethod>
@@ -552,7 +553,7 @@
     </class-type>
 
     <class-type type-name='histfig_site_link_occupationst' inherits-from='histfig_site_link'>
-        <int32_t name='unk_1'/>
+        <int32_t name='occupation_id' ref-target='occupation'/>
     </class-type>
     <class-type type-name='histfig_site_link_seat_of_powerst' inherits-from='histfig_site_link'/>
     <class-type type-name='histfig_site_link_hangoutst' inherits-from='histfig_site_link'/>
@@ -565,7 +566,7 @@
     <class-type type-name='histfig_site_link_prison_site_building_profilest' inherits-from='histfig_site_link'/>
 
 
-    <enum-type type-name='histfig_hf_link_type'>
+    <enum-type type-name='histfig_hf_link_type' base-type='int16_t'> bay12: HistFigHfLinkType
         <enum-item name='MOTHER'/>
         <enum-item name='FATHER'/>
         <enum-item name='SPOUSE'/>
@@ -596,7 +597,7 @@
                 <pointer name='file' type-name='file_compressorst'/>
                 <enum name='loadversion' type-name='save_version'/>
             </vmethod>
-            <vmethod comment='generate_xml'>
+            <vmethod name='generate_xml'>
                 <pointer type-name='stl-fstream'/>
                 <int32_t name='indent'/>
             </vmethod>
@@ -614,8 +615,8 @@
     <class-type type-name='histfig_hf_link_masterst' inherits-from='histfig_hf_link'/>
     <class-type type-name='histfig_hf_link_apprenticest' inherits-from='histfig_hf_link'/>
     <class-type type-name='histfig_hf_link_companionst' inherits-from='histfig_hf_link'>
-        <int32_t name='unk_1'/>
-        <int32_t name='unk_2'/>
+        <int32_t name='agreement_id'/>
+        <int32_t name='agreement_party_id'/>
     </class-type>
     <class-type type-name='histfig_hf_link_former_apprenticest' inherits-from='histfig_hf_link'/>
     <class-type type-name='histfig_hf_link_former_masterst' inherits-from='histfig_hf_link'/>
@@ -623,22 +624,22 @@
     <class-type type-name='histfig_hf_link_former_spousest' inherits-from='histfig_hf_link'/>
     <class-type type-name='histfig_hf_link_deceased_spousest' inherits-from='histfig_hf_link'/>
 
-    <enum-type type-name='entity_entity_link_type' base-type='int16_t'>
+    <enum-type type-name='entity_entity_link_type'> bay12: EntityAssociation, no base type
         <enum-item name='PARENT'/>
         <enum-item name='CHILD'/>
         <enum-item name='RELIGIOUS' comment='Seen between religion and merc company.' since='v0.47.01'/>
     </enum-type>
 
-    <struct-type type-name='entity_entity_link'>
+    <struct-type type-name='entity_entity_link' original-name='entity_associationst'>
         <enum base-type='int16_t' type-name='entity_entity_link_type' name='type'/>
         <int32_t name='target' ref-target='historical_entity'/>
         <int16_t name='strength'/>
     </struct-type>
 
-    <enum-type type-name='entity_site_link_type' base-type='int32_t' comment="Mostly guesswork, hence the 'research notes' below. Interacts highly with status">
+    <enum-type type-name='entity_site_link_type' base-type='int32_t'> bay12: EntitySiteProfileLocationType
         <enum-item name='None' value='-1'/>
             Probably inactive/failed/NA. Seen with status = 0/2/8/16/128/144/8192. Entities Civilization/SiteGovernment/NomadicGroup/Outcast (not all value/entity permutations)
-        <enum-item name='Claim'/>
+        <enum-item name='All'/>
             Civilization: status = 0 if any flags set and status = 2 if not, with the exception of "fortress" that can be set in either case. capital, monument, reclaim, and land_for_holding flags seen.
             does not seem to indicate clearly whether the site is owned currently. Note that civs don't have links to most of its sites, as it normally goes via site governments.
             SiteGovernment: flags.residence => status = 0. No flags set with any other status value. Thus, SiteGovernment/type=Claim/status=0 probably means it's the current official local government.
@@ -646,10 +647,10 @@
             Religion: all were Fortress (and had that flag) and had status = 0. Thus, probably civ level "owner", as the monasteries seem to have local site governments.
             MilitaryUnit: residence+fortress flags => status = 0 and owner (with no local site government). status = 5 and no flags set was the alternative seen.
             Outcast: flags.residence => status = 0 and local government. Alternative seen is status = 1 and no flags set.
-        <enum-item name='Unk_1'/>
-        <enum-item name='Foreign_Crime'/>
+        <enum-item name='Inside_Wall'/>
+        <enum-item name='Outside_Wall'/>
             NomadicGroup/SiteGovernment, all with criminal_gang flag set and status = 0. Can also be found with None (failed/inactive?). Connection usually not mentioned anywhere.
-        <enum-item name='Unk_3'/>
+        <enum-item name='Outskirts'/>
         <enum-item name='Local_Activity'/>
             Religion: All have status = 0. At least one of the residence and base_of_operation flags set.
             Outcast: status = 0 => flag residence and/or base_of_operation. Reverse not true. Assume status = 0 still active, with 2, 3, 131, 195 being failures.
@@ -657,7 +658,7 @@
             Guild: All have status = 0 and the capital flag set.
     </enum-type>
 
-    <bitfield-type type-name='entity_site_link_flags' base-type='uint32_t'>
+    <bitfield-type type-name='entity_site_link_flags' base-type='uint32_t'> bay12: ENTITY_SITE_PROFILE_FLAG_*
         <flag-bit name='residence'             comment='site is residence'/>
         <flag-bit name='capital'               comment='site is capital'/>
         <flag-bit name='fortress'              comment='used at least by those castles which arent currently in'/>
@@ -677,32 +678,15 @@
         <flag-bit name='holy_city'             comment='for the holy city of a religion'/>
     </bitfield-type>
 
-    <bitfield-type type-name='entity_site_link_status_flags' base-type='uint32_t' comment="The meaning of the bits are highly uncertain, and the bits are named with their values as if part of an integer to match research made against an integer field">
-        <flag-bit name='failure_1'/>
-        <flag-bit name='failure_2'/>
-        <flag-bit name='unk_4'/>
-        <flag-bit name='unk_8'/>
-        <flag-bit name='unk_16'/>
-        <flag-bit name='unk_32'/>
-        <flag-bit name='unk_64'/>
-        <flag-bit name='unk_128'/>
-        <flag-bit name='unk_256'/>
-        <flag-bit name='unk_512'/>
-        <flag-bit name='unk_1024'/>
-        <flag-bit name='unk_2048'/>
-        <flag-bit name='unk_4096'/>
-        <flag-bit name='unk_8192'/>
-    </bitfield-type>
-
-    <struct-type type-name='entity_site_link'>
-        <int32_t name="target" ref-target='world_site'/>
+    <struct-type type-name='entity_site_link' original-name='entity_site_profilest'>
+        <int32_t name="target" ref-target='world_site'/> this is a union in toady code but we can probably ignore that per putnam
         <int32_t name="entity_id" ref-target='historical_entity'/>
-        <int32_t name='land_holder' init-value='-1' comment="index into entity.positions.assignments of Civilization"/>
-        <enum name='type' type-name='entity_site_link_type' base-type='int32_t'/>
-        <int32_t name='unk_2' init-value='-1'/>
-        <int32_t name='unk_3' init-value='-1'/>
+        <int32_t name='position_profile_id' init-value='-1' comment="index into entity.positions.assignments of Civilization (?)"/>
+        <enum name='type' type-name='entity_site_link_type' comment="called location in df source"/>
+        <int32_t name='start_hr' init-value='-1'/>
+        <int32_t name='end_hr' init-value='-1'/>
         <bitfield name='flags' type-name='entity_site_link_flags'/>
-        <bitfield name='status' type-name='entity_site_link_status_flags'/>
+        <bitfield name='former_flag' type-name='entity_site_link_flags'/>
           Summary: 0 seems to be active, 1, 2, 3, 5, 131, various cessations of activity. 8, 16, 128, 144, 8192 something unrelated, and the 129, 195 possible cessations"
           0: Civilization/SiteGovernment/NomadicGroup/Religion/Outcast/MerchantCompany/Guild. Seems to be 'Active'. Civ can have 'Active' claim on site not held, while others seem to be currently active.
           1: SiteGovernment/NomadicGroup/Outcast. Seems to be defeated and losing presence at the site. Nomads/Outcasts might not have been the masters of the site as single rampage can cause enmity of two entities.
@@ -719,21 +703,25 @@
           195: Outcast (only 2 entries). type = Local_Activity. No flags. Both moved to inn and became primary criminal org. One had lots of members moving from the inn. Different site destroyed in both cases. No incorporation seen, though.
           8192: Civilization/SiteGovernment. type = None. No flags. No apparent connection.
         <int32_t name="link_strength" init-value='100'/>
-        <int32_t name='unk_5' init-value='0' comment="all non zero cases are SiteGovernments with type = Claim, status = 0, and flags.residence = true. All examined were formed as forced administrations"/>
-        <int32_t name='unk_6' init-value='0' comment="same value as previous field"/>
-        <stl-vector name='unk_7' comment="When a single element the first value makes sense as an abstract building related to the entity, but longer lists do not, including numbers larger than the number of abstract buildings">
-            <pointer>
-                <int32_t name='unk_1' init-value='-1'/>
-                <int32_t name='unk_2' comment="1, 2, 5 seen"/>
+        <int32_t name='initial_controlling_population' init-value='0' comment="all non zero cases are SiteGovernments with type = Claim, status = 0, and flags.residence = true. All examined were formed as forced administrations"/>
+        <int32_t name='last_check_controlling_population' init-value='0' comment="same value as previous field"/>
+        <stl-vector name='ab_profile' comment="When a single element the first value makes sense as an abstract building related to the entity, but longer lists do not, including numbers larger than the number of abstract buildings">
+            <pointer> bay12: entity_site_ab_profilest
+                <int32_t name='id' init-value='-1'/>
+                <bitfield name='purpose_flag' base-type='uint32_t'> bay12: ENTITY_SITE_AB_PROFILE_FLAG_*
+                    <flag-bit name='residence'/>
+                    <flag-bit name='place_of_worship'/>
+                    <flag-bit name='headquarters'/>
+                </bitfield>
             </pointer>
         </stl-vector>
         <int32_t name='target_site_x' comment='target site world coordinate x'/>
         <int32_t name='target_site_y' comment='target site world coordinate y'/>
-        <int32_t name='unk_v43_1' init-value='-1' since='v0.43.01' comment="all cases seen were NomadicGroup with criminal_gang flag set, unk_4 = 0 and type = Foreign_Crime, except for cases with type = Claim and residence flag set as well"/>
-        <int32_t name='unk_v43_2' init-value='-1' since='v0.43.01' comment="paired with the previous field. Could be year/year_tick pair set to the start of play for all of these as all have the same number pair in the same save"/>
+        <int32_t name='last_checked_army_year' init-value='-1' since='v0.43.01' comment="all cases seen were NomadicGroup with criminal_gang flag set, unk_4 = 0 and type = Foreign_Crime, except for cases with type = Claim and residence flag set as well"/>
+        <int32_t name='last_checked_army_year_tick' init-value='-1' since='v0.43.01' comment="paired with the previous field. Could be year/year_tick pair set to the start of play for all of these as all have the same number pair in the same save"/>
     </struct-type>
 
-    <bitfield-type type-name='undead_flags' base-type='uint16_t'>
+    <bitfield-type type-name='undead_flags' base-type='uint16_t'> bay12: HF_KILL_FLAG_*, GEN_REF_EPOP_FLAG_* and GEN_REF_CREATURE_FLAG_*
         <flag-bit name='zombie'/>
         <flag-bit name='ghostly'/>
     </bitfield-type>

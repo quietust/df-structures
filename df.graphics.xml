@@ -278,6 +278,29 @@
         <enum-item name='justify_cont'/>
         <enum-item name='not_truetype'/>
     </enum-type>
+
+    <struct-type type-name='tile_pagest' key-field='token'>
+        <stl-string name='token'/>
+        <stl-string name='filename'/>
+
+        <int16_t name='tile_dim_x'/>
+        <int16_t name='tile_dim_y'/>
+        <int16_t name='page_dim_x'/>
+        <int16_t name='page_dim_y'/>
+
+        <stl-vector name='texpos' type-name='long'/>
+        <stl-vector name='datapos' type-name='long'/>
+        <stl-vector name='texpos_gs' type-name='long'/>
+        <stl-vector name='datapos_gs' type-name='long'/>
+
+        <bool name='loaded'/>
+    </struct-type>
+
+    <struct-type type-name='texture_handlerst'>
+        <stl-vector name='page' pointer-type='tile_pagest'/>
+        <stl-vector name='texpos' type-name='int32_t'/>
+        <stl-vector name='datapos' type-name='int32_t'/>
+    </struct-type>
 </data-definition>
 
 <!--

@@ -1,5 +1,5 @@
 <data-definition>
-    <enum-type type-name='announcement_type' base-type='int16_t'>
+    <enum-type type-name='announcement_type' base-type='int16_t'> bay12: AnnouncementType
         <enum-item name='REACHED_PEAK'/>
         <enum-item name='ERA_CHANGE'/>
         <enum-item name='FEATURE_DISCOVERY'/>
@@ -383,7 +383,7 @@
         <enum-item name='FAILED_DISMOUNT' since='v0.47.01'/>
     </enum-type>
 
-    <bitfield-type type-name='announcement_flags'>
+    <bitfield-type type-name='announcement_flags'> bay12: INIT_ANNOUNCEMENT_FLAG_*
         <flag-bit name='DO_MEGA' comment='BOX'/>
         <flag-bit name='PAUSE' comment='P'/>
         <flag-bit name='RECENTER' comment='R'/>
@@ -393,13 +393,12 @@
         <flag-bit name='UNIT_COMBAT_REPORT_ALL_ACTIVE' comment='UCR_A'/>
     </bitfield-type>
 
-    <struct-type type-name='announcements'>
+    <struct-type type-name='announcements' original-name='d_init_announcementst'>
         <static-array name='flags' type-name='announcement_flags'
-                      count='339' index-enum='announcement_type'/>
-        <pointer name='unused' comment='needed to fix alignment on 64-bit platforms'/>
+                      count='352' index-enum='announcement_type'/>
     </struct-type>
 
-    <struct-type type-name='report'
+    <struct-type type-name='report' original-name='announcementst'
                  instance-vector='$global.world.status.reports' key-field='id'>
         <enum base-type='int16_t' name='type' type-name='announcement_type'
               comment='valid only if coordinates are'/>
@@ -412,7 +411,7 @@
 
         <int32_t name='duration' init-value='100' comment='remaining graphical frames to display this report in announcement bar'/>
 
-        <bitfield name='flags' base-type='uint8_t'>
+        <bitfield name='flags' base-type='uint8_t'> bay12: ANNOUNCEMENTFLAG_*
             <flag-bit name='continuation'
                       comment='When split into multiple lines, set on all but the first'/>
             <flag-bit name='unconscious' comment='units.active[0]'/>
@@ -430,25 +429,25 @@
         <int32_t name='year'/>
         <int32_t name='time'/>
 
-        <int32_t name='unk_v40_1' init-value='-1' since='v0.40.01'/>
-        <int32_t name='unk_v40_2' init-value='-1' since='v0.40.01'/>
+        <int32_t name='activity_id' init-value='-1' since='v0.40.01'/>
+        <int32_t name='activity_event_id' init-value='-1' since='v0.40.01'/>
         <int32_t name='speaker_id' ref-target='unit' since='v0.40.01' comment='unit speaking the conversation'/>
     </struct-type>
 
-    <enum-type type-name='report_zoom_type' base-type='int32_t'>
+    <enum-type type-name='report_zoom_type' base-type='int32_t'> bay12: AnnouncementLocationType
         <enum-item name='Generic'/>
         <enum-item name='Item'/>
         <enum-item name='Unit'/>
     </enum-type>
 
-    <struct-type type-name='popup_message'>
+    <struct-type type-name='popup_message' original-name='mega_announcementst'>
         <stl-string name='text'/>
 
         <int16_t name='color' init-value='7'/>
         <bool name='bright' init-value='true'/>
     </struct-type>
 
-    <struct-type type-name='report_init' comment='allocated on the stack, included in df-structures to assist with disassembly'>
+    <struct-type type-name='announcement_infost' comment='allocated on the stack, included in df-structures to assist with disassembly'>
         <enum base-type='int16_t' type-name='announcement_type' name='type'/>
         <int16_t name='color'/>
         <bool name='bright'/>
@@ -457,13 +456,13 @@
         <compound type-name='coord' name='pos2'/>
         <enum base-type='int32_t' type-name='report_zoom_type' name='zoom_type2'/>
         <int16_t name='display_timer' init-value='2000' comment='graphical frames for announcement bar to linger on last line with no new announcement'/>
-        <pointer type-name='unit' name='unit1'/>
-        <pointer type-name='unit' name='unit2'/>
-        <int32_t name='unk_v40_1' init-value='-1' comment='same as unknown field in report'/>
-        <int32_t name='unk_v40_2' init-value='-1' comment='same as unknown field in report'/>
+        <pointer type-name='unit' name='unit_a'/>
+        <pointer type-name='unit' name='unit_d'/>
+        <int32_t name='activity_id' init-value='-1' comment='same as field in report'/>
+        <int32_t name='activity_event_id' init-value='-1' comment='same as field in report'/>
         <int32_t name='speaker_id' ref-target='unit'/>
-        <bitfield base-type='uint8_t' name='flags'>
-            <flag-bit name='hostile_combat' comment='hunting or combat report, not sparring'/>
+        <bitfield base-type='uint32_t' name='flags'> bay12: ANNOUNCEMENT_INFO_FLAG_*
+            <flag-bit name='SPARRING_EVENT' comment='determined by unit_action_data_attack.flags.sparring_hit'/>
         </bitfield>
     </struct-type>
 </data-definition>

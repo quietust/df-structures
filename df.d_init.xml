@@ -1,5 +1,5 @@
 <data-definition>
-    <enum-type type-name='d_init_nickname'>
+    <enum-type type-name='d_init_nickname' base-type='int32_t'> bay12: NicknameDisplayType
         <enum-item name='REPLACE_FIRST'/>
         <enum-item name='CENTRALIZE'/>
         <enum-item name='REPLACE_ALL'/>
@@ -12,42 +12,42 @@
         <enum-item name='ON'/>
     </enum-type>
 
-    <enum-type type-name='d_init_embark_confirm'>
+    <enum-type type-name='d_init_embark_confirm' base-type='int32_t'> bay12: PostPrepareEmbarkConfirmationType
         <enum-item name='ALWAYS'/>
         <enum-item name='IF_POINTS_REMAIN'/>
         <enum-item name='NO'/>
     </enum-type>
 
-    <enum-type type-name='d_init_idlers' base-type='int16_t'>
+    <enum-type type-name='d_init_idlers' base-type='int32_t'> bay12: InitDisplayIdlersType
         <enum-item name='OFF' value='-1'/>
         <enum-item name='TOP'/>
         <enum-item name='BOTTOM'/>
     </enum-type>
 
-    <enum-type type-name='d_init_tunnel' base-type='int16_t'>
+    <enum-type type-name='d_init_tunnel' base-type='int16_t'> bay12: not an actual enum
         <enum-item name='NO'/>
         <enum-item name='FINDER'/>
         <enum-item name='ALWAYS'/>
     </enum-type>
 
-    <enum-type type-name='d_init_flags1'>
+    <enum-type type-name='d_init_flags1'> bay12: DInitDisplayFlagType
         <enum-item name='VARIED_GROUND_TILES'/>
         <enum-item name='ENGRAVINGS_START_OBSCURED'/>
         <enum-item name='SHOW_IMP_QUALITY'/>
         <enum-item name='SHOW_FLOW_AMOUNTS'/>
     </enum-type>
 
-    <enum-type type-name='d_init_flags2'>
+    <enum-type type-name='d_init_flags2'> bay12: InitAdventureFlagType
         <enum-item name='MORE'/>
         <enum-item name='ADVENTURER_TRAPS'/>
         <enum-item name='ADVENTURER_ALWAYS_CENTER'/>
     </enum-type>
 
-    <enum-type type-name='d_init_flags3'>
+    <enum-type type-name='d_init_flags3'> bay12: InitDwarfFlagType
         <enum-item name='COFFIN_NO_PETS_DEFAULT'/>
     </enum-type>
 
-    <enum-type type-name='d_init_flags4'>
+    <enum-type type-name='d_init_flags4'> bay12: InitFeatureFlagType
         <enum-item name='TEMPERATURE'/>
         <enum-item name='WEATHER'/>
         <enum-item name='ECONOMY'/>
@@ -71,80 +71,89 @@
         <enum-item name='WALKING_SPREADS_SPATTER_ADV'/>
     </enum-type>
 
-    <struct-type type-name='d_init'>
-        <df-flagarray name='flags1' index-enum='d_init_flags1'/>
+    <struct-type type-name='d_init' original-name='d_initst'>
+        <compound name='display'> bay12: d_init_displayst
+            <df-flagarray name='flags1' index-enum='d_init_flags1'/>
 
-        <static-array name='nickname' count='10' index-enum='game_type'><enum type-name='d_init_nickname'/></static-array>
+            <static-array name='nickname' count='10' index-enum='game_type'><enum type-name='d_init_nickname'/></static-array>
 
-        <uint8_t name='sky_tile'/>
-        <static-array name='sky_color' type-name='int16_t' count='3'/>
-        <uint8_t name='chasm_tile'/>
-        <uint8_t name='pillar_tile'/>
+            <uint8_t name='sky_tile'/>
+            <static-array name='sky_color' type-name='int16_t' count='3'/>
+            <uint8_t name='chasm_tile'/>
+            <uint8_t name='pillar_tile'/>
 
-        N S E W NS NE NW SE SW EW NSE NSW NEW SEW NSEW
-        <static-array name='track_tiles' type-name='uint8_t' count='15' since='v0.34.08'/>
-        <static-array name='track_tile_invert' type-name='uint8_t' count='15' since='v0.34.08'/>
-        <static-array name='track_ramp_tiles' type-name='uint8_t' count='15' since='v0.34.08'/>
-        <static-array name='track_ramp_invert' type-name='uint8_t' count='15' since='v0.34.08'/>
+            N S E W NS NE NW SE SW EW NSE NSW NEW SEW NSEW
+            <static-array name='track_tiles' type-name='uint8_t' count='15' since='v0.34.08'/>
+            <static-array name='track_tile_invert' type-name='uint8_t' count='15' since='v0.34.08'/>
+            <static-array name='track_ramp_tiles' type-name='uint8_t' count='15' since='v0.34.08'/>
+            <static-array name='track_ramp_invert' type-name='uint8_t' count='15' since='v0.34.08'/>
 
-        <static-array name='tree_tiles' type-name='uint8_t' count='104' since='v0.40.01'/>
+            <static-array name='tree_tiles' type-name='uint8_t' count='104' since='v0.40.01'/>
 
-        <static-array name='chasm_color' type-name='int16_t' count='3'/>
+            <static-array name='chasm_color' type-name='int16_t' count='3'/>
 
-        <compound name='wound_color'>
-            <static-array name='none' type-name='int16_t' count='3'/>
-            <static-array name='minor' type-name='int16_t' count='3'/>
-            <static-array name='inhibited' type-name='int16_t' count='3'/>
-            <static-array name='function_loss' type-name='int16_t' count='3'/>
-            <static-array name='broken' type-name='int16_t' count='3'/>
-            <static-array name='missing' type-name='int16_t' count='3'/>
+            <compound name='wound_color'>
+                <static-array name='none' type-name='int16_t' count='3'/>
+                <static-array name='minor' type-name='int16_t' count='3'/>
+                <static-array name='inhibited' type-name='int16_t' count='3'/>
+                <static-array name='function_loss' type-name='int16_t' count='3'/>
+                <static-array name='broken' type-name='int16_t' count='3'/>
+                <static-array name='missing' type-name='int16_t' count='3'/>
+            </compound>
+
+            <enum name="idlers" base-type='int16_t' type-name='d_init_idlers'/>
+            <enum name="show_embark_tunnel" base-type='int16_t' type-name='d_init_tunnel'/>
         </compound>
 
-        <enum name="idlers" base-type='int16_t' type-name='d_init_idlers'/>
-        <enum name="show_embark_tunnel" base-type='int16_t' type-name='d_init_tunnel'/>
+        <compound name='adventure'> bay12: d_init_adventurest
+            <df-flagarray name='flags2' index-enum='d_init_flags2'/>
 
-        <df-flagarray name='flags2' index-enum='d_init_flags2'/>
+            <int32_t name="display_length"/>
 
-        <int32_t name="display_length"/>
-
-        <enum name="adventurer_z_view" type-name='d_init_z_view'/>
-        <int32_t name="adventurer_z_view_size"/>
-
-        <df-flagarray name='flags3' index-enum='d_init_flags3'/>
-
-        <int32_t name="population_cap"/>
-        <int32_t name="strict_population_cap"/>
-        <int32_t name="baby_cap_absolute"/>
-        <int32_t name="baby_cap_percent"/>
-        <int32_t name="visitor_cap"/>
-
-        <int32_t name="specific_seed_cap"/>
-        <int32_t name="fortress_seed_cap"/>
-
-        <static-array name='invasion_soldier_cap' type-name='int32_t' count='3'/>
-        <static-array name='invasion_monster_cap' type-name='int32_t' count='3'/>
-        <static-array name='path_cost' type-name='int32_t' count='4'/>
-        <static-array name='embark_rect' type-name='int16_t' count='2'/>
-
-        <compound name='store_dist'>
-            <int16_t name='item_decrease'/>
-            <int16_t name='seed_combine'/>
-            <int16_t name='bucket_combine'/>
-            <int16_t name='barrel_combine'/>
-            <int16_t name='bin_combine'/>
+            <enum name="adventurer_z_view" type-name='d_init_z_view'/>
+            <int32_t name="adventurer_z_view_size"/>
         </compound>
 
-        <static-array name='set_labor_lists' type-name='int16_t' count='2'/>
+        <compound name='dwarf'> bay12: d_init_dwarfst
+            <df-flagarray name='flags3' index-enum='d_init_flags3'/>
 
-        <int32_t name='graze_coefficient' since='v0.40.13'/>
+            <int32_t name="population_cap"/>
+            <int32_t name="strict_population_cap"/>
+            <int32_t name="baby_cap_absolute"/>
+            <int32_t name="baby_cap_percent"/>
+            <int32_t name="visitor_cap"/>
 
-        <static-array name='temple_value_levels' type-name='int32_t' count='2' since='v0.47.01'/>
-        <static-array name='priesthood_unit_counts' type-name='int32_t' count='2' since='v0.47.01'/>
-        <static-array name='guildhall_value_levels' type-name='int32_t' count='2' since='v0.47.01'/>
-        <static-array name='guild_unit_counts' type-name='int32_t' count='2' since='v0.47.01'/>
+            <int32_t name="specific_seed_cap"/>
+            <int32_t name="fortress_seed_cap"/>
 
-        <df-flagarray name='flags4' index-enum='d_init_flags4'/>
-        <enum name="post_prepare_embark_confirmation" type-name='d_init_embark_confirm'/>
+            <static-array name='invasion_soldier_cap' type-name='int32_t' count='3'/>
+            <static-array name='invasion_monster_cap' type-name='int32_t' count='3'/>
+            <static-array name='path_cost' type-name='int32_t' count='4'/>
+            <static-array name='embark_rect' type-name='int16_t' count='2'/>
+
+            <compound name='store_dist'>
+                <int16_t name='item_decrease'/>
+                <int16_t name='seed_combine'/>
+                <int16_t name='bucket_combine'/>
+                <int16_t name='barrel_combine'/>
+                <int16_t name='bin_combine'/>
+            </compound>
+
+            <static-array name='set_labor_lists' type-name='int16_t' count='2'/>
+
+            <int32_t name='graze_coefficient' since='v0.40.13'/>
+
+            <static-array name='temple_value_levels' type-name='int32_t' count='2' since='v0.47.01'/>
+            <static-array name='priesthood_unit_counts' type-name='int32_t' count='2' since='v0.47.01'/>
+            <static-array name='guildhall_value_levels' type-name='int32_t' count='2' since='v0.47.01'/>
+            <static-array name='guild_unit_counts' type-name='int32_t' count='2' since='v0.47.01'/>
+        </compound>
+
+        <compound name='feature'> bay12: d_init_featurest
+            <df-flagarray name='flags4' index-enum='d_init_flags4'/>
+            <enum name="post_prepare_embark_confirmation" type-name='d_init_embark_confirm'/>
+        </compound>
+
         <compound name='announcements' type-name='announcements'/>
     </struct-type>
 </data-definition>

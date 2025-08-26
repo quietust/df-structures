@@ -1,33 +1,20 @@
 <data-definition>
-    <enum-type type-name='worldgen_region_type'>
-        <enum-item name='SWAMP'/>
-        <enum-item name='DESERT'/>
-        <enum-item name='FOREST'/>
-        <enum-item name='MOUNTAINS'/>
-        <enum-item name='OCEAN'/>
-        <enum-item name='LAKE'/>
-        <enum-item name='GLACIER'/>
-        <enum-item name='TUNDRA'/>
-        <enum-item name='GRASSLAND'/>
-        <enum-item name='HILLS'/>
-    </enum-type>
-
-    <enum-type type-name='worldgen_range_type'>
+    <enum-type type-name='worldgen_range_type'> bay12: RegionField
         <enum-item name='ELEVATION'/>
         <enum-item name='RAINFALL'/>
-        <enum-item/>
+        <enum-item name='VEGETATION'/>
         <enum-item name='TEMPERATURE'/>
-        <enum-item/>
-        <enum-item name='DRAINAGE'/>
+        <enum-item name='EVIL'/>
+        <enum-item name='DRAINAGE' comment='GEOLOGY'/>
         <enum-item name='VOLCANISM'/>
         <enum-item name='SAVAGERY'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='AIRMASS_TEMP'/>
+        <enum-item name='AIRMASS_X'/>
+        <enum-item name='AIRMASS_Y'/>
+        <enum-item name='WEATHER'/>
+        <enum-item name='DAILY_WINDS'/>
+        <enum-item name='SNOWFALL'/>
+        <enum-item name='SALINITY'/>
         <enum-item/>
         <enum-item/>
         <enum-item/>
@@ -41,13 +28,18 @@
 
     <enum-type type-name='units_other_id'>
         <enum-item name='ANY_RIDER'/>
-        <enum-item name='ANY_BABY2'/>
+        <enum-item name='ANY_BABY'/>
     </enum-type>
 
     <df-other-vectors-type type-name='units_other' index-enum='units_other_id' item-type='unit'>
     </df-other-vectors-type>
 
-    <enum-type type-name='conflict_level'>
+    <struct-type type-name='unit_context_block' original-name='unit_context_blockst'>
+        <static-array name='context_unit' pointer-type='unit' count='200' />
+        <int32_t name="num"/>
+    </struct-type>
+
+    <enum-type type-name='conflict_level' base-type='int32_t'> bay12: ConflictStateType
         <enum-item name='None' value='-1'/>
         <enum-item name='Encounter'/>
         <enum-item name='Horseplay'/>
@@ -58,70 +50,72 @@
         <enum-item name='NoQuarter'/>
     </enum-type>
 
-    <struct-type type-name='incident_hfid'>
-        <int32_t name="hfid" ref-target='historical_figure' since='v0.40.01'/>
-        <int32_t name='unk_hfid' ref-target='historical_figure' since='v0.44.01' comment="same as hfid seen"/>
-        <int32_t name='unk_hfid2' ref-target='historical_figure' since='v0.44.01' comment="same as hfid seen"/>
-        <stl-vector name='unk_3' type-name='int32_t' ref-target='identity' since='v0.44.01'/>
+    <struct-type type-name='incident_hfid' original-name='incident_hfst'>
+        <int32_t name="hfid" init-value='-1' ref-target='historical_figure' since='v0.40.01' comment="bay12: true hf of incident"/>
+        <int32_t name='visual_hfid' init-value='-1' ref-target='historical_figure' since='v0.44.01' comment="bay12: basic visual id"/>
+        <int32_t name='historical_hfid' init-value='-1' ref-target='historical_figure' since='v0.44.01' comment="bay12: if any witness knew actual name"/>
+        <stl-vector name='all_witnessed_ident' type-name='int32_t' ref-target='identity' since='v0.44.01'/>
     </struct-type>
 
-    <struct-type type-name='incident'
+    <enum-type type-name='incident_type' base-type='int32_t'> bay12: IncidentType
+        <enum-item name='Death'/>
+        <enum-item name='Crime' comment="Visible indirectly through convictions or crime effects (e.g. killing/maiming someone)"/>
+        <enum-item name='Attack'/>
+        <enum-item name='Escalation'/>
+        <enum-item name='Reunion'/>
+        <enum-item name='YieldDemand'/>
+        <enum-item name='Performance'/>
+        <enum-item name='Artifact'/>
+        <enum-item name='Writing'/>
+        <enum-item name='SelfID'/>
+        <enum-item name='RefusedID'/>
+    </enum-type>
+
+    <struct-type type-name='incident' original-name='incidentst'
                  instance-vector='$global.world.incidents.all' key-field='id'>
         dtor 0x8C1AE10
 
         <int32_t name='id'/>
-        <enum name='type' base-type='int32_t'>
-            <enum-item name='Death'/>
-            <enum-item name='Crime' comment="Visible indirectly through convictions or crime effects (e.g. killing/maiming someone)"/>
-            <enum-item name='Attack'/>
-            <enum-item name='Escalation'/>
-            <enum-item name='Reunion'/>
-            <enum-item name='YieldDemand'/>
-            <enum-item name='Performance'/>
-            <enum-item name='Artifact'/>
-            <enum-item name='Writing'/>
-            <enum-item name='SelfID'/>
-            <enum-item name='RefusedID'/>
-        </enum>
+        <enum name='type' type-name='incident_type'/>
 
         <stl-vector name="witnesses" type-name='int32_t' ref-target='unit'/>
 
-        <int32_t name='unk_year'/>
-        <int32_t name='unk_year_tick'/>
+        <int32_t name='last_witness_year'/>
+        <int32_t name='last_witness_year_tick'/>
 
         <int32_t name="victim" ref-target='unit'/>
         <compound type-name='incident_hfid' name='victim_hf'/>
         <int32_t name="victim_race" ref-target='creature_raw' since='v0.40.01'/>
         <int32_t name="victim_caste" ref-target='caste_raw' aux-value='$$.victim_race' since='v0.40.01'/>
 
-        <int32_t name='entity2' ref-target='historical_entity' since='v0.40.01' comment="Seen with Crime"/>
-        <int32_t name='unk_v40_1c' init-value='-1' since='v0.40.01'/>
+        <int32_t name='victim_entity' ref-target='historical_entity' since='v0.40.01' comment="Seen with Crime"/>
+        <int32_t name='victim_item' ref-target='item' since='v0.40.01'/>
 
         <int32_t name='criminal' ref-target='unit'/>
         <compound name='criminal_hf' type-name='incident_hfid'/>
         <int32_t name='criminal_race' ref-target='creature_raw' since='v0.40.01'/>
         <int32_t name='criminal_caste' ref-target='caste_raw' aux-value='$$.killer_race' since='v0.40.01'/>
 
-        <int32_t name='entity1' ref-target='historical_entity' since='v0.40.01'/>
-        <compound type-name='incident_hfid' name='unk_v40_2c'/>
+        <int32_t name='criminal_entity' ref-target='historical_entity' since='v0.40.01'/>
+        <compound type-name='incident_hfid' name='facilitator'/>
 
         <int32_t name="crime_id" ref-target='crime'/>
 
         <int32_t name='site' ref-target='world_site'/>
-        <int32_t name='unk_v40_3a' init-value='-1' since='v0.40.01' comment="41 seen on witnessed thief, 37 on interrogation target. Only one of each, though."/>
-        <int32_t name='unk_v40_3b' init-value='-1' since='v0.40.01'/>
+        <int32_t name='subregion' ref-target='world_region' since='v0.40.01'/>
+        <int32_t name='layer' ref-target='world_underground_region' since='v0.40.01'/>
         <int32_t name='entity' ref-target='historical_entity'/>
 
         <int32_t name='event_year'/>
         <int32_t name='event_time'/>
 
-        <bitfield name='flags'>
+        <bitfield name='flags' base-type='uint32_t'> bay12: INCIDENT_FLAG_*
             <flag-bit name='announced_missing'/>
             <flag-bit name='discovered'/>
-            <flag-bit name='unk2' since='v0.40.01'/>
+            <flag-bit name='stale' since='v0.40.01'/>
         </bitfield>
 
-        <enum base-type='int16_t' name='death_cause' type-name='death_type'/>
+        <enum name='death_cause' type-name='death_type'/>
 
         -- v0.40.01
         <enum name='conflict_level' type-name='conflict_level'/>
@@ -129,31 +123,31 @@
         <int32_t name='world_x' comment="Location appears to be in in-game tiles world wide"/>
         <int32_t name='world_y'/>
         <int32_t name='world_z'/>
-        <int32_t name='unk_80'/>
-        <int32_t name='unk_10c'/>
+        <int32_t name='eventcol' ref-target='history_event_collection'/>
+        <int32_t name='implied_incident_id' ref-target='incident'/>
 
         <compound name='data' is-union='true'>
             <pointer type-name='incident_data_performance' name='Performance'/>
             <pointer type-name='incident_data_artifact' name='Artifact'/>
             <pointer type-name='incident_data_writing' name='Writing'/>
             <pointer type-name='incident_data_identity' name='SelfID'/>
-            <pointer type-name='incident_data_identity' name='RefusedID'/>
+            <pointer type-name='incident_data_refused_identify' name='RefusedID'/>
         </compound>
     </struct-type>
 
-    <struct-type type-name='incident_data_performance'>
-        <enum name='performance_event' base-type='int32_t' type-name='performance_event_type'/>
+    <struct-type type-name='incident_data_performance' original-name='incident_performancest'>
+        <enum name='performance_event' type-name='performance_event_type'/>
         <stl-vector name='participants'>
-            <pointer>
-                <enum name='performance_event' base-type='int32_t' type-name='performance_event_type' comment='can e.g. be music for a dance musician'/>
+            <pointer> bay12: incident_performance_rolest
+                <enum name='performance_event' type-name='performance_participant_type' comment='can e.g. be music for a dance musician'/>
                 <int32_t name='role_index' comment='index into the instruments vector for music, with corresponding roles for other forms, possibly a dance_form_sub1 entry for dances'/>
-                <compound name='unk_1' type-name='incident_hfid'/>
-                <int32_t name='unk_2'/>
+                <compound name='hf' type-name='incident_hfid'/>
+                <int32_t name='roll'/>
             </pointer>
         </stl-vector>
         <int32_t name='reference_id' comment='history_event id/poetic_form id/musical_form id/dance_form_id or -1'/>
         <int32_t name='written_content_id' comment='-1 if not used'/>
-        <int32_t name='abstract_location' comment="location at which the performance was held"/>
+        <int32_t name='abstract_location' ref-target='abstract_building' comment="location at which the performance was held"/>
         <int32_t name='poetic_form_id'  ref-target='poetic_form' comment='More than one form can be used in a performance, e.g. dance to music'/>
         <int32_t name='musical_form_id' ref-target='musical_form'/>
         <int32_t name='dance_form_id' ref-target='dance_form'/>
@@ -166,8 +160,8 @@
     --    or simulation. It's still unknown how to determine what action participants took.
     --  Dance has been seen only with a dance form reference, but the sample was small.
 
-    <struct-type type-name='incident_data_artifact'>
-        <enum name='state' base-type='int32_t'>
+    <struct-type type-name='incident_data_artifact' original-name='incident_artifact_locationst'>
+        <enum name='state' base-type='int32_t'> bay12: IncidentArtifactLocationType
             <enum-item name='Held'/>
             <enum-item name='Dropped'/>
             <enum-item name='Gained'/>
@@ -176,93 +170,87 @@
             <enum-item name='Destroyed'/>
         </enum>
         <int32_t name='artifact_id' ref-target='artifact_record'/>
-        <compound name='unk_3' type-name='incident_hfid'/>
-        <compound name='unk_4' type-name='incident_hfid'/>
+        <compound name='hf' type-name='incident_hfid'/>
+        <compound name='second_hf' type-name='incident_hfid'/>
         <int32_t name='site_id' ref-target='world_site'/>
-        <int32_t name='unk_5'/>
-        <int32_t name='unk_6'/>
-        <int32_t name='unk_7'/>
-        <stl-vector name='unk_8' type-name='int32_t'/>
-        <int32_t name='unk_9'/>
+        <int32_t name='site_bld' ref-target='abstract_building'/>
+        <int32_t name='subregion' ref-target='world_region'/>
+        <int32_t name='layer' ref-target='world_underground_region'/>
+        <stl-vector name='affected_enid' type-name='int32_t' ref-target='historical_entity'/>
+        <int32_t name='dominant_st_enid' ref-target='historical_entity'/>
     </struct-type>
 
-    <struct-type type-name='incident_data_writing'>
-        <enum name='state' base-type='int32_t'>
+    <struct-type type-name='incident_data_writing' original-name='incident_written_content_locationst'>
+        <enum name='state' base-type='int32_t'> bay12: IncidentWrittenContentLocationType
             <enum-item name='Dropped'/>
             <enum-item name='Given'/>
         </enum>
         <int32_t name='content_id' ref-target='written_content'/>
-        <compound name='unk_1' type-name='incident_hfid'/>
-        <compound name='unk_2' type-name='incident_hfid'/>
-        <int32_t name='unk_3'/>
-        <int32_t name='unk_4'/>
-        <int32_t name='unk_5'/>
-        <int32_t name='unk_6'/>
-        <stl-vector name='unk_7' type-name='int32_t'/>
-        <int32_t name='unk_8'/>
+        <compound name='hf' type-name='incident_hfid'/>
+        <compound name='second_hf' type-name='incident_hfid'/>
+        <int32_t name='site_id' ref-target='world_site'/>
+        <int32_t name='site_bld' ref-target='abstract_building'/>
+        <int32_t name='subregion' ref-target='world_region'/>
+        <int32_t name='layer' ref-target='world_underground_region'/>
+        <stl-vector name='affected_enid' type-name='int32_t' ref-target='historical_entity'/>
+        <int32_t name='dominant_st_enid' ref-target='historical_entity'/>
     </struct-type>
 
-    <struct-type type-name='incident_data_identity'>
-        <stl-vector name='unk_1' pointer-type='incident_hfid'/>
+    <struct-type type-name='incident_data_identity' original-name='incident_gave_identificationst'>
+        <stl-vector name='identifier'>
+            <pointer> bay12: incident_gave_identification_identifierst
+                <compound name='hf' type-name='incident_hfid'/>
+            </pointer>
+        </stl-vector>
     </struct-type>
 
+    <struct-type type-name='incident_data_refused_identify' original-name='incident_refused_to_identifyst'>
+        <stl-vector name='refuser'>
+            <pointer> bay12: incident_refused_to_identify_refuserst
+                <compound name='hf' type-name='incident_hfid'/>
+            </pointer>
+        </stl-vector>
+    </struct-type>
 
-    <struct-type type-name='crime'
+    <enum-type type-name='crime_type' base-type='int32_t'> bay12: CrimeType
+        <enum-item name='ProductionOrderViolation'/>
+        <enum-item name='ExportViolation'/>
+        <enum-item name='JobOrderViolation'/>
+        <enum-item name='ConspiracyToSlowLabor'/>
+        <enum-item name='Murder'/>
+        <enum-item name='DisorderlyBehavior'/>
+        <enum-item name='BuildingDestruction'/>
+        <enum-item name='Vandalism'/>
+        <enum-item name='Theft'/>
+        <enum-item name='Robbery'/>
+        <enum-item name='BloodDrinking'/>
+        <enum-item name='Embezzlement' since='v0.47.01'/>
+        <enum-item name='AttemptedMurder' since='v0.47.01'/>
+        <enum-item name='Kidnapping' since='v0.47.01'/>
+        <enum-item name='AttemptedKidnapping' since='v0.47.01'/>
+        <enum-item name='AttemptedTheft' since='v0.47.01'/>
+        <enum-item name='Treason' since='v0.47.01'/>
+        <enum-item name='Espionage' since='v0.47.01'/>
+        <enum-item name='Bribery' since='v0.47.01'/>
+    </enum-type>
+
+    <struct-type type-name='crime' original-name='crimest'
                  instance-vector='$global.world.crimes.all' key-field='id'>
-        dtor 0x8C166D0
 
         <int32_t name='id'/>
 
-        <enum name='mode' base-type='int32_t'>
-            <enum-item name='ProductionOrderViolation'/>
-            <enum-item name='ExportViolation'/>
-            <enum-item name='JobOrderViolation'/>
-            <enum-item name='ConspiracyToSlowLabor'/>
-            <enum-item name='Murder'/>
-            <enum-item name='DisorderlyBehavior'/>
-            <enum-item name='BuildingDestruction'/>
-            <enum-item name='Vandalism'/>
-            <enum-item name='Theft'/>
-            <enum-item name='Robbery'/>
-            <enum-item name='BloodDrinking'/>
-            <enum-item name='Embezzlement' since='v0.47.01'/>
-            <enum-item name='AttemptedMurder' since='v0.47.01'/>
-            <enum-item name='Kidnapping' since='v0.47.01'/>
-            <enum-item name='AttemptedKidnapping' since='v0.47.01'/>
-            <enum-item name='AttemptedTheft' since='v0.47.01'/>
-            <enum-item name='Treason' since='v0.47.01'/>
-            <enum-item name='Espionage' since='v0.47.01'/>
-            <enum-item name='Bribery' since='v0.47.01'/>
-        </enum>
+        <enum name='mode' type-name='crime_type'/>
 
-        <compound name='punishment'>
-            <int32_t name='hammerstrikes'/>
-            <int32_t name='prison_time'/>
-            <int32_t name='give_beating'/>
-        </compound>
+        <compound name='punishment' type-name='punishmentst'/>
 
         <int32_t name='criminal' ref-target='unit'/>
-        <int32_t name='criminal_hf' ref-target='historical_figure'/>
-        <int32_t name='criminal_hf_2' ref-target='historical_figure' comment="Usually all 3 same value, but Espionage gave different HF for 2/3, probably boss"/>
-        <int32_t name='criminal_hf_3' ref-target='historical_figure'/>
-        <compound name='convict_data'>
-            <stl-vector name='unk_v47_vector_1' type-name='int32_t' since='v0.47.01' comment="don't know what the number refers to"/>
-            <int32_t name='convicted' ref-target='unit'/>
-        </compound>
-        <int32_t name='convicted_hf' ref-target='historical_figure'/>
-        <int32_t name='convicted_hf_2' ref-target='historical_figure' comment="the two additional copies probably refers to some other roles"/>
-        <int32_t name='convicted_hf_3' ref-target='historical_figure' comment="-1 seen in case of convicted but not yet punished. Tossed in prison has -1, so it might be 'punishment finished'"/>
+        <compound name='criminal_hf' type-name='incident_hfid'/>
+        <int32_t name='accused' ref-target='unit'/>
+        <compound name='accused_hf' type-name='incident_hfid'/>
+        <int32_t name='victim' ref-target='unit'/>
+        <compound name='victim_hf' type-name='incident_hfid'/>
 
-        <compound name='victim_data'>
-            <stl-vector name='unk_v47_vector_2' type-name='int32_t' since='v0.47.01'/>
-            <int32_t name='victim' ref-target='unit'/>
-        </compound>
-        <int32_t name='victim_hf' ref-target='historical_figure'/>
-        <int32_t name='victim_hf_2' ref-target='historical_figure' comment="the two additional copies probably refers to some other roles, but all 3 are identical in cases seen"/>
-        <int32_t name='victim_hf_3' ref-target='historical_figure'/>
-
-        <stl-vector name='unk_v47_vector_3' type-name='int32_t' since='v0.47.01' comment="this vector hasn't been seen, but is guessed at based on the pattern above"/>
-        <bitfield name='flags'>
+        <bitfield name='flags' base-type='uint32_t'> bay12: CRIMEFLAG_*
             <flag-bit name='sentenced'/>
             <flag-bit name='discovered'/>
             <flag-bit name='needs_trial'
@@ -281,53 +269,40 @@
 
         <int32_t name='item_id' ref-target='item' comment="seen with crime of theft"/>
 
-        <stl-vector name='reports'>
-            <pointer>
-                <int32_t name='death_id' ref-target='incident' comment="-1..."/>
-                <int32_t name='accused_id' ref-target='historical_figure' comment="hfid of accused"/>
-                <int32_t name='accused_id_2' ref-target='historical_figure' comment="copy of accused_id?"/>
-                <stl-vector name='unk_vec'/> judging by sizes and padding, haven't seen populated
-            </pointer>
-        </stl-vector>
+        <stl-vector name='reports' pointer-type='incident_hfid'/>
 
-        <stl-vector name='counterintelligence' since='v0.47.01'>
-            <pointer>
-                <int32_t name='unk_1' init-value='-1' comment="suspect entity, as counterintelligence shows organization unknown for examined cases. Also -1 when there is no organization"/>
-                <int32_t name="identified_hf" ref-target='historical_figure'/>
-                <int32_t name="identified_hf_2" ref-target='historical_figure' comment="same as the one above or -1 only ones seen."/>
-                <stl-vector name='unk_vec'/> judging by sizes and padding, haven't seen populated
-            </pointer>
-        </stl-vector>
+        <stl-vector name='counterintelligence' since='v0.47.01' pointer-type='incident_hfid'/>
 
-        <stl-vector name='witnesses' pointer-type='crime_witness'/>
+        <stl-vector name='witnesses' pointer-type='witness_reportst'/>
         <int32_t name='agreement_id' ref-target='agreement'/>
     </struct-type>
 
-    <struct-type type-name='crime_witness'>
-        <int32_t name='incident_id' ref-target='incident'/>
-        <int32_t name='crime_id' ref-target='crime'/>
-        <enum name='witness_claim'>
-            <enum-item name='SawDisorderlyConduct'/>
-            <enum-item name='FoundTheBody'/>
-            <enum-item name='SawObjectWasMissing'/>
-            <enum-item name='SawObjectWasDisturbed'/>
-            <enum-item name='SawSomebodyAdmireObject'/>
-            <enum-item name='Confessed'/>
-            <enum-item name='ImplicatesSomeone'/>
-            <enum-item name='AccusesSomeone'/>
-        </enum>
-        <int32_t name='year'/>
-        <int32_t name='tick'/>
-        <int32_t name='witness_id' ref-target='unit'/>
-        <compound name='witness_data' type-name='incident_hfid'/>
-        <int32_t name='accused_id' ref-target='unit'/>
-        <int32_t name='accused_identity_id' ref-target='identity'/>
-        <compound name='accused_data' type-name='incident_hfid'/>
-        <int32_t name='reported_year'/>
-        <int32_t name='reported_tick'/>
+    <enum-type type-name='witness_type' base-type='int32_t'> bay12: WitnessType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='SAW_ACTUAL_INCIDENT'/>
+        <enum-item name='FOUND_BODY'/>
+        <enum-item name='SAW_THAT_OBJECT_WAS_MISSING'/>
+        <enum-item name='SAW_DISTURBED_OBJECT'/>
+        <enum-item name='SOMEBODY_ADMIRED_OBJECT'/>
+        <enum-item name='CONFESSED'/>
+        <enum-item name='COCONSPIRATOR_IMPLICATED'/>
+    </enum-type>
+
+    <struct-type type-name='witness_reportst'>
+        <int32_t name='incident_id' ref-target='incident' init-value='-1'/>
+        <int32_t name='crime_id' ref-target='crime' init-value='-1'/>
+        <enum type-name='witness_type' name='type' init-value='NONE'/>
+        <int32_t name='year' init-value='0'/>
+        <int32_t name='year_tick' init-value='0'/>
+        <int32_t name='witness_id' ref-target='unit' init-value='-1'/>
+        <compound name='witness_ihf' type-name='incident_hfid'/>
+        <int32_t name='accused_id' ref-target='unit' init-value='-1'/>
+        <compound name='accused_ihf' type-name='incident_hfid'/>
+        <int32_t name='reported_year' init-value='0'/>
+        <int32_t name='reported_year_tick' init-value='0'/>
     </struct-type>
 
-    <struct-type type-name='mission_campaign_report'>
+    <struct-type type-name='mission_campaign_report' original-name='mission_report_datast'>
         <static-array name='travel_x' type-name='int32_t' count='64'/>
         <static-array name='travel_y' type-name='int32_t' count='64'/>
         <static-array name='travel_year' type-name='int32_t' count='64'/>
@@ -339,30 +314,35 @@
         <int32_t name='events_count'/>
     </struct-type>
 
-    <struct-type type-name='mission_report'>
+    <struct-type type-name='mission_report' original-name='mission_reportst'>
         <stl-vector name='campaigns' pointer-type='mission_campaign_report' />
-        <int32_t name='current_campaign'/>
+        <int32_t name='current_travel'/>
         <int32_t name='origin_x'/>
         <int32_t name='origin_y'/>
-        <int32_t name='unk_5'/>
+        <int32_t name='current_event'/>
 
         <stl-string name="title"/>
-        <int32_t name='unk_7'/>
+        <bitfield name='flags' base-type='uint32_t'> bay12: MISSION_REPORT_FLAG_*
+            <flag-bit name='viewed'/>
+        </bitfield>
         <int32_t name='year'/>
         <int32_t name='year_tick'/>
-        <stl-vector name='unk_10'/>
-        <int32_t name='unk_11'/>
-        <int32_t name='unk_12'/>
+        <stl-vector name='searched_site' type-name='int32_t' ref-target='world_site'/>
+        <int32_t name='delay_end_year'/>
+        <int32_t name='delay_end_year_tick'/>
     </struct-type>
 
-    <struct-type type-name='spoils_report'>
+    <struct-type type-name='spoils_report' original-name='tribute_reportst'>
         <stl-string name="title"/>
-        <int32_t name='unk_1'/>
+        <bitfield name='flags' base-type='uint32_t'> bay12: TRIBTE_REPORT_FLAG_*
+            <flag-bit name='viewed'/>
+            <flag-bit name='spoils'/>
+        </bitfield>
         <int32_t name='year'/>
         <int32_t name='year_tick'/>
 
         <stl-vector name='item_types'>
-            <enum base-type='int16_t' type-name='item_type'/>
+            <enum type-name='item_type'/>
         </stl-vector>
         <stl-vector name='item_subtypes'>
             <int16_t refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
@@ -376,60 +356,74 @@
         <stl-vector name='creature_counts' type-name='int32_t'/>
     </struct-type>
 
-    <struct-type type-name='interrogation_report'>
+    <enum-type type-name='interrogation_method_type' base-type='int32_t'> bay12: InterrogationMethodType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='INTIMIDATE'/>
+        <enum-item name='FLATTER'/>
+        <enum-item name='RELIGIOUS_SYMPATHY'/>
+        <enum-item name='APPEAL_TO_VALUE'/>
+        <enum-item name='BUILD_RAPPORT'/>
+        <enum-item name='LIE'/>
+    </enum-type>
+
+    <struct-type type-name='interrogation_report' original-name='interrogation_reportst'>
         <stl-string name='title'/>
         <int32_t name='officer_hf' ref-target='historical_figure'/>
         <int32_t name='subject_hf' ref-target='historical_figure'/>
         <stl-string name='officer_name'/>
-        <int32_t name='unk_3'/>
+        <bitfield name='flags'> bay12: INTERROGATION_REPORT_FLAG_*
+            <flag-bit name='viewed'/>
+            <flag-bit name='current_id_is_newly_revealed'/>
+        </bitfield>
         <int32_t name='year'/>
         <int32_t name='tick'/>
-        <compound name='unk'>
-            <int32_t name='officer_hf2' ref-target='historical_figure' comment='appears identical to officer_hf'/>
-            <int32_t name='subject_hf2' ref-target='historical_figure' comment='appears identical to subject_hf'/>
-            <int16_t name='unk_8'/>
-            <int32_t name='unk_9'/>
-            <int32_t name='unk_10' init-value='-1'/>
-            <int32_t name='unk_11' init-value='-1000000'/>
-            <int32_t name='unk_12' init-value='-1000000'/>
-            <int32_t name='unk_13'/>
-            <int16_t name='unk_14'/>
-            <int32_t name='unk_15'/>
-            <int32_t name='unk_16'/>
-            <int32_t name='unk_17'/>
-            <int32_t name='unk_18'/>
-            <int32_t name='unk_19'/>
-            <int32_t name='unk_20'/>
-            <int32_t name='unk_21'/>
-            <bitfield name='flags'>
-                <flag-bit/>
+        <compound name='intcr'> bay12: interrogation_resultst
+            <int32_t name='officer_hf' ref-target='historical_figure' comment='appears identical to officer_hf'/>
+            <int32_t name='subject_hf' ref-target='historical_figure' comment='appears identical to subject_hf'/>
+            <enum name='relationship_to_corruptor' type-name='vague_relationship_type'/>
+            <int32_t name='relationship_civ' ref-target='historical_entity'/>
+            <enum name='method' type-name='interrogation_method_type'/>
+            <int32_t name='method_perceived_modifier' init-value='-1000000'/>
+            <int32_t name='method_modifier' init-value='-1000000'/>
+            <enum name='facet' type-name='personality_facet_type'/>
+            <int16_t name='facet_rating'/>
+            <int32_t name='facet_modifier'/>
+            <enum name='value' type-name='value_type'/>
+            <int32_t name='value_rating'/>
+            <int32_t name='value_modifier'/>
+            <enum name='relationship_factor' type-name='intrigue_corruption_result_rel_factor_type'/>
+            <int32_t name='relationship_rating'/>
+            <int32_t name='relationship_modifier'/>
+            <bitfield name='flags' base-type='uint32_t'> bay12: INTERROGATION_RESULT_*
+                <flag-bit name='successful'/>
+                <flag-bit name='failed_judgment_test'/>
             </bitfield>
+            <int32_t name='position_enid'/>
+            <int32_t name='position_eppid'/>
+
+            <int32_t name='relevant_id'/>
+            <int32_t name='relevant_hf_wg_relationship'/>
         </compound>
 
-        <int32_t name='unk_23'/>
-        <int32_t name='unk_24'/>
-        <int32_t name='unk_25'/>
-        <int32_t name='unk_26'/>
-
-        <stl-vector name='unk_27' type-name='int32_t'/> ?
+        <stl-vector name='confessed_target_crime_id' type-name='int32_t' ref-target='crime'/>
 
         <int32_t name='subject_identity_id' ref-target='identity'/>
 
-        <stl-vector name='unk_29'/> ?
-        <stl-vector name='unk_30' type-name='int32_t'/>
-        <stl-vector name='unk_31' type-name='int32_t' ref-target='history_event' comment='seen hfs_formed_intrigue_relationship'/>
+        <stl-vector name='confessed_identity_id' type-name='int32_t' ref-target='identity'/>
+        <stl-vector name='revealed_agreement_id' type-name='int32_t' ref-target='agreement'/>
+        <stl-vector name='revealed_event_id' type-name='int32_t' ref-target='history_event' comment='seen hfs_formed_intrigue_relationship'/>
         <stl-vector name='details' pointer-type='stl-string'/>
     </struct-type>
 
-    <struct-type type-name='cursed_tomb'>
-        <int8_t name='triggered'/>
+    <struct-type type-name='cursed_tomb' original-name='event_disturbance_monitorst'>
+        <uint8_t name='triggered'/>
         <stl-vector type-name='int32_t' name='coffin_skeletons' ref-target='item'/>
         <int32_t name='disturbance' ref-target='interaction'/>
         <stl-vector type-name='int32_t' name='treasures' ref-target='item'/>
-        <int32_t name='unk_1' comment='reference to something, not an interaction or syndrome'/>
-        <int32_t name='unk_2'/>
+        <int32_t name='site_id' ref-target='world_site'/>
+        <int32_t name='structure_id' ref-target='abstract_building'/>
         <stl-vector name='trigger_regions' comment='normally just one, 3x3 around the coffin'>
-            <pointer>
+            <pointer> bay12: edm_rectst
                 <int32_t name='x_min'/>
                 <int32_t name='y_min'/>
                 <int32_t name='z_min'/>
@@ -441,14 +435,14 @@
         <compound type-name='coord' name='coffin_pos'/>
     </struct-type>
 
-    <struct-type type-name='ocean_wave_maker'>
+    <struct-type type-name='ocean_wave_maker' original-name='event_ocean_wave_generatorst'>
         <compound type-name='coord' name='pos'/>
         <int8_t name='interval'/>
         <compound name='coastline' type-name='coord2d_path'/>
         <compound name='wave_origin' type-name='coord2d_path'/>
     </struct-type>
 
-    <struct-type type-name='coord_rect'>
+    <struct-type type-name='coord_rect' original-name='event_swampst'>
         <int16_t name='x1'/>
         <int16_t name='y1'/>
         <int16_t name='x2'/>
@@ -456,25 +450,25 @@
         <int16_t name='z'/>
     </struct-type>
 
-    <struct-type type-name='embark_feature' comment="layers plus river seen">
+    <struct-type type-name='embark_feature' original-name='event_populationst' comment="layers plus river seen">
         <compound type-name='coord2d' name='world_tile'/>
         <compound type-name='coord2d' name='mid_level_tile' comment="the MLT the feature resides in"/>
         <int16_t name='local_feature_idx'/>
         <int32_t name='global_feature_idx' ref-target='world_underground_region'/>
-        <int32_t name='unk10'/>
+        <int32_t name='global_feature_sq'/>
         <enum name='layer' type-name='layer_type' base-type='int16_t'/>
         <compound type-name='coord2d' name='local' comment="the top left corner of the MLT, in embark relative coordinates"/>
         <int16_t name='z_min'/>
         <int16_t name='z_max'/>
     </struct-type>
 
-    <enum-type type-name='combat_report_event_type' base-type='int16_t'>
-        <enum-item/>
+    <enum-type type-name='combat_report_event_type' base-type='int16_t'> bay12: CombatEventType
+        <enum-item name='StruckItem'/>
         <enum-item name='Deflected'/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='ThroughTissue'/>
+        <enum-item name='CompoundFracture'/>
+        <enum-item name='BrokenAway'/>
+        <enum-item name='BasicWound'/>
         <enum-item name='Unconscious'/>
         <enum-item name='Stunned'/>
         <enum-item name='MoreStunned'/>
@@ -482,13 +476,13 @@
         <enum-item name='MoreWinded'/>
         <enum-item name='Nausea'/>
         <enum-item name='MoreNausea'/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='SeveredPart'/>
+        <enum-item name='PopOut'/>
         <enum-item name='ExtractInjected'/>
         <enum-item name='ExtractSprayed'/>
         <enum-item name='BloodSucked'/>
-        <enum-item name='SeveredPart'/>
-        <enum-item/>
+        <enum-item name='StrikeInto'/>
+        <enum-item name='GrabGlances'/>
         <enum-item name='KnockedBack'/>
         <enum-item name='StuckIn'/>
         <enum-item name='LatchOnPart'/>
@@ -496,36 +490,39 @@
         <enum-item name='Enraged'/>
         <enum-item name='PassThrough'/>
         <enum-item name='GlancesAway'/>
-        <enum-item/>
-        <enum-item/>
+        <enum-item name='TendonDamaged'/>
+        <enum-item name='LigamentDamaged'/>
         <enum-item name='MajorArtery'/>
         <enum-item name='Artery'/>
         <enum-item name='MotorNerve'/>
         <enum-item name='SensoryNerve'/>
         <enum-item name='NoForce'/>
         <enum-item name='Interrupted'/>
+        <enum-item name='Pulped'/>
+        <enum-item name='Gelded'/>
+        <enum-item name='ItemBreaks'/>
     </enum-type>
 
-    <struct-type type-name='glowing_barrier'>
-        <bool name='triggered' comment='set when the glowing barrier vanishes, preventing later HFS events'/>
-        <int32_t name='unk_1'/>
+    <struct-type type-name='glowing_barrier' original-name='event_underworld_building_monitorst'>
+        <uint8_t name='triggered' comment='set when the glowing barrier vanishes, preventing later HFS events'/>
+        <int32_t name='age' comment='divide by 100800, add 1, then multiply by 20 to get number of demons to summon (min 10, max 100)'/>
         <stl-vector name='buildings' type-name='int32_t' ref-target='building' comment='when building is deconstructed, causes glowing barrier at pos to vanish and (in fort mode) spawns HFS one z-level below if it has not been set off already'/>
         <compound name='pos' type-name='coord' comment='coordinates of a GlowingBarrier or GlowingFloor tiletype'/>
     </struct-type>
 
-    <struct-type type-name='deep_vein_hollow'>
-        <bool name='triggered' comment='set when the underworld spire is breached, preventing subsequent HFS events'/>
-        <int32_t name='unk_1'/>
+    <struct-type type-name='deep_vein_hollow' original-name='event_underworld_tube_breach_monitorst'>
+        <uint8_t name='triggered' comment='set when the underworld spire is breached, preventing subsequent HFS events'/>
+        <int32_t name='age' comment='divide by 100800, add 1, then multiply by 20 to get number of demons to summon (min 10, max 100)'/>
         <compound name='tiles' type-name='coord_path' comment='tile coordinates correspond to open spaces within an underworld spire; revealing one of these tiles triggers the HFS demon wave'/>
-        <compound name='pos' type-name='coord' comment='seemingly unused'/>
+        <compound name='pos' type-name='coord' comment='announcement zoom location'/>
     </struct-type>
 
-    <struct-type type-name='campfire'>
+    <struct-type type-name='campfire' original-name='event_campfirest'>
         <compound type-name='coord' name='pos'/>
         <int32_t name='timer'/>
     </struct-type>
 
-    <struct-type type-name='web_cluster'>
+    <struct-type type-name='web_cluster' original-name='event_webst'>
         <stl-vector type-name='int16_t' name='x'/>
         <stl-vector type-name='int16_t' name='y'/>
         <int16_t name='z'/>
@@ -536,7 +533,7 @@
         <stl-vector type-name='int32_t' name='ambushers' ref-target='unit'/>
     </struct-type>
 
-    <struct-type type-name='fire'>
+    <struct-type type-name='fire' original-name='event_firest'>
         <compound type-name='coord' name='pos'/>
         <int16_t name='timer'/>
         <uint16_t name='inner_temp_cur' init-value='10508' comment='applied to own tile'/>
@@ -545,26 +542,26 @@
         <uint16_t name='outer_temp_max' init-value='10708'/>
     </struct-type>
 
-    <struct-type type-name='ocean_wave'>
+    <struct-type type-name='ocean_wave' original-name='event_ocean_wave_frontst'>
         <compound type-name='coord2d' name='dest'/>
         <compound type-name='coord2d' name='cur'/>
         <int16_t name='z'/>
-        <bool name='spawn_flows' comment='set once the wave reaches the coast'/>
+        <int8_t name='spawn_flows' comment='set once the wave reaches the coast'/>
         <int8_t name='move_timer'/>
-        <int8_t name='unk_timer' comment='starts at 120 and randomly decrements'/>
+        <int8_t name='vis_duration' comment='starts at 120 and randomly decrements'/>
     </struct-type>
 
-    <struct-type type-name='coin_batch' instance-vector='$global.world.coin_batches'>
+    <struct-type type-name='coin_batch' original-name='coinbatchst' instance-vector='$global.world.coin_batches'>
         <int32_t name='year'/>
         <int16_t name='mat_type' ref-target='material' aux-value='$$.mat_index'/>
         <int32_t name='mat_index'/>
         <int32_t name='entity' ref-target='historical_entity'/>
         <int32_t name='ruler' ref-target='historical_figure'/>
-        <compound name='image_front'>
+        <compound name='image_front'> not a compound
             <int32_t name='id' ref-target='art_image_chunk'/>
             <int16_t name='subid' ref-target='art_image' aux-value='$$.id'/>
         </compound>
-        <compound name='image_back'>
+        <compound name='image_back'> not a compound
             <int32_t name='id' ref-target='art_image_chunk'/>
             <int16_t name='subid' ref-target='art_image' aux-value='$$.id'/>
         </compound>
@@ -573,22 +570,24 @@
     <class-type type-name='job_handler' original-name='job_handlerst' custom-methods='true'>
         <df-linked-list name='list' type-name='job_list_link'/>
         <stl-vector name='postings' comment='entries never removed'>
-            <pointer>
+            <pointer> bay12: job_postingst
                 <int32_t name='idx' comment='equal to position in vector'/>
                 <pointer type-name='job' name='job' comment='bad if dead flag is set'/>
-                <bitfield name='flags' base-type='int32_t'>
+                <bitfield name='flags' base-type='uint32_t'> bay12: JOB_POSTING_FLAG_*
                     <flag-bit name='dead'/>
                 </bitfield>
-                <int32_t name='unk_1' comment='not saved'/>
+                <int32_t name='rough_number_of_applications' comment='not saved'/>
             </pointer>
         </stl-vector>
 
-        <static-array name='unk_1' count='2000'>
-            <pointer name='unk_1' type-name='unit' comment="List seems to be processed index 0 first and then removal swaps last to first"/>
-            <int32_t name='unk_2' comment="Seems to have very few bits set in lower half, (not copied with the pointer?)"/>
-            <int32_t name='unk_3' comment="Seems to have many bits set in lower half, (not copied with the pointer?)"/>
-        </static-array>
-        <int32_t name='unk_2' comment='next slot'/>
+        <compound name='job_application_heap' comment='this appears to be a priority queue of some sort'> bay12: job_application_binary_heapst
+            <static-array name='node' count='2000'> bay12: job_applicationst
+                <pointer name='applicant' type-name='unit'/>
+                <int32_t name='posting_index'/>
+                <int32_t name='value'/>
+            </static-array>
+            <int32_t name='size'/>
+        </compound>
 
         <virtual-methods>
             <vmethod name='cancel_job'><pointer type-name='job'/></vmethod>
@@ -598,14 +597,14 @@
     <class-type type-name='building_handler' original-name='building_handlerst' custom-methods='true'>
         dtor 85316f0
 
-        <stl-vector name='all' pointer-type='building'/>
+        <stl-vector name='all' pointer-type='building' comment='bay12: global'/>
 
-        <compound name='other' type-name='buildings_other'/>
+        <compound name='other' type-name='buildings_other' comment='not a compound in bay12'/>
 
-        <stl-vector name='bad' has-bad-pointers='true' pointer-type='building'/>
+        <stl-vector name='temp_save' has-bad-pointers='true' pointer-type='building'/>
 
-        <bool name='check_bridge_collapse'/>
-        <bool name='check_machine_collapse' comment='?'/>
+        <bool name='check_bridge_collapse' comment='bay12: evaluate_bridge_stability'/>
+        <bool name='check_machine_collapse' comment='bay12: evaluate_machine_stability'/>
 
         <virtual-methods>
             <vmethod name='get_machine_hookup_list' comment='ToadyOnes name'>
@@ -617,119 +616,58 @@
                 <int16_t name='x2'/>
                 <int16_t name='y2'/>
                 <int16_t name='z'/>
-                <int8_t name='is_vertical'/>
+                <bool name='is_vertical'/>
             </vmethod>
         </virtual-methods>
     </class-type>
 
     <class-type type-name='machine_handler' original-name='machine_handlerst' custom-methods='true'>
         <stl-vector name='all' pointer-type='machine'/>
-        <stl-vector name='bad' has-bad-pointers='true' pointer-type='machine'/>
+        <stl-vector name='temp_save' has-bad-pointers='true' pointer-type='machine'/>
         <virtual-methods>
-            <vmethod>
+            <vmethod name='add_to_machine'>
                 <pointer type-name='building'/>
             </vmethod>
         </virtual-methods>
     </class-type>
 
-    <struct-type type-name='mental_picture'>
-        <compound name='unk'>
-            <stl-vector name='elements' pointer-type='mental_picture_elementst'/>
-            <int32_t name='unk_1'/>
-            <stl-vector name='properties' pointer-type='mental_picture_propertyst'/>
-            <int32_t name='unk_2'/>
-        </compound>
-        <int32_t name='unk_1' init-value='-1'/>
-        <int32_t name='unk_2' init-value='-1'/>
+    <struct-type type-name='mental_picturest'>
+        <stl-vector name='elements' pointer-type='mental_picture_elementst'/>
+        <int32_t name='next_element_id'/>
+        <stl-vector name='properties' pointer-type='mental_picture_propertyst'/>
+        <int32_t name='next_property_id'/>
     </struct-type>
 
-    32bit size is 4 bytes more than should be
-    <struct-type type-name='belief_system' key-field='id' instance-vector='$global.world.belief_systems.all'>
+    <enum-type type-name='story_frame_relation_type' base-type='int32_t'> bay12: StoryFrameRelationType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='CAUSE'/>
+        <enum-item name='SEQUENCE'/>
+        <enum-item name='CONCURRENT'/>
+    </enum-type>
+
+    <struct-type type-name='story_framest'>
+        <compound name='mental_picture' type-name='mental_picturest'/>
+        <int32_t name='related_frame_index'/>
+        <enum name='relation' type-name='story_frame_relation_type'/>
+    </struct-type>
+
+    <struct-type type-name='storyst'>
+        <stl-vector name='story_frame' pointer-type='story_framest'/>
+    </struct-type>
+
+    <struct-type type-name='belief_system' original-name='belief_systemst' key-field='id' instance-vector='$global.world.belief_systems.all'>
         <int32_t name='id'/>
 
-        <stl-vector name='mental_pictures'>
-            <pointer>
-                <stl-vector name='unk_1' pointer-type='mental_picture'/>
-            </pointer>
-        </stl-vector>
+        <stl-vector name='story' pointer-type='storyst'/>
         <stl-vector name='deities' type-name='int32_t' ref-target="historical_figure" comment="historical figure ID of gods the belief system is concerned with"/>
         <stl-vector name='worship_levels' type-name='int32_t' comment="worship level for each god referenced in the deities field"/>
 
-        <int32_t name='unk_1'/>
-        <int32_t name='unk_2'/>
-        <int32_t name='unk_3'/>
-        <int32_t name='unk_4'/>
-        <int32_t name='unk_5'/>
-        <int32_t name='unk_6'/>
-        <int32_t name='unk_7'/>
-        <int32_t name='unk_8'/>
-        <int32_t name='unk_9'/>
-        <int32_t name='unk_10'/>
-
-        <int32_t name='unk_11'/>
-        <int32_t name='unk_12'/>
-        <int32_t name='unk_13'/>
-        <int32_t name='unk_14'/>
-        <int32_t name='unk_15'/>
-        <int32_t name='unk_16'/>
-        <int32_t name='unk_17'/>
-        <int32_t name='unk_18'/>
-        <int32_t name='unk_19'/>
-        <int32_t name='unk_20'/>
-
-        <int32_t name='unk_21'/>
-        <int32_t name='unk_22'/>
-        <int32_t name='unk_23'/>
-        <int32_t name='unk_24'/>
-        <int32_t name='unk_25'/>
-        <int32_t name='unk_26'/>
-        <int32_t name='unk_27'/>
-        <int32_t name='unk_28'/>
-        <int32_t name='unk_29'/>
-        <int32_t name='unk_30'/>
-
-        <int32_t name='unk_31'/>
-        <int32_t name='unk_32'/>
-        <int32_t name='unk_33'/>
-        <int32_t name='unk_34'/>
-        <int32_t name='unk_35'/>
-        <int32_t name='unk_36'/>
-        <int32_t name='unk_37'/>
-        <int32_t name='unk_38'/>
-        <int32_t name='unk_39'/>
-        <int32_t name='unk_40'/>
-
-        <int32_t name='unk_41'/>
-        <int32_t name='unk_42'/>
-        <int32_t name='unk_43'/>
-        <int32_t name='unk_44'/>
-        <int32_t name='unk_45'/>
-        <int32_t name='unk_46'/>
-        <int32_t name='unk_47'/>
-        <int32_t name='unk_48'/>
-        <int32_t name='unk_49'/>
-        <int32_t name='unk_50'/>
-
-        <int32_t name='unk_51'/>
-        <int32_t name='unk_52'/>
-        <int32_t name='unk_53'/>
-        <int32_t name='unk_54'/>
-        <int32_t name='unk_55'/>
-        <int32_t name='unk_56'/>
-        <int32_t name='unk_57'/>
-        <int32_t name='unk_58'/>
-        <int32_t name='unk_59'/>
-        <int32_t name='unk_60'/>
-
-        <int32_t name='unk_61'/>
-        <int32_t name='unk_62'/>
-        <int32_t name='unk_63'/>
-        <int32_t name='unk_64'/>
+        <static-array name='value' type-name='int32_t' count='64' index-enum='value_type'/>
     </struct-type>
 
-    <struct-type type-name='divination_set_roll'>
-        <stl-vector name='result' type-name='int32_t' comment="When the divination die linked to the parent divination_set is rolled, the effect of this particular divination_set_roll will be carried out if the die lands on any of the values specified here."/>
-        <enum name='effect_type' base-type='int32_t'>
+    <struct-type type-name='divination_set_roll' original-name='divination_outcomest'>
+        <stl-vector name='result' type-name='int32_t' ref-target='image_set' comment="When the divination die linked to the parent divination_set is rolled, the effect of this particular divination_set_roll will be carried out if the die lands on any of the values specified here."/>
+        <enum name='effect_type' base-type='int32_t'> bay12: DivinationOutcomeType
             <enum-item name='MediumBlessing'/>
             <enum-item name='MinorBlessing'/>
             <enum-item name='MediumCurse'/>
@@ -739,7 +677,7 @@
         <int32_t name='effect' comment="When effect_type is MediumBlessing, MinorBlessing, MediumCurse or MinorCurse, this is the ID of the interaction to be carried out (targeting the creature who rolled the divination die). When effect_type is Fortune, this determines which of the hardcoded divination fortune messages is to be displayed."/>
     </struct-type>
 
-    <struct-type type-name='divination_set' instance-vector='$global.world.divination_sets.all' key-field='id'>
+    <struct-type type-name='divination_set' original-name='divination_setst' instance-vector='$global.world.divination_sets.all' key-field='id'>
         <int32_t name='id' comment="currently matches index into vector"/>
         <int32_t name='deity_id' ref-target='historical_figure'/>
         <int32_t name='owner_id' ref-target='historical_entity' comment="religion owning the set"/>
@@ -747,134 +685,195 @@
         <stl-vector name='rolls' pointer-type='divination_set_roll'/>
     </struct-type>
 
-    <struct-type type-name='image_set' instance-vector='$global.world.image_sets.all' key-field='id'>
+    <enum-type type-name='image_set_type' base-type='int32_t'> bay12: ImageSetType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='TOOL_FACES'/>
+    </enum-type>
+
+    <enum-type type-name='set_image_type' base-type='int32_t'> bay12: SetImageType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='ART_IMAGE' comment='image chunk + image member'/>
+        <enum-item name='WORD' comment='language index + word idex'/>
+        <enum-item name='SHAPE' comment='shape index + adjective index'/>
+        <enum-item name='DOT'/>
+        <enum-item name='NUMERAL'/>
+    </enum-type>
+
+    <struct-type type-name='image_set' original-name='image_setst' instance-vector='$global.world.image_sets.all' key-field='id'>
         <int32_t name='id'/>
-        <int32_t name='unk_2'/>
-        <stl-vector name='unk_vec1'>
-            <pointer>
-                <int32_t name='unk_1'/>
-                <int32_t name='unk_2' init-value='-1'/>
-                <int32_t name='unk_3' init-value='-1'/>
-                <int32_t name='unk_4'/>
+        <enum name='type' type-name='image_set_type'/>
+        <stl-vector name='set_image'>
+            <pointer> bay12: set_imagest
+                <enum name='type' type-name='set_image_type'/>
+                <int32_t name='index_id_1' init-value='-1'/>
+                <int32_t name='index_id_2' init-value='-1'/>
+                <int32_t name='number'/>
             </pointer>
         </stl-vector>
-        <stl-vector name='unk_vec2' type-name='int16_t'/>
+        <stl-vector name='associated_use' type-name='tool_uses'/>
+    </struct-type>
+
+    <struct-type type-name='random_object_infost'>
+        <stl-vector pointer-type='random_object_batchst' name='batch'/>
+    </struct-type>
+
+    <enum-type type-name='unit_reaction_type' base-type='int32_t'> bay12: UnitReactionType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='STRANGER'/>
+        <enum-item name='GOOD_FAMILY'/>
+        <enum-item name='MURDERER'/>
+        <enum-item name='MYSELF'/>
+        <enum-item name='CANNOT_BECAUSE_IT_IS_ETHEREAL'/>
+        <enum-item name='CANNOT_BECAUSE_IT_IS_INACCESSIBLE'/>
+        <enum-item name='EQUIPMENT'/>
+        <enum-item name='CANNOT_BECAUSE_I_AM_ETHEREAL'/>
+        <enum-item name='ARENA_TARGET'/>
+        <enum-item name='ARENA_BUDDY'/>
+        <enum-item name='I_AM_CHAINED_AND_YOU_ARE_LCU'/>
+        <enum-item name='I_AM_LED_AND_YOU_ARE_LCU'/>
+        <enum-item name='I_AM_LCU_AND_YOU_ARE_CHAINED'/>
+        <enum-item name='I_AM_LCU_AND_YOU_ARE_LED'/>
+        <enum-item name='SOMEBODY_IS_CRAZE'/>,
+        <enum-item name='NOT_LIVING_IS_FINE'/>
+        <enum-item name='LIVING_MUST_BE_KILLED'/>
+        <enum-item name='EVIL_DEAD'/>
+        <enum-item name='WE_ARE_SAME_RACE_WILDERNESS_ANIMALS'/>
+        <enum-item name='PREDATOR_OR_PREY'/>
+        <enum-item name='BENIGN_ANIMAL'/>
+        <enum-item name='DANGEROUS_ANIMAL'/>
+        <enum-item name='NEIGHBOR'/>
+        <enum-item name='YOU_ARE_MY_PRISONER'/>
+        <enum-item name='MASTER'/>
+        <enum-item name='APPRENTICE'/>
+        <enum-item name='TRAVELING_COMPANION'/>
+        <enum-item name='LOVER'/>
+        <enum-item name='HATED_GROUP'/>
+        <enum-item name='ENEMY_FIGHTER'/>
+        <enum-item name='MONSTER'/>
+        <enum-item name='FORMER_MASTER'/>
+        <enum-item name='FORMER_APPRENTICE'/>
+        <enum-item name='SAME_CULTURE'/>
+        <enum-item name='INTRUDER'/>
+    </enum-type>
+
+    <struct-type type-name='formationst'>
+        <int32_t name='id'/>
     </struct-type>
 
     <struct-type type-name='world'>
-        dtor 89fff80
-        <!-- <compound> -->
-        <stl-vector name='glowing_barriers' pointer-type='glowing_barrier'/>
-        <stl-vector name='deep_vein_hollows' pointer-type='deep_vein_hollow'/>
-        <stl-vector name='cursed_tombs' pointer-type='cursed_tomb'/>
+        <compound name='event'> bay12: event_handlerst
+            <stl-vector name='glowing_barriers' pointer-type='glowing_barrier' comment='bay12: underworld_building_monitor'/>
+            <stl-vector name='deep_vein_hollows' pointer-type='deep_vein_hollow' comment='bay12: underworld_tube_breach_monitor'/>
+            <stl-vector name='cursed_tombs' pointer-type='cursed_tomb'  comment='bay12: disturbance_monitor'/>
+            <stl-vector name='engravings' pointer-type='engraving' comment='bay12: detail'/>
+            <stl-vector name='vermin' pointer-type='vermin' comment='bay12: vermin'/>
+            <stl-vector name='vermin_colonies' pointer-type='vermin' comment='bay12: vermin_colony'/>
+            <stl-vector name='dirty_waters' pointer-type='coord' comment="bay12: water; for making blood flow downstream in rivers, but also includes mud in artificial water channels"/>
+            <stl-vector name='campfires' pointer-type='campfire' comment='bay12: campfire'/>
+            <stl-vector name='web_clusters' pointer-type='web_cluster' comment='bay12: web'/>
+            <stl-vector name='fires' pointer-type='fire' comment='bay12: fire'/>
+            <stl-vector name='ocean_wave_makers' pointer-type='ocean_wave_maker' comment='bay12: ocean_wave_generator'/>
+            <stl-vector name='ocean_waves' pointer-type='ocean_wave' comment='bay12: ocean_wave_front'/>
+            <stl-vector name='constructions' pointer-type='construction' comment='bay12: construction'/>
+            <stl-vector name='murky_pools' pointer-type='coord_rect' comment='bay12: swamp'/>
+            <stl-vector name='embark_features' pointer-type='embark_feature' comment="bay12: population; populated at embark"/>
 
-        <stl-vector name='engravings' pointer-type='engraving'/>
-
-        <compound name='vermin'>
-            <stl-vector name='all' pointer-type='vermin'/>
-            <stl-vector name='colonies' pointer-type='vermin'/>
+            <!-- bay12: "THESE ARE USED DURING SITE SAVE/LOAD" -->
+            <stl-vector name='temp_save_glowing_barriers' pointer-type='glowing_barrier' comment='bay12: temp_save_underworld_building_monitor'/>
+            <stl-vector name='temp_save_deep_vein_hollows' pointer-type='deep_vein_hollow' comment='bay12: temp_save_underworld_tube_breach_monitor'/>
+            <stl-vector name='temp_save_cursed_tombs' pointer-type='cursed_tomb' comment='bay12: temp_save_disturbance_monitor'/>
+            <stl-vector name='temp_save_engravings' pointer-type='engraving' comment='bay12: temp_save_detail'/>
+            <stl-vector name='temp_save_constructions' pointer-type='construction' comment='bay12: temp_save_construction'/>
+            <stl-vector name='temp_save_embark_features' pointer-type='embark_feature' comment='bay12: temp_save_population'/>
+            <stl-vector name='temp_save_ocean_wave_makers' pointer-type='ocean_wave_maker' comment='bay12: temp_save_ocean_wave_generator'/>
+            <stl-vector name='temp_save_murky_pools' pointer-type='coord_rect' comment='bay12: temp_save_swamp'/>
         </compound>
-        <stl-vector name='dirty_waters' pointer-type='coord' comment="for making blood flow downstream in rivers, but also includes mud in artificial water channels"/>
-        <stl-vector name='campfires' pointer-type='campfire'/>
-        <stl-vector name='web_clusters' pointer-type='web_cluster'/>
-        <stl-vector name='fires' pointer-type='fire'/>
-        <stl-vector name='ocean_wave_makers' pointer-type='ocean_wave_maker'/>
-        <stl-vector name='ocean_waves' pointer-type='ocean_wave'/>
-        <stl-vector name='constructions' pointer-type='construction'/>
-        <stl-vector name='murky_pools' pointer-type='coord_rect'/>
-        <stl-vector name='embark_features' pointer-type='embark_feature' comment="populated at embark"/>
-
-        <stl-vector name='site_glowing_barriers' pointer-type='glowing_barrier'/>
-        <stl-vector name='site_deep_vein_hollows' pointer-type='deep_vein_hollow'/>
-        <stl-vector name='site_cursed_tombs' pointer-type='cursed_tomb'/>
-        <stl-vector name='site_engravings' pointer-type='engraving'/>
-        <stl-vector name='site_constructions' pointer-type='construction'/>
-        <stl-vector name='site_embark_features' pointer-type='embark_feature'/>
-        <stl-vector name='site_ocean_wave_makers' pointer-type='ocean_wave_maker'/>
-        <stl-vector name='site_murky_pools' pointer-type='coord_rect'/>
-        <!-- </compound> -->
+        bay12: effect_handlerst
         <stl-vector name='effects' pointer-type='effect_info'/>
 
+        bay12: coinbatch_handlerst
         <stl-vector name='coin_batches' pointer-type='coin_batch'/>
+        bay12: wilderpop_handlerst
         <stl-vector name='populations' pointer-type='local_population'/>
 
         --
+        <compound name='manager_orders'> bay12: workquota_handlerst
+            <stl-vector name='all' pointer-type='manager_order'/>
+            <int32_t name='manager_order_next_id'/>
+        </compound>
 
-        <stl-vector name='manager_orders' pointer-type='manager_order'/>
-        <int32_t name='manager_order_next_id'/>
-
+        bay12: mandate_handlerst
         <stl-vector name='mandates' pointer-type='mandate'/>
 
         --  Entities
 
-        <compound name='entities'>
+        <compound name='entities'> bay12: entity_handlerst
             <stl-vector name='all' pointer-type='historical_entity'/>
 
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='historical_entity'/>
-        </compound>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='historical_entity'/>
 
-        -- Apparently a temporary buffer for world construction stuff
-
-        <compound name='worldgen_coord_buf'>
+            -- Apparently a temporary buffer for world construction stuff
             <static-array count='20000' type-name='coord2d' name='slots'/>
             <int16_t name='next_slot'/>
         </compound>
 
         -- Units
 
-        <compound name='units'>
+        <compound name='units'> bay12: unit_handlerst
             <stl-vector name='all' pointer-type='unit'/>
 
             <stl-vector name='active' pointer-type='unit' comment='not sorted, entry 0 is adventurer'/>
 
             <compound name='other' type-name='units_other'/>
 
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='unit'/>
-            <stl-vector name='unknown' since='v0.44.06'/>
+            <stl-vector name='temp_save' has-bad-pointers='true' pointer-type='unit'/>
+            <stl-vector name='unit_context_block' pointer-type='unit_context_block' since='v0.44.06'/>
         </compound>
 
         -- Unit and Art Chunks
 
+        bay12: unit_chunk_handlerst
         <stl-vector name='unit_chunks' pointer-type='unit_chunk'/>
+        bay12: art_image_chunk_handlerst
         <stl-vector name='art_image_chunks' pointer-type='art_image_chunk'/>
 
         -- Nemesis
 
-        <compound name='nemesis'>
+        <compound name='nemesis'> bay12: nemesis_handlerst
             <stl-vector name='all' pointer-type='nemesis_record'/>
             <static-array name='other' count='28'>
                 <stl-vector pointer-type='nemesis_record'/>
             </static-array>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='nemesis_record'/>
-            <bool name='unk4'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='nemesis_record'/>
+            <bool name='do_not_remove_from_vector'/>
         </compound>
 
         -- Items
 
-        <compound name='items'>
-            dtor 852f4b0
+        <compound name='items'> bay12: item_handlerst
 
             <stl-vector name='all' pointer-type='item'/>
 
             <compound name='other' type-name='items_other'/>
 
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='item'/>
+            <stl-vector name='temp_save' has-bad-pointers='true' pointer-type='item'/>
 
-            <stl-vector name='bad_tag' type-name='int32_t'/>
+            <stl-vector name='temp_save_compat' type-name='int32_t'/>
         </compound>
 
         -- Artifacts
 
-        <compound name='artifacts'>
+        <compound name='artifacts'> bay12: artifact_handlerst
             <stl-vector name='all' pointer-type='artifact_record'/>
 
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='artifact_record'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='artifact_record'/>
         </compound>
 
         -- Jobs and projectiles
 
         <compound name='jobs' type-name='job_handler'/>
 
+        bay12: proj_handlerst
         <df-linked-list name='proj_list' type-name='proj_list_link'/>
 
         -- Buildings
@@ -887,25 +886,19 @@
 
         -- Flow guides (whatever those are)
 
-        <compound name='flow_guides'>
+        <compound name='flow_guides'> bay12: flow_guide_handlerst
             <stl-vector name='all' pointer-type='flow_guide'/>
-            <stl-vector name='bad' pointer-type='flow_guide' has-bad-pointers='true'/>
+            <stl-vector name='temp_save' pointer-type='flow_guide' has-bad-pointers='true'/>
         </compound>
 
         -- Stockpile classifier
 
-        <compound name='stockpile'>
+        <compound name='stockpile'> bay12: storage_handlerst
             <static-array type-name='int32_t' name='num_jobs' count='10' index-enum='hauler_type'/>
             <static-array type-name='int32_t' name='num_haulers' count='10' index-enum='hauler_type'/>
 
-            -- Pointers used as tokens; data never accessed by the look of it:
-
-            <compound name='simple1'>
-                <int8_t name='unk_1'/>
-                <int8_t name='food'/>
-                <int8_t name='unk_2'/>
-                <int8_t name='unk_3'/>
-            </compound>
+            <int8_t name='barreltype'/>
+            <int8_t name='barreltype_food'/>
             <stl-vector name='seeds' type-name='int8_t'
                         index-refers-to='(find-plant-raw $)'/>
             <stl-vector name='plants' type-name='int8_t'
@@ -920,252 +913,223 @@
                         index-refers-to='(find-plant-raw $)'/>
             <stl-vector name='plant_powder' type-name='int8_t'
                         index-refers-to='(find-plant-raw $)'/>
-            <compound name='simple2'>
-                <int8_t name='seeds'/>
-                <int8_t name='plants'/>
-                <int8_t name='cheese'/>
-                <int8_t name='fish'/>
-                <int8_t name='meat'/>
-                <int8_t name='leaves'/>
-                <int8_t name='powder'/>
-                <int8_t name='eggs'/>
-            </compound>
+            <int8_t name='barreltype_seeds_mix'/>
+            <int8_t name='barreltype_plants_mix'/>
+            <int8_t name='barreltype_cheese_mix'/>
+            <int8_t name='barreltype_fish_mix'/>
+            <int8_t name='barreltype_meat_mix'/>
+            <int8_t name='barreltype_leaves_mix'/>
+            <int8_t name='barreltype_powder_mix'/>
+            <int8_t name='barreltype_eggs_mix'/>
             <stl-vector name='liquid_plant' type-name='int8_t'
                         index-refers-to='(find-plant-raw $)'/>
             <stl-vector name='liquid_animal' type-name='int8_t'
                         index-refers-to='(find-creature $)'/>
             <stl-vector name='liquid_builtin' type-name='int8_t'
                         index-refers-to='(material-by-id $ -1)'/>
-            <compound name='simple3'>
-                <int8_t name='glob_fat'/>
-                <int8_t name='glob_tallow'/>
-                <int8_t name='glob_paste'/>
-                <int8_t name='glob_pressed'/>
-
-                <int8_t name='weapons'/>
-                <int8_t name='shields'/>
-                <int8_t name='ammo'/>
-                <int8_t name='coins'/>
-
-                <int8_t name='bar_blocks'/>
-                <int8_t name='gems' comment='not large'/>
-                <int8_t name='finished_goods'/>
-                <int8_t name='tanned_skins'/>
-
-                <int8_t name='thread_cloth'/>
-                <int8_t name='unk_1'/>
-                <int8_t name='unk_2'/>
-                <int8_t name='unk_3'/>
-            </compound>
+            <int8_t name='barreltype_glob_fat'/>
+            <int8_t name='barreltype_glob_tallow'/>
+            <int8_t name='barreltype_glob_paste'/>
+            <int8_t name='barreltype_glob_pressed'/>
+            <int8_t name='bintype_weapon'/>
+            <int8_t name='bintype_armor'/>
+            <int8_t name='bintype_ammo'/>
+            <int8_t name='bintype_coins'/>
+            <int8_t name='bintype_barblock'/>
+            <int8_t name='bintype_gem' comment='not large'/>
+            <int8_t name='bintype_finished'/>
+            <int8_t name='bintype_leather'/>
+            <int8_t name='bintype_cloth'/>
+            <int8_t name='bintype_sheet'/>
         </compound>
 
         -- Plants
 
-        <compound name='plants'>
+        <compound name='plants'> bay12: veg_handlerst
             <stl-vector name='all' pointer-type='plant'/>
             <stl-vector name='shrub_dry' pointer-type='plant'/>
             <stl-vector name='shrub_wet' pointer-type='plant'/>
             <stl-vector name='tree_dry' pointer-type='plant'/>
             <stl-vector name='tree_wet' pointer-type='plant'/>
-            <stl-vector name='empty' pointer-type='plant'/>
+            <stl-vector name='temp_save' pointer-type='plant' has-bad-pointers='true'/>
         </compound>
 
-        -- Adventure quests
-
-        <!--
-        <df-linked-list name='quests' type-name='quest_list_link'/>
-        -->
-
-        -- Unknown
-
-        <compound name='enemy_status_cache' comment='?'>
+        <compound name='enemy_status_cache'> bay12: unit_reaction_handlerst
             <static-array name='slot_used' type-name='bool' count='500'/>
             <static-array name='rel_map' count='500'>
-                <static-array type-name='int32_t' count='500'/>
+                <static-array type-name='unit_reaction_type' count='500'/> bay12: unit_reactionst
             </static-array>
             <int32_t name='next_slot'/>
         </compound>
 
-        <compound name='schedules'>
+        <compound name='schedules'> bay12: schedule_handlerst
             <stl-vector name='all' pointer-type='schedule_info' />
-            <stl-vector name='bad' pointer-type='schedule_info' has-bad-pointers='true' />
+            <stl-vector name='temp_save' pointer-type='schedule_info' has-bad-pointers='true' />
         </compound>
 
-        <compound name='squads'>
+        <compound name='squads'> bay12: squad_handlerst
             <stl-vector name='all' pointer-type='squad'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='squad'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='squad'/>
         </compound>
 
-        <compound name='formations'>
-            <stl-vector name='all'>
-                <pointer>
-                    <int32_t/>?
-                </pointer>
-            </stl-vector>
-            <stl-vector name='bad' has-bad-pointers='true'>
-                <pointer/>
-            </stl-vector>
+        <compound name='formations'> bay12: formation_handlerst
+            <stl-vector name='all' pointer-type='formationst'/>
+            <stl-vector name='order_load' pointer-type='formationst' has-bad-pointers='true'/>
         </compound>
 
         -- Drills
 
-        <compound name='activities'>
+        <compound name='activities'> bay12: activity_handlerst
             <stl-vector name='all' pointer-type='activity_entry'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='activity_entry'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='activity_entry'/>
         </compound>
 
         -- Reports and announcements
 
-        <compound name='status'>
-            dtor 85356e0
+        <compound name='status'> bay12: announcement_handlerst
             <stl-vector name='reports' pointer-type='report'/>
             <stl-vector name='announcements' pointer-type='report'/>
             <stl-vector name='popups' pointer-type='popup_message'/>
 
             <int32_t name='next_report_id'/>
-            <bitfield name='flags'>
+            <bitfield name='flags' base-type='uint32_t'> bay12: REPORT_FLAG_*
                 <flag-bit name='combat'/>
                 <flag-bit name='hunting'/>
                 <flag-bit name='sparring'/>
+                <flag-bit name='mission'/>
+                <flag-bit name='spoils'/>
+                <flag-bit name='tribute'/>
+                <flag-bit name='interrogation'/>
             </bitfield>
 
-            <static-array name='unk_1' type-name='int32_t' count='9' since='v0.40.01'/>
+            <static-array name='current_numeric_unid' type-name='int32_t' count='9' ref-target='unit' since='v0.40.01'/>
             <stl-vector name='mission_reports' pointer-type='mission_report'/>
             <stl-vector name='spoils_reports' pointer-type='spoils_report' since='v0.44.06'/>
             <stl-vector name='interrogation_reports' pointer-type='interrogation_report' since='v0.47.01'/>
-            <int32_t name='display_timer'/>
+            <int32_t name='display_timer' comment='bay12: announcetime'/>
 
-            <static-array name='slots' count='100'>
-                <comment>Written to by code at 0x80fd7b0</comment>
-                <enum type-name='combat_report_event_type' name='type'/>
-                <int32_t name='item' comment='or body part layer'/>
-                <int32_t name='unk1b'/>
-                <int32_t name='unk1c'/>
-                <int32_t name='unk1d'/>
-                <int16_t name='body_part'/>
-                <int16_t name='unk2b'/>
-                <int16_t name='unk2c'/>
-                <int16_t name='unk2d'/>
-                <stl-string name='target_bp_name'/>
-                <stl-string name='verb'/>
-                <stl-string name='with_item_name'/>
-                <stl-string name='unk3d'/>
-                <bitfield name='flags' base-type='int32_t'>
-                    <flag-bit name='behind'/>
-                    <flag-bit name='side'/>
-                    <flag-bit name='by'/>
-                    <flag-bit name='item'/>
-                    <flag-bit name='tap'/>
-                    <flag-bit name='sever'/>
-                </bitfield>
-            </static-array>
-
-            <static-array name='slot_id_used' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
-            <static-array name='slot_id_idx1' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
-            <static-array name='slot_id_idx2' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
-
-            <int16_t name='slots_used'/>
+            <compound name='slots'> bay12: combat_event_listst
+                <static-array name='slotdata' count='100'> bay12: combat_eventst
+                    <enum type-name='combat_report_event_type' name='type'/>
+                    <static-array name='field1' type-name='int32_t' count='4' comment='varies by event type'/>
+                    <static-array name='field2' type-name='int16_t' count='4' comment='varies by event type'/>
+                    <static-array name='str' type-name='stl-string' count='4'/>
+                    <bitfield name='flags' base-type='uint32_t'> bay12: COMBAT_EVENT_STRIKE_INTRO_FLAG_*
+                        <flag-bit name='behind'/>
+                        <flag-bit name='side'/>
+                        <flag-bit name='grapple'/>
+                        <flag-bit name='item'/>
+                        <flag-bit name='tap'/>
+                        <flag-bit name='passive'/>
+                        <flag-bit name='liquipowder'/>
+                    </bitfield>
+                </static-array>
+                <static-array name='slot_id_used' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
+                <static-array name='slot_id_idx1' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
+                <static-array name='slot_id_idx2' type-name='int16_t' count='38' index-enum='combat_report_event_type'/>
+                <int16_t name='slots_used'/>
+            </compound>
         </compound>
 
-        <compound name='interaction_instances'>
+        <compound name='interaction_instances'> bay12: interaction_instance_handlerst
             <stl-vector name='all' pointer-type='interaction_instance'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='interaction_instance'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='interaction_instance'/>
         </compound>
 
-        <compound name='written_contents'>
+        <compound name='written_contents'> bay12: written_content_handlerst
             <stl-vector name='all' pointer-type='written_content'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='written_content'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='written_content'/>
         </compound>
 
-        <compound name='identities'>
+        <compound name='identities'> bay12: identity_handlerst
             <stl-vector name='all' pointer-type='identity'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='identity'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='identity'/>
         </compound>
 
-        <compound name='incidents'>
+        <compound name='incidents'> bay12: incident_handlerst
             <stl-vector name='all' pointer-type='incident'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='incident'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='incident'/>
         </compound>
 
-        <compound name='crimes'>
+        <compound name='crimes'> bay12: crime_handlerst
             <stl-vector name='all' pointer-type='crime'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='crime'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='crime'/>
         </compound>
 
-        <compound name='vehicles' since='v0.34.08'>
+        <compound name='vehicles' since='v0.34.08'> bay12: vehicle_handlerst
             <stl-vector name='all' pointer-type='vehicle'/>
             <stl-vector name='active' pointer-type='vehicle'/>
-            <stl-vector name='bad' has-bad-pointers='true' pointer-type='vehicle'/>
+            <stl-vector name='order_load' has-bad-pointers='true' pointer-type='vehicle'/>
         </compound>
 
-        <compound name='armies' since='v0.40.01'>
+        <compound name='armies' since='v0.40.01'> bay12: army_handlerst
             <stl-vector name='all' pointer-type='army'/>
-            <stl-vector name='bad' pointer-type='army' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='army' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='army_controllers' since='v0.40.01'>
+        <compound name='army_controllers' since='v0.40.01'> bay12: army_controller_handlerst
             <stl-vector name='all' pointer-type='army_controller'/>
-            <stl-vector name='bad' pointer-type='army_controller' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='army_controller' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='army_tracking_info' since='v0.40.01'>
+        <compound name='army_tracking_info' since='v0.40.01'> bay12: army_tracking_info_handlerst
             <stl-vector name='all'/>
-            <stl-vector name='bad' has-bad-pointers='true'/>
+            <stl-vector name='order_load' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='cultural_identities' since='v0.40.01'>
+        <compound name='cultural_identities' since='v0.40.01'> bay12: cultural_identity_handlerst
             <stl-vector name='all' pointer-type='cultural_identity'/>
-            <stl-vector name='bad' pointer-type='cultural_identity' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='cultural_identity' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='agreements' since='v0.40.01'>
+        <compound name='agreements' since='v0.40.01'> bay12: agreement_handlerst
             <stl-vector name='all' pointer-type='agreement'/>
-            <stl-vector name='bad' pointer-type='agreement' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='agreement' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='poetic_forms' since='v0.42.01'>
+        <compound name='poetic_forms' since='v0.42.01'> bay12: poetic_form_handlerst
             <stl-vector name='all' pointer-type='poetic_form'/>
-            <stl-vector name='bad' pointer-type='poetic_form' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='poetic_form' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='musical_forms' since='v0.42.01'>
+        <compound name='musical_forms' since='v0.42.01'> bay12: musical_form_handlerst
             <stl-vector name='all' pointer-type='musical_form'/>
-            <stl-vector name='bad' pointer-type='musical_form' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='musical_form' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='dance_forms' since='v0.42.01'>
+        <compound name='dance_forms' since='v0.42.01'> bay12: dance_form_handlerst
             <stl-vector name='all' pointer-type='dance_form'/>
-            <stl-vector name='bad' pointer-type='dance_form' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='dance_form' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='scales' since='v0.42.01'>
+        <compound name='scales' since='v0.42.01'> bay12: scale_handlerst
             <stl-vector name='all' pointer-type='scale'/>
-            <stl-vector name='bad' pointer-type='scale' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='scale' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='rhythms' since='v0.42.01'>
+        <compound name='rhythms' since='v0.42.01'> bay12: rhythm_handlerst
             <stl-vector name='all' pointer-type='rhythm'/>
-            <stl-vector name='bad' pointer-type='rhythm' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='rhythm' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='occupations' since='v0.42.01'>
+        <compound name='occupations' since='v0.42.01'> bay12: occupation_handlerst
             <stl-vector name='all' pointer-type='occupation'/>
-            <stl-vector name='bad' pointer-type='occupation' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='occupation' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='belief_systems' since='v0.44.01'>
+        <compound name='belief_systems' since='v0.44.01'> bay12: belief_system_handlerst
             <stl-vector name='all' pointer-type='belief_system'/>
-            <stl-vector name='bad' pointer-type='belief_system' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='belief_system' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='image_sets' since='v0.47.01'>
+        <compound name='image_sets' since='v0.47.01'> bay12: image_set_handlerst
             <stl-vector name='all' pointer-type='image_set'/>
-            <stl-vector name='bad' pointer-type='image_set' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='image_set' has-bad-pointers='true'/>
         </compound>
 
-        <compound name='divination_sets' since='v0.47.01'>
+        <compound name='divination_sets' since='v0.47.01'> bay12: divination_set_handlerst
             <stl-vector name='all' pointer-type='divination_set'/>
-            <stl-vector name='bad' pointer-type='divination_set' has-bad-pointers='true'/>
+            <stl-vector name='order_load' pointer-type='divination_set' has-bad-pointers='true'/>
         </compound>
 
         <pointer name='selected_building' type-name='building'/>
@@ -1175,8 +1139,7 @@
         <int16_t name='building_height'/>
         <enum name='selected_direction' base-type='int8_t' type-name='screw_pump_direction'/>
 
-        <compound name='map'>
-            52cdc
+        <compound name='map'> not a compound, beware of alignment problems
             <stl-vector name='map_blocks' pointer-type='map_block'/>
             <pointer name='block_index' is-array='true'>
                 <pointer is-array='true'>
@@ -1202,49 +1165,47 @@
             <int32_t name='region_x'/>
             <int32_t name='region_y'/>
             <int32_t name='region_z'/>
-            <static-array name='distance_lookup' count='53'>
+            <static-array name='distance_lookup' count='53' comment='bay12: lightrad'>
                 <static-array count='53' type-name='int16_t'
                               comment='Appears to be precomputed rounded integer distances'/>
             </static-array>
         </compound>
 
-        TODO: why did the alignment actually change here?
-
-        <compound name='profession_skills'>
-            <static-array name='primary' index-enum='profession' since='v0.40.01'>
+        <compound name='profession_skills'> not a compound, beware of alignment problems
+            <static-array name='primary' index-enum='profession' since='v0.40.01' comment='bay12: u_skill_pick'>
                 <stl-vector type-name='job_skill'/>
             </static-array>
-            <static-array name='secondary' index-enum='profession' since='v0.40.01'>
+            <static-array name='secondary' index-enum='profession' since='v0.40.01' comment='bay12: u_mskill_pick'>
                 <stl-vector type-name='job_skill'/>
             </static-array>
         </compound>
 
-        <compound name='math'>
-            <static-array name='approx' count='40' since='v0.40.01' comment='10 * cosine/sine of the index in units of 1/40 of a circle, rounded towards 0'>
+        <compound name='math'> not a compound, beware of alignment problems
+            <static-array name='approx' count='40' since='v0.40.01' comment='bay12: precalc_vision_arc; 10 * cosine/sine of the index in units of 1/40 of a circle, rounded towards 0'>
                 <int32_t name='cos'/>
                 <int32_t name='sin'/>
             </static-array>
-            <static-array name='cos' count='181' type-name='d-float' since='v0.40.01' comment='100 * cosine of the index in degrees'/>
-            <static-array name='hypot' count='11' since='v0.40.01' comment='square root of the sum of the squares of the indices'>
+            <static-array name='cos' count='181' type-name='d-float' since='v0.40.01' comment='bay12: precalc_vision_dot; 100 * cosine of the index in degrees'/>
+            <static-array name='hypot' count='11' since='v0.40.01' comment='bay12: precalc_vision_sqrt; square root of the sum of the squares of the indices'>
                 <static-array count='11' type-name='d-float'/>
             </static-array>
         </compound>
 
-        <compound name='map_extras'>
-            <uint8_t name='rotation'/>
+        <compound name='map_extras'> not a compound, beware of alignment problems
+            <int8_t name='rotation'/>
 
             <pointer type-name='z_level_flags' name='z_level_flags'
-                     is-array='true' since='v0.34.05'/>
+                     is-array='true' since='v0.34.05' comment='bay12: temp_block_layer_flag'/>
 
-            <stl-vector name='unk_v40_3a' pointer-type='block_square_event_spoorst' since='v0.40.01'/>
-            <stl-vector name='unk_v40_3b' type-name='int16_t' since='v0.40.01'/>
-            <stl-vector name='unk_v40_3c' type-name='int16_t' since='v0.40.01'/>
-            <stl-vector name='unk_v40_3d' type-name='int16_t' since='v0.40.01'/>
+            <stl-vector name='inactive_spoor_bse' pointer-type='block_square_event_spoorst' since='v0.40.01'/>
+            <stl-vector name='inactive_spoor_bse_abs_smm_x' type-name='int16_t' since='v0.40.01'/>
+            <stl-vector name='inactive_spoor_bse_abs_smm_y' type-name='int16_t' since='v0.40.01'/>
+            <stl-vector name='inactive_spoor_bse_abs_smm_z' type-name='int16_t' since='v0.40.01'/>
         </compound>
 
         <pointer name='world_data' type-name='world_data'/>
 
-        <compound name='worldgen_status'>
+        <compound name='worldgen_status'> bay12: world_generatorst
             <enum base-type='int16_t' name='state'>
                 <enum-item name='None' value='-1'/>
                 <enum-item name='Initializing'/>
@@ -1260,96 +1221,95 @@
                 <enum-item name='Done'/>
             </enum>
             <int32_t name='num_rejects'/>
-            <static-array name='unk_1' count='53' type-name='int32_t'/>
-            <static-array name='unk_2' count='53' type-name='int32_t'/>
+            <static-array name='skip_reject' count='53' type-name='int32_t'/>
+            <static-array name='reject_type' count='53' type-name='int32_t'/>
             <int16_t name='rejection_reason'/>
-            <int32_t name='lakes_total'/>
-            <int32_t name='unk_3'/>
-            <int16_t name='unk_4'/>
-            <int32_t name='lakes_cur'/>
-            <int32_t name='unk_5'/>
-            <int32_t name='unk_6'/>
+            <int32_t name='new_dimx'/>
+            <int32_t name='new_dimy'/>
+            <int16_t/>
+            <int32_t name='lake_x'/>
+            <int32_t name='geoindex'/>
+            <int32_t name='max_geo_index'/>
             <static-array name='geo_layers' count='100' pointer-type='world_geo_layer'/>
-            <static-array name='unk_7' count='100' type-name='int8_t'/>
-            <static-array name='unk_8' count='100' type-name='int16_t'/>
-            <int32_t name='unk_9'/>
+            <static-array name='placement_freq' count='100' type-name='int8_t'/>
+            <static-array name='placement_parent' count='100' type-name='int16_t'/>
+            <int32_t name='have_logged_parameters'/>
             <int32_t name='finalized_civ_mats'/>
             <int32_t name='finalized_art'/>
             <int32_t name='finalized_uniforms'/>
             <int32_t name='finalized_sites'/>
-            <int32_t name='unk_10'/>
-            <int32_t name='unk_11'/>
-            <int32_t name='unk_12'/>
+            <int32_t name='rampage_num'/>
+            <int32_t/>
+            <int32_t/>
             <stl-vector name='entities' pointer-type='historical_entity'/>
             <stl-vector name='sites' pointer-type='world_site'/>
             <int32_t name='cursor_x'/>
             <int32_t name='cursor_y'/>
-            <stl-vector name='unk_13' type-name='pointer'/>
-            <stl-vector name='unk_14' type-name='pointer'/>
+            <compound name='riverstart' type-name='coord2d_path'/>
             <int32_t name='rivers_total'/>
             <int32_t name='rivers_cur'/>
-            <int8_t name='unk_15'/>
+            <int8_t name='last_used_valid'/>
             <stl-string name='last_param_set'/>
             <stl-string name='last_seed'/>
-            <stl-string name='last_name_seed'/>
             <stl-string name='last_history_seed'/>
+            <stl-string name='last_name_seed'/>
             <stl-string name='last_creature_seed'/>
-            <bool name='place_caves'/>
-            <bool name='place_good_evil'/>
-            <bool name='place_megabeasts'/>
-            <bool name='place_other_beasts'/>
-            <bool name='make_cave_pops'/>
-            <bool name='make_cave_civs'/>
-            <bool name='place_civs'/>
+            <bool name='prehistory_initialized'/>
+            <bool name='placed_caves'/>
+            <bool name='placed_good_evil'/>
+            <bool name='placed_megabeasts'/>
+            <bool name='placed_other_beasts'/>
+            <bool name='made_cave_pops'/>
+            <bool name='made_cave_civs'/>
             <bool name='finished_prehistory'/>
-            <stl-vector name='sites2' pointer-type='world_site'/>
-            <stl-vector name='sites3' pointer-type='world_site'/>
-            <int32_t name='unk_16'/>
-            <int8_t name='unk_17'/>
-            <int8_t name='unk_18'/>
-            <int8_t name='unk_19'/>
-            <int8_t name='unk_20'/>
+            <stl-vector name='caves' pointer-type='world_site'/>
+            <stl-vector name='orig_cave' pointer-type='world_site'/>
+            <int32_t name='current_bandit_num'/>
+            <bool name='have_placed_controllable'/>
+            <bool name='placed'/>
+            <bool name='skip_controllable'/>
+            <bool name='just_continued'/>
             <stl-vector name='entity_raws' pointer-type='entity_raw'/>
-            <stl-vector name='unk_21' type-name='int16_t'/>
+            <stl-vector name='entity_race' type-name='int16_t'/>
             <int32_t name='civ_count'/>  --  Only valid during civ placement phase
             <int32_t name='civs_left_to_place'/>  --  Ditto
-            <static-array name='regions1' count='10'>
+            <static-array name='normal_regions' count='10'>
                 <stl-vector pointer-type='world_region'/>
             </static-array>
-            <static-array name='regions2' count='10'>
+            <static-array name='good_regions' count='10'>
                 <stl-vector pointer-type='world_region'/>
             </static-array>
-            <static-array name='regions3' count='10'>
+            <static-array name='evil_regions' count='10'>
                 <stl-vector pointer-type='world_region'/>
             </static-array>
-            <stl-vector name='unk_22' type-name='int32_t'/>
-            <stl-vector name='unk_23' type-name='int32_t'/>
-            <stl-vector name='unk_24' type-name='int32_t'/>
-            <stl-vector name='unk_25' type-name='int32_t'/>
-            <stl-vector name='unk_26' type-name='int32_t'/>
-            <stl-vector name='unk_27' type-name='int32_t'/>
-            <int32_t name='unk_28'/>
-            <int32_t name='unk_29'/>
-            <stl-vector name='unk_10d298' type-name='int16_t' since='v0.40.01'/>
-            <stl-vector name='unk_10d2a4' type-name='int16_t' since='v0.40.01'/>
-            <stl-vector name='libraries' pointer-type='abstract_building' since='v0.42.01'/>
-            <int32_t name='unk_30' since='v0.42.01'/>
-            <stl-vector name='temples' pointer-type='abstract_building' since='v0.44.01'/>
-            <stl-vector name='some_artifacts' pointer-type='artifact_record' since='v0.44.01'/>
-            <stl-vector name='unk_31' since='v0.47.01'/>
-            <stl-vector name='unk_32' type-name='int32_t' since='v0.47.01'/>
+            <stl-vector name='cave_choice_x' type-name='int32_t'/>
+            <stl-vector name='cave_choice_y' type-name='int32_t'/>
+            <stl-vector name='final_cave_choice_x' type-name='int32_t'/>
+            <stl-vector name='final_cave_choice_y' type-name='int32_t'/>
+            <stl-vector name='o_final_cave_choice_x' type-name='int32_t'/>
+            <stl-vector name='o_final_cave_choice_y' type-name='int32_t'/>
+            <int32_t name='mountain_cave_left'/>
+            <int32_t name='non_mountain_cave_left'/>
+            <stl-vector name='candidate_demon_c' type-name='int16_t' since='v0.40.01'/>
+            <stl-vector name='candidate_demon_cc' type-name='int16_t' since='v0.40.01'/>
+            <stl-vector name='libraries' pointer-type='abstract_building_libraryst' since='v0.42.01'/>
+            <int32_t name='book_count' since='v0.42.01'/>
+            <stl-vector name='temples' pointer-type='abstract_building_templest' since='v0.44.01'/>
+            <stl-vector name='holy_relics' pointer-type='artifact_record' since='v0.44.01'/>
+            <stl-vector name='disaster_site' pointer-type='world_site' since='v0.47.01'/>
+            <stl-vector name='building_usage_move_check_hfid' type-name='int32_t' ref-target='historical_figure' since='v0.47.01'/>
         </compound>
 
         <compound name='orphaned_flow_pool' type-name='flow_reuse_pool'/>
 
         -- raws
 
-        <compound name='raws' type-name='world_raws'/>
+        <compound name='raws' type-name='world_raws'/> NOT A COMPOUND!
 
-        <compound name='area_grasses' comment="grasses in world tiles around embark. Populated at embark">
-            <compound name='world_tiles' type-name='coord2d_path' comment="7*7 world tile area centered around embark, stunted at edges"/>
+        <compound name='area_grasses' comment="grasses in world tiles around embark. Populated at embark"> not a compound
+            <compound name='world_tiles' type-name='coord2d_path' comment="local_wilderpop"/>
             <stl-vector name='layer_grasses' comment="one per layer per world tile">
-                <pointer>
+                <pointer> bay12: grass_selectionst
                     <compound name='ref' type-name='world_population_ref'/>
                     <stl-vector name='grasses'>
                         <int32_t ref-target='plant_raw'/>
@@ -1358,34 +1318,32 @@
             </stl-vector>
         </compound>
 
-        <compound name='flow_engine'>
-            <int8_t name='rnd_16'/>
-            <int16_t name='rnd_256'/>
-            <int16_t name='rnd_pos'/>
+        <compound name='flow_engine'> not a compound
+            <int8_t name='rnd_16' comment='flow_direction'/>
+            <int16_t name='rnd_256' comment='flow_index'/>
+            <int16_t name='rnd_pos' comment='flow_index_count'/>
             <static-array name='rnd_x' type-name='int16_t' count='16'/>
             <static-array name='rnd_y' type-name='int16_t' count='16'/>
 
             <int32_t name='block_idx' refers-to='$$._global.map.map_blocks[$]'/>
 
-            <stl-vector name='unk7a' type-name='int16_t'/>
-            <stl-vector name='unk7b' type-name='int16_t'/>
-            <stl-vector name='unk7c' type-name='int16_t'/>
-            <stl-vector name='unk7_cntdn' type-name='int16_t'/>
+            <compound name='sink_checked' type-name='coord_path'/>
+            <stl-vector name='sink_checked_timer' type-name='int16_t'/>
         </compound>
 
+        bay12: building_use_controllerst
         <stl-vector name='busy_buildings' type-name='int32_t' ref-target='building'
                     comment='buildings with nonempty getUsers'/>
 
-        <df-flagarray name='cavein_flags' index-enum='world_cavein_flags'/>
+        <df-flagarray name='flags' index-enum='world_flags'/>
         <enum type-name='save_version' name='original_save_version' comment='DF version on which the world was first created'/>
 
-        <compound name='worldgen'>
+        <compound name='worldgen'> not a compound
             <stl-string name='version'/>
             <int32_t name="next_unit_chunk_id"/>
             <int16_t name="next_unit_chunk_offset"/>
             <int32_t name="next_art_image_chunk_id"/>
             <int16_t name="next_art_image_chunk_offset"/>
-            ctor 87ae880
             <compound name='worldgen_parms' type-name='worldgen_parms'/>
         </compound>
 
@@ -1395,80 +1353,57 @@
 
         <stl-vector name='entity_populations' pointer-type='entity_population'/>
 
-        <compound name='unk_v40_6' comment="every value matches a nemesis, but unk2/3 have too few values to draw conclusions. Note that nemesis matches may just be a conincidence of falling within the nemesis range">
-            <static-array name='unk1' since='v0.40.01' count='336'>
+        <compound name='daily_events'> bay12: world_yearly_schedulest
+            <static-array name='deaths' since='v0.40.01' count='336'>
                 <stl-vector type-name='int32_t' ref-target='nemesis_record'/>
             </static-array>
-            <static-array name='unk2' since='v0.40.01' count='336'>
-                <stl-vector type-name='int32_t'/>
-            </static-array>
-            <static-array name='unk3' since='v0.40.01' count='336'>
-                <stl-vector type-name='int32_t'/>
-            </static-array>
-            <static-array name='unk4' since='v0.40.01' count='336'>
+            <static-array name='pregnancies' since='v0.40.01' count='336'>
                 <stl-vector type-name='int32_t' ref-target='nemesis_record'/>
             </static-array>
-            <static-array name='unk5' since='v0.40.01' count='336'>
+            <static-array name='births' since='v0.40.01' count='336'>
                 <stl-vector type-name='int32_t' ref-target='nemesis_record'/>
             </static-array>
-            <static-array name='unk6' since='v0.40.01' count='336'>
+            <static-array name='grown_up' since='v0.40.01' count='336'>
+                <stl-vector type-name='int32_t' ref-target='nemesis_record'/>
+            </static-array>
+            <static-array name='marriage_1' since='v0.40.01' count='336'>
+                <stl-vector type-name='int32_t' ref-target='nemesis_record'/>
+            </static-array>
+            <static-array name='marriage_2' since='v0.40.01' count='336'>
                 <stl-vector type-name='int32_t' ref-target='nemesis_record' comment="same length as corresponding previous vector element. Not true for other pairs"/>
             </static-array>
         </compound>
-        <stl-vector name='unk_131ec0' since='v0.42.01'>
-            <pointer> The first value in a pair is always less/equal to the higher one, and the first value of the corresponding pair in the next vector
-                      element is always greater/equal to the second one of the previous entry. Looks like first/last values for something.
-                <int32_t name='unk_1'/>
-                <int32_t name='unk_2'/>
-
-                <int32_t name='unk_3'/>
-                <int32_t name='unk_4'/>
-
-                <int32_t name='unk_5'/>
-                <int32_t name='unk_6'/>
-
-                <int32_t name='unk_7'/>
-                <int32_t name='unk_8'/>
-
-                <int32_t name='unk_9'/>
-                <int32_t name='unk_10'/>
-
-                <int32_t name='unk_11'/>
-                <int32_t name='unk_12'/>
-
-                <int32_t name='unk_13'/>
-                <int32_t name='unk_14'/>
-
-                <int32_t name='unk_15'/>
-                <int32_t name='unk_16'/>
-            </pointer>
-        </stl-vector>
-        <stl-vector name='languages' since='v0.40.01'> DWARF ELF GOBLIN HUMAN
-            <pointer>
+        <compound type-name='random_object_infost' name='random_object_info' since='v0.42.01'/>
+        <stl-vector name='fake_world_info' since='v0.40.01'> bay12: fake_world_infost
+            <pointer> bay12: fake_world_info_languagest
                 <stl-string name='name'/>
-                <int32_t name='unk_1'/>
-                <int32_t name='unk_2'/>
+                <bitfield name='flags' base-type='uint32_t'> bay12: FWI_LANGUAGE_FLAG_*
+                    <flag-bit name='tonal'/>
+                    <flag-bit name='stressed'/>
+                    <flag-bit name='quantitative_stress'/>
+                </bitfield>
+                <int32_t name='rhyme_level'/>
             </pointer>
         </stl-vector>
-        <stl-vector name='unk_131ef0' since='v0.44.01'>
-            <pointer>
-                <int32_t name='hfid' ref-target='historical_figure' comment="confusing. usually the creator, but sometimes completely unrelated or culled"/>
+        <stl-vector name='family_info' since='v0.44.01'> bay12: family_infost
+            <pointer> bay12: familyst
+                <int32_t name='hfid' ref-target='historical_figure'/>
                 <stl-vector name='claims'>
-                    <pointer>
+                    <pointer> bay12: family_artifact_claimst
                         <int32_t name='artifact' ref-target='artifact_record'/>
-                        <int32_t name='unk_1' comment="only seen 1, and only family heirloom..."/>
-                        <int32_t name='year' comment="matches up with creation or a claim..."/>
+                        <enum name='type' type-name='artifact_claim_type'/>
+                        <int32_t name='year'/>
                         <int32_t name='year_tick' init-value='-1'/>
-                        <int32_t name='unk_2' init-value='-1' comment="only seen -1"/>
+                        <int32_t name='renounced_heid' ref-target='history_event'/>
                     </pointer>
                 </stl-vector>
-                <int32_t name='unk_hfid' ref-target='historical_figure' comment="hfid or completely unrelated hf seen?"/>
-                <int32_t name='unk_1' init-value='0' comment="only seen 0"/>
-                <int32_t name='unk_2' init-value='0' comment="only seen 0"/>
+                <int32_t name='current_family_head_hfid' ref-target='historical_figure' comment="hfid or completely unrelated hf seen?"/>
+                <int32_t name='current_family_head_birth_year' init-value='0' comment="only seen 0"/>
+                <int32_t name='current_family_head_birth_season_count' init-value='0' comment="only seen 0"/>
             </pointer>
         </stl-vector>
 
-        <int32_t name='unk_131f08' since='v0.44.01'/>
+        <int32_t name='artifact_history_suppression_count' since='v0.44.01'/>
 
         <bool name="reindex_pathfinding" comment='forces map_block.passable to be recomputed'/>
 
@@ -1476,41 +1411,41 @@
 
         <stl-vector name='orphaned_flows' pointer-type='flow_info' comment='flows that are not tied to a map_block'/>
 
-        <compound name='pathfinder'>
-            <static-array name='boundary_heap' count='80000'>
-                <comment>A heap of current boundary tiles.</comment>
-                <int32_t name='total_cost'/>
-                <int32_t name='local_cost'/>
-                <int16_t name='x'/>
-                <int16_t name='y'/>
-                <int32_t name='z'/>
-            </static-array>
-            <int32_t name='heap_count'/>
+        <compound name='pathfinder'> not a compound
+            <compound name='heap'> bay12: open_list_binary_heapst
+                <static-array name='boundary_heap' count='80000'> bay12: open_list_nodest
+                    <comment>A heap of current boundary tiles.</comment>
+                    <int32_t name='total_cost'/>
+                    <int32_t name='local_cost'/>
+                    <int16_t name='x'/>
+                    <int16_t name='y'/>
+                    <int16_t name='z'/>
+                </static-array>
+                <int32_t name='heap_count'/>
 
-            <compound name='pos1' type-name='coord'/>
-            <compound name='pos2' type-name='coord'/>
+                <compound name='pos1' type-name='coord'/>
+                <compound name='pos2' type-name='coord'/>
 
-            -- Not quite simple distance, it seems:
-            <int32_t name='dist_x'/>
-            <int32_t name='dist_y'/>
-            <int32_t name='dist_z'/>
+                -- Not quite simple distance, it seems:
+                <int32_t name='dist_x'/>
+                <int32_t name='dist_y'/>
+                <int32_t name='dist_z'/>
+            </compound>
 
-            <int32_t name='next_path_cost'/>
-            <bool name='wipe_path_cost'/>
-            <uint16_t name='next_path_tag'/>
-            <bool name='wipe_path_tag'/>
-
-            <int16_t name='next_walkable_id'/>
-
-            <int16_t name='plant_update_step'/>
-            <bool name='unk_1'/>
+            <int32_t name='pathstart'/>
+            <int8_t name='pathclear'/>
+            <uint16_t name='direction_start'/>
+            <int8_t name='direction_clear'/>
+            <int16_t name='next_levelmap'/>
+            <int16_t name='cur_veg_move_stage'/>
+            <bool name='preparing_map'/>
         </compound>
 
         <int32_t name='save_version'/>
 
-        <compound name='cur_savegame'>
+        <compound name='cur_savegame'> not a compound
             <stl-string name='save_dir'/>
-            <int32_t name='unk_v40_0s'/> was padding
+            <bool name='civ_history_complete'/>
             <enum base-type='int32_t' name='load_stage' since='v0.40.01'>
                 <enum-item name='LoadingObjectFiles'/>
                 <enum-item name='SortingMaterialTemplates'/>
@@ -1555,7 +1490,7 @@
                 <enum-item name='PreparingGraphics'/>
                 <enum-item name='Finishing'/>
             </enum>
-            <int32_t name='unk_v40_2s' since='v0.40.01'/>
+            <int32_t name='load_stage_count' since='v0.40.01'/>
         </compound>
 
         <compound name='loading' since='v0.40.01'>
@@ -1586,37 +1521,37 @@
             <int32_t name='object_file_index' since='v0.40.01' refers-to='$$._parent.object_files[$]'/>
         </compound>
 
-        <pointer name='unk_v40_7s' comment="mutated from 0.40.01. Generates 4 bytes of padding before it on 64 bit systems followed by an 8 byte pointer, but only a 4 byte pointer on 32 bit systems"/>
+        <int32_t name='temp_pop_breeding_start'/>
 
-        <compound name='features'>
-            <stl-vector name='unk_v47_1' pointer-type='world_site' since='v0.47.01'/>
+        <compound name='features'> not a compound
+            <stl-vector name='wg_market_site' pointer-type='world_site' since='v0.47.01'/>
             <stl-vector name='map_features' pointer-type='feature_init'/>
             <stl-vector type-name='int16_t' name='feature_x'/>
             <stl-vector type-name='int16_t' name='feature_y'/>
             <stl-vector type-name='int16_t' name='feature_local_idx' comment='same as map_block.local_feature'/>
             <stl-vector type-name='int32_t' name='feature_global_idx' ref-target='world_underground_region'/>
-            <stl-vector pointer-type='feature_init' name='unk_1' comment='from unk_9C'/>
-            <stl-vector type-name='int16_t' name='unk_2' comment='unk_9C.region.x'/>
-            <stl-vector type-name='int16_t' name='unk_3' comment='unk_9C.region.y'/>
-            <stl-vector type-name='int16_t' name='unk_4' comment='unk_9C.embark.x'/>
-            <stl-vector type-name='int16_t' name='unk_5' comment='unk_9C.embark.y'/>
-            <stl-vector type-name='int16_t' name='unk_6' comment='unk_9C.local_feature_idx'/>
-            <stl-vector type-name='int32_t' name='unk_7' comment='unk_9C.global_feature_idx'/>
-            <stl-vector type-name='int32_t' name='unk_8' comment='unk_9C.unk10'/>
-            <stl-vector type-name='int16_t' name='unk_9' comment='unk_9C.unk14'/>
-            <stl-vector type-name='int16_t' name='unk_10' comment='unk_9C.local.x'/>
-            <stl-vector type-name='int16_t' name='unk_11' comment='unk_9C.local.y'/>
-            <stl-vector type-name='int16_t' name='unk_12' comment='unk_9C.z_min'/>
-            <stl-vector type-name='int16_t' name='unk_13' comment='unk_9C.z_min; yes, seemingly duplicate'/>
-            <stl-vector type-name='int16_t' name='unk_14' comment='unk_9C.z_max'/>
-            <stl-bit-vector name='unk_15' since='v0.40.11'/>
+            <stl-vector pointer-type='feature_init' name='newpop_feature'/>
+            <stl-vector type-name='int16_t' name='newpop_ax'/>
+            <stl-vector type-name='int16_t' name='newpop_ay'/>
+            <stl-vector type-name='int16_t' name='newpop_dx'/>
+            <stl-vector type-name='int16_t' name='newpop_dy'/>
+            <stl-vector type-name='int16_t' name='newpop_feature_ind'/>
+            <stl-vector type-name='int32_t' name='newpop_feature_layer'/>
+            <stl-vector type-name='int32_t' name='newpop_feature_layer_sq'/>
+            <stl-vector type-name='int16_t' name='newpop_layer_depth'/>
+            <stl-vector type-name='int16_t' name='newpop_sx'/>
+            <stl-vector type-name='int16_t' name='newpop_sy'/>
+            <stl-vector type-name='int16_t' name='newpop_min_z'/>
+            <stl-vector type-name='int16_t' name='newpop_mid_z'/>
+            <stl-vector type-name='int16_t' name='newpop_max_z'/>
+            <stl-bit-vector name='newpop_from_saved_pop' since='v0.40.11'/>
         </compound>
 
         <bool name='allow_announcements' comment='announcements will not be processed at all if false'/>
-        <bool name='unk_26a9a9'/>
-        <bool name='unk_26a9aa' since='v0.42.01'/>
+        <bool name='suppress_minevent_announcements'/>
+        <bool name='updating_region' since='v0.42.01'/>
 
-        <compound name='arena_spawn'>
+        <compound name='arena_spawn'> bay12: arenast
             <stl-vector name='race' type-name='int16_t' ref-target='creature_raw'/>
             <stl-vector name='caste' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.race[$._key]'/>
 
@@ -1624,34 +1559,14 @@
 
             <stl-string name='filter' since='v0.34.08'/>
 
-            <static-array name='item_types' count='107' comment='true array'>
-                <stl-vector>
-                    <pointer>
-                        <enum base-type='int16_t' name='item_type' type-name='item_type'/>
-                        <int16_t name='item_subtype' refers-to='(item-subtype-target $$._parent.item_type $)'/>
+            <compound type-name='embark_item_choice' name='item_types'/>
 
-                        <int16_t name='mattype' ref-target='material' aux-value='$$.matindex'/>
-                        <int32_t name='matindex'/>
-
-                        <bool name='unk_1'/>
-                    </pointer>
-                </stl-vector>
-            </static-array>
-
-            <stl-vector name='unk_vec1'/>
-            <stl-vector name='unk_vec2'/>
-            <stl-vector name='unk_vec3'/>
-
-            <compound name='equipment'>
-                <stl-vector name='skills'>
-                    <enum base-type='int16_t' type-name='job_skill'/>
-                </stl-vector>
+            <compound name='equipment'> not a compound
+                <stl-vector name='skills' type-name='job_skill'/>
                 <stl-vector name='skill_levels' type-name='int32_t'
                             index-refers-to='$$._parent.skills[$]'/>
 
-                <stl-vector name='item_types'>
-                    <enum base-type='int16_t' type-name='item_type'/>
-                </stl-vector>
+                <stl-vector name='item_types' type-name='item_type'/>
                 <stl-vector name='item_subtypes'>
                     <int16_t refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
                 </stl-vector>
@@ -1661,97 +1576,106 @@
 
             <int32_t name='side'/>
             <int32_t name='interaction' refers-to='$$._parent.interactions[$]'/>
-            <enum name='tame' base-type='int32_t' since='v0.47.01' comment='sets tame-mountable status when the creature creation menu is opened'>
-                <enum-item name='NotTame' value='0'/>
-                <enum-item name='Tame'/>
-            </enum>
+            <bool name='tame'/>
 
             <stl-vector name='interactions' pointer-type='interaction_effect' since='v0.34.01'/>
             <stl-vector name='creature_cnt' type-name='int32_t'
                         index-refers-to='(find-instance $creature_raw $)'/>
-            <int32_t name='unk_int1'/>
-        </compound>
+            <pointer type-name='unit' name='selecting_mount_un'/>
 
-        <compound name='arena_settings'>
             <enum name='conflict_level' type-name='conflict_level'/>
-            <bool name='morale_enable'/>
-            <int16_t name='unk1'/>?
+            <bitfield name='flag' base-type='uint32_t'> bay12: ARENA_FLAG_*
+                <flag-bit name='morale_enable'/>
+            </bitfield>
             <uint16_t name='temperature'/>
             <int16_t name='time'/>
-            <int32_t name='weather_column'/>
             <int32_t name='weather_row'/>
+            <int32_t name='weather_selected'/>
             <stl-vector name='tree_types' pointer-type='plant_raw'/>
             <int32_t name='tree_cursor'/>
             <int32_t name='tree_age'/>
             <stl-string name='tree_filter'/>
             <stl-string name='tree_age_str'/>
+            <bool name='arena_tree_entering_filter'/>
+            <bool name='arena_tree_entering_age'/>
         </compound>
 
-        <int8_t name='unk_26b5b8'/>
-        <int8_t name='unk_26b5b9'/>
 
-        <compound name='unk_26c678' since='v0.47.01'>
-            <stl-vector name='unk_1'/>
-            <stl-vector name='unk_2'/>
+        <compound name='dungeon' since='v0.47.01'> bay12: dungeonst
+            <stl-vector name='creature_race' type-name='int16_t' ref-target='creature_raw'/>
+            <stl-vector name='creature_caste' type-name='int16_t' ref-target='caste_raw' aux-value='$$._parent.race[$._key]'/>
 
-            <int32_t name='unk_3'/>
-            <compound name='unk_38' type-name='world_unk26c678_unk38'/>
+            <int32_t name='last_selected_creature_index'/>
+            <compound type-name='embark_item_choice' name='etl'/>
 
-            <stl-vector name='unk_4'/>
-            <stl-vector name='unk_5'/>
-            <stl-vector name='unk_6'/>
-            <stl-vector name='unk_7'/>
-            <stl-vector name='unk_8'/>
-            <stl-vector name='unk_9'/>
-            <stl-vector name='unk_10'/>
-            <stl-vector name='unk_11'/>
+            <stl-vector name='skill_type' type-name='job_skill'/>
+            <stl-vector name='skill_value' type-name='int32_t'
+                        index-refers-to='$$._parent.skills[$]'/>
+
+            <stl-vector name='item_types' type-name='item_type'/>
+            <stl-vector name='item_subtypes'>
+                <int16_t refers-to='(item-subtype-target $$._parent._parent.item_types[$$._key] $)'/>
+            </stl-vector>
+            <compound name='item_materials' type-name='material_vec_ref'/>
+            <stl-vector name='item_amount' type-name='int32_t'/>
+
+            <stl-vector name='race_count' type-name='int32_t'/>
         </compound>
 
-        <compound name='unk_19325c'>
-            <stl-vector name='unk_1'>
-                <pointer>
-                    <pointer name='unk_1'/>
-                    <int32_t name='unk_2'/>
-                    <int16_t name='unk_3'/>
-                    <int32_t name='unk_4'/>
-                    <int32_t name='unk_5'/>
-                    <int32_t name='unk_6'/>
+        <compound name='attack_chance_info'> bay12: attack_chance_infost
+            <stl-vector name='modifier' pointer-type='attack_chance_modifierst'/>
+            <stl-vector name='attack'>
+                <pointer> bay12: attack_chance_attackst
+                    <pointer name='attack_item' type-name='item'/>
+                    <int32_t name='attack_index'/>
+                    <bitfield name='modifier_flags' type-name='attack_chance_modifier_flags'/>
                 </pointer>
             </stl-vector>
-            <stl-vector name='unk_2'>
-                <pointer>
-                    <pointer type-name='item' name='unk_1'/>
-                    <int32_t name='unk_2'/>
-                    <int32_t name='unk_3'/>
-                </pointer>
-            </stl-vector>
-            <stl-vector name='unk_3'>
-                <pointer>
-                    <int16_t name='unk_1'/>
-                    <int32_t name='unk_2'/>
-                    <int32_t name='unk_3'/>
-                    <int32_t name='unk_4'/>
+            <stl-vector name='target'>
+                <pointer> bay12: attack_chance_targetst
+                    <int16_t name='target_bp'/>
+                    <int32_t name='initial_hit_chance_adjustment'/>
+                    <int32_t name='initial_hit_squareness_adjustment'/>
+                    <bitfield name='modifier_flags' type-name='attack_chance_modifier_flags'/>
                 </pointer>
             </stl-vector>
 
-            <int32_t name='unk_4'/>
-            <int32_t name='unk_5'/>
-            <int32_t name='unk_6'/>
+            <int32_t name='current_modifier_number'/>
+            <int32_t name='current_attack_number'/>
+            <int32_t name='current_target_number'/>
         </compound>
-
-        <int32_t name='unk_26b618' since='v0.40.01'/>
     </struct-type>
 
-    <struct-type type-name='world_unk26c678_unk38'>
-        <static-array name='unk_1' count='107'>
-            <stl-vector/> contains 16-byte records on Win64
-        </static-array>
-        <stl-vector name='unk_2' type-name='int32_t'/>
-        <stl-vector name='unk_3' type-name='int16_t'/>
-        <stl-vector name='unk_4' type-name='int16_t'/>
+
+    <bitfield-type type-name='attack_chance_modifier_flags' base-type='uint32_t'> bay12: ATTACK_CHANCE_MODIFIER_FLAG_*
+        <flag-bit name='HEAD'/>
+        <flag-bit name='BODY'/>
+        <flag-bit name='LIMB'/>
+        <flag-bit name='PRIORITY_WIELD'/>
+        <flag-bit name='MAIN_ATTACK'/>
+        <flag-bit name='ADJUSTED_UP_LOTS'/>
+        <flag-bit name='ADJUSTED_UP'/>
+        <flag-bit name='ADJUSTED_DOWN'/>
+        <flag-bit name='ADJUSTED_DOWN_LOTS'/>
+        <flag-bit name='RING_OF_SAVINGS'/>
+        <flag-bit name='GRASP'/>
+        <flag-bit name='STANCE'/>
+        <flag-bit name='ARMOR_3'/>
+        <flag-bit name='ARMOR_2'/>
+        <flag-bit name='ARMOR_1'/>
+        <flag-bit name='SMALL_AIM_MINUS'/>
+    </bitfield-type>
+
+    <struct-type type-name='attack_chance_modifierst'>
+        <pointer name='attack_item' type-name='item'/>
+        <int32_t name='attack_index'/>
+        <int16_t name='target_bp'/>
+        <int32_t name='hit_chance_adjustment'/>
+        <int32_t name='hit_squareness_adjustment'/>
+        <bitfield name='flags' type-name='attack_chance_modifier_flags'/>
     </struct-type>
 
-    <enum-type type-name='world_cavein_flags'>
+    <enum-type type-name='world_flags'> bay12: WorldFlagType
         <enum-item name='process_columns'/>
     </enum-type>
 

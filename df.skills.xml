@@ -1,7 +1,7 @@
 <data-definition>
     ----- PROFESSION -----
 
-    <enum-type type-name='profession' base-type='int16_t'>
+    <enum-type type-name='profession' base-type='int16_t'> bay12: UnitType
         <enum-attr name='caption'/>
         <enum-attr name='military' type-name='bool' default-value='false'/>
         <enum-attr name='parent' type-name='profession' default-value='NONE'/>
@@ -817,7 +817,7 @@
 
     ----- LABOR -----
 
-    <enum-type type-name='unit_labor_category'>
+    <enum-type type-name='unit_labor_category'> bay12: SUPER_PROFESSION_*
         used in viewscreen_dwarfmodest::unit_labors_sidemenu
         <enum-item name='Other' value='-13'/>
         <enum-item name='Hauling'/>
@@ -836,7 +836,7 @@
         <enum-item name='None'/>
     </enum-type>
 
-    <enum-type type-name='unit_labor'>
+    <enum-type type-name='unit_labor' base-type='int32_t'> bay12: ProfessionType
         <enum-attr name='caption'/>
         <enum-attr name='category' type-name='unit_labor_category' default-value='None'/>
 
@@ -1216,7 +1216,7 @@
         <enum-item name='MilitaryMisc'/>
     </enum-type>
 
-    <enum-type type-name='job_skill' base-type='int16_t'>
+    <enum-type type-name='job_skill' base-type='int16_t'> bay12: SkillType
         <enum-attr name='caption'/>
         <enum-attr name='caption_noun'/>
         <enum-attr name='profession' type-name='profession' default-value='NONE'/>
