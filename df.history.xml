@@ -1,4 +1,41 @@
 <data-definition>
+    <enum-type type-name='negotiation_result_difficulty_modifier_type' base-type='int32_t'> bay12: NegotiationResultDifficultyModifierType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='INVASION_DEATHS'/>
+        <enum-item name='TARGET_LARGER_CIV'/>
+        <enum-item name='TARGET_SMALLER_CIV'/>
+    </enum-type>
+
+    <enum-type type-name='negotiation_result_type' base-type='int32_t'> bay12: NegotiationResultType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='SUCCESS'/>
+        <enum-item name='FAILURE'/>
+        <enum-item name='MUST_LIFT_CURRENT_SIEGE'/>
+    </enum-type>
+
+    <struct-type type-name='negotiation_resultst'>
+        <int32_t name='initiator_hfid' ref-target='historical_figure'/>
+        <int32_t name='initiator_enid' ref-target='historical_entity'/>
+        <int32_t name='target_hfid' ref-target='historical_figure'/>
+        <int32_t name='target_enid' ref-target='historical_entity'/>
+        <int32_t name='target_ep_id'/>
+        <int32_t name='target_ep_enid'/>
+        <enum type-name='meeting_topic' name='topic'/>
+        <enum type-name='negotiation_result_type' name='result'/>
+        <int32_t name='result_id'/>
+        <int32_t name='result_magnitude'/>
+        <int32_t name='initiator_negotiation_roll'/>
+        <int32_t name='initiator_persuasion_roll'/>
+        <int32_t name='initiator_extra_skill'/>
+        <int32_t name='initiator_extra_skill_roll'/>
+        <int32_t name='target_negotiation_roll'/>
+        <int32_t name='target_judgment_roll'/>
+        <int32_t name='target_extra_skill'/>
+        <int32_t name='target_extra_skill_roll'/>
+        <stl-vector type-name='negotiation_result_difficulty_modifier_type' name='difficulty_modifier'/>
+        <stl-vector type-name='int32_t' name='difficulty_modifier_value'/>
+    </struct-type>
+
     <bitfield-type type-name='intrigue_corruption_result_flag' base-type='uint32_t'> bay12: INTRIGUE_CORRUPTION_RESULT_FLAG_*
         <flag-bit name='succeeded' original-name='SUCCESSFUL'/>
         <flag-bit name='misread_target' original-name='FAILED_JUDGMENT_TEST'/>
@@ -138,6 +175,8 @@
 
     <struct-type type-name='intrigue' instance-vector='$global.world.history.intrigues' key-field='event_id' original-name='history_support_eventst'>
         <int32_t name='event_id' original-name='global_id' ref-target='history_event' comment="NOTE: can be culled. Seen: failed_intrigue_corruption, event_agreement_formed, hfs_formed_intrigue_relationship"/>
+
+        <pointer type-name='negotiation_resultst' name='negotiation_result'/>
         <pointer type-name='intrigue_corruption' name='corruption' original-name='intcr' comment="Mutually exclusive with circumstance. Exactly one is present. Presumably 'bring into network' action doesn't provide membership"/>
         <compound name='reason'> not a compound
             <enum base-type='int32_t' type-name='history_event_reason' name='type' original-name='reason'/>

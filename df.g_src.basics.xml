@@ -1122,10 +1122,10 @@
         <enum-item name='DEITY_PRONOUNCEMENT' since='v0.51.01'>
             <item-attr name='alert_type' value='GENERAL'/>
         </enum-item>
-        <enum-item name='UNUSED_47'>
+        <enum-item name='CREATURE_STUCK'>
             <item-attr name='alert_type' value='GENERAL'/>
         </enum-item>
-        <enum-item name='UNUSED_48'>
+        <enum-item name='CITIZEN_STUCK'>
             <item-attr name='alert_type' value='GENERAL'/>
         </enum-item>
         <enum-item name='UNUSED_49'>

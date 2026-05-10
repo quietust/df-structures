@@ -83,6 +83,7 @@
         <enum-item name='ABDUCT_HF'/>
         <enum-item name='SABOTAGE_ENTITY'/>
         <enum-item name='INFILTRATE_SOCIETY'/>
+        <enum-item name='DIPLOMACY'/>
     </enum-type>
 
     <enum-type type-name='invasion_intent_type' base-type='int32_t'> bay12: InvasionIntentType
@@ -216,6 +217,39 @@
         <bitfield base-type='uint32_t' type-name='ac_goal_make_request_flag' name="flag"/>
         <int32_t name='source_abs_smm_x' init-value='-1'/>
         <int32_t name='source_abs_smm_y' init-value='-1'/>
+    </struct-type>
+
+    <enum-type type-name='meeting_topic' original-name='diplomacy_topic_type' base-type='int16_t'> bay12: DiplomacyTopicType
+        <enum-item name="DiscussCurrent" original-name='AGREEMENT'/>
+        <enum-item name="RequestPeace" original-name='PEACETREATY'/>
+        <enum-item name="TreeQuota" original-name='TREECOUNT'/>
+        <enum-item name="BecomeLandHolder" original-name='ESTABLISH_LAND_HOLDER'/>
+        <enum-item name="PromoteLandHolder" original-name='ELEVATE_LAND_HOLDER'/>
+        <enum-item name="ExportAgreement" original-name='MAKE_REQUESTS'/>
+        <enum-item name="ImportAgreement" original-name='TAKE_REQUESTS'/>
+        <enum-item name="PleasantPlace" original-name='PLEASANTRIES'/>
+        <enum-item name="WorldStatus" original-name='DISCUSS_WORLD'/>
+        <enum-item name="TributeAgreement" original-name='TRIBUTE'/>
+        <enum-item name="DemandSurrender" original-name='DEMAND_UNCONDITIONAL_SURRENDER'/>
+        <enum-item name="InduceWar" original-name='SET_ENTITY_1_AGAINST_ENTITY_2'/>
+        <enum-item name="InducePeace" original-name='ENTITY_1_SHOULD_LOVE_ENTITY_2'/>
+        <enum-item name="DeclareWar" original-name='DECLARE_WAR'/>
+        <enum-item name="SeekAlliance" original-name='SEEK_ALLIANCE'/>
+        <enum-item name="OpenTrade" original-name='OPEN_TRADE'/>
+        <enum-item name="ImproveTrade" original-name='IMPROVE_TRADE'/>
+    </enum-type>
+
+    <bitfield-type type-name='ac_goal_diplomacy_flag' base-type='uint32_t'> bay12: AC_GOAL_DIPLOMACY_FLAG_*
+        <flag-bit name='RETURNING_HOME'/>
+    </bitfield-type>
+
+    <struct-type type-name='ac_goal_diplomacyst'>
+        <stl-vector type-name='meeting_topic' name='topic'/>
+        <stl-vector type-name='int32_t' name='topic_id1'/>
+        <stl-vector type-name='int32_t' name='topic_id2'/>
+        <bitfield base-type='uint32_t' type-name='ac_goal_diplomacy_flag' name='flag'/>
+        <int32_t name='source_abs_smm_x'/>
+        <int32_t name='source_abs_smm_y'/>
     </struct-type>
 
     <bitfield-type type-name='ac_goal_hunting_flag' base-type='uint32_t'> bay12: AC_GOAL_HUNTING_FLAG_*
@@ -446,6 +480,7 @@
             <pointer type-name='army_controller_goal_abduct_hfst' name='goal_abduct_hf'/>
             <pointer type-name='army_controller_goal_sabotage_entityst' name='goal_sabotage_entity'/>
             <pointer type-name='army_controller_goal_infiltrate_societyst' name='goal_infiltrate_society'/>
+            <pointer type-name='ac_goal_diplomacyst' name='goal_diplomacy'/>
         </compound>
         <enum type-name='army_controller_goal_type' name='goal'/>
 
