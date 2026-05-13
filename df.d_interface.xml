@@ -6934,6 +6934,11 @@
 
     -- Unused: viewscreen_workquota_detailsst
 
+    -- Unused: CivlistModeType
+    -- Unused: CIVLIST_SQUAD_FLAG_*
+    -- Unused: CIVLIST_MESSENGER_FLAG_*
+    -- Unused: viewscreen_civlistst
+
     <enum-type type-name='world_view_mode_type' base-type='int32_t'> bay12: WorldViewModeType
         <enum-item name='NONE' value='-1'/>
         <enum-item name='NORMAL'/>
@@ -6944,12 +6949,8 @@
         <enum-item name='REPORTS'/>
         <enum-item name='CITIZENS'/>
         <enum-item name='ARTIFACTS'/>
+        <enum-item name='NEW_MISSION'/>
     </enum-type>
-
-    -- Unused: CivlistModeType
-    -- Unused: CIVLIST_SQUAD_FLAG_*
-    -- Unused: CIVLIST_MESSENGER_FLAG_*
-    -- Unused: viewscreen_civlistst
 
     <bitfield-type type-name='civlist_squad_flag' base-type='uint32_t'> bay12: CIVLIST_SQUAD_FLAG_*
         <flag-bit name='LOCKED_IN'/>
@@ -6958,6 +6959,31 @@
     <bitfield-type type-name='civlist_messenger_flag' base-type='uint32_t'> bay12: CIVLIST_MESSENGER_FLAG_*
         <flag-bit name='LOCKED_IN'/>
     </bitfield-type>
+
+    <enum-type type-name='world_new_mission_type' base-type='int32_t'> bay12: WorldNewMissionType
+        <enum-item name='NONE' value='-1'/>
+        <enum-item name='OKAY'/>
+        <enum-item name='NOT_DISPLAYED'/>
+        <enum-item name='OWN_SITE'/>
+        <enum-item name='OWN_CIV'/>
+        <enum-item name='NOT_UNDER_YOUR_CONTROL'/>
+        <enum-item name='NO_CIV'/>
+        <enum-item name='NO_REQUESTABLE_WORKERS'/>
+        <enum-item name='INACCESSIBLE'/>
+        <enum-item name='NO_MILITARY_GOALS_HF'/>
+        <enum-item name='NO_MEET_WORKERS_HF'/>
+        <enum-item name='NOT_IN_CONTACT'/>
+        <enum-item name='ALREADY_IN_CONTACT'/>
+        <enum-item name='ALREADY_AT_WAR'/>
+        <enum-item name='ALREADY_HAVE_PEACE'/>
+        <enum-item name='ALREADY_HAVE_ALLIANCE'/>
+        <enum-item name='AT_WAR'/>
+        <enum-item name='CANNOT_COMMUNICATE'/>
+        <enum-item name='HOSTILE_ENTITY'/>
+        <enum-item name='NOT_TRADING'/>
+        <enum-item name='ALREADY_TRADING'/>
+        <enum-item name='NO_CIVILIZATION_MILITARY_GOALS_HF'/>
+    </enum-type>
 
     <class-type type-name='viewscreen_worldst' inherits-from='viewscreen'>
         <int32_t name='region_cent_x'/>
@@ -6970,6 +6996,7 @@
 
         <enum type-name='world_view_mode_type' name='view_mode'/>
 
+        <pointer type-name='historical_figure' name='civ_level_military_goals_hf'/>
         <pointer type-name='historical_figure' name='military_goals_hf'/>
         <pointer type-name='historical_figure' name='meet_workers_hf'/>
 
@@ -6996,6 +7023,8 @@
         <bool name='scrolling_ac'/>
         <int32_t name='scroll_position_ac'/>
 
+        <static-array type-name='world_new_mission_type' name='new_mission' index-enum='army_controller_goal_type'/>
+
         <stl-vector pointer-type='squad' name='squad'/>
         <stl-vector type-name='civlist_squad_flag' name='squad_flag'/>
         <stl-vector pointer-type='entity_position_assignment' name='messenger_epp'/>
@@ -7009,6 +7038,8 @@
         <stl-vector pointer-type='nemesis_record' name='request_nem'/>
         <int32_t name='scroll_position_request_nem'/>
         <bool name='scrolling_request_nem'/>
+
+        <static-array type-name='world_new_mission_type' name='diplomacy_topic' index-enum='meeting_topic'/>
 
         <stl-vector pointer-type='entity_event' name='rumor_master'/>
         <compound type-name='region_print_datast' name='rumor_rpd'/>

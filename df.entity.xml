@@ -1385,6 +1385,7 @@
         <flag-bit name='calculated_best_appointment_precedence' original-name='CALCULATED_BEST_APPOINTMENT_PRECEDENCE'/>
         <flag-bit name='religious_devotion' original-name='RELIGIOUS_DEVOTION'/>
         <flag-bit name='might_have_interaction_region_pops' original-name='MIGHT_HAVE_INTERACTION_REGION_POPS'/>
+        <flag-bit name='ignore_progress_triggers' original-name='IGNORE_PROGRESS_TRIGGERS'/>
     </bitfield-type>
 
     <enum-type type-name='historical_entity_type' original-name='entity_type' base-type='int16_t'> bay12: EntityType; no base type, but usually int16

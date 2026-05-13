@@ -81,6 +81,7 @@
         <enum-item name='SOUND_OFF'/>
         <enum-item name='PORTABLE_MODE'/>
         <enum-item name='COMPRESS_SAVES'/>
+        <enum-item name='DISPLAY_ALL_ERRORLOGS'/>
     </enum-type>
 
     <struct-type type-name='init_media' original-name='init_mediast'>

@@ -1478,6 +1478,7 @@
         <flag-bit name='may_have_mythical_substance' original-name='MAY_HAVE_MYTHICAL_SUBSTANCE'/>
         <flag-bit name='did_dungeon_move_unit' original-name='DID_DUNGEON_MOVE_UNIT'/>
         <flag-bit name='carrying_somebody' original-name='CARRYING_SOMEBODY'/>
+        <flag-bit name='has_announced_stuck' original-name='HAS_ANNOUNCED_STUCK'/>
     </bitfield-type>
 
     <enum-type type-name='unitpref_type'> bay12: UnitPrefs, no base type
@@ -2374,6 +2375,7 @@
         <stl-string name='undead_name' original-name='animated_name' comment='display name of reanimated creatures'/>
         <int32_t name='initial_good_head_count' since='v0.43.01'/>
         <int32_t name='initial_good_grasp_count' since='v0.43.01'/>
+        <int16_t name='disturbed_timer'/>
     </struct-type>
 
     <struct-type type-name='entity_pop_specifierst'>
@@ -2592,6 +2594,8 @@
 
     <struct-type type-name='unit_cache_vars'>
         <enum type-name='glowtile_type' name='cached_glowtile_type' original-name='glow_tile'/>
+        <int32_t name='path_cooldown'/>
+        <int32_t name='next_path_cooldown'/>
     </struct-type>
 
     <enum-type type-name='dungeon_control_state' base-type='int8_t'> bay12: DungeonControlState
